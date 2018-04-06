@@ -7,12 +7,16 @@ import {
   routerReducer,
   initialRouterState,
 } from './router.reducer';
+import { AuthState } from '../authentication/state/auth.reducer';
 
-export interface AppState {
+interface FullAppState {
   router: RouterState;
+  auth: AuthState;
 }
 
-export const reducers: ActionReducerMap<Partial<AppState>> = {
+export type AppState = Partial<FullAppState>;
+
+export const reducers: ActionReducerMap<AppState> = {
   router: routerReducer,
 };
 
