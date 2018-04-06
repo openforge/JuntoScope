@@ -17,6 +17,10 @@ const routes: Routes = [
     loadChildren: './authentication/authentication.module#AuthenticationModule',
   },
   {
+    path: 'scoping',
+    loadChildren: './scoping/scoping.module#ScopingModule',
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },
