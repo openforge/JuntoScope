@@ -14,6 +14,8 @@ import { reducers, metaReducers, initialState } from './state/app.state';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { NotFoundComponent } from './not-found.component';
+import { AuthGuard } from './auth.guard';
+import { UnAuthGuard } from './un-auth.guard';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -27,7 +29,7 @@ import { NotFoundComponent } from './not-found.component';
     AngularFirestoreModule,
     AuthenticationModule.forRoot(),
   ],
-  providers: [],
+  providers: [AuthGuard, UnAuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
