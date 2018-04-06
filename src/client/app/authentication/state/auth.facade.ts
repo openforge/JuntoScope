@@ -25,6 +25,7 @@ import {
   LogoutAction,
 } from './auth.actions';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class AuthFacade {
@@ -41,6 +42,14 @@ export class AuthFacade {
   /*
    * Module-level Effects
    */
+
+  // If user exists, do nothing. Else, create user
+  @Effect({ dispatch: false })
+  authenticaded$ = this.actions$.pipe(
+    ofType<AuthenticatedAction>(AuthActionTypes.AUTHENTICATED),
+    map(action => action.payload),
+    tap(user => this.userSvc.processUser(user))
+  );
 
   @Effect()
   getUser$ = this.actions$.pipe(
@@ -82,7 +91,8 @@ export class AuthFacade {
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private userSvc: UserService
   ) {}
 
   /*

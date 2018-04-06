@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { authReducer, initialAuthState } from './state/auth.reducer';
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthFacade } from './state/auth.facade';
 import { LoginComponent } from './containers/login/login.component';
@@ -25,7 +26,7 @@ export class AuthenticationModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AuthenticationModule,
-      providers: [AuthService, AuthFacade],
+      providers: [AuthService, AuthFacade, UserService],
     };
   }
 }
