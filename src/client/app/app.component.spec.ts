@@ -36,21 +36,4 @@ describe('AppComponent', () => {
   it('snaps', () => {
     expect(fixture).toMatchSnapshot();
   });
-
-  it(
-    `should have as title 'app'`,
-    async(() => {
-      expect(component.title).toEqual('app');
-    })
-  );
-
-  it(
-    'should render title in a h1 tag',
-    async(() => {
-      const compiled = fixture.debugElement.nativeElement;
-      expect(compiled.querySelector('h1').textContent).toContain(
-        component.title
-      );
-    })
-  );
 });
