@@ -10,7 +10,12 @@ import {
 import { CustomSerializer } from './state/router.reducer';
 import { RouterFacade } from './state/router.facade';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    loadChildren: './authentication/authentication.module#AuthenticationModule',
+  },
+];
 
 @NgModule({
   imports: [

@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { reducers, metaReducers, initialState } from './state/app.state';
 import { AppComponent } from './app.component';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { AppComponent } from './app.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AuthenticationModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
