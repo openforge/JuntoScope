@@ -13,9 +13,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { reducers, metaReducers, initialState } from './state/app.state';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { NotFoundComponent } from './not-found.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule.forRoot(),
