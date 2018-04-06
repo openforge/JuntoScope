@@ -9,11 +9,16 @@ import {
 
 import { CustomSerializer } from './state/router.reducer';
 import { RouterFacade } from './state/router.facade';
+import { NotFoundComponent } from './not-found.component';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: './authentication/authentication.module#AuthenticationModule',
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 
