@@ -24,18 +24,21 @@ export class UserService {
   }
 
   processUser(user) {
-    if (this.afs.collection('users', ref => ref.where('uid', '==', user.uid))) {
-      console.log('User already exists: ');
-    } else {
-      this.addUser(user);
-    }
+    this.afs.firestore
+      .doc('/users/' + user.uid)
+      .get()
+      .then(docSnapshot => {
+        if (docSnapshot.exists) {
+          console.log('User already exists');
+        } else {
+          this.addUser(user);
+        }
+      });
   }
 
   addUser(user) {
-    this.usersCollection.add({
-      name: user.displayName,
-      projects: [],
-      uid: user.uid,
+    this.usersCollection.doc(user.uid).set({
+      sources: [],
     });
   }
 }
