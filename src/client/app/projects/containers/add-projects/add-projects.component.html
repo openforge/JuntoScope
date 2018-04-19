@@ -1,0 +1,11 @@
+<h2>ADD PROJECT(S)</h2>
+
+<h4>Choose an account</h4>
+
+<div *ngFor="let account of accounts">
+  <button (click)="selectAccount()">{{ account }}</button>
+</div>
+
+<h3>DON'T SEE YOUR ACCOUNT?</h3>
+
+<button (click)="addAccount()">Add Account</button>
