@@ -28,6 +28,8 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: './settings/settings.module#SettingsModule',
+    path: 'connections',
+    loadChildren: './connections/connections.module#ConnectionsModule',
     canActivate: [AuthGuard],
   },
   {

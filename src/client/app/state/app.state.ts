@@ -8,10 +8,12 @@ import {
   initialRouterState,
 } from '@app/state/router.reducer';
 import { AuthState } from '@app/authentication/state/auth.reducer';
+import { ConnectionsState } from '../connections/state/connections.reducer';
 
 interface FullAppState {
   router: RouterState;
   auth: AuthState;
+  connections: ConnectionsState;
 }
 
 export type AppState = Partial<FullAppState>;
