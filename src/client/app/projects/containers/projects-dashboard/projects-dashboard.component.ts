@@ -13,8 +13,8 @@ import { RouterFacade } from '../../../state/router.facade';
   styleUrls: ['./projects-dashboard.component.scss'],
 })
 export class ProjectsDashboardComponent implements OnDestroy {
-  projects = [];
-  scopes = [];
+  projects: any[];
+  scopes: any[];
 
   constructor(private routerFacade: RouterFacade) {}
 
