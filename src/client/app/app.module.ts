@@ -17,8 +17,10 @@ import { NotFoundComponent } from './not-found.component';
 import { AuthGuard } from './auth.guard';
 import { UnAuthGuard } from './un-auth.guard';
 
+import { TabsComponent } from './navigation/tabs/tabs.component';
+
 @NgModule({
-  declarations: [AppComponent, NotFoundComponent],
+  declarations: [AppComponent, NotFoundComponent, TabsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule.forRoot(),
