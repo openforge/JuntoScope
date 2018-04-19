@@ -2,6 +2,6 @@
   JuntoScope
 </h1>
 
-<tabs></tabs>
+<app-tabs [hidden]="!(authenticaded$ | async)"></app-tabs>
 
 <router-outlet></router-outlet>
