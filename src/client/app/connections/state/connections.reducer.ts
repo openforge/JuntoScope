@@ -25,7 +25,7 @@ export const initialConnectionsState: ConnectionsState = {
   error: null,
 };
 
-export function authReducer(
+export function ConnectionsReducer(
   state = initialConnectionsState,
   action: ConnectionsActions
 ): ConnectionsState {

@@ -11,6 +11,7 @@ export enum ConnectionsActionTypes {
 
 export class GetConnectionsAction implements Action {
   readonly type = ConnectionsActionTypes.GET_CONNECTIONS;
+  constructor(public payload: string) {}
 }
 
 export class ConnectionsLoadedAction implements Action {
