@@ -1,31 +1,27 @@
-/* Place the navbar at the bottom of the page, and make it stick */
 .navbar {
-  background-color: #335;
+  background-color: #c1c1c1;
   overflow: hidden;
   position: fixed;
   bottom: 0;
   width: 100%;
 }
 
-/* Style the links inside the navigation bar */
 .navbar a {
   float: left;
   display: block;
-  color: #f2f2d2;
+  color: #414141;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
 }
 
-/* Change the color of links on hover */
 .navbar a:hover {
-  background-color: #dfd;
+  background-color: #ef5b20;
   color: black;
 }
 
-/* Add a color to the active/current link */
 .navbar a.active {
-  background-color: #4caf44;
+  background-color: #ef5b20;
   color: white;
 }
