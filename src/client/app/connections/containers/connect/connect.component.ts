@@ -1,9 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { map, filter, withLatestFrom, take } from 'rxjs/operators';
-
-import { AuthFacade } from '../../../authentication/state/auth.facade';
-import { AuthCase } from '../../../authentication/state/auth.reducer';
 import { RouterFacade } from '../../../state/router.facade';
 
 @Component({
@@ -11,18 +6,14 @@ import { RouterFacade } from '../../../state/router.facade';
   templateUrl: './connect.component.html',
   styleUrls: ['./connect.component.scss'],
 })
-export class ConnectComponent implements OnDestroy {
-  user$ = this.authFacade.user$;
-  connectionTypes = ['Teamwork'];
+export class ConnectComponent implements OnInit {
+  connectionTypes = ['teamwork'];
 
-  constructor(
-    private authFacade: AuthFacade,
-    private routerFacade: RouterFacade
-  ) {}
+  constructor(private routerFacade: RouterFacade) {}
 
-  ngOnDestroy() {}
+  ngOnInit() {}
 
   connect(type: string) {
-    this.routerFacade.navigate({ path: ['/token'] });
+    this.routerFacade.navigate({ path: ['/connections/' + type] });
   }
 }
