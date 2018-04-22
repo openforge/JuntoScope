@@ -19,4 +19,8 @@ export class ProjectsDashboardComponent implements OnDestroy {
   constructor(private routerFacade: RouterFacade) {}
 
   ngOnDestroy() {}
+
+  navigateAddProject() {
+    this.routerFacade.navigate({ path: ['/projects-dashboard/add-projects'] });
+  }
 }
