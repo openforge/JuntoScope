@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "junto-scope-dev",
+    "production": "junto-scope"
+  }
+}
