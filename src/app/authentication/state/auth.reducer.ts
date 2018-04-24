@@ -7,7 +7,7 @@ import {
 import { User } from '@models/user';
 import { AppState } from '@app/state/app.state';
 
-export enum AuthCase {
+export enum AuthUiState {
   LOADING = 'Loading',
   AUTHENTICATED = 'Authenticated',
   NOT_AUTHENTICATED = 'Not Authenticated',
@@ -15,13 +15,13 @@ export enum AuthCase {
 
 export interface AuthState {
   user: User;
-  authState: AuthCase;
+  authState: AuthUiState;
   error: string;
 }
 
 export const initialAuthState: AuthState = {
   user: null,
-  authState: AuthCase.NOT_AUTHENTICATED,
+  authState: AuthUiState.NOT_AUTHENTICATED,
   error: null,
 };
 
@@ -33,22 +33,26 @@ export function authReducer(
     case AuthActionTypes.GET_USER:
     case AuthActionTypes.LOGIN:
     case AuthActionTypes.LOGOUT:
-      return { ...state, authState: AuthCase.LOADING };
+      return { ...state, authState: AuthUiState.LOADING };
 
     case AuthActionTypes.AUTHENTICATED:
       return {
         user: action.payload,
-        authState: AuthCase.AUTHENTICATED,
+        authState: AuthUiState.AUTHENTICATED,
         error: null,
       };
 
     case AuthActionTypes.NOT_AUTHENTICATED:
-      return { user: null, authState: AuthCase.NOT_AUTHENTICATED, error: null };
+      return {
+        user: null,
+        authState: AuthUiState.NOT_AUTHENTICATED,
+        error: null,
+      };
 
     case AuthActionTypes.AUTH_ERROR:
       return {
         user: null,
-        authState: AuthCase.NOT_AUTHENTICATED,
+        authState: AuthUiState.NOT_AUTHENTICATED,
         error: action.payload.message,
       };
 

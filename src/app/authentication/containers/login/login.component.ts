@@ -5,7 +5,7 @@ import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { map, filter, withLatestFrom, take } from 'rxjs/operators';
 
 import { AuthFacade } from '@app/authentication/state/auth.facade';
-import { AuthCase } from '@app/authentication/state/auth.reducer';
+import { AuthUiState } from '@app/authentication/state/auth.reducer';
 import { RouterFacade } from '@app/state/router.facade';
 
 @TakeUntilDestroy()
@@ -16,14 +16,14 @@ import { RouterFacade } from '@app/state/router.facade';
 })
 export class LoginComponent implements OnDestroy {
   loading$ = this.authFacade.authState$.pipe(
-    map(authState => authState === AuthCase.LOADING)
+    map(authState => authState === AuthUiState.LOADING)
   );
 
   authError$ = this.authFacade.error$;
 
   private loginRedirect$ = this.authFacade.authState$.pipe(
     untilDestroyed(this),
-    filter(authState => authState === AuthCase.AUTHENTICATED),
+    filter(authState => authState === AuthUiState.AUTHENTICATED),
     withLatestFrom(this.routerFacade.queryParams$)
   );
 

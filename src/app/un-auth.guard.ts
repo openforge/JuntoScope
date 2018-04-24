@@ -9,7 +9,7 @@ import { map, tap, filter, switchMap, take } from 'rxjs/operators';
 
 import { RouterFacade } from '@app/state/router.facade';
 import { AuthFacade } from '@app/authentication/state/auth.facade';
-import { AuthCase } from '@app/authentication/state/auth.reducer';
+import { AuthUiState } from '@app/authentication/state/auth.reducer';
 
 @Injectable()
 export class UnAuthGuard implements CanActivate {
@@ -20,9 +20,9 @@ export class UnAuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const isUnAuth$ = this.authFacade.authState$.pipe(
-      filter(authState => authState !== AuthCase.LOADING),
+      filter(authState => authState !== AuthUiState.LOADING),
       take(1),
-      map(authState => authState === AuthCase.NOT_AUTHENTICATED),
+      map(authState => authState === AuthUiState.NOT_AUTHENTICATED),
       tap(unAuth => {
         if (!unAuth) {
           this.routerFacade.navigate({ path: ['/scoping'] });

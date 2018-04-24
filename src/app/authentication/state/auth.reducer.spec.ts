@@ -29,7 +29,7 @@ describe('Auth Reducer', () => {
       const { initialAuthState } = fromAuth;
       const expected: fromAuth.AuthState = {
         user: null,
-        authState: fromAuth.AuthCase.LOADING,
+        authState: fromAuth.AuthUiState.LOADING,
         error: null,
       };
       const action = new GetUserAction();
@@ -45,7 +45,7 @@ describe('Auth Reducer', () => {
       const { initialAuthState } = fromAuth;
       const expected: fromAuth.AuthState = {
         user: null,
-        authState: fromAuth.AuthCase.LOADING,
+        authState: fromAuth.AuthUiState.LOADING,
         error: null,
       };
       const action = new LoginAction({ provider: 'test' });
@@ -61,7 +61,7 @@ describe('Auth Reducer', () => {
       const { initialAuthState } = fromAuth;
       const expected: fromAuth.AuthState = {
         user: null,
-        authState: fromAuth.AuthCase.LOADING,
+        authState: fromAuth.AuthUiState.LOADING,
         error: null,
       };
       const action = new LogoutAction();
@@ -78,7 +78,7 @@ describe('Auth Reducer', () => {
 
       const expected: fromAuth.AuthState = {
         user: testUser,
-        authState: fromAuth.AuthCase.AUTHENTICATED,
+        authState: fromAuth.AuthUiState.AUTHENTICATED,
         error: null,
       };
       const action = new AuthenticatedAction(testUser);
@@ -92,7 +92,7 @@ describe('Auth Reducer', () => {
   describe('NOT_AUTHENTICATED action', () => {
     const expected: fromAuth.AuthState = {
       user: null,
-      authState: fromAuth.AuthCase.NOT_AUTHENTICATED,
+      authState: fromAuth.AuthUiState.NOT_AUTHENTICATED,
       error: null,
     };
 
@@ -108,7 +108,7 @@ describe('Auth Reducer', () => {
     it('should clear user & error', () => {
       const initialAuthState: fromAuth.AuthState = {
         user: testUser,
-        authState: fromAuth.AuthCase.AUTHENTICATED,
+        authState: fromAuth.AuthUiState.AUTHENTICATED,
         error: 'test error',
       };
       const action = new NotAuthenticatedAction();
@@ -123,7 +123,7 @@ describe('Auth Reducer', () => {
     const message = 'test error';
     const expected: fromAuth.AuthState = {
       user: null,
-      authState: fromAuth.AuthCase.NOT_AUTHENTICATED,
+      authState: fromAuth.AuthUiState.NOT_AUTHENTICATED,
       error: message,
     };
 
@@ -139,7 +139,7 @@ describe('Auth Reducer', () => {
     it('should clear user', () => {
       const initialAuthState: fromAuth.AuthState = {
         user: testUser,
-        authState: fromAuth.AuthCase.AUTHENTICATED,
+        authState: fromAuth.AuthUiState.AUTHENTICATED,
         error: null,
       };
       const action = new AuthErrorAction({ message });
@@ -155,7 +155,7 @@ describe('Auth Queries', () => {
   const testState: AppState = {
     auth: {
       user: testUser,
-      authState: fromAuth.AuthCase.AUTHENTICATED,
+      authState: fromAuth.AuthUiState.AUTHENTICATED,
       error: null,
     },
   };
