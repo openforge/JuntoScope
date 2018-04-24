@@ -1,0 +1,15 @@
+<p>
+  Authenticate with your Google account!
+</p>
+
+<button (click)="googleLogin()">
+  Google Auth
+</button>
+
+<p *ngIf="loading$ | async">
+  Authenticating ...
+</p>
+
+<p *ngIf="authError$ | async as message">
+  Auth Error: {{ message }}
+</p>
