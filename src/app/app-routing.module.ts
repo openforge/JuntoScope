@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'connections',
-    loadChildren: './connections/connections.module#ConnectionsModule',
+    loadChildren: '@app/connections/connections.module#ConnectionsModule',
     canActivate: [AuthGuard],
   },
   {

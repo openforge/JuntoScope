@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamworkComponent } from './teamwork.component';
+import { TeamworkComponent } from '@app/connections/containers/teamwork/teamwork.component';
 
 describe('TeamworkComponent', () => {
   let component: TeamworkComponent;

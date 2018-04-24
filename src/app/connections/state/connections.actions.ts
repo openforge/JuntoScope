@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { Connection } from '../../../../models/connection';
+import { Connection } from '@models/connection';
 
 export enum ConnectionsActionTypes {
   GET_CONNECTIONS = '[Connection] Get Connections',

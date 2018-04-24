@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { map, tap } from 'rxjs/operators';
-import { Connection } from '../../../../models/connection';
+import { Connection } from '@models/connection';
 
 import {
   AngularFirestore,

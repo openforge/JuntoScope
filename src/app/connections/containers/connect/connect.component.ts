@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouterFacade } from '../../../state/router.facade';
+import { RouterFacade } from '@app/state/router.facade';
 
 @Component({
   selector: 'app-connect',

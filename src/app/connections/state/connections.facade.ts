@@ -13,7 +13,7 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-import { AppState } from '../../state/app.state';
+import { AppState } from '@app/state/app.state';
 import {
   ConnectionsActionTypes,
   GetConnectionsAction,
@@ -22,8 +22,8 @@ import {
   AddConnectionAction,
   AddConnectionActionSuccess,
   AddConnectionActionFail,
-} from './connections.actions';
-import { ConnectionsService } from '../services/connections.service';
+} from '@app/connections/state/connections.actions';
+import { ConnectionsService } from '@app/connections/services/connections.service';
 
 @Injectable()
 export class ConnectionsFacade {
@@ -49,10 +49,9 @@ export class ConnectionsFacade {
   addConnection$ = this.actions$.pipe(
     ofType<AddConnectionAction>(ConnectionsActionTypes.ADD_CONNECTION),
     switchMap(action =>
-      this.connectionsSvc.addConnection(action.payload)
-      .pipe(
-        map(response => new AddConnectionActionSuccess(response))
-      )
+      this.connectionsSvc
+        .addConnection(action.payload)
+        .pipe(map(response => new AddConnectionActionSuccess(response)))
     ),
     catchError(error =>
       of(new AddConnectionActionFail({ message: error.message }))
