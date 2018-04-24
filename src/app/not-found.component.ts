@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { RouterFacade } from './state/router.facade';
+import { RouterFacade } from '@app/state/router.facade';
 
 @Component({
   selector: 'app-not-found',

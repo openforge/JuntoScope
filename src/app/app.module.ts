@@ -8,14 +8,14 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
-import { environment } from '../environments/environment';
-import { AppRoutingModule } from './app-routing.module';
-import { reducers, metaReducers, initialState } from './state/app.state';
-import { AppComponent } from './app.component';
-import { AuthenticationModule } from './authentication/authentication.module';
-import { NotFoundComponent } from './not-found.component';
-import { AuthGuard } from './auth.guard';
-import { UnAuthGuard } from './un-auth.guard';
+import { environment } from '@env/environment';
+import { AppRoutingModule } from '@app/app-routing.module';
+import { reducers, metaReducers, initialState } from '@app/state/app.state';
+import { AppComponent } from '@app/app.component';
+import { AuthenticationModule } from '@app/authentication/authentication.module';
+import { NotFoundComponent } from '@app/not-found.component';
+import { AuthGuard } from '@app/auth.guard';
+import { UnAuthGuard } from '@app/un-auth.guard';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],

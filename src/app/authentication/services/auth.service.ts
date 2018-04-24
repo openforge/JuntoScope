@@ -6,7 +6,7 @@ import { map, tap } from 'rxjs/operators';
 
 import * as firebase from 'firebase';
 
-import { User } from '../../../models/user';
+import { User } from '@models/user';
 
 @Injectable()
 export class AuthService {

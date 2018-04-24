@@ -13,8 +13,8 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-import { AppState } from '../../state/app.state';
-import { AuthQuery, AuthCase } from './auth.reducer';
+import { AppState } from '@app/state/app.state';
+import { AuthQuery, AuthCase } from '@app/authentication/state/auth.reducer';
 import {
   AuthActionTypes,
   GetUserAction,
@@ -23,8 +23,8 @@ import {
   AuthenticatedAction,
   LoginAction,
   LogoutAction,
-} from './auth.actions';
-import { AuthService } from '../services/auth.service';
+} from '@app/authentication/state/auth.actions';
+import { AuthService } from '@app/authentication/services/auth.service';
 
 @Injectable()
 export class AuthFacade {
