@@ -28,6 +28,43 @@ export class TeamworkService {
       .catch(error => { throw new Error('Unable to authenticate with Teamwork. Please verify your token and try again later.') });
   }
 
+  async getProjects(token: string) {
+    let authData;
+    try {
+      authData = await this.validateToken(token);
+      const uri = `${authData.baseUrl}/projects.json`;
+      const headers = this.getReqHeaders(token);
+
+      const options: request.OptionsWithUri = {
+        uri,
+        method: 'GET',
+        headers,
+        json: true,
+      };
+
+      return request(options)
+        .then(response => {
+          const projects = response.projects;
+
+          return {
+            projects: projects.map(
+              p => {
+                return {
+                  id: p.id,
+                  name: p.name,
+                  description: p.description,
+                  created: p['created-on']
+                };
+              }
+            )
+          };
+        })
+        .catch(error => { throw new Error('Unable to get projects from Teamwork. Please try again later.') });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   private getReqHeaders(token: string) {
     const encodedToken = new Buffer(`${token}:X`).toString('base64');
     return {
