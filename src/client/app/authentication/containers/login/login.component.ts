@@ -2,12 +2,14 @@ import { Component, OnDestroy } from '@angular/core';
 
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 
-import { map, filter, withLatestFrom, take } from 'rxjs/operators';
+import { map, tap, filter, withLatestFrom, take } from 'rxjs/operators';
 
 import { AuthFacade } from '@app/authentication/state/auth.facade';
 import { AuthUiState } from '@app/authentication/state/auth.reducer';
 import { RouterFacade } from '@app/state/router.facade';
 import { AppFacade } from '@app/state/app.facade';
+
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @TakeUntilDestroy()
 @Component({
@@ -38,7 +40,8 @@ export class LoginComponent implements OnDestroy {
   constructor(
     private appFacade: AppFacade,
     private authFacade: AuthFacade,
-    private routerFacade: RouterFacade
+    private routerFacade: RouterFacade,
+    private afAuth: AngularFireAuth
   ) {}
 
   ngOnDestroy() {}

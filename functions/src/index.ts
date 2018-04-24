@@ -11,9 +11,12 @@ app.disable('X-Powered-By');
 app.use(cors({ origin: true }));
 
 app.use(idTokenAuth);
+app.use('/test', (req: express.Request, res: express.Response) => {
+  res.send("Success");
+});
 
 app.use(apiRouter);
-app.use('/*', (req: express.Request, res: express.Response) => {
+app.get('/*', (req: express.Request, res: express.Response) => {
   res.status(404).send();
 });
 

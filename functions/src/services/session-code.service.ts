@@ -54,7 +54,7 @@ export class SessionCodeService {
   }
 
   // Bijective Enumeration -- String to Number
-  private decode(str: string) {
+  decode(str: string) {
     let id = 0;
 
     for (let i = 0, len = str.length; i < len; i++) {
