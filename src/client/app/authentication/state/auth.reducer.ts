@@ -1,10 +1,11 @@
-import { createSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import { AuthActions, AuthActionTypes } from './auth.actions';
 import { User } from '../../../../models/user';
 import { AppState } from '../../state/app.state';
 
 export enum AuthUiState {
+  UNKNOWN = 'Unknown',
   LOADING = 'Loading',
   AUTHENTICATED = 'Authenticated',
   NOT_AUTHENTICATED = 'Not Authenticated',
@@ -12,13 +13,13 @@ export enum AuthUiState {
 
 export interface AuthState {
   user: User;
-  authState: AuthUiState;
+  uiState: AuthUiState;
   error: string;
 }
 
 export const initialAuthState: AuthState = {
   user: null,
-  authState: AuthUiState.NOT_AUTHENTICATED,
+  uiState: AuthUiState.UNKNOWN,
   error: null,
 };
 
@@ -30,26 +31,26 @@ export function authReducer(
     case AuthActionTypes.GET_USER:
     case AuthActionTypes.LOGIN:
     case AuthActionTypes.LOGOUT:
-      return { ...state, authState: AuthUiState.LOADING };
+      return { ...state, uiState: AuthUiState.LOADING };
 
     case AuthActionTypes.AUTHENTICATED:
       return {
         user: action.payload,
-        authState: AuthUiState.AUTHENTICATED,
+        uiState: AuthUiState.AUTHENTICATED,
         error: null,
       };
 
     case AuthActionTypes.NOT_AUTHENTICATED:
       return {
         user: null,
-        authState: AuthUiState.NOT_AUTHENTICATED,
+        uiState: AuthUiState.NOT_AUTHENTICATED,
         error: null,
       };
 
     case AuthActionTypes.AUTH_ERROR:
       return {
         user: null,
-        authState: AuthUiState.NOT_AUTHENTICATED,
+        uiState: AuthUiState.NOT_AUTHENTICATED,
         error: action.payload.message,
       };
 
@@ -59,11 +60,11 @@ export function authReducer(
 }
 
 export namespace AuthQuery {
-  const getSlice = (state: AppState) => state.auth;
-  export const getUser = createSelector(getSlice, state => state.user);
-  export const getAuthState = createSelector(
-    getSlice,
-    state => state.authState
+  const selectSlice = createFeatureSelector<AuthState>('auth');
+  export const selectUser = createSelector(selectSlice, state => state.user);
+  export const selectUiState = createSelector(
+    selectSlice,
+    state => state.uiState
   );
-  export const getError = createSelector(getSlice, state => state.error);
+  export const selectError = createSelector(selectSlice, state => state.error);
 }

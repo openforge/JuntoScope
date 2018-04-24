@@ -32,11 +32,11 @@ export class AuthFacade {
    * Observable Store Queries
    */
 
-  user$ = this.store.pipe(select(AuthQuery.getUser));
+  user$ = this.store.pipe(select(AuthQuery.selectUser));
 
-  authState$ = this.store.pipe(select(AuthQuery.getAuthState));
+  authState$ = this.store.pipe(select(AuthQuery.selectUiState));
 
-  error$ = this.store.pipe(select(AuthQuery.getError));
+  error$ = this.store.pipe(select(AuthQuery.selectError));
 
   /*
    * Module-level Effects
