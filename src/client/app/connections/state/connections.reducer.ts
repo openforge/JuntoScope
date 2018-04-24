@@ -47,6 +47,14 @@ export function ConnectionsReducer(
         error: action.payload.message,
       };
 
+    case ConnectionsActionTypes.ADD_CONNECTION_SUCCESS:
+      // TODO Handle cloud function response
+      return state;
+
+    case ConnectionsActionTypes.ADD_CONNECTION_FAIL:
+      // TODO Handle cloud function response error
+      return state;
+
     default:
       return state;
   }

@@ -1,6 +1,11 @@
 <h1>Provide token</h1>
-<form>
-  <input type="text" name="token" />
+<form [formGroup]="tokenForm">
+  <input class="form-control" type="text" formControlName="token" name="token"/>
+  <ng-container *ngIf="tokenForm.get('token') as tokenCtrl">
+    <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
+      Token is required
+    </h6>
+  </ng-container>
 
   <p>
     <a href="">Where do I find this?</a>
