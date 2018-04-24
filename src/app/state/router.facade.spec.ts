@@ -19,10 +19,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { cold, hot } from 'jest-marbles';
 
-import { ConfigureFn, configureTests } from '../../test/jest-test.helper';
-import { AppState, reducers, initialState } from './app.state';
-import { RouterFacade } from './router.facade';
-import { CustomSerializer } from './router.reducer';
+import { ConfigureFn, configureTests } from '@test/jest-test.helper';
+import { AppState, reducers, initialState } from '@app/state/app.state';
+import { RouterFacade } from '@app/state/router.facade';
+import { CustomSerializer } from '@app/state/router.reducer';
 import { Component } from '@angular/core';
 import {
   GoAction,
@@ -30,7 +30,7 @@ import {
   ForwardAction,
   RouterActionTypes,
   NavigationOptions,
-} from './router.actions';
+} from '@app/state/router.actions';
 
 @Component({
   template: '<div></div>',

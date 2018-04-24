@@ -3,12 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { StoreModule } from '@ngrx/store';
 
-import { AuthenticationRoutingModule } from './authentication-routing.module';
-import { authReducer, initialAuthState } from './state/auth.reducer';
-import { AuthService } from './services/auth.service';
+import { AuthenticationRoutingModule } from '@app/authentication/authentication-routing.module';
+import {
+  authReducer,
+  initialAuthState,
+} from '@app/authentication/state/auth.reducer';
+import { AuthService } from '@app/authentication/services/auth.service';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthFacade } from './state/auth.facade';
-import { LoginComponent } from './containers/login/login.component';
+import { AuthFacade } from '@app/authentication/state/auth.facade';
+import { LoginComponent } from '@app/authentication/containers/login/login.component';
 
 @NgModule({
   imports: [

@@ -1,5 +1,5 @@
-import * as fromAuth from './auth.reducer';
-import { AppState } from '../../state/app.state';
+import * as fromAuth from '@app/authentication/state/auth.reducer';
+import { AppState } from '@app/state/app.state';
 import {
   GetUserAction,
   LoginAction,
@@ -7,8 +7,8 @@ import {
   AuthenticatedAction,
   NotAuthenticatedAction,
   AuthErrorAction,
-} from './auth.actions';
-import { User } from '../../../models/user';
+} from '@app/authentication/state/auth.actions';
+import { User } from '@models/user';
 
 const testUser: User = { uid: 'testUid', displayName: 'testName' };
 

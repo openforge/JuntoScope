@@ -1,13 +1,13 @@
 import { MetaReducer, ActionReducerMap, ActionReducer } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 
-import { environment } from '../../environments/environment';
+import { environment } from '@env/environment';
 import {
   RouterState,
   routerReducer,
   initialRouterState,
-} from './router.reducer';
-import { AuthState } from '../authentication/state/auth.reducer';
+} from '@app/state/router.reducer';
+import { AuthState } from '@app/authentication/state/auth.reducer';
 
 interface FullAppState {
   router: RouterState;

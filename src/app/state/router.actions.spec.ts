@@ -1,4 +1,4 @@
-import * as RouterActions from './router.actions';
+import * as RouterActions from '@app/state/router.actions';
 
 describe('Router Actions', () => {
   describe('Go Action', () => {

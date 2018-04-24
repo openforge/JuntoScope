@@ -7,15 +7,15 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 
 import { map, tap } from 'rxjs/operators';
 
-import { AppState } from './app.state';
-import { RouterQuery } from './router.reducer';
+import { AppState } from '@app/state/app.state';
+import { RouterQuery } from '@app/state/router.reducer';
 import {
   GoAction,
   BackAction,
   ForwardAction,
   RouterActionTypes,
   NavigationOptions,
-} from './router.actions';
+} from '@app/state/router.actions';
 
 @Injectable()
 export class RouterFacade {

@@ -1,8 +1,11 @@
 import { createSelector } from '@ngrx/store';
 
-import { AuthActions, AuthActionTypes } from './auth.actions';
-import { User } from '../../../models/user';
-import { AppState } from '../../state/app.state';
+import {
+  AuthActions,
+  AuthActionTypes,
+} from '@app/authentication/state/auth.actions';
+import { User } from '@models/user';
+import { AppState } from '@app/state/app.state';
 
 export enum AuthCase {
   LOADING = 'Loading',
