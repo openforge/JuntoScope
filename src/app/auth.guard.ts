@@ -19,10 +19,10 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const isAuth$ = this.authFacade.authState$.pipe(
-      filter(authState => authState !== AuthUiState.LOADING),
+    const isAuth$ = this.authFacade.uiState$.pipe(
+      filter(uiState => uiState !== AuthUiState.LOADING),
       take(1),
-      map(authState => authState === AuthUiState.AUTHENTICATED),
+      map(uiState => uiState === AuthUiState.AUTHENTICATED),
       tap(isAuth => {
         if (!isAuth) {
           this.routerFacade.navigate({

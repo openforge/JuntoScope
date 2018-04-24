@@ -17,9 +17,7 @@ import { LoginComponent } from '@app/authentication/containers/login/login.compo
   imports: [
     CommonModule,
     AuthenticationRoutingModule,
-    StoreModule.forFeature('auth', authReducer, {
-      initialState: initialAuthState,
-    }),
+    StoreModule.forFeature('auth', authReducer),
     EffectsModule.forFeature([AuthFacade]),
   ],
   declarations: [LoginComponent],

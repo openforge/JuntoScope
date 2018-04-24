@@ -19,10 +19,10 @@ export class UnAuthGuard implements CanActivate {
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const isUnAuth$ = this.authFacade.authState$.pipe(
-      filter(authState => authState !== AuthUiState.LOADING),
+    const isUnAuth$ = this.authFacade.uiState$.pipe(
+      filter(uiState => uiState !== AuthUiState.LOADING),
       take(1),
-      map(authState => authState === AuthUiState.NOT_AUTHENTICATED),
+      map(uiState => uiState === AuthUiState.NOT_AUTHENTICATED),
       tap(unAuth => {
         if (!unAuth) {
           this.routerFacade.navigate({ path: ['/scoping'] });

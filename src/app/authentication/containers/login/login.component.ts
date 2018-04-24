@@ -15,15 +15,15 @@ import { RouterFacade } from '@app/state/router.facade';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnDestroy {
-  loading$ = this.authFacade.authState$.pipe(
-    map(authState => authState === AuthUiState.LOADING)
+  loading$ = this.authFacade.uiState$.pipe(
+    map(uiState => uiState === AuthUiState.LOADING)
   );
 
   authError$ = this.authFacade.error$;
 
-  private loginRedirect$ = this.authFacade.authState$.pipe(
+  private loginRedirect$ = this.authFacade.uiState$.pipe(
     untilDestroyed(this),
-    filter(authState => authState === AuthUiState.AUTHENTICATED),
+    filter(uiState => uiState === AuthUiState.AUTHENTICATED),
     withLatestFrom(this.routerFacade.queryParams$)
   );
 

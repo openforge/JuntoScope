@@ -17,9 +17,9 @@ import { RouterFacade } from '@app/state/router.facade';
 export class DashboardComponent implements OnDestroy {
   user$ = this.authFacade.user$;
 
-  private logoutRedirect$ = this.authFacade.authState$.pipe(
+  private logoutRedirect$ = this.authFacade.uiState$.pipe(
     untilDestroyed(this),
-    filter(authState => authState === AuthUiState.NOT_AUTHENTICATED),
+    filter(uiState => uiState === AuthUiState.NOT_AUTHENTICATED),
     withLatestFrom(this.routerFacade.queryParams$)
   );
 
