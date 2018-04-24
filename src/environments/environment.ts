@@ -12,5 +12,6 @@ export const environment = {
     projectId: 'junto-scope-dev',
     storageBucket: '',
     messagingSenderId: '494457695327',
+    apiBaseUrl: '/junto-scope-dev/us-central1/api'
   },
 };
