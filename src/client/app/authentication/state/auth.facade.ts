@@ -14,7 +14,7 @@ import {
 import { of } from 'rxjs/observable/of';
 
 import { AppState } from '@app/state/app.state';
-import { AuthQuery, AuthCase } from '@app/authentication/state/auth.reducer';
+import { AuthQuery, AuthUiState } from '@app/authentication/state/auth.reducer';
 import {
   AuthActionTypes,
   GetUserAction,
@@ -92,7 +92,7 @@ export class AuthFacade {
   checkAuth() {
     return this.authState$.pipe(
       take(1),
-      map(state => state === AuthCase.NOT_AUTHENTICATED),
+      map(state => state === AuthUiState.NOT_AUTHENTICATED),
       tap(unAuth => {
         if (unAuth) {
           this.store.dispatch(new GetUserAction());

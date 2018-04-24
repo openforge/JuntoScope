@@ -4,7 +4,7 @@ import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { map, filter, withLatestFrom, take } from 'rxjs/operators';
 
 import { AuthFacade } from '../../../authentication/state/auth.facade';
-import { AuthCase } from '../../../authentication/state/auth.reducer';
+import { AuthUiState } from '../../../authentication/state/auth.reducer';
 import { RouterFacade } from '../../../state/router.facade';
 
 @TakeUntilDestroy()
@@ -18,7 +18,7 @@ export class SettingsComponent implements OnDestroy {
 
   private logoutRedirect$ = this.authFacade.authState$.pipe(
     untilDestroyed(this),
-    filter(authState => authState === AuthCase.NOT_AUTHENTICATED),
+    filter(authState => authState === AuthUiState.NOT_AUTHENTICATED),
     withLatestFrom(this.routerFacade.queryParams$)
   );
 

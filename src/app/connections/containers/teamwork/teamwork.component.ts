@@ -11,7 +11,7 @@ import { AppState } from '../../../state/app.state';
 import { Store } from '@ngrx/store';
 
 import { AuthFacade } from '../../../authentication/state/auth.facade';
-import { AuthCase } from '../../../authentication/state/auth.reducer';
+import { AuthUiState } from '../../../authentication/state/auth.reducer';
 
 import * as ConnectionsActions from '../../state/connections.actions';
 
