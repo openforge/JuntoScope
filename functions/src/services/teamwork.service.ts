@@ -39,7 +39,7 @@ export class TeamworkService {
         uri,
         method: 'GET',
         headers,
-        json: true,
+        json: true
       };
 
       return request(options)
@@ -60,6 +60,46 @@ export class TeamworkService {
           };
         })
         .catch(error => { throw new Error('Unable to get projects from Teamwork. Please try again later.') });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getTaskLists(token: string, projectId: string, page: number) {
+    let authData;
+    try {
+      authData = await this.validateToken(token);
+      const uri = `${authData.baseUrl}/projects/${projectId}/tasklists.json?page=${page}`;
+      const headers = this.getReqHeaders(token);
+
+      const options: request.OptionsWithUri = {
+        uri,
+        method: 'GET',
+        headers,
+        json: true,
+        resolveWithFullResponse: true,
+      };
+
+      return request(options)
+        .then(response => {
+          const tasklists = response.body.tasklists;
+          const responseHeaders = response.headers;
+
+          return {
+            page: responseHeaders['x-page'],
+            pages: responseHeaders['x-pages'],
+            tasklists: tasklists.map(
+              t => {
+                return {
+                  id: t.id,
+                  name: t.name,
+                  description: t.description
+                };
+              }
+            )
+          };
+        })
+        .catch(error => { throw new Error('Unable to get task lists from Teamwork. Please try again later.') });
     } catch (error) {
       throw error;
     }
