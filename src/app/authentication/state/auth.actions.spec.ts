@@ -1,5 +1,5 @@
-import * as AuthActions from './auth.actions';
-import { User } from '../../../models/user';
+import * as AuthActions from '@app/authentication/state/auth.actions';
+import { User } from '@models/user';
 
 describe('Authentication Actions', () => {
   describe('GetUser Action', () => {

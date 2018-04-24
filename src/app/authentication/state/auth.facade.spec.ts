@@ -11,9 +11,13 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs/Observable';
 
 import { cold, hot } from 'jest-marbles';
-import { ConfigureFn, configureTests } from '../../../test/jest-test.helper';
-import { AuthState, authReducer, initialAuthState } from './auth.reducer';
-import { AuthFacade } from './auth.facade';
+import { ConfigureFn, configureTests } from '@test/jest-test.helper';
+import {
+  AuthState,
+  authReducer,
+  initialAuthState,
+} from '@app/authentication/state/auth.reducer';
+import { AuthFacade } from '@app/authentication/state/auth.facade';
 import {
   AuthActionTypes,
   GetUserAction,
@@ -22,9 +26,9 @@ import {
   AuthenticatedAction,
   LoginAction,
   LogoutAction,
-} from './auth.actions';
-import { AuthService } from '../services/auth.service';
-import { User } from '../../../models/user';
+} from '@app/authentication/state/auth.actions';
+import { AuthService } from '@app/authentication/services/auth.service';
+import { User } from '@models/user';
 
 const testUser: User = { uid: 'testUid', displayName: 'testName' };
 
