@@ -19,6 +19,9 @@ import {
   GetConnectionsAction,
   ConnectionsLoadedAction,
   ConnectionsErrorAction,
+  AddConnectionAction,
+  AddConnectionActionSuccess,
+  AddConnectionActionFail,
 } from './connections.actions';
 import { ConnectionsService } from '../services/connections.service';
 
@@ -39,6 +42,20 @@ export class ConnectionsFacade {
     ),
     catchError(error =>
       of(new ConnectionsErrorAction({ message: error.message }))
+    )
+  );
+
+  @Effect()
+  addConnection$ = this.actions$.pipe(
+    ofType<AddConnectionAction>(ConnectionsActionTypes.ADD_CONNECTION),
+    switchMap(action =>
+      this.connectionsSvc.addConnection(action.payload)
+      .pipe(
+        map(response => new AddConnectionActionSuccess(response))
+      )
+    ),
+    catchError(error =>
+      of(new AddConnectionActionFail({ message: error.message }))
     )
   );
 

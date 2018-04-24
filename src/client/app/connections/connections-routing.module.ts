@@ -6,11 +6,6 @@ import { TeamworkComponent } from './containers/teamwork/teamwork.component';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'connect',
-  },
-  {
-    path: 'connect',
     component: ConnectComponent,
   },
   {

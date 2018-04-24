@@ -1,4 +1,4 @@
 export interface Connection {
-  uid: string;
   type: string;
+  token: string;
 }
