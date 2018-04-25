@@ -1,13 +1,36 @@
 import * as express from 'express';
+import { firestore, teamworkService, encryptionService } from './../../../services';
 
 export async function getProjects(req: express.Request, res: express.Response) {
+  const uid = res.locals.user.uid;
+  const connectionId = req.params.connectionId;
 
-  // Should get connection (from route Param)
-  // Should use appropriate service (teamwork for now)
-  //   to fetch projects under given connection.
+  console.log(connectionId);
 
-  // Should return List of projects on success
-  // or appropriate error.
+  let connectionRef;
+  try {
+  	connectionRef = await firestore.collection(`/users/${uid}/connections`).doc(connectionId).get();
+  } catch(error) {
+  	return res.status(400).json({ message: 'Error getting connection' });
+  }
 
-  res.json([]);
+  const connection = connectionRef.data();
+
+  switch (connection.type.toLowerCase()) {
+    case 'teamwork': {
+      
+      let teamworkResponse;
+      try {
+        teamworkResponse = await teamworkService.getProjects(encryptionService.decrypt(connection.token), connection.externalData.baseUrl);
+      } catch(error) {
+        return res.status(400).json({ message: error.message });
+      }
+
+      return res.json(teamworkResponse);
+    }
+
+    default: {
+      return res.status(400).json({ message: 'Unknown Connection Type' });
+    }
+  }
 }
