@@ -5,7 +5,7 @@ import {
   ConnectionsActionTypes,
 } from '@app/connections/state/connections.actions';
 import { Connection } from '@models/connection';
-import { AppState } from '@app/state/app.state';
+import { AppState } from '@app/state/app.reducer';
 
 export enum ConnectionsCase {
   LOADING = 'Loading',

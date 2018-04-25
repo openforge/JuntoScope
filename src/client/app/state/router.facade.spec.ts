@@ -19,10 +19,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { cold, hot } from 'jest-marbles';
 
-import { ConfigureFn, configureTests } from '../../test/jest-test.helper';
-import { AppState, reducers, initialState } from './app.state';
-import { RouterFacade } from './router.facade';
-import { CustomSerializer } from './router.reducer';
+import { ConfigureFn, configureTests } from '@test/jest-test.helper';
+import { AppState, reducers, initialState } from '@app/state/app.reducer';
+import { RouterFacade } from '@app/state/router.facade';
+import { CustomSerializer } from '@app/state/router.reducer';
 import { Component } from '@angular/core';
 import {
   GoAction,
@@ -45,45 +45,43 @@ describe('RouterFacade', () => {
   let facade: RouterFacade;
   let metadata: EffectsMetadata<RouterFacade>;
 
-  beforeEach(
-    async(() => {
-      const configure: ConfigureFn = testBed => {
-        testBed.configureTestingModule({
-          declarations: [TestComponent],
-          imports: [
-            CommonModule,
-            RouterTestingModule.withRoutes([
-              {
-                path: 'test-route/:id',
-                component: TestComponent,
-              },
-            ]),
-            StoreModule.forRoot(reducers, { initialState }),
-            StoreRouterConnectingModule.forRoot(),
-            EffectsModule.forRoot([RouterFacade]),
-          ],
-          providers: [
+  beforeEach(async(() => {
+    const configure: ConfigureFn = testBed => {
+      testBed.configureTestingModule({
+        declarations: [TestComponent],
+        imports: [
+          CommonModule,
+          RouterTestingModule.withRoutes([
             {
-              provide: RouterStateSerializer,
-              useClass: CustomSerializer,
+              path: 'test-route/:id',
+              component: TestComponent,
             },
-            RouterFacade,
-            provideMockActions(() => actions$),
-          ],
-        });
-      };
-
-      configureTests(configure).then(testBed => {
-        location = testBed.get(Location);
-        router = testBed.get(Router);
-        store = testBed.get(Store);
-        facade = testBed.get(RouterFacade);
-        metadata = getEffectsMetadata(facade);
-
-        router.initialNavigation();
+          ]),
+          StoreModule.forRoot(reducers, { initialState }),
+          StoreRouterConnectingModule.forRoot(),
+          EffectsModule.forRoot([RouterFacade]),
+        ],
+        providers: [
+          {
+            provide: RouterStateSerializer,
+            useClass: CustomSerializer,
+          },
+          RouterFacade,
+          provideMockActions(() => actions$),
+        ],
       });
-    })
-  );
+    };
+
+    configureTests(configure).then(testBed => {
+      location = testBed.get(Location);
+      router = testBed.get(Router);
+      store = testBed.get(Store);
+      facade = testBed.get(RouterFacade);
+      metadata = getEffectsMetadata(facade);
+
+      router.initialNavigation();
+    });
+  }));
 
   describe('Store Query: state$', () => {
     it('should have the initial router navigation state', () => {

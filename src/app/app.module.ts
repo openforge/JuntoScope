@@ -10,7 +10,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { environment } from '@env/environment';
 import { AppRoutingModule } from '@app/app-routing.module';
-import { reducers, metaReducers, initialState } from '@app/state/app.state';
+import { reducers, metaReducers, initialState } from '@app/state/app.reducer';
 import { AppComponent } from '@app/app.component';
 import { AuthenticationModule } from '@app/authentication/authentication.module';
 import { NotFoundComponent } from '@app/not-found.component';

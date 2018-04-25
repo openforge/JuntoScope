@@ -13,7 +13,7 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-import { AppState } from '@app/state/app.state';
+import { AppState } from '@app/state/app.reducer';
 import {
   ConnectionsActionTypes,
   GetConnectionsAction,

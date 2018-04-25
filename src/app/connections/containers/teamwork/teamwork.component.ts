@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { AppState } from '../../../state/app.state';
+import { AppState } from '../../../state/app.reducer';
 import { Store } from '@ngrx/store';
 
 import { AuthFacade } from '../../../authentication/state/auth.facade';

@@ -7,7 +7,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 
 import { map, tap } from 'rxjs/operators';
 
-import { AppState } from '@app/state/app.state';
+import { AppState } from '@app/state/app.reducer';
 import { RouterQuery } from '@app/state/router.reducer';
 import {
   GoAction,
