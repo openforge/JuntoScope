@@ -1,3 +1,15 @@
+
+<h1>Your connections</h1>
+<ng-container *ngIf="connections$ | async as connections">
+  <pre *ngIf="connections.length > 0; else emptyConnections">
+    {{ connections | json }}
+  </pre>
+</ng-container>
+
+<ng-template #emptyConnections>
+  <p><b>No Connections Yet, Create one!</b></p>
+</ng-template>
+
 <h1>Connect to</h1>
 <ul>
   <li *ngFor="let type of connectionTypes" (click)="connect(type)">{{ type }}</li>

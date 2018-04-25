@@ -1,19 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { AppState } from '../../../state/app.reducer';
-import { Store } from '@ngrx/store';
-
-import { AuthFacade } from '../../../authentication/state/auth.facade';
-import { AuthUiState } from '../../../authentication/state/auth.reducer';
-
-import * as ConnectionsActions from '../../state/connections.actions';
+import { ConnectionFacade } from '@app/connections/state/connection.facade';
 
 @Component({
   selector: 'app-teamwork',
@@ -21,29 +9,27 @@ import * as ConnectionsActions from '../../state/connections.actions';
   styleUrls: ['./teamwork.component.scss'],
 })
 export class TeamworkComponent implements OnInit {
-  user$ = this.authFacade.user$;
   tokenForm: FormGroup;
 
+  addError$ = this.connectionFacade.error$;
+
   constructor(
-    private authFacade: AuthFacade,
     private fb: FormBuilder,
-    private http: HttpClient,
-    private store: Store<AppState>
+    private connectionFacade: ConnectionFacade
   ) {}
 
   ngOnInit() {
     this.createForm();
   }
 
-  continue(event: UIEvent) {
-    event.preventDefault();
+  continue() {
     if (this.tokenForm.valid) {
-      this.store.dispatch(
-        new ConnectionsActions.AddConnectionAction({
-          token: this.tokenForm.get('token').value,
-          type: 'teamwork',
-        })
-      );
+      const connection = {
+        token: this.tokenForm.get('token').value,
+        type: 'teamwork',
+      };
+
+      this.connectionFacade.addConnection(connection);
     } else {
       this.tokenForm.get('token').markAsDirty();
     }

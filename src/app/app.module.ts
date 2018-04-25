@@ -19,6 +19,7 @@ import { AuthGuard } from '@app/auth.guard';
 import { UnAuthGuard } from '@app/un-auth.guard';
 import { AppFacade } from '@app/state/app.facade';
 import { ApiInterceptor } from '@app/api.interceptor';
+import { ConnectionsModule } from '@app/connections/connections.module';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -32,6 +33,7 @@ import { ApiInterceptor } from '@app/api.interceptor';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AuthenticationModule.forRoot(),
+    ConnectionsModule.forRoot(),
   ],
   providers: [
     AppFacade,

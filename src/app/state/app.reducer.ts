@@ -19,12 +19,16 @@ import {
   AuthQuery,
   AuthUiState,
 } from '@app/authentication/state/auth.reducer';
-import { ConnectionsState } from '@app/connections/state/connections.reducer';
+import {
+  ConnectionState,
+  ConnectionQuery,
+  ConnectionUiState,
+} from '@app/connections/state/connection.reducer';
 
 interface FullAppState {
   router: RouterState;
   auth: AuthState;
-  connections: ConnectionsState;
+  connection: ConnectionState;
 }
 
 export type AppState = Partial<FullAppState>;
@@ -52,5 +56,14 @@ export namespace AppQuery {
 
       return { path: ['/connections'] };
     }
+  );
+
+  export const selectUidDocPath = createSelector(
+    AuthQuery.selectUser,
+    user => user && `users/${user.uid}`
+  );
+  export const selectConnectionsClnPath = createSelector(
+    selectUidDocPath,
+    uidPath => uidPath && `${uidPath}/connections`
   );
 }
