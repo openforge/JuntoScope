@@ -93,15 +93,15 @@ export class TeamworkService {
       .catch(error => { throw new Error('Unable to get task lists from Teamwork. Please verify your token and project id and  try again later.') });
   }
 
-  async getTasks(token: string, tasklistId: string) {
+  async getTasks(token: string, baseUrl:string, tasklistId: string) {
     try {
-      const tasksData = await this.getTasksData(token, tasklistId, 1);
+      const tasksData = await this.getTasksData(token, baseUrl, tasklistId, 1);
       let tasks = tasksData.tasks;
 
       if (tasksData.pages > 1) {
         let taskPromises = [];
         for (var i = 2; i <= tasksData.pages; i++) {
-          taskPromises.push(this.getTasksData(token, tasklistId, 1));
+          taskPromises.push(this.getTasksData(token, baseUrl, tasklistId, i));
         };
         const moreTasksData = await Promise.all(taskPromises);
         moreTasksData.map(
@@ -132,110 +132,92 @@ export class TeamworkService {
     );
   }
 
-  private async getTasksData(token: string, tasklistId: string, page: number) {
-    let authData;
-    try {
-      authData = await this.validateToken(token);
-      const uri = `${authData.baseUrl}tasklists/${tasklistId}/tasks.json?page=${page}`;
-      const headers = this.getReqHeaders(token);
-      
-      const options: request.OptionsWithUri = {
-        uri,
-        method: 'GET',
-        headers,
-        json: true,
-        resolveWithFullResponse: true,
-      };
+  private async getTasksData(token: string, baseUrl:string, tasklistId: string, page: number) {
+    const uri = `${baseUrl}tasklists/${tasklistId}/tasks.json?page=${page}`;
+    const headers = this.getReqHeaders(token);
+    
+    const options: request.OptionsWithUri = {
+      uri,
+      method: 'GET',
+      headers,
+      json: true,
+      resolveWithFullResponse: true,
+    };
 
-      return request(options)
-        .then(response => {
-          const tasks = response.body['todo-items'];
-          const responseHeaders = response.headers;
+    return request(options)
+      .then(response => {
+        const tasks = response.body['todo-items'];
+        const responseHeaders = response.headers;
 
-          return {
-            page: responseHeaders['x-page'],
-            pages: responseHeaders['x-pages'],
-            tasks: tasks.map(
-              t => {
-                const estimatedHours = +t['estimated-minutes']/60;
-                return {
-                  id: t.id,
-                  name: t.content,
-                  description: t.description,
-                  parent: t.parentTaskId,
-                  estimation: estimatedHours
-                };
-              }
-            )
-          };
-        })
-        .catch(error => { throw new Error('Unable to get tasks from Teamwork. Please verify your token and task list id and try again later.') });
-    } catch (error) {
-      throw error;
-    }
+        return {
+          page: responseHeaders['x-page'],
+          pages: responseHeaders['x-pages'],
+          tasks: tasks.map(
+            t => {
+              const estimatedHours = +t['estimated-minutes']/60;
+              return {
+                id: t.id,
+                name: t.content,
+                description: t.description,
+                parent: t.parentTaskId,
+                estimation: estimatedHours
+              };
+            }
+          )
+        };
+      })
+      .catch(error => { throw new Error('Unable to get tasks from Teamwork. Please verify your token and task list id and try again later.') });
   }
 
-  async getTask(token: string, taskId: string) {
-    let authData;
-    try {
-      authData = await this.validateToken(token);
-      const uri = `${authData.baseUrl}tasks/${taskId}.json`;
-      const headers = this.getReqHeaders(token);
-      
-      const options: request.OptionsWithUri = {
-        uri,
-        method: 'GET',
-        headers,
-        json: true
-      };
+  async getTask(token: string, baseUrl:string, taskId: string) {
+    const uri = `${baseUrl}tasks/${taskId}.json`;
+    const headers = this.getReqHeaders(token);
+    
+    const options: request.OptionsWithUri = {
+      uri,
+      method: 'GET',
+      headers,
+      json: true
+    };
 
-      return request(options)
-        .then(response => {
-          const task = response['todo-item'];
-          const estimatedHours = +task['estimated-minutes']/60;
-                
-          return {
-            id: task.id,
-            name: task.content,
-            description: task.description,
-            parent: task.parentTaskId,
-            estimation: estimatedHours
-          };
-        })
-        .catch(error => { throw new Error('Unable to get task from Teamwork. Please verify your token and task id and try again later.') });
-    } catch (error) {
-      throw error;
-    }
+    return request(options)
+      .then(response => {
+        const task = response['todo-item'];
+        const estimatedHours = +task['estimated-minutes']/60;
+              
+        return {
+          id: task.id,
+          name: task.content,
+          description: task.description,
+          parent: task.parentTaskId,
+          estimation: estimatedHours
+        };
+      })
+      .catch(error => { throw new Error('Unable to get task from Teamwork. Please verify your token and task id and try again later.') });
   }
 
-  async putEstimation(token: string, taskId: string, hours: number) {
-    let authData;
-    try {
-      authData = await this.validateToken(token);
-      const uri = `${authData.baseUrl}tasks/${taskId}.json`;
-      const headers = this.getReqHeaders(token);
-      
-      const estimatedMinutes = hours*60;
-      const options: request.OptionsWithUri = {
-        uri,
-        method: 'PUT',
-        headers,
-        json: true,
-        body: {
-          'todo-item': {
-            'estimated-minutes': `${estimatedMinutes}`
-          }
+  async putEstimate(token: string, baseUrl:string, taskId: string, hours: number) {
+    const uri = `${baseUrl}tasks/${taskId}.json`;
+    const headers = this.getReqHeaders(token);
+    
+    const estimatedMinutes = hours*60;
+    const options: request.OptionsWithUri = {
+      uri,
+      method: 'PUT',
+      headers,
+      json: true,
+      body: {
+        'todo-item': {
+          'estimated-minutes': `${estimatedMinutes}`
         }
-      };
+      }
+    };
 
-      return request(options)
-        .then(response => {
-          return true;
-        })
-        .catch(error => { throw new Error('Unable to update task on Teamwork. Please verify your token and task id try again later.') });
-    } catch (error) {
-      throw error;
-    }
+    return request(options)
+      .then(response => {
+        return true;
+      })
+      .catch(error => { throw new Error('Unable to update task on Teamwork. Please verify your token and task id try again later.') });
   }
 
   private getReqHeaders(token: string) {

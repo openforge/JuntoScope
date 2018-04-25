@@ -1,13 +1,15 @@
 import * as express from 'express';
-import { firestore, teamworkService, encryptionService } from './../../../../services';
+import { firestore, teamworkService, encryptionService } from './../../../services';
 
-export async function getTaskLists(req: express.Request, res: express.Response) {
+export async function putEstimate(req: express.Request, res: express.Response) {
   const uid = res.locals.user.uid;
   const connectionId = req.params.connectionId;
-  const projectId = req.params.projectId;
-  let page = 1;
-  if (req.query.page) {
-    page = req.query.page;
+  const taskId = req.params.taskId;
+
+  const { hours } = req.body as { hours: number };
+
+  if (!hours) {
+    return res.status(400).json({ message: 'Estimated hours are required.' });
   }
 
   let connectionRef;
@@ -24,7 +26,7 @@ export async function getTaskLists(req: express.Request, res: express.Response) 
       
       let teamworkResponse;
       try {
-        teamworkResponse = await teamworkService.getTaskLists(encryptionService.decrypt(connection.token), connection.externalData.baseUrl, projectId, page);
+        teamworkResponse = await teamworkService.putEstimate(encryptionService.decrypt(connection.token), connection.externalData.baseUrl, taskId, hours);
       } catch(error) {
         return res.status(400).json({ message: error.message });
       }
