@@ -34,7 +34,7 @@ export class AuthFacade {
 
   user$ = this.store.pipe(select(AuthQuery.selectUser));
 
-  authState$ = this.store.pipe(select(AuthQuery.selectUiState));
+  uiState$ = this.store.pipe(select(AuthQuery.selectUiState));
 
   error$ = this.store.pipe(select(AuthQuery.selectError));
 
@@ -90,15 +90,13 @@ export class AuthFacade {
    */
 
   checkAuth() {
-    return this.authState$.pipe(
-      take(1),
-      map(state => state === AuthUiState.NOT_AUTHENTICATED),
-      tap(unAuth => {
-        if (unAuth) {
+    this.uiState$
+      .pipe(take(1), map(uiState => uiState === AuthUiState.UNKNOWN))
+      .subscribe(unchecked => {
+        if (unchecked) {
           this.store.dispatch(new GetUserAction());
         }
-      })
-    );
+      });
   }
 
   googleLogin() {
