@@ -1,3 +1,3 @@
 import { createSelector } from '@ngrx/store';
 
-import { AppState } from '@app/state/app.state';
+import { AppState } from '@app/state/app.reducer';

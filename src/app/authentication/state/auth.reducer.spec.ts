@@ -1,5 +1,5 @@
 import * as fromAuth from '@app/authentication/state/auth.reducer';
-import { AppState } from '@app/state/app.state';
+import { AppState } from '@app/state/app.reducer';
 import {
   GetUserAction,
   LoginAction,
