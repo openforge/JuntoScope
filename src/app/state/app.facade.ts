@@ -10,6 +10,7 @@ export class AppFacade {
    * Observable Store Queries
    */
 
+  authRedirect$ = this.store.pipe(select(AppQuery.selectAuthRedirect));
   /*
    * Module-level Effects
    */

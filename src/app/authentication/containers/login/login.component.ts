@@ -7,6 +7,7 @@ import { map, filter, withLatestFrom, take } from 'rxjs/operators';
 import { AuthFacade } from '@app/authentication/state/auth.facade';
 import { AuthUiState } from '@app/authentication/state/auth.reducer';
 import { RouterFacade } from '@app/state/router.facade';
+import { AppFacade } from '@app/state/app.facade';
 
 @TakeUntilDestroy()
 @Component({
@@ -21,13 +22,21 @@ export class LoginComponent implements OnDestroy {
 
   authError$ = this.authFacade.error$;
 
-  private loginRedirect$ = this.authFacade.uiState$.pipe(
+  private loginRedirect$ = this.appFacade.authRedirect$.pipe(
     untilDestroyed(this),
-    filter(uiState => uiState === AuthUiState.AUTHENTICATED),
-    withLatestFrom(this.routerFacade.queryParams$)
+    filter(redirectUrl => !!redirectUrl),
+    withLatestFrom(this.routerFacade.queryParams$),
+    map(([navOptions, query]) => {
+      if (query && query.returnUrl) {
+        navOptions.path = [query.returnUrl];
+      }
+
+      return navOptions;
+    })
   );
 
   constructor(
+    private appFacade: AppFacade,
     private authFacade: AuthFacade,
     private routerFacade: RouterFacade
   ) {}
@@ -37,14 +46,8 @@ export class LoginComponent implements OnDestroy {
   googleLogin() {
     this.authFacade.googleLogin();
 
-    this.loginRedirect$.pipe(take(1)).subscribe(([, params]) => {
-      let path = ['/scoping'];
-
-      if (params && params.returnUrl) {
-        path = [params.returnUrl];
-      }
-
-      this.routerFacade.navigate({ path });
+    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
+      this.routerFacade.navigate(navOptions);
     });
   }
 }
