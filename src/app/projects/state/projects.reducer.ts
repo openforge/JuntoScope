@@ -1,3 +1,4 @@
 import { createSelector } from '@ngrx/store';
 
-import { AppState } from '@app/state/app.reducer';
+import { User } from '../../../../models/user';
+import { AppState } from '../../state/app.state';
