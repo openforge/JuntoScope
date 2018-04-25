@@ -7,8 +7,6 @@ export async function addSession(req: express.Request, res: express.Response) {
   const { connectionId, projectId } = req.params;
   const accessCode = req.body.accessCode;
 
-  console.log(req.body);
-
   if (!accessCode) {
     res.status(400).json({ message: 'accessCode required' });
   }
