@@ -42,5 +42,15 @@ export const initialState: AppState = {
 };
 
 export namespace AppQuery {
+  export const selectAuthRedirect = createSelector(
+    AuthQuery.selectUiState,
+    RouterQuery.getQueryParams,
+    (authUiState, routeQueryParams): NavigationOptions => {
+      if (authUiState === AuthUiState.NOT_AUTHENTICATED) {
+        return { path: ['/login'] };
+      }
 
+      return { path: ['/connections'] };
+    }
+  );
 }

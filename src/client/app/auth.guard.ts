@@ -5,7 +5,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 
-import { map, tap, filter, switchMap, first, take } from 'rxjs/operators';
+import { map, tap, filter } from 'rxjs/operators';
 
 import { RouterFacade } from '@app/state/router.facade';
 import { AuthFacade } from '@app/authentication/state/auth.facade';
@@ -19,9 +19,8 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const isAuth$ = this.authFacade.uiState$.pipe(
+    return this.authFacade.uiState$.pipe(
       filter(uiState => uiState !== AuthUiState.LOADING),
-      take(1),
       map(uiState => uiState === AuthUiState.AUTHENTICATED),
       tap(isAuth => {
         if (!isAuth) {
@@ -32,7 +31,5 @@ export class AuthGuard implements CanActivate {
         }
       })
     );
-
-    return this.authFacade.checkAuth().pipe(switchMap(() => isAuth$));
   }
 }
