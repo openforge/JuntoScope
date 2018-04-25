@@ -18,7 +18,7 @@ import { NotFoundComponent } from '@app/not-found.component';
 import { AuthGuard } from '@app/auth.guard';
 import { UnAuthGuard } from '@app/un-auth.guard';
 
-import { TokenInterceptor } from '@app/http.interceptor';
+import { TokenInterceptor } from '@app/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
