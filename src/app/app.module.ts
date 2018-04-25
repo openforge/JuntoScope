@@ -11,14 +11,15 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { environment } from '@env/environment';
 import { AppRoutingModule } from '@app/app-routing.module';
-import { reducers, metaReducers, initialState } from '@app/state/app.state';
+import { reducers, metaReducers, initialState } from '@app/state/app.reducer';
 import { AppComponent } from '@app/app.component';
 import { AuthenticationModule } from '@app/authentication/authentication.module';
 import { NotFoundComponent } from '@app/not-found.component';
 import { AuthGuard } from '@app/auth.guard';
 import { UnAuthGuard } from '@app/un-auth.guard';
-
-import { TokenInterceptor } from './http.interceptor';
+import { AppFacade } from '@app/state/app.facade';
+import { ApiInterceptor } from '@app/api.interceptor';
+import { ConnectionsModule } from '@app/connections/connections.module';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -32,15 +33,18 @@ import { TokenInterceptor } from './http.interceptor';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AuthenticationModule.forRoot(),
+    ConnectionsModule.forRoot(),
   ],
   providers: [
+    AppFacade,
     AuthGuard,
     UnAuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    }],
+      useClass: ApiInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

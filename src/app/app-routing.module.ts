@@ -26,6 +26,16 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'connections',
+    loadChildren: '@app/connections/connections.module#ConnectionsModule',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'settings',
+    loadChildren: './settings/settings.module#SettingsModule',
+    canActivate: [AuthGuard],
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },

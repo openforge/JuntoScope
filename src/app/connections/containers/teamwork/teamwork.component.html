@@ -1,0 +1,19 @@
+<h1>Provide token</h1>
+<form [formGroup]="tokenForm" (ngSubmit)="continue()">
+  <input class="form-control" type="text" formControlName="token" name="token"/>
+  <ng-container *ngIf="tokenForm.get('token') as tokenCtrl">
+    <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
+      Token is required
+    </h6>
+  </ng-container>
+
+  <h6 *ngIf="addError$ | async as error">
+    {{ error }}
+  </h6>
+
+  <p>
+    <a href="">Where do I find this?</a>
+  </p>
+
+  <button type="submit">Allow access</button>
+</form>

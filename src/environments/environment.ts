@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  apiBaseUrl: 'http://localhost:5000/junto-scope-dev/us-central1/api',
   firebase: {
     apiKey: 'AIzaSyDpn5_jCcNAHdBq70gaPSueWaszn4xnrR8',
     authDomain: 'junto-scope-dev.firebaseapp.com',
@@ -12,6 +13,5 @@ export const environment = {
     projectId: 'junto-scope-dev',
     storageBucket: '',
     messagingSenderId: '494457695327',
-    apiBaseUrl: '/junto-scope-dev/us-central1/api'
   },
 };

@@ -13,8 +13,8 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-import { AppState } from '@app/state/app.state';
-import { AuthQuery, AuthCase } from '@app/authentication/state/auth.reducer';
+import { AppState } from '@app/state/app.reducer';
+import { AuthQuery, AuthUiState } from '@app/authentication/state/auth.reducer';
 import {
   AuthActionTypes,
   GetUserAction,
@@ -32,11 +32,11 @@ export class AuthFacade {
    * Observable Store Queries
    */
 
-  user$ = this.store.pipe(select(AuthQuery.getUser));
+  user$ = this.store.pipe(select(AuthQuery.selectUser));
 
-  authState$ = this.store.pipe(select(AuthQuery.getAuthState));
+  uiState$ = this.store.pipe(select(AuthQuery.selectUiState));
 
-  error$ = this.store.pipe(select(AuthQuery.getError));
+  error$ = this.store.pipe(select(AuthQuery.selectError));
 
   /*
    * Module-level Effects
@@ -90,15 +90,13 @@ export class AuthFacade {
    */
 
   checkAuth() {
-    return this.authState$.pipe(
-      take(1),
-      map(state => state === AuthCase.NOT_AUTHENTICATED),
-      tap(unAuth => {
-        if (unAuth) {
+    this.uiState$
+      .pipe(take(1), map(uiState => uiState === AuthUiState.UNKNOWN))
+      .subscribe(unchecked => {
+        if (unchecked) {
           this.store.dispatch(new GetUserAction());
         }
-      })
-    );
+      });
   }
 
   googleLogin() {

@@ -5,11 +5,11 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 
-import { map, tap, filter, switchMap, first, take } from 'rxjs/operators';
+import { map, tap, filter } from 'rxjs/operators';
 
 import { RouterFacade } from '@app/state/router.facade';
 import { AuthFacade } from '@app/authentication/state/auth.facade';
-import { AuthCase } from '@app/authentication/state/auth.reducer';
+import { AuthUiState } from '@app/authentication/state/auth.reducer';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,10 +19,9 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const isAuth$ = this.authFacade.authState$.pipe(
-      filter(authState => authState !== AuthCase.LOADING),
-      take(1),
-      map(authState => authState === AuthCase.AUTHENTICATED),
+    return this.authFacade.uiState$.pipe(
+      filter(uiState => uiState !== AuthUiState.LOADING),
+      map(uiState => uiState === AuthUiState.AUTHENTICATED),
       tap(isAuth => {
         if (!isAuth) {
           this.routerFacade.navigate({
@@ -32,7 +31,5 @@ export class AuthGuard implements CanActivate {
         }
       })
     );
-
-    return this.authFacade.checkAuth().pipe(switchMap(() => isAuth$));
   }
 }

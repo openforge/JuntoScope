@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Observable';
 import { cold, hot } from 'jest-marbles';
 
 import { ConfigureFn, configureTests } from '@test/jest-test.helper';
-import { AppState, reducers, initialState } from '@app/state/app.state';
+import { AppState, reducers, initialState } from '@app/state/app.reducer';
 import { RouterFacade } from '@app/state/router.facade';
 import { CustomSerializer } from '@app/state/router.reducer';
 import { Component } from '@angular/core';

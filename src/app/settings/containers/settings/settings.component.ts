@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 
 import { map, filter, withLatestFrom, take } from 'rxjs/operators';
@@ -10,16 +9,16 @@ import { RouterFacade } from '@app/state/router.facade';
 
 @TakeUntilDestroy()
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.scss'],
 })
-export class DashboardComponent implements OnDestroy {
+export class SettingsComponent implements OnDestroy {
   user$ = this.authFacade.user$;
 
   private logoutRedirect$ = this.authFacade.uiState$.pipe(
     untilDestroyed(this),
-    filter(uiState => uiState === AuthUiState.NOT_AUTHENTICATED),
+    filter(authState => authState === AuthUiState.NOT_AUTHENTICATED),
     withLatestFrom(this.routerFacade.queryParams$)
   );
 
@@ -36,5 +35,9 @@ export class DashboardComponent implements OnDestroy {
     this.logoutRedirect$.pipe(take(1)).subscribe(() => {
       this.routerFacade.navigate({ path: ['/login'] });
     });
+  }
+
+  navigateManageConnections() {
+    this.routerFacade.navigate({ path: ['/settings/manage-connections'] });
   }
 }
