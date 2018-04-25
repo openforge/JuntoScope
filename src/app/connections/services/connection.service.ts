@@ -12,7 +12,7 @@ import {
 import * as firebase from 'firebase';
 
 @Injectable()
-export class ConnectionsService {
+export class ConnectionService {
   private connectionsCollection: AngularFirestoreCollection<Connection>;
 
   constructor(private afs: AngularFirestore, private http: HttpClient) {

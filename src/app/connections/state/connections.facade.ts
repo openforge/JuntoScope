@@ -23,7 +23,7 @@ import {
   AddConnectionActionSuccess,
   AddConnectionActionFail,
 } from '@app/connections/state/connections.actions';
-import { ConnectionsService } from '@app/connections/services/connections.service';
+import { ConnectionService } from '@app/connections/services/connection.service';
 
 @Injectable()
 export class ConnectionsFacade {
@@ -31,7 +31,7 @@ export class ConnectionsFacade {
   getConnection$ = this.actions$.pipe(
     ofType<GetConnectionsAction>(ConnectionsActionTypes.GET_CONNECTIONS),
     switchMap(action =>
-      this.connectionsSvc.getConnections(action.payload).pipe(
+      this.connectionSvc.getConnections(action.payload).pipe(
         map(connections => {
           if (!connections) {
             return new ConnectionsLoadedAction([]);
@@ -49,7 +49,7 @@ export class ConnectionsFacade {
   addConnection$ = this.actions$.pipe(
     ofType<AddConnectionAction>(ConnectionsActionTypes.ADD_CONNECTION),
     switchMap(action =>
-      this.connectionsSvc
+      this.connectionSvc
         .addConnection(action.payload)
         .pipe(map(response => new AddConnectionActionSuccess(response)))
     ),
@@ -61,6 +61,6 @@ export class ConnectionsFacade {
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
-    private connectionsSvc: ConnectionsService
+    private connectionSvc: ConnectionService
   ) {}
 }
