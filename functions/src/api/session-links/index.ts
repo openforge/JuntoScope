@@ -4,4 +4,4 @@ import { decodeSessionLink } from './decode-session-link';
 
 export const sessionLinksRouter = express.Router({ mergeParams: true });
 
-sessionLinksRouter.post('/:sessionLink', decodeSessionLink);
+sessionLinksRouter.get('/:sessionLink', decodeSessionLink);

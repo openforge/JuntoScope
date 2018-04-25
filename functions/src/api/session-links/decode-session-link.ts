@@ -12,32 +12,37 @@ export async function decodeSessionLink(req: express.Request, res: express.Respo
   // If valid, add user to the session.users property & return the session data
   // otherwise, return appropriate error
 
+  const uid = res.locals.user.uid;
   const sessionLink = sessionCodeService.decode(req.params.sessionLink);
   const sessionsRef = firestore.doc('/public/sessions');
   const linksRef = sessionsRef.collection('/links');
-  const linkRef = linksRef.doc(sessionLink.toString());
-
-  const code = req.body.accessCode;
+  const linkSeshRef = linksRef.doc(sessionLink.toString());
+  const accessCode = req.query.accessCode;
 
   let seshInfo;
-  let queryString;
+  let seshUri;
   let sessionRef;
+  let encryptedCode;
 
-  linkRef.get().then((doc) => {
+  await linkSeshRef.get().then((doc) => {
     seshInfo = doc.data();
-    queryString = `/users/${seshInfo.userId}/connections/${seshInfo.connectionId}/projects/${seshInfo.projectId}/sessions/${seshInfo.sessionId}`;
-    sessionRef = firestore.doc(queryString);
-
-    sessionRef.get().then((doc) => {
-      let encryptedCode = doc.data().accessCode;
-
-      if (code == encryptionService.decrypt(encryptedCode)) {
-        console.log("Congratulations!!!");
-      }
-    })
+    seshUri = `/users/${seshInfo.userId}/connections/${seshInfo.connectionId}/projects/${seshInfo.projectId}/sessions/${seshInfo.sessionId}`;
   })
 
+  sessionRef = firestore.doc(seshUri);
+
+  await sessionRef.get().then((doc) => {
+    encryptedCode = doc.data().accessCode;
+  });
+
+  if (accessCode == encryptionService.decrypt(encryptedCode)) {
+    console.log("Congratulations!!!");
+    linkSeshRef.set({ users: {
+      [uid]: true,
+    }, }, { merge: true });
+  }
 
 
-  res.send();
+
+  res.send(seshInfo);
 }
