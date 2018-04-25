@@ -32,9 +32,9 @@ export class TeamworkService {
     let authData;
     try {
       authData = await this.validateToken(token);
-      const uri = `${authData.baseUrl}/projects.json`;
+      const uri = `${authData.baseUrl}projects.json`;
       const headers = this.getReqHeaders(token);
-
+      
       const options: request.OptionsWithUri = {
         uri,
         method: 'GET',
@@ -59,7 +59,7 @@ export class TeamworkService {
             )
           };
         })
-        .catch(error => { throw new Error('Unable to get projects from Teamwork. Please try again later.') });
+        .catch(error => { throw new Error('Unable to get projects from Teamwork. Please verify your token and  try again later.') });
     } catch (error) {
       throw error;
     }
@@ -69,9 +69,9 @@ export class TeamworkService {
     let authData;
     try {
       authData = await this.validateToken(token);
-      const uri = `${authData.baseUrl}/projects/${projectId}/tasklists.json?page=${page}`;
+      const uri = `${authData.baseUrl}projects/${projectId}/tasklists.json?page=${page}`;
       const headers = this.getReqHeaders(token);
-
+      
       const options: request.OptionsWithUri = {
         uri,
         method: 'GET',
@@ -99,7 +99,7 @@ export class TeamworkService {
             )
           };
         })
-        .catch(error => { throw new Error('Unable to get task lists from Teamwork. Please try again later.') });
+        .catch(error => { throw new Error('Unable to get task lists from Teamwork. Please verify your token and project id and  try again later.') });
     } catch (error) {
       throw error;
     }
@@ -148,9 +148,9 @@ export class TeamworkService {
     let authData;
     try {
       authData = await this.validateToken(token);
-      const uri = `${authData.baseUrl}/tasklists/${tasklistId}/tasks.json?page=${page}`;
+      const uri = `${authData.baseUrl}tasklists/${tasklistId}/tasks.json?page=${page}`;
       const headers = this.getReqHeaders(token);
-
+      
       const options: request.OptionsWithUri = {
         uri,
         method: 'GET',
@@ -169,17 +169,82 @@ export class TeamworkService {
             pages: responseHeaders['x-pages'],
             tasks: tasks.map(
               t => {
+                const estimatedHours = +t['estimated-minutes']/60;
                 return {
                   id: t.id,
                   name: t.content,
                   description: t.description,
-                  parent: t.parentTaskId
+                  parent: t.parentTaskId,
+                  estimation: estimatedHours
                 };
               }
             )
           };
         })
-        .catch(error => { throw new Error('Unable to get tasks from Teamwork. Please try again later.') });
+        .catch(error => { throw new Error('Unable to get tasks from Teamwork. Please verify your token and task list id and try again later.') });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getTask(token: string, taskId: string) {
+    let authData;
+    try {
+      authData = await this.validateToken(token);
+      const uri = `${authData.baseUrl}tasks/${taskId}.json`;
+      const headers = this.getReqHeaders(token);
+      
+      const options: request.OptionsWithUri = {
+        uri,
+        method: 'GET',
+        headers,
+        json: true
+      };
+
+      return request(options)
+        .then(response => {
+          const task = response['todo-item'];
+          const estimatedHours = +task['estimated-minutes']/60;
+                
+          return {
+            id: task.id,
+            name: task.content,
+            description: task.description,
+            parent: task.parentTaskId,
+            estimation: estimatedHours
+          };
+        })
+        .catch(error => { throw new Error('Unable to get task from Teamwork. Please verify your token and task id and try again later.') });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async putEstimation(token: string, taskId: string, hours: number) {
+    let authData;
+    try {
+      authData = await this.validateToken(token);
+      const uri = `${authData.baseUrl}tasks/${taskId}.json`;
+      const headers = this.getReqHeaders(token);
+      
+      const estimatedMinutes = hours*60;
+      const options: request.OptionsWithUri = {
+        uri,
+        method: 'PUT',
+        headers,
+        json: true,
+        body: {
+          'todo-item': {
+            'estimated-minutes': `${estimatedMinutes}`
+          }
+        }
+      };
+
+      return request(options)
+        .then(response => {
+          return true;
+        })
+        .catch(error => { throw new Error('Unable to update task on Teamwork. Please verify your token and task id try again later.') });
     } catch (error) {
       throw error;
     }
