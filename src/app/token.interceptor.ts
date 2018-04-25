@@ -5,9 +5,9 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
+
 import { Observable } from 'rxjs/Observable';
 import { switchMap, take } from 'rxjs/operators';
-import * as firebase from 'firebase';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -18,22 +18,21 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private afAuth: AngularFireAuth) {}
 
   intercept(
-    request: HttpRequest<any>,
+    req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (request.url.search(environment.firebase.apiBaseUrl) === -1) {
-      return next.handle(request);
+    if (!req.url.includes(environment.apiBaseUrl)) {
+      return next.handle(req);
     }
+
     return this.afAuth.authState.pipe(
       take(1),
-      switchMap((user: firebase.User) => user.getIdToken(true)),
+      switchMap(user => user.getIdToken()),
       switchMap(idToken => {
-        const headers = request.headers.set(
-          'Authorization',
-          `Bearer ${idToken}`
-        );
-        const req = request.clone({ headers });
-        return next.handle(req);
+        const headers = req.headers.set('Authorization', `Bearer ${idToken}`);
+        const authReq = req.clone({ headers });
+
+        return next.handle(authReq);
       })
     );
   }
