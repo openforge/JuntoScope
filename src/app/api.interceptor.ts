@@ -4,17 +4,19 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { switchMap, take } from 'rxjs/operators';
+import { _throw } from 'rxjs/observable/throw';
+import { switchMap, take, catchError } from 'rxjs/operators';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { environment } from '@env/environment';
 
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
+export class ApiInterceptor implements HttpInterceptor {
   constructor(private afAuth: AngularFireAuth) {}
 
   intercept(
@@ -32,7 +34,15 @@ export class TokenInterceptor implements HttpInterceptor {
         const headers = req.headers.set('Authorization', `Bearer ${idToken}`);
         const authReq = req.clone({ headers });
 
-        return next.handle(authReq);
+        return next.handle(authReq).pipe(
+          catchError(response => {
+            if (response instanceof HttpErrorResponse) {
+              return _throw(response.error);
+            }
+
+            return _throw(response);
+          })
+        );
       })
     );
   }
