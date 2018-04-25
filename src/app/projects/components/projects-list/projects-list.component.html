@@ -1,0 +1,21 @@
+<p>
+  Logged in as {{ user.displayName }}
+</p>
+<p>
+  Your uid is {{ user.uid }}
+</p>
+
+<!-- *ngFor="let project of projects" -->
+<section>
+    <h5>Project List</h5>
+    <ul class="list-group">
+        <li class="list-group-item">Project 1
+          <!-- Project 1 will be replaced with {{ project }} -->
+          <!-- Clicking + will toggle the task-list component -->
+          <button>+</button>
+        </li>
+        <!-- NOTE: task-list component has not yet been created, but would likely go somewhere around here
+          <div></div>
+        -->
+      </ul>
+  </section>

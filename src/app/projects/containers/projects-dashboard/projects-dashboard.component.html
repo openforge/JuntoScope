@@ -1,0 +1,12 @@
+<h2>DASHBOARD</h2>
+
+<div>
+  <h3>PROJECTS</h3>
+  <button (click)="navigateAddProject()">Add Project</button>
+  <app-projects-list [projects]="projects"></app-projects-list>
+</div>
+
+<div>
+  <h3>SCOPES</h3>
+  <app-scopes-list [scopes]="scopes"></app-scopes-list>
+</div>

@@ -36,6 +36,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'projects-dashboard',
+    loadChildren: './projects/projects.module#ProjectsModule',
+    canActivate: [AuthGuard],
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },
