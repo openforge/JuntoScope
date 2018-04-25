@@ -17,7 +17,7 @@ import { NotFoundComponent } from '@app/not-found.component';
 import { AuthGuard } from '@app/auth.guard';
 import { UnAuthGuard } from '@app/un-auth.guard';
 import { AppFacade } from '@app/state/app.facade';
-import { TokenInterceptor } from '@app/token.interceptor';
+import { ApiInterceptor } from '@app/api.interceptor';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -37,7 +37,7 @@ import { TokenInterceptor } from '@app/token.interceptor';
     UnAuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: ApiInterceptor,
       multi: true,
     },
   ],
