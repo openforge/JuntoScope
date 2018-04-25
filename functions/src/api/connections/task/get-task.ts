@@ -1,14 +1,10 @@
 import * as express from 'express';
-import { firestore, teamworkService, encryptionService } from './../../../../services';
+import { firestore, teamworkService, encryptionService } from './../../../services';
 
-export async function getTaskLists(req: express.Request, res: express.Response) {
+export async function getTask(req: express.Request, res: express.Response) {
   const uid = res.locals.user.uid;
   const connectionId = req.params.connectionId;
-  const projectId = req.params.projectId;
-  let page = 1;
-  if (req.query.page) {
-    page = req.query.page;
-  }
+  const taskId = req.params.taskId;
 
   let connectionRef;
   try {
@@ -24,7 +20,7 @@ export async function getTaskLists(req: express.Request, res: express.Response) 
       
       let teamworkResponse;
       try {
-        teamworkResponse = await teamworkService.getTaskLists(encryptionService.decrypt(connection.token), connection.externalData.baseUrl, projectId, page);
+        teamworkResponse = await teamworkService.getTask(encryptionService.decrypt(connection.token), connection.externalData.baseUrl, taskId);
       } catch(error) {
         return res.status(400).json({ message: error.message });
       }
