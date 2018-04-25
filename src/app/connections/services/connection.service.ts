@@ -1,22 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { map, tap } from 'rxjs/operators';
+import { AngularFirestore } from 'angularfire2/firestore';
+
+import { environment } from '@env/environment';
 import { Connection } from '@models/connection';
-
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from 'angularfire2/firestore';
-
-import * as firebase from 'firebase';
 
 @Injectable()
 export class ConnectionService {
-  private connectionsCollection: AngularFirestoreCollection<Connection>;
+  constructor(private afs: AngularFirestore, private http: HttpClient) {}
 
-  constructor(private afs: AngularFirestore, private http: HttpClient) {
-    this.connectionsCollection = afs.collection<Connection>('connections');
+  addConnection(connection: Connection) {
+    return this.http.post(`${environment.apiBaseUrl}/connections`, connection);
   }
 
   getConnections(user) {
@@ -30,10 +25,5 @@ export class ConnectionService {
           return Object.assign({}, { id }, data);
         });
       });
-  }
-
-  addConnection(connection: Connection) {
-    // TODO Add cloud function url
-    return this.http.post('', connection);
   }
 }
