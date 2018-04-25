@@ -13,36 +13,8 @@ export async function decodeSessionLink(req: express.Request, res: express.Respo
   // otherwise, return appropriate error
 
   const uid = res.locals.user.uid;
-  const sessionLink = sessionCodeService.decode(req.params.sessionLink);
-  const sessionsRef = firestore.doc('/public/sessions');
-  const linksRef = sessionsRef.collection('/links');
-  const linkSeshRef = linksRef.doc(sessionLink.toString());
+  const sessionLink = req.params.sessionLink;
   const accessCode = req.query.accessCode;
 
-  let seshInfo;
-  let seshUri;
-  let sessionRef;
-  let encryptedCode;
-
-  await linkSeshRef.get().then((doc) => {
-    seshInfo = doc.data();
-    seshUri = `/users/${seshInfo.userId}/connections/${seshInfo.connectionId}/projects/${seshInfo.projectId}/sessions/${seshInfo.sessionId}`;
-  })
-
-  sessionRef = firestore.doc(seshUri);
-
-  await sessionRef.get().then((doc) => {
-    encryptedCode = doc.data().accessCode;
-  });
-
-  if (accessCode == encryptionService.decrypt(encryptedCode)) {
-    console.log("Congratulations!!!");
-    linkSeshRef.set({ users: {
-      [uid]: true,
-    }, }, { merge: true });
-  }
-
-
-
-  res.send(seshInfo);
+  res.send(await sessionCodeService.validateSession(sessionLink, accessCode, uid));
 }
