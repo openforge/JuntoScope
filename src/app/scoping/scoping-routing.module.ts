@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from '@app/scoping/containers/dashboard/dashboard.component';
+import { SessionScopingComponent } from '@app/scoping/containers/session-scoping/session-scoping.component';
+import { SessionResultsComponent } from '@app/scoping/containers/session-results/session-results.component';
 
 const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'dashboard',
+    path: ':sessionId',
+    component: SessionScopingComponent,
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent,
+    path: ':sessionId/results',
+    component: SessionResultsComponent,
   },
 ];
 

@@ -10,7 +10,6 @@ import {
 import { CustomSerializer } from '@app/state/router.reducer';
 import { RouterFacade } from '@app/state/router.facade';
 import { NotFoundComponent } from '@app/not-found.component';
-import { UnAuthGuard } from '@app/un-auth.guard';
 import { AuthGuard } from '@app/auth.guard';
 
 const routes: Routes = [
@@ -18,7 +17,11 @@ const routes: Routes = [
     path: '',
     loadChildren:
       '@app/authentication/authentication.module#AuthenticationModule',
-    canActivate: [UnAuthGuard],
+  },
+  {
+    path: 'dashboard',
+    loadChildren: '@app/dashboard/dashboard.module#DashboardModule',
+    canActivate: [AuthGuard],
   },
   {
     path: 'scoping',
@@ -33,11 +36,6 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: './settings/settings.module#SettingsModule',
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'projects-dashboard',
-    loadChildren: './projects/projects.module#ProjectsModule',
     canActivate: [AuthGuard],
   },
   {
