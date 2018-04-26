@@ -29,6 +29,14 @@ export class SettingsComponent implements OnDestroy {
 
   ngOnDestroy() {}
 
+  viewConnectionDetails(connectionId) {
+    this.routerFacade.navigate({ path: [`/connections/${connectionId}`] });
+  }
+
+  addConnection() {
+    this.routerFacade.navigate({ path: ['/connections/add'] });
+  }
+
   logout() {
     this.authFacade.logout();
 
