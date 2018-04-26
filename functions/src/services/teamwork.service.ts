@@ -114,7 +114,9 @@ export class TeamworkService {
       const tasksTree = tasks.filter(t => t.parent == '');
       this.fillChildTasks(tasksTree, tasks);
       
-      return tasksTree;
+      return {
+        tasks: tasksTree
+      };
       
     } catch (error) {
       throw error;
