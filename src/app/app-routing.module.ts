@@ -19,6 +19,11 @@ const routes: Routes = [
       '@app/authentication/authentication.module#AuthenticationModule',
   },
   {
+    path: 'dashboard',
+    loadChildren: '@app/dashboard/dashboard.module#DashboardModule',
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'scoping',
     loadChildren: '@app/scoping/scoping.module#ScopingModule',
     canActivate: [AuthGuard],
