@@ -13,6 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
 import { ConnectionService } from '@app/connections/services/connection.service';
 import { CreateSessionComponent } from '@app/connections/containers/create-session/create-session.component';
+import { ConnectionDetailsComponent } from './containers/connection-details/connection-details.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { CreateSessionComponent } from '@app/connections/containers/create-sessi
     TeamworkComponent,
     InstructionsComponent,
     CreateSessionComponent,
+    ConnectionDetailsComponent,
   ],
 })
 export class ConnectionsModule {
