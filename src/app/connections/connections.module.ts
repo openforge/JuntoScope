@@ -12,6 +12,7 @@ import { connectionReducer } from '@app/connections/state/connection.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
 import { ConnectionService } from '@app/connections/services/connection.service';
+import { CreateSessionComponent } from '@app/connections/containers/create-session/create-session.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,12 @@ import { ConnectionService } from '@app/connections/services/connection.service'
     StoreModule.forFeature('connection', connectionReducer),
     EffectsModule.forFeature([ConnectionFacade]),
   ],
-  declarations: [ConnectComponent, TeamworkComponent, InstructionsComponent],
+  declarations: [
+    ConnectComponent,
+    TeamworkComponent,
+    InstructionsComponent,
+    CreateSessionComponent,
+  ],
 })
 export class ConnectionsModule {
   static forRoot(): ModuleWithProviders {
