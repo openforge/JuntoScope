@@ -30,6 +30,24 @@ export class DashboardComponent implements OnDestroy {
 
   ngOnDestroy() {}
 
+  createSession(connectionId) {
+    this.routerFacade.navigate({
+      path: [`/connections/${connectionId}/create-session`],
+    });
+  }
+
+  addConnection() {
+    this.routerFacade.navigate({ path: ['/connections/add'] });
+  }
+
+  resumeSession(sessionId) {
+    this.routerFacade.navigate({ path: [`/scoping/${sessionId}`] });
+  }
+
+  viewResults(sessionId) {
+    this.routerFacade.navigate({ path: [`/scoping/${sessionId}/results`] });
+  }
+
   logout() {
     this.authFacade.logout();
 
