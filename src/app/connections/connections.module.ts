@@ -4,8 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ConnectionsRoutingModule } from '@app/connections/connections-routing.module';
-import { ConnectComponent } from '@app/connections/containers/connect/connect.component';
-import { TeamworkComponent } from '@app/connections/containers/teamwork/teamwork.component';
+import { AddConnectionComponent } from '@app/connections/containers/add-connection/add-connection.component';
 import { InstructionsComponent } from '@app/connections/components/instructions/instructions.component';
 import { StoreModule } from '@ngrx/store';
 import { connectionReducer } from '@app/connections/state/connection.reducer';
@@ -25,8 +24,7 @@ import { ConnectionDetailsComponent } from './containers/connection-details/conn
     EffectsModule.forFeature([ConnectionFacade]),
   ],
   declarations: [
-    ConnectComponent,
-    TeamworkComponent,
+    AddConnectionComponent,
     InstructionsComponent,
     CreateSessionComponent,
     ConnectionDetailsComponent,

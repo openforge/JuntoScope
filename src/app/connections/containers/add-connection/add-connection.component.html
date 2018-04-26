@@ -1,0 +1,24 @@
+<h1>Connection Details</h1>
+<form [formGroup]="connectionForm" (ngSubmit)="continue()">
+  <label for="type1">Teamwork</label>
+  <input id="type1" type="radio" formControlName="type" name="type" value="teamwork" />
+
+  <ng-container *ngIf="connectionForm.get('type').value">
+    <input class="form-control" type="text" formControlName="token" name="token"/>
+    <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
+      <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
+        Token is required
+      </h6>
+    </ng-container>
+
+    <h6 *ngIf="addError$ | async as error">
+      {{ error }}
+    </h6>
+
+    <p>
+      <a href="">Where do I find this?</a>
+    </p>
+
+    <button type="submit">Allow access</button>
+  </ng-container>
+</form>

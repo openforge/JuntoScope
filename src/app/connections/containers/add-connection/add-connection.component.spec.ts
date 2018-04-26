@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamworkComponent } from '@app/connections/containers/teamwork/teamwork.component';
+import { AddConnectionComponent } from '@app/connections/containers/teamwork/teamwork.component';
 
-describe('TeamworkComponent', () => {
-  let component: TeamworkComponent;
-  let fixture: ComponentFixture<TeamworkComponent>;
+describe('AddConnectionComponent', () => {
+  let component: AddConnectionComponent;
+  let fixture: ComponentFixture<AddConnectionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TeamworkComponent],
+      declarations: [AddConnectionComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TeamworkComponent);
+    fixture = TestBed.createComponent(AddConnectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
