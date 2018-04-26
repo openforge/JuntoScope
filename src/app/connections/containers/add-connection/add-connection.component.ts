@@ -4,12 +4,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
 
 @Component({
-  selector: 'app-teamwork',
-  templateUrl: './teamwork.component.html',
-  styleUrls: ['./teamwork.component.scss'],
+  selector: 'app-add-connection',
+  templateUrl: './add-connection.component.html',
+  styleUrls: ['./add-connection.component.scss'],
 })
-export class TeamworkComponent implements OnInit {
-  tokenForm: FormGroup;
+export class AddConnectionComponent implements OnInit {
+  connectionForm: FormGroup;
 
   addError$ = this.connectionFacade.error$;
 
@@ -23,20 +23,18 @@ export class TeamworkComponent implements OnInit {
   }
 
   continue() {
-    if (this.tokenForm.valid) {
-      const connection = {
-        token: this.tokenForm.get('token').value,
-        type: 'teamwork',
-      };
+    if (this.connectionForm.valid) {
+      const connection = this.connectionForm.value;
 
       this.connectionFacade.addConnection(connection);
     } else {
-      this.tokenForm.get('token').markAsDirty();
+      this.connectionForm.get('token').markAsDirty();
     }
   }
 
   createForm() {
-    this.tokenForm = this.fb.group({
+    this.connectionForm = this.fb.group({
+      type: ['', Validators.required],
       token: ['', Validators.required],
     });
   }

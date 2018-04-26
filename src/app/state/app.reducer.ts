@@ -54,7 +54,7 @@ export namespace AppQuery {
         return { path: ['/login'] };
       }
 
-      return { path: ['/connections'] };
+      return { path: ['/connections/add'] };
     }
   );
 
