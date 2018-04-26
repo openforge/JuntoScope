@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterFacade } from '@app/state/router.facade';
 
 @Component({
   selector: 'app-terms',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./terms.component.scss'],
 })
 export class TermsComponent implements OnInit {
-  constructor() {}
+  constructor(public routerFacade: RouterFacade) {}
 
   ngOnInit() {}
 }
