@@ -1,0 +1,9 @@
+<div *ngIf="user$ | async as user">
+  <pre>
+    {{ user | json }}
+  </pre>
+</div>
+
+<button (click)="logout()">
+  Logout
+</button>
