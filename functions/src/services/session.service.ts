@@ -77,6 +77,38 @@ export class SessionService {
     return { accessCode, expirationDate };
   }
 
+  async refreshAccessCode(encodedSessionLink, uid) {
+    const sessionLink = this.decode(encodedSessionLink);
+    const sessionsRef = this.firestore.doc('/public/sessions');
+    const linksRef = sessionsRef.collection('/links');
+    const linkSeshRef = linksRef.doc(sessionLink.toString());
+    const date = new Date();
+    const newExpirationDate = date.getTime() + 1800000;
+
+    let seshInfo;
+    let seshUri;
+    let sessionRef;
+    let fetchedAccessCode;
+    let expirationDate;
+
+    await linkSeshRef.get().then((doc) => {
+      seshInfo = doc.data();
+      seshUri = `/users/${seshInfo.userId}/connections/${seshInfo.connectionId}/projects/${seshInfo.projectId}/sessions/${seshInfo.sessionId}`;
+    })
+
+    if (uid != seshInfo.userId) {
+      return { error: "Only moderators can refresh accessCode" }
+    } else {
+      sessionRef = this.firestore.doc(seshUri);
+
+      sessionRef.set({
+        expirationDate: newExpirationDate
+      }, { merge: true });
+
+      return { expirationDate: newExpirationDate };
+    }
+  }
+
   async validateSession(encodedSessionLink, accessCode, uid) {
     const sessionLink = this.decode(encodedSessionLink);
     const sessionsRef = this.firestore.doc('/public/sessions');
