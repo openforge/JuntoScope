@@ -1,24 +1,43 @@
-<h1>Connection Details</h1>
-<form [formGroup]="connectionForm" (ngSubmit)="continue()">
-  <label for="type1">Teamwork</label>
-  <input id="type1" type="radio" formControlName="type" name="type" value="teamwork" />
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>Add Connection</ion-title>
+</ion-toolbar>
 
-  <ng-container *ngIf="connectionForm.get('type').value">
-    <input class="form-control" type="text" formControlName="token" name="token"/>
-    <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
-      <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
-        Token is required
+<ion-content>
+  <form [formGroup]="connectionForm" (ngSubmit)="continue()">
+
+    <ion-list>
+
+      <ion-radio-group formControlName="type">
+    
+        <ion-item>
+          <ion-label>Teamwork</ion-label>
+          <ion-radio name="type" value="teamwork"></ion-radio>
+        </ion-item>
+    
+      </ion-radio-group>
+    
+    </ion-list>
+    <ng-container *ngIf="connectionForm.get('type').value">
+      <ion-input class="form-control" type="text" formControlName="token" name="token"></ion-input>
+      
+      <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
+        <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
+          Token is required
+        </h6>
+      </ng-container>
+
+      <h6 *ngIf="addError$ | async as error">
+        {{ error }}
       </h6>
+
+      <p>
+        <ion-button href="">Where do I find this?</ion-button>
+      </p>
+
+      <ion-button type="submit">Allow access</ion-button>
     </ng-container>
-
-    <h6 *ngIf="addError$ | async as error">
-      {{ error }}
-    </h6>
-
-    <p>
-      <a href="">Where do I find this?</a>
-    </p>
-
-    <button type="submit">Allow access</button>
-  </ng-container>
-</form>
+  </form>
+</ion-content>
