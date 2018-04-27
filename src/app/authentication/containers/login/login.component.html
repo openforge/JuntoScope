@@ -1,19 +1,28 @@
-<p>
-  Authenticate with your Google account!
-</p>
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>JuntoScope</ion-title>
+</ion-toolbar>
 
-<button (click)="googleLogin()">
-  Google Auth
-</button>
+<ion-content>
+  <p>
+    Authenticate with your Google account!
+  </p>
 
-<p *ngIf="loading$ | async">
-  Authenticating ...
-</p>
+  <ion-button (click)="googleLogin()">
+    Google Auth
+  </ion-button>
 
-<p *ngIf="authError$ | async as message">
-  Auth Error: {{ message }}
-</p>
+  <p *ngIf="loading$ | async">
+    Authenticating ...
+  </p>
+
+  <p *ngIf="authError$ | async as message">
+    Auth Error: {{ message }}
+  </p>
 
 
-<a routerLink="/terms">Terms</a>
-<a routerLink="/privacy">Privacy Policy</a>
+  <ion-button routerLink="/terms">Terms</ion-button>
+  <ion-button routerLink="/privacy">Privacy Policy</ion-button>
+</ion-content>

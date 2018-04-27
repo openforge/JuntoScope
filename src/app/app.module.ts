@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { IonicModule } from '@ionic/angular';
+
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -26,6 +28,7 @@ import { ConnectionsModule } from '@app/connections/connections.module';
   imports: [
     HttpClientModule,
     BrowserModule,
+    IonicModule.forRoot(),
     AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

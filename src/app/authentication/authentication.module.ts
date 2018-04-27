@@ -14,11 +14,13 @@ import { AuthFacade } from '@app/authentication/state/auth.facade';
 import { LoginComponent } from '@app/authentication/containers/login/login.component';
 import { TermsComponent } from './containers/terms/terms.component';
 import { PrivacyComponent } from './containers/privacy/privacy.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   imports: [
     CommonModule,
     AuthenticationRoutingModule,
+    IonicModule,
     StoreModule.forFeature('auth', authReducer),
     EffectsModule.forFeature([AuthFacade]),
   ],
