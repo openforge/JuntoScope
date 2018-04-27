@@ -4,4 +4,4 @@ import { addSession } from './add-session'
 
 export const sessionsRouter = express.Router({ mergeParams: true });
 
-sessionsRouter.get('/', addSession);
+sessionsRouter.post('/', addSession);

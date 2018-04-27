@@ -82,11 +82,14 @@ export class SessionService {
     const sessionsRef = this.firestore.doc('/public/sessions');
     const linksRef = sessionsRef.collection('/links');
     const linkSeshRef = linksRef.doc(sessionLink.toString());
+    const date = new Date();
+    const currentTime = date.getTime();
 
     let seshInfo;
     let seshUri;
     let sessionRef;
-    let encryptedCode;
+    let fetchedAccessCode;
+    let expirationDate;
 
     await linkSeshRef.get().then((doc) => {
       seshInfo = doc.data();
@@ -96,10 +99,11 @@ export class SessionService {
     sessionRef = this.firestore.doc(seshUri);
 
     await sessionRef.get().then((doc) => {
-      encryptedCode = doc.data().accessCode;
+      fetchedAccessCode = doc.data().accessCode;
+      expirationDate = doc.data().expirationDate;
     });
 
-    if (accessCode === encryptionService.decrypt(encryptedCode)) {
+    if (accessCode === fetchedAccessCode && expirationDate >= currentTime) {
       linkSeshRef.set({ users: {
         [uid]: true,
       }, }, { merge: true });
