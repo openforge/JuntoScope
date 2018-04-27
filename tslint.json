@@ -20,7 +20,6 @@
     "forin": true,
     "import-blacklist": [
       true,
-      "rxjs",
       "rxjs/Rx"
     ],
     "indent": [
@@ -74,7 +73,6 @@
     "object-literal-sort-keys": false,
     "prefer-const": true,
     "radix": true,
-
     "triple-equals": [
       true,
       "allow-null-check"
