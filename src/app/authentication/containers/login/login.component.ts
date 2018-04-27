@@ -9,6 +9,8 @@ import { AuthUiState } from '@app/authentication/state/auth.reducer';
 import { RouterFacade } from '@app/state/router.facade';
 import { AppFacade } from '@app/state/app.facade';
 
+import { AngularFireAuth } from 'angularfire2/auth';
+
 @TakeUntilDestroy()
 @Component({
   selector: 'app-login',
@@ -38,7 +40,8 @@ export class LoginComponent implements OnDestroy {
   constructor(
     private appFacade: AppFacade,
     private authFacade: AuthFacade,
-    private routerFacade: RouterFacade
+    private routerFacade: RouterFacade,
+    private afAuth: AngularFireAuth
   ) {}
 
   ngOnDestroy() {}

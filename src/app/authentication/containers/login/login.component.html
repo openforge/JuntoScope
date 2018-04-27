@@ -1,9 +1,17 @@
 <p>
-  Authenticate with your Google account!
+  SIGN IN
 </p>
 
+<button>
+  Facebook
+</button>
+
 <button (click)="googleLogin()">
-  Google Auth
+  Google
+</button>
+
+<button (click)="googleLogin()">
+  Twitter
 </button>
 
 <p *ngIf="loading$ | async">
