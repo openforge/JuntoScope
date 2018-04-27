@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 
 import { switchMap, catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 
 import { AppState } from '@app/state/app.reducer';
 import {
