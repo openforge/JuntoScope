@@ -1,13 +1,29 @@
-<h1>SETTINGS</h1>
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>Settings</ion-title>
+</ion-toolbar>
 
-<ul class="list-group">
-  <li class="list-group-item" (click)="navigateManageConnections()">Manage Connections</li>
-  <li class="list-group-item">FAQ</li>
-</ul>
+<ion-content>
+  <ion-button type="button" (click)="logout()">
+    Logout
+  </ion-button>
+  <ion-button type="button">
+    Delete Account
+  </ion-button>
 
-<a href="javascript:void(0)" (click)="viewConnectionDetails(123)">Connection Details</a>
-<a href="javascript:void(0)" (click)="addConnection()">addConnection</a>
+  <p>Connections</p>
 
-<button type="button" class="btn btn-danger btn-lg" (click)="logout()">
-  Logout
-</button>
+  <ion-list>
+      <ion-item (click)="viewConnectionDetails(123)">
+        Connection 123
+      </ion-item>
+      <ion-item (click)="addConnection()">
+        Add Connection
+      </ion-item>
+  </ion-list>
+
+  <p>FAQ</p>
+
+</ion-content>
