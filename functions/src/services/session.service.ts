@@ -5,7 +5,7 @@ import { encryptionService } from '.';
 const CHARS = 'vdR8gYZ43DpNJPQkBnWXGtysHfF7z2x-Mjh9bK6Tr5c_wVLCSqm';
 const BASE = CHARS.length;
 
-export class SessionCodeService {
+export class SessionService {
   sessionsRef = this.firestore.doc('/public/sessions');
   linksRef = this.sessionsRef.collection('/links');
 
@@ -65,6 +65,18 @@ export class SessionCodeService {
     return id;
   }
 
+  generateAccessCode() {
+    var accessCode = "";
+    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const date = new Date();
+    const expirationDate = date.getTime() + 1800000;
+
+    for (var i = 0; i < 5; i++)
+      accessCode += letters.charAt(Math.floor(Math.random() * letters.length));
+
+    return { accessCode, expirationDate };
+  }
+
   async validateSession(encodedSessionLink, accessCode, uid) {
     const sessionLink = this.decode(encodedSessionLink);
     const sessionsRef = this.firestore.doc('/public/sessions');
@@ -87,7 +99,7 @@ export class SessionCodeService {
       encryptedCode = doc.data().accessCode;
     });
 
-    if (accessCode == encryptionService.decrypt(encryptedCode)) {
+    if (accessCode === encryptionService.decrypt(encryptedCode)) {
       linkSeshRef.set({ users: {
         [uid]: true,
       }, }, { merge: true });
