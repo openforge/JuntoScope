@@ -12,7 +12,7 @@ export async function addSession(req: express.Request, res: express.Response) {
   ).add({
     ...req.body,
     accessCode: accessCode,
-    expiresOn: expirationDate,
+    expirationDate: expirationDate,
   });
 
   let sessionCode = await sessionService.generateCode(uid, connectionId, projectId, docRef.id);
