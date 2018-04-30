@@ -30,10 +30,18 @@ export class DashboardComponent implements OnDestroy {
 
   ngOnDestroy() {}
 
+  handleJoin(sessionCode: string) {
+    console.log('Dashboard handling', sessionCode);
+  }
+
   createSession(connectionId) {
     this.routerFacade.navigate({
       path: [`/connections/${connectionId}/create-session`],
     });
+  }
+
+  goSettings() {
+    this.routerFacade.navigate({ path: ['/settings'] });
   }
 
   addConnection() {
