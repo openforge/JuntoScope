@@ -10,6 +10,7 @@ import { ConnectionFacade } from '@app/connections/state/connection.facade';
 })
 export class AddConnectionComponent implements OnInit {
   connectionForm: FormGroup;
+  type: string;
 
   addError$ = this.connectionFacade.error$;
 
@@ -22,9 +23,16 @@ export class AddConnectionComponent implements OnInit {
     this.createForm();
   }
 
+  setType(type: string) {
+    this.type = type;
+  }
+
   continue() {
     if (this.connectionForm.valid) {
-      const connection = this.connectionForm.value;
+      const connection = {
+        token: this.connectionForm.get('token').value,
+        type: this.type,
+      };
 
       this.connectionFacade.addConnection(connection);
     } else {
@@ -34,7 +42,6 @@ export class AddConnectionComponent implements OnInit {
 
   createForm() {
     this.connectionForm = this.fb.group({
-      type: ['', Validators.required],
       token: ['', Validators.required],
     });
   }
