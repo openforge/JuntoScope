@@ -1,3 +1,20 @@
-<p>
-  connection-details works!
-</p>
+<ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Connection Detail</ion-title>
+  </ion-toolbar>
+  
+  <ion-content>
+  
+    <ng-container *ngIf="connection">
+      <p>{{connection.externalData.company}} {{connection.type}}</p>
+
+      <p>Account: {{connection.type}}</p>
+      <p>Name: {{connection.externalData.name}}</p>
+      <p>Company: {{connection.externalData.company}}</p>
+
+      <ion-button>Delete</ion-button>
+    </ng-container>
+
+  </ion-content>
