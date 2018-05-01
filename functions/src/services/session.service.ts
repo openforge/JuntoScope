@@ -114,8 +114,6 @@ export class SessionService {
     const sessionsRef = this.firestore.doc('/public/sessions');
     const linksRef = sessionsRef.collection('/links');
     const linkSeshRef = linksRef.doc(sessionLink.toString());
-    const date = new Date();
-    const currentTime = date.getTime();
 
     let seshInfo;
     let seshUri;
@@ -135,9 +133,9 @@ export class SessionService {
       expirationDate = doc.data().expirationDate;
     });
 
-    if (accessCode === fetchedAccessCode && expirationDate >= currentTime) {
+    if (accessCode === fetchedAccessCode && expirationDate >= Date.now()) {
       linkSeshRef.set({ users: {
-        [uid]: true,
+        [uid]: Date.now(),
       }, }, { merge: true });
 
       return seshInfo;
