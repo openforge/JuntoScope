@@ -123,7 +123,7 @@ export class SessionService {
 
     await linkSeshRef.get().then((doc) => {
       seshInfo = doc.data();
-      seshUri = `/users/${seshInfo.userId}/connections/${seshInfo.connectionId}/projects/${seshInfo.projectId}/sessions/${seshInfo.sessionId}`;
+      seshUri = `/users/${seshInfo.userId}/connections/${seshInfo.connectionId}/sessions/${seshInfo.sessionId}`;
     })
 
     sessionRef = this.firestore.doc(seshUri);

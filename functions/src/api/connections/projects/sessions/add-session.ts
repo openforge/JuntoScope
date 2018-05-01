@@ -8,7 +8,7 @@ export async function addSession(req: express.Request, res: express.Response) {
   const { accessCode, expirationDate } = sessionService.generateAccessCode();
 
   const docRef = await firestore.collection(
-    `/users/${uid}/connections/${connectionId}/projects/${projectId}/sessions`
+    `/users/${uid}/connections/${connectionId}/sessions`
   ).add({
     ...req.body,
     accessCode: accessCode,
