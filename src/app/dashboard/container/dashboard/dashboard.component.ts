@@ -2,11 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 
-import { map, filter, withLatestFrom, take } from 'rxjs/operators';
+import { map, filter, withLatestFrom, take, tap } from 'rxjs/operators';
 
 import { AuthFacade } from '@app/authentication/state/auth.facade';
 import { AuthUiState } from '@app/authentication/state/auth.reducer';
 import { RouterFacade } from '@app/state/router.facade';
+import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
 
 @TakeUntilDestroy()
 @Component({
@@ -14,8 +15,10 @@ import { RouterFacade } from '@app/state/router.facade';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnDestroy {
-  user$ = this.authFacade.user$;
+export class DashboardComponent implements OnInit, OnDestroy {
+  user$ = this.authFacade.user$.pipe(tap(user => console.log(user)));
+
+  historyItems$ = this.dashboardFacade.historyItems$;
 
   private logoutRedirect$ = this.authFacade.uiState$.pipe(
     untilDestroyed(this),
@@ -25,10 +28,23 @@ export class DashboardComponent implements OnDestroy {
 
   constructor(
     private authFacade: AuthFacade,
-    private routerFacade: RouterFacade
+    private routerFacade: RouterFacade,
+    private dashboardFacade: DashboardFacade
   ) {}
 
+  ngOnInit() {
+    this.dashboardFacade.getHistory();
+  }
+
   ngOnDestroy() {}
+
+  refresh() {
+    this.dashboardFacade.getHistory();
+  }
+
+  loadMore() {
+    this.dashboardFacade.getMoreHistory();
+  }
 
   handleJoin(sessionCode: string) {
     console.log('Dashboard handling', sessionCode);
