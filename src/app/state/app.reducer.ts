@@ -46,6 +46,11 @@ export const initialState: AppState = {
 };
 
 export namespace AppQuery {
+  export const selectUid = createSelector(
+    AuthQuery.selectUser,
+    user => user.uid
+  );
+
   export const selectAuthRedirect = createSelector(
     AuthQuery.selectUiState,
     RouterQuery.getQueryParams,

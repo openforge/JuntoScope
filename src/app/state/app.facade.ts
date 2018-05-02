@@ -13,6 +13,11 @@ export class AppFacade {
 
   authRedirect$ = this.store.pipe(select(AppQuery.selectAuthRedirect));
 
+  uid$ = this.store.pipe(
+    select(AppQuery.selectUid),
+    filter(exists => !!exists)
+  );
+
   uidDocPath$ = this.store.pipe(
     select(AppQuery.selectUidDocPath),
     filter(exists => !!exists)

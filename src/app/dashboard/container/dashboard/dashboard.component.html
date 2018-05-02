@@ -15,6 +15,11 @@
     Reuse list of connections cmp
   </div>
 
+  <app-session-history [historyItems]="historyItems$ | async"></app-session-history>
+
+  <ion-button (click)="loadMore()">Moar</ion-button>
+  <ion-button (click)="refresh()">rfrsh</ion-button>
+
 
   <!-- <div *ngIf="user$ | async as user">
     <pre>
