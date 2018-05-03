@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { ApiInterceptor } from '@app/shared/api.interceptor';
+import { PopupService } from '@app/shared/popup.service';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule, IonicModule],
@@ -20,6 +21,7 @@ export class SharedModule {
           useClass: ApiInterceptor,
           multi: true,
         },
+        PopupService
       ],
     };
   }
