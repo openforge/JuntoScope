@@ -7,11 +7,12 @@ import {
 } from 'angularfire2/firestore';
 
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
-import { tap, share, takeUntil, switchMap } from 'rxjs/operators';
+import { tap, share, takeUntil, switchMap, map } from 'rxjs/operators';
 
 import { AppFacade } from '@app/state/app.facade';
 import { ScopingSession } from '@models/scoping-session';
 import { HistoryItem } from '@models/history-item';
+import { Task } from '@models/task';
 
 @Injectable({
   providedIn: 'root',
@@ -64,6 +65,30 @@ export class HistoryService {
     return this.afs
       .doc<ScopingSession>(
         `users/${userId}/connections/${connectionId}/sessions/${sessionId}`
+      )
+      .valueChanges()
+      .pipe(
+        switchMap(session =>
+          this.getSessionTask(
+            { userId, connectionId, sessionId },
+            session.currentTaskId
+          ).pipe(
+            map(task => {
+              session.tasks = { [session.currentTaskId]: task };
+              return session;
+            })
+          )
+        )
+      );
+  }
+
+  private getSessionTask(
+    { userId, connectionId, sessionId }: Partial<HistoryItem>,
+    taskId: string
+  ) {
+    return this.afs
+      .doc<Task>(
+        `users/${userId}/connections/${connectionId}/sessions/${sessionId}/tasks/${taskId}`
       )
       .valueChanges();
   }
