@@ -15,18 +15,13 @@
     Reuse list of connections cmp
   </div>
 
-  <app-session-history-list [items]="historyItems$ | async"></app-session-history-list>
+  <app-session-history-list [uid]="uid$ | async" [items]="historyItems$ | async" (options)="handleOptionClick($event)" (detail)="handleDetailClick($event)"></app-session-history-list>
 
   <ion-button (click)="loadMore()">Moar</ion-button>
   <ion-button (click)="refresh()">rfrsh</ion-button>
 
 
-  <!-- <div *ngIf="user$ | async as user">
-    <pre>
-      {{ user | json }}
-    </pre>
-  </div>
-
+  <!--
   <a href="javascript:void(0)" (click)="createSession(123)">Start New Session</a>
   <a href="javascript:void(0)" (click)="addConnection()">addConnection</a>
   <a href="javascript:void(0)" (click)="resumeSession(123)">Resume Scoping Session</a>
