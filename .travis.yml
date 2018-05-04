@@ -4,10 +4,8 @@ node_js:
 branches:
   only:
   - develop
-  - master
 script:
 - npm run build
-after_success:
 - npm run firebase:deploy
 notifications:
   slack:
