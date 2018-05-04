@@ -11,5 +11,7 @@
         View completed session results or continue scoping
       </ion-label>
     </ion-item-divider>
+
+    <app-session-history-item *ngFor="let item of items" [item]="item" [uid]="uid" [time]="item.users[uid]" (options)="handleOptionClick($event, item)" (detail)="handleDetailClick($event, item)"></app-session-history-item>
   </ion-item-group>
 </ion-list>

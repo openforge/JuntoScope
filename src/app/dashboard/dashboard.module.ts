@@ -8,6 +8,7 @@ import { DashboardRoutingModule } from '@app/dashboard/dashboard-routing.module'
 import { DashboardComponent } from '@app/dashboard/container/dashboard/dashboard.component';
 import { JoinSessionComponent } from '@app/dashboard/components/join-session/join-session.component';
 import { SessionHistoryListComponent } from '@app/dashboard/components/session-history-list/session-history-list.component';
+import { SessionHistoryItemComponent } from './components/session-history-item/session-history-item.component';
 import { HistoryService } from '@app/dashboard/services/history.service';
 import { dashboardReducer } from '@app/dashboard/state/dashboard.reducer';
 import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
@@ -23,6 +24,7 @@ import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
     DashboardComponent,
     JoinSessionComponent,
     SessionHistoryListComponent,
+    SessionHistoryItemComponent,
   ],
 })
 export class DashboardModule {
