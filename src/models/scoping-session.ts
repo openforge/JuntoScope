@@ -7,3 +7,8 @@ export interface ScopingSession {
   numScopedTasks: number;
   tasks: { [taskId: string]: Task };
 }
+
+export enum SessionStatus {
+  COMPLETE = 'Session Completed',
+  INCOMPLETE = 'Session Incomplete',
+}
