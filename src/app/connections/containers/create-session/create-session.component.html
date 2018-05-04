@@ -1,3 +1,130 @@
-<p>
-  create-session works!
-</p>
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>Create Scoping Session</ion-title>
+</ion-toolbar>
+
+<ion-content>
+  <form [formGroup]="sessionForm" (ngSubmit)="continue()">
+
+    <ng-container *ngIf="step == 0">
+      <p>
+        Select Project
+      </p>
+      <p>
+        Connection Name
+      </p>
+      <ion-list>
+
+        <ion-radio-group formControlName="project">
+
+          <ion-item>
+            <ion-label>Project 1</ion-label>
+            <ion-radio name="project" value="111"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Project 2</ion-label>
+            <ion-radio name="project" value="222"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Project 3</ion-label>
+            <ion-radio name="project" value="333"></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+
+      </ion-list>
+
+      <ng-container *ngIf="sessionForm.get('project') as projectCtrl">
+        <h6 *ngIf="projectCtrl.dirty && projectCtrl.hasError('required')" class="error input-error">
+          Project is required
+        </h6>
+      </ng-container>
+
+      <ion-button (click)="goBack()">Back</ion-button>
+      <ion-button (click)="goToTaskLists()">Next</ion-button>
+    </ng-container>
+
+    <ng-container *ngIf="step == 1">
+      <p>
+        Select Task List
+      </p>
+      <p>
+        Connection Name
+      </p>
+      <p>
+        Project Name
+      </p>
+      <ion-list>
+
+        <ion-radio-group formControlName="tasklist">
+
+          <ion-item>
+            <ion-label>Task List 1</ion-label>
+            <ion-radio name="tasklist" value="111"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Task List 2</ion-label>
+            <ion-radio name="tasklist" value="222"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Task List 3</ion-label>
+            <ion-radio name="tasklist" value="333"></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+
+      </ion-list>
+
+      <ng-container *ngIf="sessionForm.get('tasklist') as tasklistCtrl">
+        <h6 *ngIf="tasklistCtrl.dirty && tasklistCtrl.hasError('required')" class="error input-error">
+          Task List is required
+        </h6>
+      </ng-container>
+
+      <ion-button (click)="goBack()">Back</ion-button>
+      <ion-button (click)="goToScopeLink()">Create Session</ion-button>
+    </ng-container>
+
+    <ng-container *ngIf="step == 2">
+      <p>
+        Share Scope Link
+      </p>
+      <p>
+        Connection Name
+      </p>
+      <p>
+        Project Name
+      </p>
+      <p>
+        Task List Name
+      </p>
+
+      <p>
+        Date/Time
+      </p>
+      <p>
+        Session URL:
+      </p>
+      <p>
+        http://scopeLink.url
+      </p>
+      <ion-button>Copy</ion-button>
+
+      <p>
+        Access Code
+      </p>
+      <p>
+        BNJ2323JH
+      </p>
+      <ion-button>Copy</ion-button>
+      <ion-button (click)="goToScoping(123)">Start Scoping</ion-button>
+
+    </ng-container>
+  </form>
+</ion-content>

@@ -11,7 +11,7 @@ import {
   exhaustMap,
   take,
 } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 
 import { AppState } from '@app/state/app.reducer';
 import { AuthQuery, AuthUiState } from '@app/authentication/state/auth.reducer';

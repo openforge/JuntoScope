@@ -2,11 +2,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 
-import { map, filter, withLatestFrom, take } from 'rxjs/operators';
+import { map, filter, withLatestFrom, take, tap } from 'rxjs/operators';
 
-import { AuthFacade } from '@app/authentication/state/auth.facade';
-import { AuthUiState } from '@app/authentication/state/auth.reducer';
+import { AppFacade } from '@app/state/app.facade';
 import { RouterFacade } from '@app/state/router.facade';
+import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
+import { SessionUserType } from '@models/user';
+import { SessionStatus } from '@models/scoping-session';
+import {
+  HistoryItemOptionEvent,
+  HistoryItemDetailEvent,
+} from '@models/history-item';
 
 @TakeUntilDestroy()
 @Component({
@@ -14,26 +20,50 @@ import { RouterFacade } from '@app/state/router.facade';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnDestroy {
-  user$ = this.authFacade.user$;
-
-  private logoutRedirect$ = this.authFacade.uiState$.pipe(
-    untilDestroyed(this),
-    filter(uiState => uiState === AuthUiState.NOT_AUTHENTICATED),
-    withLatestFrom(this.routerFacade.queryParams$)
-  );
+export class DashboardComponent implements OnInit, OnDestroy {
+  uid$ = this.appFacade.uid$;
+  historyItems$ = this.dashboardFacade.historyItems$;
 
   constructor(
-    private authFacade: AuthFacade,
-    private routerFacade: RouterFacade
+    private appFacade: AppFacade,
+    private routerFacade: RouterFacade,
+    private dashboardFacade: DashboardFacade
   ) {}
 
+  ngOnInit() {
+    this.dashboardFacade.getHistory();
+  }
+
   ngOnDestroy() {}
+
+  handleOptionClick(event: HistoryItemOptionEvent) {
+    console.log('options for User Type', event);
+  }
+
+  handleDetailClick(event: HistoryItemDetailEvent) {
+    console.log('details for session status', event);
+  }
+
+  refresh() {
+    this.dashboardFacade.getHistory();
+  }
+
+  loadMore() {
+    this.dashboardFacade.getMoreHistory();
+  }
+
+  handleJoin(sessionCode: string) {
+    console.log('Dashboard handling', sessionCode);
+  }
 
   createSession(connectionId) {
     this.routerFacade.navigate({
       path: [`/connections/${connectionId}/create-session`],
     });
+  }
+
+  goSettings() {
+    this.routerFacade.navigate({ path: ['/settings'] });
   }
 
   addConnection() {
@@ -46,13 +76,5 @@ export class DashboardComponent implements OnDestroy {
 
   viewResults(sessionId) {
     this.routerFacade.navigate({ path: [`/scoping/${sessionId}/results`] });
-  }
-
-  logout() {
-    this.authFacade.logout();
-
-    this.logoutRedirect$.pipe(take(1)).subscribe(() => {
-      this.routerFacade.navigate({ path: ['/login'] });
-    });
   }
 }

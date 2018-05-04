@@ -1,7 +1,61 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write;
+
+    match /public/sessions/links/{link} {
+      // Allow authorized users to fetch session links
+      allow read: if request.auth.uid in resource.data.users;
+
+      // Writing happens through the Cloud API when creating sessions
+      // for Access Code & Session URL generation
+      // allow write: if never --;
     }
+
+    match /users/{userId} {
+      // Allow users to read and write to their own profile
+      allow read: if request.auth.uid == userId;
+
+      // TODO: Should any user profile data be written from the client side?
+      // allow write: if ??;
+
+      match /connections/{connectionId} {
+        // Allow users to read their own connections
+        allow read: if request.auth.uid == userId;
+
+        // Writing happens through the Cloud API for token validation purposes
+        // allow write: if never --;
+
+        match /sessions/{sessionId} {
+          // Helper function to access session in child rules
+          function getSessionData() {
+            return get(/databases/$(database)/documents/users/$(userId)/connections/$(connectionId)/sessions/$(sessionId)).data;
+          }
+
+          // Allow session participants to view session data
+          allow read: if request.auth.uid in resource.data.users;
+
+          // TODO: Should any session data be written from the client side?
+          // allow write: if ??
+
+          match /tasks/{taskId} {
+            // Helper function to validate vote hours
+            function isVoteValid() {
+              return request.resource.data.votes[request.auth.uid] > 0
+                && !math.isInfinite(request.resource.data.votes[request.auth.uid]);
+            }
+
+            // Allow session participants to view session tasks
+            allow read: if request.auth.uid in getSessionData().users;
+
+            // Allow users to register ONLY their OWN votes on tasks
+            allow update: if request.writeFields.size() == 1 && isVoteValid();
+          }
+
+        }
+
+      }
+
+    }
+
   }
+
 }

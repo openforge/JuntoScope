@@ -7,8 +7,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import { _throw } from 'rxjs/observable/throw';
+import { Observable, throwError } from 'rxjs';
 import { switchMap, take, catchError } from 'rxjs/operators';
 
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -37,10 +36,10 @@ export class ApiInterceptor implements HttpInterceptor {
         return next.handle(authReq).pipe(
           catchError(response => {
             if (response instanceof HttpErrorResponse) {
-              return _throw(response.error);
+              return throwError(response.error);
             }
 
-            return _throw(response);
+            return throwError(response);
           })
         );
       })
