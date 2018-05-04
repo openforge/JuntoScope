@@ -9,15 +9,12 @@
   <ion-button type="button" (click)="logout()">
     Logout
   </ion-button>
-  <ion-button type="button">
-    Delete Account
-  </ion-button>
 
   <p>Connections</p>
 
   <ion-list>
-      <ion-item (click)="viewConnectionDetails(123)">
-        Connection 123
+      <ion-item *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
+        {{connection.externalData.company}} {{connection.type}}
       </ion-item>
       <ion-item (click)="addConnection()">
         Add Connection
