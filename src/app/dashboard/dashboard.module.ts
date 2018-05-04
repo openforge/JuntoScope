@@ -7,7 +7,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { DashboardRoutingModule } from '@app/dashboard/dashboard-routing.module';
 import { DashboardComponent } from '@app/dashboard/container/dashboard/dashboard.component';
 import { JoinSessionComponent } from '@app/dashboard/components/join-session/join-session.component';
-import { SessionHistoryComponent } from '@app/dashboard/components/session-history/session-history.component';
+import { SessionHistoryListComponent } from '@app/dashboard/components/session-history-list/session-history-list.component';
 import { HistoryService } from '@app/dashboard/services/history.service';
 import { dashboardReducer } from '@app/dashboard/state/dashboard.reducer';
 import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
@@ -22,7 +22,7 @@ import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
   declarations: [
     DashboardComponent,
     JoinSessionComponent,
-    SessionHistoryComponent,
+    SessionHistoryListComponent,
   ],
 })
 export class DashboardModule {

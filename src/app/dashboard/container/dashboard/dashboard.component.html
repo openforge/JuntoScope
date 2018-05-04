@@ -15,7 +15,7 @@
     Reuse list of connections cmp
   </div>
 
-  <app-session-history [historyItems]="historyItems$ | async"></app-session-history>
+  <app-session-history-list [items]="historyItems$ | async"></app-session-history-list>
 
   <ion-button (click)="loadMore()">Moar</ion-button>
   <ion-button (click)="refresh()">rfrsh</ion-button>
