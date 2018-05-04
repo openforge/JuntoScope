@@ -1,13 +1,15 @@
 language: node_js
 node_js:
-  - "8.11"
-
+- '8.11'
 branches:
   only:
-    - master
-
+  - develop
+  - master
 script:
-  - npm run build
-
+- npm run build
 after_success:
-  - npm run firebase:deploy
+- npm run firebase:deploy
+notifications:
+  slack:
+    rooms:
+      secure: lxH1zn6wXA4+WuqDRUFTePBCBIzkFAS99EgPYeaJKJ6ignwwHoGqn3ciKAbDD5VqmQU+N8I8f2aAO/Ti3zMcL9Gh0zJaVYK3bXBAmUk+/OKOypWNP/oyOh7FJFmaaLcmJawPRvnJ8iGK5VyVB4o/n8tFg4AqxTphy0eDeDLTIAFoI3v5r3zViAbKCeiw1M5JGUhaCzj79icPM1zcoNoP8CuLzGRdvEqQuIXxopta1tmggMKcjpKyGqZgsVdCNUVfxpOE481ZO6GUfw33cIgJDDyvCo17ijuUB06JTqFpEQ566VadKTz22VdzhvqQIE6A5BnyNNFMT4mMISN22pikOnqHN6UWPIW0p1loZOKRT7bZ81n2889LVRWlQxETO8ooAkvBRjv0Uk3mutMGyAeLCZK3tgyF3zMNWt5pXRQjCNcz10emzLT1NYA+jVnrEPGM6jLgUu33UicEfXD78/PpIh3M70JaP+qFjhB3VSSD+jvdquaXqlWVBnzqzvZDxEbXnbDqYqFQOkPo9tHUw/xzIdYVa30daxVmF+pzqHGCyolILByjrj+r/oaPUQLuI/QQxaUnYLNh5y3EIaXYucUXPm4x/gAH8cl9tzqF5kBCwXYO/2m2z93afLI26RkDnQqEYfyZRBCUKc7zC86ZjRwVAKjMN5WWf8GByoyHpTCL9bg=
