@@ -3,8 +3,16 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 
-import { switchMap, catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import {
+  switchMap,
+  catchError,
+  map,
+  mergeMap,
+  tap,
+  take,
+  filter,
+} from 'rxjs/operators';
+import { of, combineLatest, empty } from 'rxjs';
 
 import { AppState } from '@app/state/app.reducer';
 import {
@@ -20,7 +28,10 @@ import {
 } from '@app/connections/state/connection.actions';
 import { ConnectionService } from '@app/connections/services/connection.service';
 import { Connection } from '@models/connection';
-import { ConnectionQuery } from '@app/connections/state/connection.reducer';
+import {
+  ConnectionQuery,
+  ConnectionUiState,
+} from '@app/connections/state/connection.reducer';
 import { NoopAction } from '@app/state/app.actions';
 import { PopupService } from '@app/shared/popup.service';
 import { RouterFacade } from '@app/state/router.facade';
@@ -36,6 +47,10 @@ export class ConnectionFacade {
   uiState$ = this.store.pipe(select(ConnectionQuery.selectUiState));
 
   error$ = this.store.pipe(select(ConnectionQuery.selectError));
+
+  selectedConnection$ = this.store.pipe(
+    select(ConnectionQuery.selectSelectedConnection)
+  );
 
   /*
    * Module-level Effects
@@ -94,12 +109,12 @@ export class ConnectionFacade {
     ofType<SelectedConnectionAction>(ConnectionActionTypes.SELECTED),
     tap(res => console.log(res)),
     switchMap(action =>
-      this.connectionSvc.getProjects(action.payload.connection).pipe(
+      this.connectionSvc.getProjects(action.payload.connectionId).pipe(
         map(
           res =>
             new ModifiedConnectionAction({
               update: {
-                id: action.payload.connection.id,
+                id: action.payload.connectionId,
                 changes: { projects: res.projects },
               },
             })
@@ -130,8 +145,25 @@ export class ConnectionFacade {
     this.store.dispatch(new AddConnectionAction({ connection }));
   }
 
-  selectConnection(connection: Connection) {
-    console.log('selectConnection');
-    this.store.dispatch(new SelectedConnectionAction({ connection }));
+  selectConnection(connectionId: string) {
+    this.uiState$
+      .pipe(
+        take(1),
+        switchMap(currentState => {
+          if (currentState === ConnectionUiState.LOADED) {
+            return of(currentState);
+          } else if (currentState !== ConnectionUiState.LOADING) {
+            this.getConnections();
+
+            return this.uiState$.pipe(
+              filter(state => state === ConnectionUiState.LOADED),
+              take(1)
+            );
+          }
+        })
+      )
+      .subscribe(() => {
+        this.store.dispatch(new SelectedConnectionAction({ connectionId }));
+      });
   }
 }

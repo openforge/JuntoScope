@@ -6,5 +6,5 @@
 </ion-toolbar>
 
 <ion-content>
-  <app-project-list [projects]='projects'></app-project-list>
+  <app-project-list [projects]="projects$ | async"></app-project-list>
 </ion-content>

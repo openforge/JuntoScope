@@ -22,9 +22,9 @@ export class ConnectionService {
     return this.http.post(`${environment.apiBaseUrl}/connections`, connection);
   }
 
-  getProjects(connection: Connection) {
+  getProjects(connectionId: string) {
     return this.http.get<{ projects: Project[] }>(
-      `${environment.apiBaseUrl}/connections/${connection.id}/projects/`
+      `${environment.apiBaseUrl}/connections/${connectionId}/projects/`
     );
   }
 

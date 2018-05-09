@@ -37,7 +37,7 @@ export function connectionReducer(
 ): ConnectionState {
   switch (action.type) {
     case ConnectionActionTypes.SELECTED: {
-      return { ...state, selectedId: action.payload.connection.id };
+      return { ...state, selectedId: action.payload.connectionId };
     }
 
     case ConnectionActionTypes.QUERY_ALL: {
@@ -91,4 +91,13 @@ export namespace ConnectionQuery {
     state => state.uiState
   );
   export const selectError = createSelector(selectSlice, state => state.error);
+  export const selectSelectedId = createSelector(
+    selectSlice,
+    state => state.selectedId
+  );
+  export const selectSelectedConnection = createSelector(
+    selectSelectedId,
+    selectEntities,
+    (id, entities) => entities[id]
+  );
 }
