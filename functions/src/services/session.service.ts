@@ -1,45 +1,145 @@
-import { Firestore } from "@google-cloud/firestore";
+import { Firestore } from '@google-cloud/firestore';
 import { encryptionService } from '.';
 
 // Shuffled alphanumerics w/o vowels and ambiguous I, l, 1, 0, O, o.
 const CHARS = 'vdR8gYZ43DpNJPQkBnWXGtysHfF7z2x-Mjh9bK6Tr5c_wVLCSqm';
 const BASE = CHARS.length;
 
+const ACCESS_CODE_DURATION = 30 * 60000; // 30 minutes (in milliseconds)
+
 export class SessionService {
-  sessionsRef = this.firestore.doc('/public/sessions');
-  linksRef = this.sessionsRef.collection('/links');
+  publicDataDocRef = this.firestore.doc('/public/data');
+  publicSessionsRef = this.publicDataDocRef.collection('/sessions');
 
   constructor(private firestore: Firestore) {}
 
-  async generateCode(userId, connectionId, projectId, sessionId) {
-    const newId = await this.firestore.runTransaction(t => {
-      return t.get(this.sessionsRef)
-        .then(doc => {
-          let fn, count;
-          let increment = Math.floor(Math.random() * 128) + 32;
+  async createSession(ownerId, connectionId, projectId, sessionData) {
+    const { accessCode, expirationDate } = this.generateAccessCode();
 
-          if (!doc.exists) {
-            fn = 'create';
-            count = 1000000 + increment;
-          } else {
-            fn = 'update';
-            count = doc.data().count + increment;
-          }
+    const sessionDocRef = this.firestore
+      .collection(`/users/${ownerId}/connections/${connectionId}/sessions`)
+      .doc();
 
-          t[fn](this.sessionsRef, { count })
+    const sessionLink = await this.firestore.runTransaction(
+      async transaction => {
+        const sessionCode = await transaction
+          .get(this.publicDataDocRef)
+          .then(publicSessionsDoc => {
+            // TODO: Use and update a distrbuted counter to minimize any potential impact on performance.
+            // See https://firebase.google.com/docs/firestore/solutions/counters
+            let fn: 'create' | 'update', uniqueNum;
+            const increment = Math.floor(Math.random() * 128) + 32;
 
-          return Promise.resolve(count);
-        });
+            if (!publicSessionsDoc.exists) {
+              fn = 'create';
+              uniqueNum = 1000000 + increment;
+            } else {
+              fn = 'update';
+              uniqueNum = publicSessionsDoc.data().uniqueNum + increment;
+            }
+
+            transaction[fn](this.publicDataDocRef, { uniqueNum });
+
+            return Promise.resolve(this.encode(uniqueNum));
+          });
+
+        await transaction
+          .set(sessionDocRef, {
+            ...sessionData,
+            sessionCode,
+            accessCode,
+            expirationDate,
+          })
+          .set(this.publicSessionsRef.doc(sessionCode), {
+            ownerId,
+            connectionId,
+            projectId,
+            sessionId: sessionDocRef.id,
+            participants: { [ownerId]: Date.now() },
+          });
+      }
+    );
+  }
+
+  async refreshAccessCode(sessionLink: string, uid: string) {
+    const publicSessionDocRef = this.publicSessionsRef.doc(sessionLink);
+
+    await publicSessionDocRef.get().then(doc => {
+      const docData = doc.data();
+
+      if (!docData) {
+        return Promise.reject('Invalid Session Link.');
+      }
+
+      if (docData.ownerId !== uid) {
+        return Promise.reject('Only a moderator can refresh the Access Code.');
+      }
+
+      const { ownerId, connectionId, sessionId } = docData;
+
+      const sessionDocRef = this.firestore.doc(
+        `/users/${ownerId}/connections/${connectionId}/sessions/${sessionId}`
+      );
+
+      const expirationDate = Date.now() + ACCESS_CODE_DURATION;
+      return sessionDocRef.update({ expirationDate });
     });
+  }
 
-    await this.linksRef.doc(`${newId}`).set({
-      userId,
-      connectionId,
-      projectId,
-      sessionId,
-    });
+  async validateSession(
+    sessionLink: string,
+    providedAccessCode: string,
+    uid: string
+  ) {
+    const nowTimestamp = Date.now();
+    const publicSessionDocRef = this.publicSessionsRef.doc(sessionLink);
 
-    return this.encode(newId);
+    return await publicSessionDocRef
+      .get()
+      .then(doc => {
+        const docData = doc.data();
+
+        if (!docData) {
+          return Promise.reject('Invalid Session Link.');
+        }
+
+        if (docData.participants && docData.participants[uid]) {
+          return Promise.reject('Already a participant of this session.');
+        }
+
+        const { ownerId, connectionId, sessionId } = docData;
+
+        return this.firestore
+          .doc(
+            `/users/${ownerId}/connections/${connectionId}/sessions/${sessionId}`
+          )
+          .get();
+      })
+      .then(sessionDoc => {
+        const { accessCode, expirationDate } = sessionDoc.data();
+
+        if (providedAccessCode !== accessCode) {
+          return Promise.reject('Invalid Access Code.');
+        }
+
+        if (expirationDate < nowTimestamp) {
+          return Promise.reject('Access Code Expired.');
+        }
+
+        return publicSessionDocRef.update(`participants.${uid}`, nowTimestamp);
+      });
+  }
+
+  private generateAccessCode() {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const expirationDate = Date.now() + ACCESS_CODE_DURATION;
+    let accessCode = '';
+
+    for (let i = 0; i < 5; i++) {
+      accessCode += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+
+    return { accessCode, expirationDate };
   }
 
   // Bijective Enumeration -- Number to String
@@ -59,89 +159,9 @@ export class SessionService {
     let id = 0;
 
     for (let i = 0, len = str.length; i < len; i++) {
-      id = (id * BASE) + CHARS.indexOf(str.charAt(i));
+      id = id * BASE + CHARS.indexOf(str.charAt(i));
     }
 
     return id;
-  }
-
-  generateAccessCode() {
-    var accessCode = "";
-    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const date = new Date();
-    const expirationDate = date.getTime() + 1800000;
-
-    for (var i = 0; i < 5; i++)
-      accessCode += letters.charAt(Math.floor(Math.random() * letters.length));
-
-    return { accessCode, expirationDate };
-  }
-
-  async refreshAccessCode(encodedSessionLink, uid) {
-    const sessionLink = this.decode(encodedSessionLink);
-    const sessionsRef = this.firestore.doc('/public/sessions');
-    const linksRef = sessionsRef.collection('/links');
-    const linkSeshRef = linksRef.doc(sessionLink.toString());
-    const date = new Date();
-    const newExpirationDate = date.getTime() + 1800000;
-
-    let seshInfo;
-    let seshUri;
-    let sessionRef;
-    let fetchedAccessCode;
-    let expirationDate;
-
-    await linkSeshRef.get().then((doc) => {
-      seshInfo = doc.data();
-      seshUri = `/users/${seshInfo.userId}/connections/${seshInfo.connectionId}/projects/${seshInfo.projectId}/sessions/${seshInfo.sessionId}`;
-    })
-
-    if (uid != seshInfo.userId) {
-      return { error: "Only moderators can refresh accessCode" }
-    } else {
-      sessionRef = this.firestore.doc(seshUri);
-
-      sessionRef.set({
-        expirationDate: newExpirationDate
-      }, { merge: true });
-
-      return { expirationDate: newExpirationDate };
-    }
-  }
-
-  async validateSession(encodedSessionLink, accessCode, uid) {
-    const sessionLink = this.decode(encodedSessionLink);
-    const sessionsRef = this.firestore.doc('/public/sessions');
-    const linksRef = sessionsRef.collection('/links');
-    const linkSeshRef = linksRef.doc(sessionLink.toString());
-
-    let seshInfo;
-    let seshUri;
-    let sessionRef;
-    let fetchedAccessCode;
-    let expirationDate;
-
-    await linkSeshRef.get().then((doc) => {
-      seshInfo = doc.data();
-      seshUri = `/users/${seshInfo.userId}/connections/${seshInfo.connectionId}/sessions/${seshInfo.sessionId}`;
-    })
-
-    sessionRef = this.firestore.doc(seshUri);
-
-    await sessionRef.get().then((doc) => {
-      fetchedAccessCode = doc.data().accessCode;
-      expirationDate = doc.data().expirationDate;
-    });
-
-    if (accessCode === fetchedAccessCode && expirationDate >= Date.now()) {
-      linkSeshRef.set({ users: {
-        [uid]: Date.now(),
-      }, }, { merge: true });
-
-      return seshInfo;
-    } else {
-      return { error: "Invalid Access Code" };
-    }
-
   }
 }
