@@ -3,10 +3,10 @@ import { SessionUserType } from '@models/user';
 
 export interface HistoryItem extends Partial<ScopingSession> {
   id?: string;
-  userId: string;
+  ownerId: string;
   connectionId: string;
   sessionId: string;
-  users: { [uid: string]: number };
+  participants: { [uid: string]: number };
 }
 
 export interface HistoryItemOptionEvent {

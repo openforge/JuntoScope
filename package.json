@@ -85,11 +85,11 @@
     }
   },
   "lint-staged": {
-    "{src,e2e}/**/*.{js,ts}": [
+    "{src,e2e,functions/src}/**/*.{js,ts}": [
       "npx tslint",
       "git add"
     ],
-    "{src,e2e}/**/*.{js,ts,css,scss,md}": [
+    "{src,e2e,functions/src}/**/*.{js,ts,css,scss,md}": [
       "prettier --write",
       "git add"
     ]
