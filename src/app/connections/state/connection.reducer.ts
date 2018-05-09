@@ -18,6 +18,7 @@ export enum ConnectionUiState {
 export interface ConnectionState extends EntityState<Connection> {
   uiState: ConnectionUiState;
   error: string;
+  selectedId: string;
 }
 
 export const adapter: EntityAdapter<Connection> = createEntityAdapter<
@@ -27,6 +28,7 @@ export const adapter: EntityAdapter<Connection> = createEntityAdapter<
 export const initialConnectionState: ConnectionState = adapter.getInitialState({
   uiState: ConnectionUiState.NOT_LOADED,
   error: null,
+  selectedId: null,
 });
 
 export function connectionReducer(
@@ -34,6 +36,10 @@ export function connectionReducer(
   action: ConnectionActions
 ): ConnectionState {
   switch (action.type) {
+    case ConnectionActionTypes.SELECTED: {
+      return { ...state, selectedId: action.payload.connection.id };
+    }
+
     case ConnectionActionTypes.QUERY_ALL: {
       return { ...state, uiState: ConnectionUiState.LOADING };
     }

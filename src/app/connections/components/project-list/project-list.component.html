@@ -1,0 +1,11 @@
+<ion-list>
+  <ion-list-header>
+    <ion-label>
+      Connection Name
+    </ion-label>
+  </ion-list-header>
+
+  <ion-item-group>
+    <app-project-item *ngFor="let project of projects" [project]="project">project</app-project-item>
+  </ion-item-group>
+</ion-list>

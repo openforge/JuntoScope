@@ -14,6 +14,7 @@ import {
   ModifiedConnectionAction,
   RemovedConnectionAction,
   AddConnectionAction,
+  SelectedConnectionAction,
   AddConnectionErrorAction,
   NoConnectionsAction,
 } from '@app/connections/state/connection.actions';
@@ -88,6 +89,28 @@ export class ConnectionFacade {
     )
   );
 
+  @Effect()
+  selectConnection$ = this.actions$.pipe(
+    ofType<SelectedConnectionAction>(ConnectionActionTypes.SELECTED),
+    tap(res => console.log(res)),
+    switchMap(action =>
+      this.connectionSvc.getProjects(action.payload.connection).pipe(
+        map(
+          res =>
+            new ModifiedConnectionAction({
+              update: {
+                id: action.payload.connection.id,
+                changes: { projects: res.projects },
+              },
+            })
+        ),
+        catchError(error =>
+          of(new AddConnectionErrorAction({ message: error.message }))
+        )
+      )
+    )
+  );
+
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
@@ -105,5 +128,10 @@ export class ConnectionFacade {
 
   addConnection(connection: Connection) {
     this.store.dispatch(new AddConnectionAction({ connection }));
+  }
+
+  selectConnection(connection: Connection) {
+    console.log('selectConnection');
+    this.store.dispatch(new SelectedConnectionAction({ connection }));
   }
 }
