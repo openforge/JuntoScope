@@ -16,7 +16,7 @@ export class SelectProjectComponent {
     switchMap(params =>
       this.connectionFacade.selectedConnection$.pipe(
         filter(connection => !!connection),
-        map(connection => connection.projects)
+        map(connection => Object.values(connection.projects))
       )
     )
   );

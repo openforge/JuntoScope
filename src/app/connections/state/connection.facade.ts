@@ -111,11 +111,11 @@ export class ConnectionFacade {
     switchMap(action =>
       this.connectionSvc.getProjects(action.payload.connectionId).pipe(
         map(
-          res =>
+          projects =>
             new ModifiedConnectionAction({
               update: {
                 id: action.payload.connectionId,
-                changes: { projects: res.projects },
+                changes: { projects },
               },
             })
         ),

@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 
 import { AngularFirestore } from 'angularfire2/firestore';
 
-import { environment } from '@env/environment';
-import { Connection } from '@models/connection';
-import { AppFacade } from '@app/state/app.facade';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 
+import * as _ from 'lodash';
+
+import { environment } from '@env/environment';
 import { Project } from '@models/project';
+import { Connection } from '@models/connection';
+import { AppFacade } from '@app/state/app.facade';
 
 @Injectable()
 export class ConnectionService {
@@ -23,9 +25,11 @@ export class ConnectionService {
   }
 
   getProjects(connectionId: string) {
-    return this.http.get<{ projects: Project[] }>(
-      `${environment.apiBaseUrl}/connections/${connectionId}/projects/`
-    );
+    return this.http
+      .get<{ projects: Project[] }>(
+        `${environment.apiBaseUrl}/connections/${connectionId}/projects/`
+      )
+      .pipe(map(response => _.keyBy(response.projects, 'id')));
   }
 
   getConnections() {
