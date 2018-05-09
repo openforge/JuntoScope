@@ -34,7 +34,7 @@ export class SessionHistoryItemComponent {
 
   handleOptionsClick() {
     const userType =
-      this.item.userId === this.uid
+      this.item.ownerId === this.uid
         ? SessionUserType.MODERATOR
         : SessionUserType.PARTICIPANT;
 
