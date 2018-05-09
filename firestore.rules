@@ -1,9 +1,14 @@
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    match /public/sessions/links/{link} {
+    match /public/data/sessions/{sessionUrl} {
+      function isParticipant() {
+        return request.auth.uid in resource.data.participants;
+      }
+
       // Allow authorized users to fetch session links
-      allow read: if request.auth.uid in resource.data.users;
+      allow read: if isParticipant();
+      allow list: if isParticipant() && request.query.limit <= 10;
 
       // Writing happens through the Cloud API when creating sessions
       // for Access Code & Session URL generation
@@ -30,8 +35,13 @@ service cloud.firestore {
             return get(/databases/$(database)/documents/users/$(userId)/connections/$(connectionId)/sessions/$(sessionId)).data;
           }
 
+          // Helper function to access session participants
+          function getSessionParticipants() {
+            return get(/databases/$(database)/documents/public/data/sessions/$(getSessionData().sessionCode)).data.participants;
+          }
+
           // Allow session participants to view session data
-          allow read: if request.auth.uid in resource.data.users;
+          allow read: if request.auth.uid in getSessionParticipants();
 
           // TODO: Should any session data be written from the client side?
           // allow write: if ??
@@ -44,7 +54,7 @@ service cloud.firestore {
             }
 
             // Allow session participants to view session tasks
-            allow read: if request.auth.uid in getSessionData().users;
+            allow read: if request.auth.uid in getSessionParticipants();
 
             // Allow users to register ONLY their OWN votes on tasks
             allow update: if request.writeFields.size() == 1 && isVoteValid();
