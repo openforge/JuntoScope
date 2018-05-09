@@ -94,9 +94,13 @@ export class ConnectionFacade {
           switchMap((response: any) =>
             this.popupSvc.simpleAlert(
               'Verify Account',
-              `Connection type: ${response.type} Company name: ${response.externalData.company} Account name: ${response.externalData.name}`,
-              'Next')),
-          map(() => new RouterActions.GoAction({path: ['/dashboard']})),
+              `Connection type: ${response.type} Company name: ${
+                response.externalData.company
+              } Account name: ${response.externalData.name}`,
+              'Next'
+            )
+          ),
+          map(() => new RouterActions.GoAction({ path: ['/dashboard'] })),
           catchError(error =>
             of(new AddConnectionErrorAction({ message: error.message }))
           )
@@ -111,11 +115,11 @@ export class ConnectionFacade {
     switchMap(action =>
       this.connectionSvc.getProjects(action.payload.connectionId).pipe(
         map(
-          res =>
+          projects =>
             new ModifiedConnectionAction({
               update: {
                 id: action.payload.connectionId,
-                changes: { projects: res.projects },
+                changes: { projects },
               },
             })
         ),

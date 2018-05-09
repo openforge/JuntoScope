@@ -1,11 +1,9 @@
-interface Project {
-  name: string;
-}
+import { Project } from '@models/project';
 
 export interface Connection {
   id?: string;
   type: string;
   token: string;
   externalData?: any;
-  projects?: Project[];
+  projects?: { [projectId: string]: Project };
 }
