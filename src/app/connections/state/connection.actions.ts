@@ -12,6 +12,8 @@ export enum ConnectionActionTypes {
 
   ADD = '[Connection] Add',
   ADD_ERROR = '[Connection] Add Error',
+
+  SELECTED = '[Connection] Selected',
 }
 
 export class QueryConnectionsAction implements Action {
@@ -49,6 +51,11 @@ export class AddConnectionErrorAction implements Action {
   constructor(public payload: { message: string }) {}
 }
 
+export class SelectedConnectionAction implements Action {
+  readonly type = ConnectionActionTypes.SELECTED;
+  constructor(public payload: { connection: Connection }) {}
+}
+
 export type ConnectionActions =
   | QueryConnectionsAction
   | NoConnectionsAction
@@ -56,4 +63,5 @@ export type ConnectionActions =
   | ModifiedConnectionAction
   | RemovedConnectionAction
   | AddConnectionAction
-  | AddConnectionErrorAction;
+  | AddConnectionErrorAction
+  | SelectedConnectionAction;

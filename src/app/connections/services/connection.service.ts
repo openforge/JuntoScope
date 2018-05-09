@@ -6,7 +6,9 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { environment } from '@env/environment';
 import { Connection } from '@models/connection';
 import { AppFacade } from '@app/state/app.facade';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, tap, catchError } from 'rxjs/operators';
+
+import { Project } from '@models/project';
 
 @Injectable()
 export class ConnectionService {
@@ -18,6 +20,12 @@ export class ConnectionService {
 
   addConnection(connection: Connection) {
     return this.http.post(`${environment.apiBaseUrl}/connections`, connection);
+  }
+
+  getProjects(connection: Connection) {
+    return this.http.get<{ projects: Project[] }>(
+      `${environment.apiBaseUrl}/connections/${connection.id}/projects/`
+    );
   }
 
   getConnections() {

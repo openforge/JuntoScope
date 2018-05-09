@@ -4,7 +4,7 @@
 </ion-list-header>
 
 <ion-list>
-    <button ion-item *ngFor="let connection of connections" (click)="goSelectProject()">
+    <button ion-item *ngFor="let connection of connections" (click)="goSelectProject(connection)">
       {{connection.externalData.company}} {{connection.type}}
     </button>
     <ion-item>

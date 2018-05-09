@@ -14,9 +14,9 @@ export class CreateSessionComponent implements OnInit {
 
   ngOnInit() {}
 
-  goSelectProject() {
+  goSelectProject(connection) {
     this.routerFacade.navigate({
-      path: ['dashboard/create-session/select-project'],
+      path: [`connections/${connection.id}/select-project`],
     });
   }
 }

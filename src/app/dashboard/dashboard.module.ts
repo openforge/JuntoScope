@@ -13,12 +13,6 @@ import { HistoryService } from '@app/dashboard/services/history.service';
 import { dashboardReducer } from '@app/dashboard/state/dashboard.reducer';
 import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
 import { CreateSessionComponent } from './components/create-session/create-session.component';
-import { ProjectListComponent } from './components/project-list/project-list.component';
-import { TaskListComponent } from './components/task-list/task-list.component';
-import { TaskItemComponent } from './components/task-item/task-item.component';
-import { ProjectItemComponent } from './components/project-item/project-item.component';
-import { SelectProjectComponent } from './container/select-project/select-project.component';
-import { SelectTaskListComponent } from './container/select-task-list/select-task-list.component';
 
 @NgModule({
   imports: [
@@ -33,12 +27,6 @@ import { SelectTaskListComponent } from './container/select-task-list/select-tas
     SessionHistoryListComponent,
     SessionHistoryItemComponent,
     CreateSessionComponent,
-    ProjectListComponent,
-    TaskListComponent,
-    TaskItemComponent,
-    ProjectItemComponent,
-    SelectProjectComponent,
-    SelectTaskListComponent,
   ],
 })
 export class DashboardModule {
