@@ -1,3 +1,9 @@
-<p>
-  session-scoping works!
-</p>
+<div>
+
+  <app-session-header [session]="session"></app-session-header>
+
+  <app-task-card [task]="session.tasks[session.currentTaskId]"></app-task-card>
+
+  <app-vote (vote)="vote($event)"></app-vote>
+
+</div>
