@@ -53,7 +53,7 @@ export class AddConnectionErrorAction implements Action {
 
 export class SelectedConnectionAction implements Action {
   readonly type = ConnectionActionTypes.SELECTED;
-  constructor(public payload: { connection: Connection }) {}
+  constructor(public payload: { connectionId: string }) {}
 }
 
 export type ConnectionActions =
