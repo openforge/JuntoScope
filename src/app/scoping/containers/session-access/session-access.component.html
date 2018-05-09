@@ -1,0 +1,27 @@
+<ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+  
+  <ion-content>
+  
+      <p>Enter Access Code</p>
+      
+      <form [formGroup]="accessForm" (ngSubmit)="continue()">
+        <ion-input class="form-control" type="text" formControlName="code" name="code"></ion-input>
+        
+        <ng-container *ngIf="accessForm.get('code') as codeCtrl">
+          <h6 *ngIf="codeCtrl.dirty && codeCtrl.hasError('required')" class="error input-error">
+            Access Code is required
+          </h6>
+        </ng-container>
+
+        <h6 *ngIf="addError$ | async as error">
+          {{ error }}
+        </h6>
+
+        <ion-button type="submit">Allow access</ion-button>
+      </form>
+  </ion-content>
