@@ -47,7 +47,9 @@ export class HistoryService {
 
     this.appFacade.uid$
       .pipe(
-        tap(uid => (this.query.field = `users.${uid}`)),
+        tap(uid => {
+          this.query.field = `participants.${uid}`;
+        }),
         switchMap(() => this.getHistoryItems())
       )
       .subscribe();
@@ -61,16 +63,16 @@ export class HistoryService {
     return this.historyItemChanges$;
   }
 
-  getSession({ userId, connectionId, sessionId }: Partial<HistoryItem>) {
+  getSession({ ownerId, connectionId, sessionId }: Partial<HistoryItem>) {
     return this.afs
       .doc<ScopingSession>(
-        `users/${userId}/connections/${connectionId}/sessions/${sessionId}`
+        `users/${ownerId}/connections/${connectionId}/sessions/${sessionId}`
       )
       .valueChanges()
       .pipe(
         switchMap(session =>
           this.getSessionTask(
-            { userId, connectionId, sessionId },
+            { ownerId, connectionId, sessionId },
             session.currentTaskId
           ).pipe(
             map(task => {
@@ -83,19 +85,19 @@ export class HistoryService {
   }
 
   private getSessionTask(
-    { userId, connectionId, sessionId }: Partial<HistoryItem>,
+    { ownerId, connectionId, sessionId }: Partial<HistoryItem>,
     taskId: string
   ) {
     return this.afs
       .doc<Task>(
-        `users/${userId}/connections/${connectionId}/sessions/${sessionId}/tasks/${taskId}`
+        `users/${ownerId}/connections/${connectionId}/sessions/${sessionId}/tasks/${taskId}`
       )
       .valueChanges();
   }
 
   private getHistoryItems({ paginating } = { paginating: false }) {
     return this.afs
-      .collection('public/sessions/links', refs => {
+      .collection('public/data/sessions', refs => {
         const { field, direction, limit } = this.query;
 
         let query = refs.where(field, '>', 0).orderBy(field, direction);
