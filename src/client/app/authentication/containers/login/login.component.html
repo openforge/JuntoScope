@@ -10,7 +10,7 @@
     Authenticate with your Google account!
   </p>
 
-  <ion-button (click)="googleLogin()">
+  <ion-button (click)="googleLogin()" [disabled]="!hasAgreed">
     Google Auth
   </ion-button>
 
@@ -22,7 +22,15 @@
     Auth Error: {{ message }}
   </p>
 
+  <div>
 
-  <ion-button routerLink="/terms">Terms</ion-button>
-  <ion-button routerLink="/privacy">Privacy Policy</ion-button>
+    <form [formGroup]="agreeForm">
+      <ion-checkbox class="form-control" formControlName="agree" name="agree"></ion-checkbox>
+    </form>
+
+    <a routerLink="/terms">Terms</a>
+    and
+    <a routerLink="/privacy">Privacy Policy</a>
+
+  </div>
 </ion-content>
