@@ -20,6 +20,7 @@ export class AuthService {
       case 'google':
         return this.afAuth.auth.signInWithPopup(this.googleProvider);
       case 'twitter':
+        // twitter  will give only the displayName as payload
         return this.afAuth.auth.signInWithPopup(this.twitterProvider);
       default:
         return Promise.reject(Error('Unknown AuthProvider Passed'));
