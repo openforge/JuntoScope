@@ -7,11 +7,16 @@
 
 <ion-content>
   <p>
-    Authenticate with your Google account!
+    First, we need a way of identifying your participation. 
+    Please sign in with:
   </p>
 
-  <ion-button (click)="googleLogin()">
-    Google Auth
+  <ion-button (click)="facebookLogin()" [disabled]="!hasAgreed">
+    Facebook
+  </ion-button>
+
+  <ion-button (click)="googleLogin()" [disabled]="!hasAgreed">
+    Google
   </ion-button>
 
   <p *ngIf="loading$ | async">
@@ -22,7 +27,15 @@
     Auth Error: {{ message }}
   </p>
 
+  <div>
 
-  <ion-button routerLink="/terms">Terms</ion-button>
-  <ion-button routerLink="/privacy">Privacy Policy</ion-button>
+    <form [formGroup]="agreeForm">
+      <ion-checkbox class="form-control" formControlName="agree" name="agree"></ion-checkbox>
+    </form>
+
+    <a routerLink="/terms">Terms</a>
+    and
+    <a routerLink="/privacy">Privacy Policy</a>
+
+  </div>
 </ion-content>

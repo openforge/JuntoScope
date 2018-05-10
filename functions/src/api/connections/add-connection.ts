@@ -39,7 +39,10 @@ export async function addConnection(req: express.Request, res: express.Response)
         externalData: teamworkResponse
       });
 
-      return res.status(201).send();
+      return res.status(201).send({
+        type: 'teamwork',
+        externalData: teamworkResponse
+      });
     }
 
     default: {

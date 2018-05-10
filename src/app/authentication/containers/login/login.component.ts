@@ -1,4 +1,10 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 
@@ -15,12 +21,14 @@ import { AppFacade } from '@app/state/app.facade';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
+  agreeForm: FormGroup;
   loading$ = this.authFacade.uiState$.pipe(
     map(uiState => uiState === AuthUiState.LOADING)
   );
 
   authError$ = this.authFacade.error$;
+  hasAgreed = false;
 
   private loginRedirect$ = this.appFacade.authRedirect$.pipe(
     untilDestroyed(this),
@@ -36,15 +44,38 @@ export class LoginComponent implements OnDestroy {
   );
 
   constructor(
+    private fb: FormBuilder,
     private appFacade: AppFacade,
     private authFacade: AuthFacade,
     private routerFacade: RouterFacade
   ) {}
 
+  ngOnInit() {
+    this.createForm();
+  }
+
   ngOnDestroy() {}
+
+  createForm() {
+    this.agreeForm = this.fb.group({
+      agree: ['', Validators.required],
+    });
+
+    this.agreeForm.valueChanges.subscribe(data => {
+      this.hasAgreed = data.agree;
+    });
+  }
 
   googleLogin() {
     this.authFacade.googleLogin();
+
+    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
+      this.routerFacade.navigate(navOptions);
+    });
+  }
+
+  facebookLogin() {
+    this.authFacade.facebookLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
       this.routerFacade.navigate(navOptions);
