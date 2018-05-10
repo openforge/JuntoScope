@@ -22,6 +22,7 @@ import { UnAuthGuard } from '@app/un-auth.guard';
 import { AppFacade } from '@app/state/app.facade';
 import { reducers, metaReducers, initialState } from '@app/state/app.reducer';
 import { DashboardModule } from '@app/dashboard/dashboard.module';
+import { ScopingModule } from '@app/scoping/scoping.module';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -38,6 +39,7 @@ import { DashboardModule } from '@app/dashboard/dashboard.module';
     AuthenticationModule.forRoot(),
     DashboardModule.forRoot(),
     ConnectionsModule.forRoot(),
+    ScopingModule.forRoot(),
   ],
   providers: [AppFacade, AuthGuard, UnAuthGuard],
   bootstrap: [AppComponent],

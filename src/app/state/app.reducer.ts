@@ -24,11 +24,13 @@ import {
   ConnectionQuery,
   ConnectionUiState,
 } from '@app/connections/state/connection.reducer';
+import { ScopingState, ScopingQuery } from '@app/scoping/state/scoping.reducer';
 
 interface FullAppState {
   router: RouterState;
   auth: AuthState;
   connection: ConnectionState;
+  scoping: ScopingState;
 }
 
 export type AppState = Partial<FullAppState>;
