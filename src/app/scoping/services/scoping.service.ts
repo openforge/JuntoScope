@@ -3,17 +3,22 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@env/environment';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { SessionValidation } from '@models/scoping-session';
+import { SessionValidation, ScopingSession } from '@models/scoping-session';
+import { AppFacade } from '@app/state/app.facade';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 import * as firebase from 'firebase';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable()
 export class ScopingService {
-  constructor(private afs: AngularFirestore, private http: HttpClient) {}
+  constructor(
+    private appFacade: AppFacade,
+    private afs: AngularFirestore,
+    private http: HttpClient
+  ) {}
 
   validateSession(sessionValidation: SessionValidation) {
-    console.log(sessionValidation);
     return this.http.get(
       `${environment.apiBaseUrl}/session-links/${
         sessionValidation.sessionLink
@@ -55,5 +60,13 @@ export class ScopingService {
         votes: votes,
       });
     });
+  }
+
+  checkParticipant(uid: string, sessionLink: string) {
+    return this.afs
+      .collection('public/data/sessions')
+      .doc<ScopingSession>(sessionLink)
+      .valueChanges()
+      .map(session => !!session.participants[uid]);
   }
 }

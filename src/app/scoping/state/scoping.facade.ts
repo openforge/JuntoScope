@@ -21,19 +21,29 @@ import {
   VoteSuccessAction,
   VoteErrorAction,
   ScopingActionTypes,
+  ValidateSessionAction,
+  SessionVerfiedAction,
+  SessionJoinErrorAction,
+  ValidateParticipantAction,
+  ParticipantValidatedAction,
+  ValidateParticipantErrorAction,
 } from '@app/scoping/state/scoping.actions';
-import { RouterFacade } from '@app/state/router.facade';
-import { PopupService } from '@app/shared/popup.service';
+import { ScopingService } from '@app/scoping/services/scoping.service';
+import { SessionValidation } from '@models/scoping-session';
+import { ScopingQuery } from '@app/scoping/state/scoping.reducer';
+import { GoAction } from '@app/state/router.actions';
 
 @Injectable()
 export class ScopingFacade {
-  constructor(
-    private store: Store<AppState>,
-    private actions$: Actions,
-    private scopingSvc: ScopingService,
-    private routerFacade: RouterFacade,
-    private popupService: PopupService
-  ) {}
+  /*
+     * Observable Store Queries
+     */
+  error$ = this.store.pipe(select(ScopingQuery.selectError));
+  uiState$ = this.store.pipe(select(ScopingQuery.selectUiState));
+
+  /*
+     * Module-level Effects
+     */
 
   @Effect()
   vote$ = this.actions$.pipe(
@@ -64,17 +74,40 @@ export class ScopingFacade {
   );
 
   @Effect()
-  voteError$ = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.VOTE_ERROR),
-    take(1),
-    tap(action => {
-      this.popupService.alert(
-        'Error',
-        'An error occurred while trying to save your vote. Please, try again.',
-        'Ok'
-      );
-    })
+  validateParticipant$ = this.actions$.pipe(
+    ofType<ValidateParticipantAction>(ScopingActionTypes.VALIDATE_PARTICIPANT),
+    switchMap(action =>
+      this.scopingSvc
+        .checkParticipant(action.payload.uid, action.payload.sessionLink)
+        .pipe(
+          map(valid => {
+            if (valid) {
+              return new ParticipantValidatedAction(valid);
+            }
+            return new ValidateParticipantErrorAction({
+              message: 'invalid participant',
+            });
+          }),
+          catchError(error => {
+            return of(
+              new ValidateParticipantErrorAction({ message: error.message })
+            );
+          })
+        )
+    )
   );
+
+  @Effect()
+  invalidParticipant$ = this.actions$.pipe(
+    ofType<SessionVerfiedAction>(ScopingActionTypes.VALIDATE_PARTICIPANT_ERROR),
+    switchMap(action => of(new GoAction({ path: ['/dashboard'] })))
+  );
+
+  constructor(
+    private store: Store<AppState>,
+    private actions$: Actions,
+    private scopingSvc: ScopingService
+  ) {}
 
   vote(userId, moderatorId, connectionId, sessionId, taskId, estimate) {
     this.store.dispatch(
@@ -86,6 +119,12 @@ export class ScopingFacade {
         taskId,
         estimate,
       })
+    );
+  }
+
+  validateParticipant(uid: string, sessionLink: string) {
+    this.store.dispatch(
+      new ValidateParticipantAction({ uid: uid, sessionLink: sessionLink })
     );
   }
 }
