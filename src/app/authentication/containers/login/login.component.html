@@ -7,11 +7,16 @@
 
 <ion-content>
   <p>
-    Authenticate with your Google account!
+    First, we need a way of identifying your participation. 
+    Please sign in with:
   </p>
 
+  <ion-button (click)="facebookLogin()" [disabled]="!hasAgreed">
+    Facebook
+  </ion-button>
+
   <ion-button (click)="googleLogin()" [disabled]="!hasAgreed">
-    Google Auth
+    Google
   </ion-button>
 
   <p *ngIf="loading$ | async">

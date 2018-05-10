@@ -103,6 +103,10 @@ export class AuthFacade {
     this.store.dispatch(new LoginAction({ provider: 'google' }));
   }
 
+  facebookLogin() {
+    this.store.dispatch(new LoginAction({ provider: 'facebook' }));
+  }
+
   logout() {
     this.store.dispatch(new LogoutAction());
   }
