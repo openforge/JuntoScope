@@ -6,6 +6,7 @@ import { map, filter, withLatestFrom, take } from 'rxjs/operators';
 import { AuthFacade } from '@app/authentication/state/auth.facade';
 import { AuthUiState } from '@app/authentication/state/auth.reducer';
 import { RouterFacade } from '@app/state/router.facade';
+import { SettingsFacade } from '@app/settings/state/settings.facade';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
 
 @TakeUntilDestroy()
@@ -17,6 +18,7 @@ import { ConnectionFacade } from '@app/connections/state/connection.facade';
 export class SettingsComponent implements OnInit, OnDestroy {
   user$ = this.authFacade.user$;
   connections$ = this.connectionFacade.connections$;
+  faqs$ = this.settingsFacade.faqs$;
 
   private logoutRedirect$ = this.authFacade.uiState$.pipe(
     untilDestroyed(this),
@@ -25,6 +27,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   );
 
   constructor(
+    private settingsFacade: SettingsFacade,
     private authFacade: AuthFacade,
     private routerFacade: RouterFacade,
     private connectionFacade: ConnectionFacade
@@ -38,6 +41,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   viewConnectionDetails(connectionId) {
     this.routerFacade.navigate({ path: [`/connections/${connectionId}`] });
+  }
+
+  viewFaqDetails(faqId) {
+    this.routerFacade.navigate({ path: [`/faqs/${faqId}`] });
   }
 
   addConnection() {
