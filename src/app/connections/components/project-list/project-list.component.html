@@ -6,6 +6,6 @@
   </ion-list-header>
 
   <ion-item-group>
-    <app-project-item *ngFor="let project of projects" [project]="project">project</app-project-item>
+    <app-project-item *ngFor="let project of projects" [project]="project" (select)="select.emit($event)">project</app-project-item>
   </ion-item-group>
 </ion-list>

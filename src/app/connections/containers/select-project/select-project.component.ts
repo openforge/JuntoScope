@@ -5,12 +5,15 @@ import {
   tap,
   filter,
   switchMap,
+  take,
   pluck,
   distinctUntilChanged,
 } from 'rxjs/operators';
 
 import { RouterFacade } from '@app/state/router.facade';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
+import { ActivatedRoute } from '@angular/router';
+import { Project } from '@models/project';
 
 @Component({
   selector: 'app-select-project',
@@ -34,6 +37,15 @@ export class SelectProjectComponent {
 
   constructor(
     private routerFacade: RouterFacade,
-    private connectionFacade: ConnectionFacade
+    private connectionFacade: ConnectionFacade,
+    private route: ActivatedRoute
   ) {}
+
+  handleProjectSelect(project: Project) {
+    this.routerFacade.params$.pipe(take(1)).subscribe(params => {
+      this.routerFacade.navigate({
+        path: [`/connections/${params.connectionId}/projects/${project.id}`],
+      });
+    });
+  }
 }
