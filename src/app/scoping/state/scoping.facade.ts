@@ -12,11 +12,13 @@ import {
   ValidateSessionAction,
   SessionVerfiedAction,
   SessionJoinErrorAction,
+  ValidateParticipantAction,
+  ParticipantValidatedAction,
+  ValidateParticipantErrorAction,
 } from '@app/scoping/state/scoping.actions';
 import { ScopingService } from '@app/scoping/services/scoping.service';
 import { SessionValidation } from '@models/scoping-session';
 import { ScopingQuery } from '@app/scoping/state/scoping.reducer';
-import { RouterFacade } from '@app/state/router.facade';
 import { GoAction } from '@app/state/router.actions';
 
 @Injectable()
@@ -25,6 +27,7 @@ export class ScopingFacade {
      * Observable Store Queries
      */
   error$ = this.store.pipe(select(ScopingQuery.selectError));
+  uiState$ = this.store.pipe(select(ScopingQuery.selectUiState));
 
   /*
      * Module-level Effects
@@ -56,6 +59,36 @@ export class ScopingFacade {
     )
   );
 
+  @Effect()
+  validateParticipant$ = this.actions$.pipe(
+    ofType<ValidateParticipantAction>(ScopingActionTypes.VALIDATE_PARTICIPANT),
+    switchMap(action =>
+      this.scopingSvc
+        .checkParticipant(action.payload.uid, action.payload.sessionLink)
+        .pipe(
+          map(valid => {
+            if (valid) {
+              return new ParticipantValidatedAction(valid);
+            }
+            return new ValidateParticipantErrorAction({
+              message: 'invalid participant',
+            });
+          }),
+          catchError(error => {
+            return of(
+              new ValidateParticipantErrorAction({ message: error.message })
+            );
+          })
+        )
+    )
+  );
+
+  @Effect()
+  invalidParticipant$ = this.actions$.pipe(
+    ofType<SessionVerfiedAction>(ScopingActionTypes.VALIDATE_PARTICIPANT_ERROR),
+    switchMap(action => of(new GoAction({ path: ['/dashboard'] })))
+  );
+
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
@@ -67,5 +100,11 @@ export class ScopingFacade {
      */
   validateSession(sessionValidation: SessionValidation) {
     this.store.dispatch(new ValidateSessionAction({ sessionValidation }));
+  }
+
+  validateParticipant(uid: string, sessionLink: string) {
+    this.store.dispatch(
+      new ValidateParticipantAction({ uid: uid, sessionLink: sessionLink })
+    );
   }
 }

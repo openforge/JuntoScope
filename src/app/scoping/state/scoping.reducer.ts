@@ -8,12 +8,20 @@ import {
 import { ScopingSession } from '@models/scoping-session';
 import { AppState } from '@app/state/app.reducer';
 
+export enum ScopingUiState {
+  CHECKING_PARTICIPANT = 'Checking',
+  PARTICIPANT_VALIDATED = 'Validated',
+  PARTICIPANT_INVALID = 'Invalid',
+}
+
 export interface ScopingState {
+  uiState: ScopingUiState;
   error: string;
 }
 
 export const initialScopingSessionState: ScopingState = {
   error: null,
+  uiState: ScopingUiState.CHECKING_PARTICIPANT,
 };
 
 export function scopingReducer(
@@ -28,6 +36,20 @@ export function scopingReducer(
       };
     }
 
+    case ScopingActionTypes.VALIDATE_PARTICIPANT_ERROR: {
+      return {
+        ...state,
+        uiState: ScopingUiState.PARTICIPANT_INVALID,
+      };
+    }
+
+    case ScopingActionTypes.PARTICIPANT_VALIDATED: {
+      return {
+        ...state,
+        uiState: ScopingUiState.PARTICIPANT_VALIDATED,
+      };
+    }
+
     default: {
       return state;
     }
@@ -36,5 +58,6 @@ export function scopingReducer(
 
 export namespace ScopingQuery {
   const getSlice = (state: AppState) => state.scoping;
+  export const selectUiState = createSelector(getSlice, state => state.uiState);
   export const selectError = createSelector(getSlice, state => state.error);
 }

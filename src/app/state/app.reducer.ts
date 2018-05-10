@@ -73,4 +73,5 @@ export namespace AppQuery {
     selectUidDocPath,
     uidPath => uidPath && `${uidPath}/connections`
   );
+  export const selectPublicSessionsClnPath = 'public/data/sessions';
 }
