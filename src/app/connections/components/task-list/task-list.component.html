@@ -1,3 +1,4 @@
-<p>
-  task-list works!
-</p>
+<ion-item>
+  <ion-label>{{ taskList.name }}</ion-label>
+  <ion-checkbox slot="start" [value]="taskList.id" (ionChange)="toggle.emit($event.detail.checked)"></ion-checkbox>
+</ion-item>

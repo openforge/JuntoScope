@@ -16,7 +16,7 @@ export class CreateSessionComponent implements OnInit {
 
   goSelectProject(connection) {
     this.routerFacade.navigate({
-      path: [`connections/${connection.id}/select-project`],
+      path: [`/connections/${connection.id}/projects`],
     });
   }
 }

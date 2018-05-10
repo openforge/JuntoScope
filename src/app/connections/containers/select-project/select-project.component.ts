@@ -1,6 +1,13 @@
 import { Component } from '@angular/core';
 
-import { map, tap, filter, switchMap } from 'rxjs/operators';
+import {
+  map,
+  tap,
+  filter,
+  switchMap,
+  pluck,
+  distinctUntilChanged,
+} from 'rxjs/operators';
 
 import { RouterFacade } from '@app/state/router.facade';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
@@ -12,10 +19,14 @@ import { ConnectionFacade } from '@app/connections/state/connection.facade';
 })
 export class SelectProjectComponent {
   projects$ = this.routerFacade.params$.pipe(
-    tap(params => this.connectionFacade.selectConnection(params.connectionId)),
+    pluck('connectionId'),
+    distinctUntilChanged(),
+    tap((connectionId: string) =>
+      this.connectionFacade.selectConnection(connectionId)
+    ),
     switchMap(params =>
       this.connectionFacade.selectedConnection$.pipe(
-        filter(connection => !!connection),
+        filter(connection => !!connection && !!connection.projects),
         map(connection => Object.values(connection.projects))
       )
     )

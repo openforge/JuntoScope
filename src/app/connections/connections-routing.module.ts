@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AddConnectionComponent } from '@app/connections/containers/add-connection/add-connection.component';
 import { ConnectionDetailsComponent } from '@app/connections/containers/connection-details/connection-details.component';
 import { SelectProjectComponent } from '@app/connections/containers/select-project/select-project.component';
+import { SelectTaskListComponent } from '@app/connections/containers/select-task-list/select-task-list.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,12 @@ const routes: Routes = [
     component: ConnectionDetailsComponent,
   },
   {
-    path: ':connectionId/select-project',
+    path: ':connectionId/projects',
     component: SelectProjectComponent,
+  },
+  {
+    path: ':connectionId/projects/:projectId',
+    component: SelectTaskListComponent,
   },
 ];
 
