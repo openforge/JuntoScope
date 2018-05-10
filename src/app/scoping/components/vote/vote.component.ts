@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NOT_APPLICABLE, MORE_INFO_NEEDED } from '@app/app.constants';
 
 @Component({
   selector: 'app-vote',
@@ -25,11 +26,11 @@ export class VoteComponent implements OnInit {
   }
 
   needMoreInfo() {
-    this.vote.emit('');
+    this.vote.emit(MORE_INFO_NEEDED);
   }
 
   notApplicable() {
-    this.vote.emit('');
+    this.vote.emit(NOT_APPLICABLE);
   }
 
   sendVote() {

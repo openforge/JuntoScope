@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 
+import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from '@app/shared/shared.module';
 import { ScopingRoutingModule } from '@app/scoping/scoping-routing.module';
 import { SessionScopingComponent } from '@app/scoping/containers/session-scoping/session-scoping.component';
@@ -9,9 +10,16 @@ import { TaskCardComponent } from './components/task-card/task-card.component';
 import { SessionHeaderComponent } from './components/session-header/session-header.component';
 import { VoteComponent } from './components/vote/vote.component';
 import { ResultEstimateComponent } from './components/result-estimate/result-estimate.component';
+import { ScopingFacade } from '@app/scoping/state/scoping.facade';
+import { ScopingService } from '@app/scoping/services/scoping.service';
+import { SelectResultComponent } from './components/select-result/select-result.component';
 
 @NgModule({
-  imports: [SharedModule, ScopingRoutingModule],
+  imports: [
+    SharedModule,
+    ScopingRoutingModule,
+    EffectsModule.forFeature([ScopingFacade]),
+  ],
   declarations: [
     SessionScopingComponent,
     SessionResultsComponent,
@@ -20,6 +28,14 @@ import { ResultEstimateComponent } from './components/result-estimate/result-est
     SessionHeaderComponent,
     VoteComponent,
     ResultEstimateComponent,
+    SelectResultComponent,
   ],
 })
-export class ScopingModule {}
+export class ScopingModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: ScopingModule,
+      providers: [ScopingService, ScopingFacade],
+    };
+  }
+}
