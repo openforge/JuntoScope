@@ -1,33 +1,19 @@
+<ng-container *ngIf="session && session.tasks">
 
-<ion-content>
+  <ion-content>
 
-  <app-session-header [session]="session"></app-session-header>
+    <h1>{{ session.projectName }}</h1>
 
-  <app-task-card [task]="session.tasks[session.currentTaskId]" [onlyTitle]="true"></app-task-card>
+    {{ session.numScopedTasks }} Tasks scoped
 
-  <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
+    <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
 
-  <ng-container *ngIf="isModerator">
-    <app-select-result [avg]="3" [max]="5"
-     (estimate)="saveFinalEstimate($event)"></app-select-result>
-  </ng-container>
+    <ul>
+      <li *ngFor="let task of (session.tasks | objValues)">
+        {{ task.name }}
+      </li>
+    </ul>
 
-  <app-counted-votes [votes]="session.tasks[session.currentTaskId].votes" [participantCount]="(session.participants | objKeys).length"></app-counted-votes>
+  </ion-content>
 
-</ion-content>
-
-<ion-footer *ngIf="!isModerator && !session.tasks[session.currentTaskId].estimate">
-  <ion-toolbar>
-    <ion-title>Waiting</ion-title>
-  </ion-toolbar>
-</ion-footer>
-<ion-footer *ngIf="!isModerator && session.tasks[session.currentTaskId].estimate">
-  <ion-toolbar>
-    <ion-title>Next task</ion-title>
-  </ion-toolbar>
-</ion-footer>
-<ion-footer *ngIf="isModerator">
-  <ion-toolbar>
-    <ion-title>Submit</ion-title>
-  </ion-toolbar>
-</ion-footer>
+</ng-container>

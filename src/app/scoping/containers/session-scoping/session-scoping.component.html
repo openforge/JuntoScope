@@ -1,13 +1,21 @@
 
 <ion-content>
 
-  <app-session-header [session]="session"></app-session-header>
+  <ng-container *ngIf="session && session.tasks; else noSession">
 
-  <app-task-card [task]="session.tasks[session.currentTaskId]"></app-task-card>
+    <app-session-header [session]="session"></app-session-header>
 
-  <app-vote (vote)="vote($event)"></app-vote>
+    <app-task-card [task]="session.tasks[session.currentTaskId]"></app-task-card>
 
-  <p>
-    {{ (session.tasks[session.currentTaskId].votes | objKeys).length}} of {{ (session.participants | objKeys).length}} votes counted
-  </p>
+    <app-vote (vote)="vote($event)"></app-vote>
+
+    <p>
+      {{ (session.tasks[session.currentTaskId].votes | objKeys).length}} of {{ (session.participants | objKeys).length}} votes counted
+    </p>
+
+  </ng-container>
+
+  <ng-template #noSession>
+    No session found
+  </ng-template>
 </ion-content>

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SessionScopingComponent } from '@app/scoping/containers/session-scoping/session-scoping.component';
 import { SessionResultsComponent } from '@app/scoping/containers/session-results/session-results.component';
 import { SessionAccessComponent } from '@app/scoping/containers/session-access/session-access.component';
+import { TaskResultsComponent } from '@app/scoping/containers/task-results/task-results.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: ':sessionId/results',
     component: SessionResultsComponent,
+  },
+  {
+    path: ':sessionId/tasks/:taskId/results',
+    component: TaskResultsComponent,
   },
 ];
 

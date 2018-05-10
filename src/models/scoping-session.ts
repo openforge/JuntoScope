@@ -5,6 +5,7 @@ export interface ScopingSession {
   id: string;
   projectName: string;
   ownerId: string;
+  connectionId: string;
   currentTaskId: string;
   numTasks: number;
   numScopedTasks: number;

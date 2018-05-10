@@ -20,31 +20,16 @@ import {
   VoteAction,
   VoteSuccessAction,
   VoteErrorAction,
+  SetEstimateAction,
+  SetEstimateSuccessAction,
+  SetEstimateErrorAction,
   ScopingActionTypes,
-  ValidateSessionAction,
-  SessionVerfiedAction,
-  SessionJoinErrorAction,
-  ValidateParticipantAction,
-  ParticipantValidatedAction,
-  ValidateParticipantErrorAction,
 } from '@app/scoping/state/scoping.actions';
-import { ScopingService } from '@app/scoping/services/scoping.service';
-import { SessionValidation } from '@models/scoping-session';
-import { ScopingQuery } from '@app/scoping/state/scoping.reducer';
-import { GoAction } from '@app/state/router.actions';
+import { RouterFacade } from '@app/state/router.facade';
+import { PopupService } from '@app/shared/popup.service';
 
 @Injectable()
 export class ScopingFacade {
-  /*
-     * Observable Store Queries
-     */
-  error$ = this.store.pipe(select(ScopingQuery.selectError));
-  uiState$ = this.store.pipe(select(ScopingQuery.selectUiState));
-
-  /*
-     * Module-level Effects
-     */
-
   @Effect()
   vote$ = this.actions$.pipe(
     ofType<VoteAction>(ScopingActionTypes.VOTE),
@@ -63,50 +48,76 @@ export class ScopingFacade {
     catchError(error => of(new VoteErrorAction({ message: error.message })))
   );
 
-  @Effect()
+  @Effect({ dispatch: false })
   voteSuccess$ = this.actions$.pipe(
     ofType<VoteAction>(ScopingActionTypes.VOTE_SUCCESS),
-    take(1),
+    tap(action => {
+      const sessionId = action.payload.sessionId;
+      this.routerFacade.navigate({
+        path: [`/scoping/${sessionId}/tasks/${action.payload.taskId}/results`],
+      });
+    })
+  );
+
+  @Effect({ dispatch: false })
+  voteError$ = this.actions$.pipe(
+    ofType<VoteAction>(ScopingActionTypes.VOTE_ERROR),
+    tap(action => {
+      this.popupService.simpleAlert(
+        'Error',
+        'An error occurred while trying to save your vote. Please, try again.',
+        'Ok'
+      );
+    })
+  );
+
+  @Effect()
+  setEstimate$ = this.actions$.pipe(
+    ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE),
+    switchMap(action =>
+      this.scopingSvc
+        .setEstimate(action.payload)
+        .then(() => {
+          console.log('Estimate saved successfully');
+          return new SetEstimateSuccessAction(action.payload);
+        })
+        .catch(({ message }) => {
+          console.log('ERROR saving estimate');
+          return new SetEstimateErrorAction({ message });
+        })
+    ),
+    catchError(error =>
+      of(new SetEstimateErrorAction({ message: error.message }))
+    )
+  );
+
+  @Effect({ dispatch: false })
+  setEstimateSuccess$ = this.actions$.pipe(
+    ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE_SUCCESS),
     tap(action => {
       const sessionId = action.payload.sessionId;
       this.routerFacade.navigate({ path: [`/scoping/${sessionId}/results`] });
     })
   );
 
-  @Effect()
-  validateParticipant$ = this.actions$.pipe(
-    ofType<ValidateParticipantAction>(ScopingActionTypes.VALIDATE_PARTICIPANT),
-    switchMap(action =>
-      this.scopingSvc
-        .checkParticipant(action.payload.uid, action.payload.sessionLink)
-        .pipe(
-          map(valid => {
-            if (valid) {
-              return new ParticipantValidatedAction(valid);
-            }
-            return new ValidateParticipantErrorAction({
-              message: 'invalid participant',
-            });
-          }),
-          catchError(error => {
-            return of(
-              new ValidateParticipantErrorAction({ message: error.message })
-            );
-          })
-        )
-    )
-  );
-
-  @Effect()
-  invalidParticipant$ = this.actions$.pipe(
-    ofType<SessionVerfiedAction>(ScopingActionTypes.VALIDATE_PARTICIPANT_ERROR),
-    switchMap(action => of(new GoAction({ path: ['/dashboard'] })))
+  @Effect({ dispatch: false })
+  setEstimateError$ = this.actions$.pipe(
+    ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE_ERROR),
+    tap(action => {
+      this.popupService.simpleAlert(
+        'Error',
+        'An error occurred while trying to save the final estimate. Please, try again.',
+        'Ok'
+      );
+    })
   );
 
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
-    private scopingSvc: ScopingService
+    private scopingSvc: ScopingService,
+    private routerFacade: RouterFacade,
+    private popupService: PopupService
   ) {}
 
   vote(userId, moderatorId, connectionId, sessionId, taskId, estimate) {
@@ -122,9 +133,23 @@ export class ScopingFacade {
     );
   }
 
-  validateParticipant(uid: string, sessionLink: string) {
+  setFinalEstimate(
+    userId,
+    moderatorId,
+    connectionId,
+    sessionId,
+    taskId,
+    estimate
+  ) {
     this.store.dispatch(
-      new ValidateParticipantAction({ uid: uid, sessionLink: sessionLink })
+      new SetEstimateAction({
+        userId,
+        moderatorId,
+        connectionId,
+        sessionId,
+        taskId,
+        estimate,
+      })
     );
   }
 }

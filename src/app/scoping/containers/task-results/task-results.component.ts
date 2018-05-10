@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ScopingSession } from '@models/scoping-session';
-import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { User } from '@models/user';
+import { Store, select } from '@ngrx/store';
 import { AppState } from '@app/state/app.reducer';
 import { AuthQuery } from '@app/authentication/state/auth.reducer';
-import { User } from '@models/user';
 import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 
 @Component({
-  selector: 'app-session-scoping',
-  templateUrl: './session-scoping.component.html',
-  styleUrls: ['./session-scoping.component.scss'],
+  selector: 'app-task-results',
+  templateUrl: './task-results.component.html',
+  styleUrls: ['./task-results.component.scss'],
 })
-export class SessionScopingComponent implements OnInit {
+export class TaskResultsComponent implements OnInit {
   session: ScopingSession;
+  hasResults = false;
   user$: Observable<User>;
   user: User;
+  isModerator = true;
+  finalEstimate: number;
 
   constructor(
     private store: Store<AppState>,
@@ -52,16 +55,19 @@ export class SessionScopingComponent implements OnInit {
 
   ngOnInit() {}
 
-  vote(estimate) {
-    estimate = parseInt(estimate, 10);
+  setFinalEstimate(estimate) {
+    this.finalEstimate = estimate;
+  }
+
+  saveFinalEstimate() {
     if (this.user && this.session) {
-      this.scopingFacade.vote(
+      this.scopingFacade.setFinalEstimate(
         this.user.uid,
         this.session.ownerId,
         this.session.connectionId,
         this.session.id,
         this.session.currentTaskId,
-        estimate
+        this.finalEstimate
       );
     }
   }
