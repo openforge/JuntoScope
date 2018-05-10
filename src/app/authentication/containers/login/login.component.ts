@@ -50,4 +50,12 @@ export class LoginComponent implements OnDestroy {
       this.routerFacade.navigate(navOptions);
     });
   }
+
+  facebookLogin() {
+    this.authFacade.facebookLogin();
+
+    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
+      this.routerFacade.navigate(navOptions);
+    });
+  }
 }
