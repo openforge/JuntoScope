@@ -9,9 +9,16 @@ export class PopupService {
     private alertCtrl: AlertController,
     private popoverCtrl: PopoverController) {}
 
-  async alert(header: string, subHeader: string, buttonLabel: string) {
-    const alert = await this.alertCtrl.create({ header, subHeader, buttons: [buttonLabel] });
+  async simpleAlert(header: string, message: string, buttonLabel: string) {
+    const alert = await this.alertCtrl.create({ header, message, buttons:[{text: buttonLabel, handler: () => true}] });
     await alert.present();
+    return alert.onDidDismiss();
+  }
+
+  async customCallbackAlert(header: string, message: string, buttonLabel: string, callback: any) {
+    const alert = await this.alertCtrl.create({ header, message, buttons:[{text: buttonLabel, handler: callback}] });
+    await alert.present();
+    return alert.onDidDismiss();
   }
 
   async promptYesNo(header: string, message: string) {
