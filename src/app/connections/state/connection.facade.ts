@@ -36,6 +36,7 @@ import { NoopAction } from '@app/state/app.actions';
 import { PopupService } from '@app/shared/popup.service';
 import { RouterFacade } from '@app/state/router.facade';
 import * as RouterActions from '@app/state/router.actions';
+import { VerifyModalComponent } from '@app/connections/components/verify-modal/verify-modal.component';
 
 @Injectable()
 export class ConnectionFacade {
@@ -92,13 +93,10 @@ export class ConnectionFacade {
         .addConnection(action.payload.connection)
         .pipe(
           switchMap((response: any) =>
-            this.popupSvc.simpleAlert(
-              'Verify Account',
-              `Connection type: ${response.type} Company name: ${
-                response.externalData.company
-              } Account name: ${response.externalData.name}`,
-              'Next'
-            )
+            this.popupSvc.openModal({
+              component: VerifyModalComponent,
+              componentProps: { connectionData: response },
+            })
           ),
           map(() => new RouterActions.GoAction({ path: ['/dashboard'] })),
           catchError(error =>

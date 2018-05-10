@@ -17,6 +17,7 @@ import { TaskItemComponent } from './components/task-item/task-item.component';
 import { ProjectItemComponent } from './components/project-item/project-item.component';
 import { SelectProjectComponent } from './containers/select-project/select-project.component';
 import { SelectTaskListComponent } from './containers/select-task-list/select-task-list.component';
+import { VerifyModalComponent } from '@app/connections/components/verify-modal/verify-modal.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,9 @@ import { SelectTaskListComponent } from './containers/select-task-list/select-ta
     ProjectItemComponent,
     SelectProjectComponent,
     SelectTaskListComponent,
+    VerifyModalComponent,
   ],
+  entryComponents: [VerifyModalComponent],
 })
 export class ConnectionsModule {
   static forRoot(): ModuleWithProviders {

@@ -14,6 +14,8 @@ import {
   HistoryItemOptionEvent,
   HistoryItemDetailEvent,
 } from '@models/history-item';
+import { PopupService } from '@app/shared/popup.service';
+import { SessionDetailModalComponent } from '@app/dashboard/components/session-detail-modal/session-detail-modal.component';
 
 @TakeUntilDestroy()
 @Component({
@@ -30,7 +32,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private appFacade: AppFacade,
     private routerFacade: RouterFacade,
     private dashboardFacade: DashboardFacade,
-    private connectionFacade: ConnectionFacade
+    private popupSvc: PopupService
   ) {}
 
   ngOnInit() {
@@ -41,7 +43,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   handleOptionClick(event: HistoryItemOptionEvent) {
-    console.log('options for User Type', event);
+    this.popupSvc.openModal({
+      component: SessionDetailModalComponent,
+      componentProps: { accountData: event },
+    });
   }
 
   handleDetailClick(event: HistoryItemDetailEvent) {
