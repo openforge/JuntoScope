@@ -6,6 +6,7 @@ import { User } from '@models/user';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@app/state/app.reducer';
 import { AuthQuery } from '@app/authentication/state/auth.reducer';
+import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 
 @Component({
   selector: 'app-session-results',
@@ -14,53 +15,34 @@ import { AuthQuery } from '@app/authentication/state/auth.reducer';
 })
 export class SessionResultsComponent implements OnInit {
   session: ScopingSession;
-  hasResults = false;
-  user$: Observable<User>;
-  user: User;
-  isModerator = true;
 
-  constructor(private store: Store<AppState>) {
-    this.user$ = this.store.pipe(select(AuthQuery.selectUser));
-    this.user$.subscribe(user => {
-      this.user = user;
-    });
-
+  constructor(
+    private store: Store<AppState>,
+    private scopingFacade: ScopingFacade
+  ) {
     this.session = {
-      id: '1',
-      ownerId: 'a',
+      id: 'xIUiPVQX1pn0sbKdC6EF',
+      ownerId: '4unCMQb5lGgORDo2Y5UUWlBcUHj1',
+      connectionId: 'THfDyZ5ql7PbyDvzuyuZ',
       projectName: 'Test project',
-      currentTaskId: '1',
-      numTasks: 2,
-      numScopedTasks: 0,
+      currentTaskId: 'prFpkJAGoM4HnRkajCys',
+      numTasks: 1,
+      numScopedTasks: 1,
       tasks: {
-        1: {
+        prFpkJAGoM4HnRkajCys: {
           name: 'Test task 1',
           description: 'This is a description',
           votes: {
-            a: 3,
+            '4unCMQb5lGgORDo2Y5UUWlBcUHj1': 3,
           },
-          estimate: null,
-        },
-        2: {
-          name: 'Test task 2',
-          description: 'This is a description',
-          votes: {
-            a: 10,
-            b: 20,
-          },
-          estimate: null,
+          estimate: 5,
         },
       },
       participants: {
-        a: 1111,
-        b: 2222,
+        '4unCMQb5lGgORDo2Y5UUWlBcUHj1': 1111,
       },
     };
   }
 
   ngOnInit() {}
-
-  saveFinalEstimate(estimate) {
-    console.log('Final estimate', estimate);
-  }
 }

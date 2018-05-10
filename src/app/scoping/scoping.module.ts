@@ -13,6 +13,7 @@ import { ResultEstimateComponent } from './components/result-estimate/result-est
 import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 import { ScopingService } from '@app/scoping/services/scoping.service';
 import { SelectResultComponent } from './components/select-result/select-result.component';
+import { TaskResultsComponent } from './containers/task-results/task-results.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { SelectResultComponent } from './components/select-result/select-result.
     VoteComponent,
     ResultEstimateComponent,
     SelectResultComponent,
+    TaskResultsComponent,
   ],
 })
 export class ScopingModule {
