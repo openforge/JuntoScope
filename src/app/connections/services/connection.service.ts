@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 
 import { environment } from '@env/environment';
 import { Project } from '@models/project';
+import { TaskList } from '@models/task-list';
 import { Connection } from '@models/connection';
 import { AppFacade } from '@app/state/app.facade';
 
@@ -30,6 +31,16 @@ export class ConnectionService {
         `${environment.apiBaseUrl}/connections/${connectionId}/projects/`
       )
       .pipe(map(response => _.keyBy(response.projects, 'id')));
+  }
+
+  getTaskLists(connectionId: string, projectId: string) {
+    return this.http
+      .get<{ taskLists: TaskList[] }>(
+        `${
+          environment.apiBaseUrl
+        }/connections/${connectionId}/projects/${projectId}/taskLists`
+      )
+      .pipe(map(response => _.keyBy(response.taskLists, 'id')));
   }
 
   getConnections() {

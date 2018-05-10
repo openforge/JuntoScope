@@ -2,6 +2,8 @@ import { Action } from '@ngrx/store';
 
 import { Connection } from '@models/connection';
 
+import { Project } from '@models/project';
+
 export enum ConnectionActionTypes {
   QUERY_ALL = '[Connection] Query All',
   NO_CONNECTIONS = '[Connection] None Found',
@@ -14,6 +16,7 @@ export enum ConnectionActionTypes {
   ADD_ERROR = '[Connection] Add Error',
 
   SELECTED = '[Connection] Selected',
+  SELECTED_PROJECT = '[Connection] Selected Project',
 }
 
 export class QueryConnectionsAction implements Action {
@@ -56,6 +59,11 @@ export class SelectedConnectionAction implements Action {
   constructor(public payload: { connectionId: string }) {}
 }
 
+export class SelectedProjectAction implements Action {
+  readonly type = ConnectionActionTypes.SELECTED_PROJECT;
+  constructor(public payload: { connection: Connection; project: Project }) {}
+}
+
 export type ConnectionActions =
   | QueryConnectionsAction
   | NoConnectionsAction
@@ -64,4 +72,5 @@ export type ConnectionActions =
   | RemovedConnectionAction
   | AddConnectionAction
   | AddConnectionErrorAction
-  | SelectedConnectionAction;
+  | SelectedConnectionAction
+  | SelectedProjectAction;

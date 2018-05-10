@@ -23,11 +23,13 @@ import {
   RemovedConnectionAction,
   AddConnectionAction,
   SelectedConnectionAction,
+  SelectedProjectAction,
   AddConnectionErrorAction,
   NoConnectionsAction,
 } from '@app/connections/state/connection.actions';
 import { ConnectionService } from '@app/connections/services/connection.service';
 import { Connection } from '@models/connection';
+import { Project } from '@models/project';
 import {
   ConnectionQuery,
   ConnectionUiState,
@@ -51,6 +53,8 @@ export class ConnectionFacade {
   selectedConnection$ = this.store.pipe(
     select(ConnectionQuery.selectSelectedConnection)
   );
+
+  selectedProject$ = this.store.pipe(select(ConnectionQuery.selectProject));
 
   /*
    * Module-level Effects
@@ -94,9 +98,13 @@ export class ConnectionFacade {
           switchMap((response: any) =>
             this.popupSvc.simpleAlert(
               'Verify Account',
-              `Connection type: ${response.type} Company name: ${response.externalData.company} Account name: ${response.externalData.name}`,
-              'Next')),
-          map(() => new RouterActions.GoAction({path: ['/dashboard']})),
+              `Connection type: ${response.type} Company name: ${
+                response.externalData.company
+              } Account name: ${response.externalData.name}`,
+              'Next'
+            )
+          ),
+          map(() => new RouterActions.GoAction({ path: ['/dashboard'] })),
           catchError(error =>
             of(new AddConnectionErrorAction({ message: error.message }))
           )
@@ -107,7 +115,6 @@ export class ConnectionFacade {
   @Effect()
   selectConnection$ = this.actions$.pipe(
     ofType<SelectedConnectionAction>(ConnectionActionTypes.SELECTED),
-    tap(res => console.log(res)),
     switchMap(action =>
       this.connectionSvc.getProjects(action.payload.connectionId).pipe(
         map(
@@ -123,6 +130,35 @@ export class ConnectionFacade {
           of(new AddConnectionErrorAction({ message: error.message }))
         )
       )
+    )
+  );
+
+  @Effect()
+  selectProject$ = this.actions$.pipe(
+    ofType<SelectedProjectAction>(ConnectionActionTypes.SELECTED_PROJECT),
+    switchMap(action =>
+      this.connectionSvc
+        .getTaskLists(action.payload.connection.id, action.payload.project.id)
+        .pipe(
+          map(taskLists => {
+            const updatedProject = { ...action.payload.project, taskLists };
+            const projectsChanges = {
+              ...action.payload.connection.projects,
+              [action.payload.project.id]: updatedProject,
+            };
+            return new ModifiedConnectionAction({
+              update: {
+                id: action.payload.connection.id,
+                changes: {
+                  projects: projectsChanges,
+                },
+              },
+            });
+          }),
+          catchError(error =>
+            of(new AddConnectionErrorAction({ message: error.message }))
+          )
+        )
     )
   );
 
@@ -164,6 +200,33 @@ export class ConnectionFacade {
       )
       .subscribe(() => {
         this.store.dispatch(new SelectedConnectionAction({ connectionId }));
+      });
+  }
+
+  selectProject(connectionId: string, projectId: string) {
+    this.selectedConnection$
+      .pipe(
+        tap(connection => {
+          if (!connection || connection.id !== connectionId) {
+            this.selectConnection(connectionId);
+          }
+        }),
+        filter(
+          connection =>
+            connection &&
+            connection.id === connectionId &&
+            connection.projects &&
+            !!connection.projects[projectId]
+        ),
+        take(1)
+      )
+      .subscribe(connection => {
+        this.store.dispatch(
+          new SelectedProjectAction({
+            connection,
+            project: connection.projects[projectId],
+          })
+        );
       });
   }
 }
