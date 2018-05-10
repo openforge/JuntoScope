@@ -12,6 +12,7 @@ import { SessionHistoryItemComponent } from './components/session-history-item/s
 import { HistoryService } from '@app/dashboard/services/history.service';
 import { dashboardReducer } from '@app/dashboard/state/dashboard.reducer';
 import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
+import { SessionDetailModalComponent } from '@app/dashboard/components/session-detail-modal/session-detail-modal.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,11 @@ import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
     JoinSessionComponent,
     SessionHistoryListComponent,
     SessionHistoryItemComponent,
+    SessionDetailModalComponent
   ],
+  entryComponents: [
+    SessionDetailModalComponent
+  ]
 })
 export class DashboardModule {
   static forRoot(): ModuleWithProviders {

@@ -12,6 +12,7 @@ import { InstructionsComponent } from '@app/connections/components/instructions/
 import { connectionReducer } from '@app/connections/state/connection.reducer';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
 import { ConnectionService } from '@app/connections/services/connection.service';
+import { VerifyModalComponent } from '@app/connections/components/verify-modal/verify-modal.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,10 @@ import { ConnectionService } from '@app/connections/services/connection.service'
     InstructionsComponent,
     CreateSessionComponent,
     ConnectionDetailsComponent,
-  ],
+    VerifyModalComponent
+  ],entryComponents: [
+    VerifyModalComponent
+  ]
 })
 export class ConnectionsModule {
   static forRoot(): ModuleWithProviders {
