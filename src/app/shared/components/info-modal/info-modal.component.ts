@@ -12,6 +12,7 @@ export class InfoModalComponent implements OnInit {
   title;
   text;
   label;
+  callback;
 
   constructor(private popupSvc: PopupService, private params: NavParams) {}
 
@@ -19,9 +20,11 @@ export class InfoModalComponent implements OnInit {
     this.title = this.params.data.title;
     this.text = this.params.data.text;
     this.label = this.params.data.label;
+    this.callback = this.params.data.callback;
   }
 
   dismiss() {
+    this.callback();
     this.popupSvc.closeModal();
   }
 }
