@@ -42,7 +42,6 @@
     "ngx-take-until-destroy": "^2.2.1",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.0.0",
-    "xlsx": "^0.12.12",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
