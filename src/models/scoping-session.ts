@@ -1,4 +1,5 @@
 import { Task } from '@models/task';
+import { User } from '@models/user';
 
 export interface ScopingSession {
   projectName: string;
@@ -6,9 +7,15 @@ export interface ScopingSession {
   numTasks: number;
   numScopedTasks: number;
   tasks: { [taskId: string]: Task };
+  participants: { [userId: string]: number };
 }
 
 export enum SessionStatus {
   COMPLETE = 'Session Completed',
   INCOMPLETE = 'Session Incomplete',
+}
+
+export interface SessionValidation {
+  sessionLink: string;
+  accessCode: string;
 }
