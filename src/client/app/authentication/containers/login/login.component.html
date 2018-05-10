@@ -21,6 +21,10 @@
     Google
   </ion-button>
 
+  <ion-button (click)="twitterLogin()" [disabled]="!hasAgreed">
+    Twitter
+  </ion-button>
+
   <p *ngIf="loading$ | async">
     Authenticating ...
   </p>
