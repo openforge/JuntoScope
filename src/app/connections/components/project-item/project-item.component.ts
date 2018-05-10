@@ -1,15 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+
 import { Project } from '@models/project';
 
 @Component({
   selector: 'app-project-item',
   templateUrl: './project-item.component.html',
   styleUrls: ['./project-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectItemComponent implements OnInit {
-  constructor() {}
-
+export class ProjectItemComponent {
   @Input() project: Project;
-
-  ngOnInit() {}
+  @Output() select = new EventEmitter<Project>();
 }
