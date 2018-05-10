@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ScopingService } from '@app/scoping/services/scoping.service';
+import { ScopingService } from './scoping.service';
 
 describe('ScopingService', () => {
   beforeEach(() => {

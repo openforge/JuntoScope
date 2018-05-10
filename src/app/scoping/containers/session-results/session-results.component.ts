@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ScopingSession } from '@models/scoping-session';
 
+import { Observable } from 'rxjs/Observable';
+import { User } from '@models/user';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '@app/state/app.reducer';
+import { AuthQuery } from '@app/authentication/state/auth.reducer';
+
 @Component({
   selector: 'app-session-results',
   templateUrl: './session-results.component.html',
@@ -9,9 +15,19 @@ import { ScopingSession } from '@models/scoping-session';
 export class SessionResultsComponent implements OnInit {
   session: ScopingSession;
   hasResults = false;
+  user$: Observable<User>;
+  user: User;
+  isModerator = true;
 
-  constructor() {
+  constructor(private store: Store<AppState>) {
+    this.user$ = this.store.pipe(select(AuthQuery.selectUser));
+    this.user$.subscribe(user => {
+      this.user = user;
+    });
+
     this.session = {
+      id: '1',
+      ownerId: 'a',
       projectName: 'Test project',
       currentTaskId: '1',
       numTasks: 2,
@@ -43,4 +59,8 @@ export class SessionResultsComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  saveFinalEstimate(estimate) {
+    console.log('Final estimate', estimate);
+  }
 }

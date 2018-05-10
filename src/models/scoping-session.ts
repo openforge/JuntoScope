@@ -2,7 +2,9 @@ import { Task } from '@models/task';
 import { User } from '@models/user';
 
 export interface ScopingSession {
+  id: string;
   projectName: string;
+  ownerId: string;
   currentTaskId: string;
   numTasks: number;
   numScopedTasks: number;

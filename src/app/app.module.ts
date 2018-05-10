@@ -15,6 +15,7 @@ import { AppRoutingModule } from '@app/app-routing.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { AuthenticationModule } from '@app/authentication/authentication.module';
 import { ConnectionsModule } from '@app/connections/connections.module';
+import { ScopingModule } from '@app/scoping/scoping.module';
 import { AppComponent } from '@app/app.component';
 import { NotFoundComponent } from '@app/not-found.component';
 import { AuthGuard } from '@app/auth.guard';

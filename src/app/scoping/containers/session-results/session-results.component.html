@@ -1,33 +1,33 @@
-<ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-back-button></ion-back-button>
-  </ion-buttons>
-  <ion-title>{{session.projectName}}</ion-title>
-</ion-toolbar>
 
 <ion-content>
 
-  <div>
+  <app-session-header [session]="session"></app-session-header>
 
-    <app-session-header [session]="session"></app-session-header>
-    <hr />
-    <app-task-card [task]="session.tasks[session.currentTaskId]" [onlyTitle]="true"></app-task-card>
-    <hr />
-    <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
-    <hr />
-    <app-counted-votes [votes]="session.tasks[session.currentTaskId].votes" [participantCount]="(session.participants | objKeys).length"></app-counted-votes>
+  <app-task-card [task]="session.tasks[session.currentTaskId]" [onlyTitle]="true"></app-task-card>
 
-  </div>
+  <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
+
+  <ng-container *ngIf="isModerator">
+    <app-select-result [avg]="3" [max]="5"
+     (estimate)="saveFinalEstimate($event)"></app-select-result>
+  </ng-container>
+
+  <app-counted-votes [votes]="session.tasks[session.currentTaskId].votes" [participantCount]="(session.participants | objKeys).length"></app-counted-votes>
 
 </ion-content>
 
-<ion-footer *ngIf="!session.tasks[session.currentTaskId].estimate">
+<ion-footer *ngIf="!isModerator && !session.tasks[session.currentTaskId].estimate">
   <ion-toolbar>
     <ion-title>Waiting</ion-title>
   </ion-toolbar>
 </ion-footer>
-<ion-footer *ngIf="session.tasks[session.currentTaskId].estimate">
+<ion-footer *ngIf="!isModerator && session.tasks[session.currentTaskId].estimate">
   <ion-toolbar>
     <ion-title>Next task</ion-title>
+  </ion-toolbar>
+</ion-footer>
+<ion-footer *ngIf="isModerator">
+  <ion-toolbar>
+    <ion-title>Submit</ion-title>
   </ion-toolbar>
 </ion-footer>

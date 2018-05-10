@@ -33,6 +33,7 @@ export class AuthService {
     return this.afAuth.authState.pipe(
       map(authData => {
         if (authData) {
+          // authData.getIdToken().then(d => { console.log(d);});
           const { uid, displayName } = authData;
           return { uid, displayName } as User;
         }
