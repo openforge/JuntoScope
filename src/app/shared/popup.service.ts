@@ -111,7 +111,7 @@ export class PopupService {
    * Return the top modal
    */
   async topModl() {
-    this.modalCtrl.getTop();
+    return this.modalCtrl.getTop();
   }
 
   /**
