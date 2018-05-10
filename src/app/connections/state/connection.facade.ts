@@ -21,6 +21,9 @@ import { ConnectionService } from '@app/connections/services/connection.service'
 import { Connection } from '@models/connection';
 import { ConnectionQuery } from '@app/connections/state/connection.reducer';
 import { NoopAction } from '@app/state/app.actions';
+import { PopupService } from '@app/shared/popup.service';
+import { RouterFacade } from '@app/state/router.facade';
+import * as RouterActions from '@app/state/router.actions';
 
 @Injectable()
 export class ConnectionFacade {
@@ -72,7 +75,12 @@ export class ConnectionFacade {
       this.connectionSvc
         .addConnection(action.payload.connection)
         .pipe(
-          map(() => new NoopAction()),
+          switchMap((response: any) =>
+            this.popupSvc.simpleAlert(
+              'Verify Account',
+              `Connection type: ${response.type} Company name: ${response.externalData.company} Account name: ${response.externalData.name}`,
+              'Next')),
+          map(() => new RouterActions.GoAction({path: ['/dashboard']})),
           catchError(error =>
             of(new AddConnectionErrorAction({ message: error.message }))
           )
@@ -83,7 +91,9 @@ export class ConnectionFacade {
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
-    private connectionSvc: ConnectionService
+    private connectionSvc: ConnectionService,
+    private popupSvc: PopupService,
+    private routerFacade: RouterFacade
   ) {}
 
   /*
