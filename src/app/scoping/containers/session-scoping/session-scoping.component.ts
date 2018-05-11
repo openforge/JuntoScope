@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ScopingSession } from '@models/scoping-session';
+import { ScopingSession, SessionValidation } from '@models/scoping-session';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { AppState } from '@app/state/app.reducer';
@@ -8,6 +8,7 @@ import { User } from '@models/user';
 import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 import { RouterFacade } from '@app/state/router.facade';
 import { take } from 'rxjs/operators';
+import { ParticipantState } from '@app/scoping/state/scoping.reducer';
 
 @Component({
   selector: 'app-session-scoping',
@@ -15,11 +16,13 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./session-scoping.component.scss'],
 })
 export class SessionScopingComponent implements OnInit {
+  ParticipantState = ParticipantState;
   session: ScopingSession;
   user$: Observable<User>;
+  params$ = this.routerFacade.params$;
+  participantState$ = this.scopingFacade.participantState$;
   user: User;
   sessionCode: string;
-  params$ = this.routerFacade.params$;
   error$ = this.scopingFacade.error$;
   uiState$ = this.scopingFacade.uiState$;
   session$ = this.scopingFacade.session$;
@@ -27,16 +30,14 @@ export class SessionScopingComponent implements OnInit {
   hasResults = false;
   isModerator = true;
   finalEstimate: number;
+  sessionLink: string;
+  participantState: ParticipantState;
 
   constructor(
     private store: Store<AppState>,
     private scopingFacade: ScopingFacade,
     private routerFacade: RouterFacade
   ) {
-    this.params$.pipe(take(1)).subscribe(params => {
-      this.sessionCode = params.sessionCode;
-      this.scopingFacade.loadSession(this.sessionCode);
-    });
     this.user$ = this.store.pipe(select(AuthQuery.selectUser));
     this.user$.subscribe(user => {
       this.user = user;
@@ -58,7 +59,19 @@ export class SessionScopingComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.params$.pipe(take(1)).subscribe(params => {
+      this.sessionCode = params.sessionCode;
+      this.scopingFacade.validateParticipant(this.user.uid, this.sessionCode);
+    });
+
+    this.participantState$.subscribe(participantState => {
+      this.participantState = participantState;
+      if (participantState === ParticipantState.PARTICIPANT_VALIDATED) {
+        this.scopingFacade.loadSession(this.sessionCode);
+      }
+    });
+  }
 
   vote(estimate) {
     estimate = parseInt(estimate, 10);
@@ -89,5 +102,9 @@ export class SessionScopingComponent implements OnInit {
         this.finalEstimate
       );
     }
+  }
+
+  access(sessionValidation: SessionValidation) {
+    this.scopingFacade.validateSession(sessionValidation);
   }
 }

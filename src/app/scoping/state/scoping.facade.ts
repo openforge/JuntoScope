@@ -51,6 +51,10 @@ export class ScopingFacade {
   uiState$ = this.store.pipe(select(ScopingQuery.selectUiState));
   session$ = this.store.pipe(select(ScopingQuery.selectSession));
 
+  participantState$ = this.store.pipe(
+    select(ScopingQuery.selectParticipantState)
+  );
+
   /**
    * Module-level Effects
    */
@@ -187,14 +191,6 @@ export class ScopingFacade {
   );
 
   @Effect()
-  sessionVerified$ = this.actions$.pipe(
-    ofType<SessionVerfiedAction>(ScopingActionTypes.SESSION_VERIFIED),
-    switchMap(action =>
-      of(new GoAction({ path: [`/scoping/${action.payload.sessionLink}`] }))
-    )
-  );
-
-  @Effect()
   validateParticipant$ = this.actions$.pipe(
     ofType<ValidateParticipantAction>(ScopingActionTypes.VALIDATE_PARTICIPANT),
     switchMap(action =>
@@ -216,12 +212,6 @@ export class ScopingFacade {
           })
         )
     )
-  );
-
-  @Effect()
-  invalidParticipant$ = this.actions$.pipe(
-    ofType<SessionVerfiedAction>(ScopingActionTypes.VALIDATE_PARTICIPANT_ERROR),
-    switchMap(action => of(new GoAction({ path: ['/dashboard'] })))
   );
 
   constructor(
