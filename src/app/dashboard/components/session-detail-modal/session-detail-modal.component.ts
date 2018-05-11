@@ -7,6 +7,9 @@ import { Store } from '@ngrx/store';
 import { RefreshAccessCodeAction } from '@app/dashboard/state/dashboard.actions';
 
 import * as moment from 'moment';
+import { Store } from '@ngrx/store';
+import { AppState } from '@app/state/app.reducer';
+import { DeleteSessionAction } from '@app/dashboard/state/dashboard.actions';
 
 @Component({
   selector: 'app-session-detail-modal',

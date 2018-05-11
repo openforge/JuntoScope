@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import {
   AngularFirestore,
@@ -93,6 +94,12 @@ export class HistoryService {
   refreshAccessCode(sessionCode) {
     return this.http.get(
       `${environment.apiBaseUrl}/session-links/${sessionCode}/refresh`
+    );
+  }
+
+  deleteSession(sessionLink) {
+    return this.http.delete(
+      `${environment.apiBaseUrl}/session-links/${sessionLink}`
     );
   }
 
