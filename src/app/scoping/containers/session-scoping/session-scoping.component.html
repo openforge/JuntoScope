@@ -1,7 +1,10 @@
 
 <ion-content>
 
-  <ng-container *ngIf="session && session.tasks; else noSession">
+  <app-session-access *ngIf="participantState === ParticipantState.PARTICIPANT_INVALID" [sessionLink]="sessionLink" (access)="access($event)">
+  </app-session-access>
+
+  <ng-container *ngIf="participantState === ParticipantState.PARTICIPANT_VALIDATED && session && session.tasks; else noSession">
 
     <app-session-header [session]="session"></app-session-header>
 
@@ -15,7 +18,7 @@
 
   </ng-container>
 
-  <ng-template #noSession>
+  <ng-template *ngIf="participantState === ParticipantState.PARTICIPANT_VALIDATED" #noSession>
     No session found
   </ng-template>
 </ion-content>

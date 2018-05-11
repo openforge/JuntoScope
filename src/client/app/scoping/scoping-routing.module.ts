@@ -7,10 +7,6 @@ import { TaskResultsComponent } from '@app/scoping/containers/task-results/task-
 
 const routes: Routes = [
   {
-    path: 'access/:sessionCode',
-    component: SessionAccessComponent,
-  },
-  {
     path: ':sessionId',
     component: SessionScopingComponent,
   },

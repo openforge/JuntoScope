@@ -33,6 +33,19 @@ import { HistoryService } from '@app/dashboard/services/history.service';
 
 @Injectable()
 export class ScopingFacade {
+  /*
+    * Observable Store Queries
+    */
+  error$ = this.store.pipe(select(ScopingQuery.selectError));
+  uiState$ = this.store.pipe(select(ScopingQuery.selectUiState));
+  participantState$ = this.store.pipe(
+    select(ScopingQuery.selectParticipantState)
+  );
+
+  /*
+    * Module-level Effects
+    */
+
   // @Effect()
   // getSession = this.actions$.pipe(
   //   ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION),
@@ -132,6 +145,48 @@ export class ScopingFacade {
         'Ok'
       );
     })
+  );
+
+  @Effect()
+  validateSession$ = this.actions$.pipe(
+    ofType<ValidateSessionAction>(ScopingActionTypes.VALIDATE_SESSION),
+    switchMap(action =>
+      this.scopingSvc.validateSession(action.payload.sessionValidation).pipe(
+        map(
+          data =>
+            new SessionVerfiedAction({
+              sessionLink: action.payload.sessionValidation.sessionLink,
+            })
+        ),
+        catchError(error => {
+          return of(new SessionJoinErrorAction({ message: error.message }));
+        })
+      )
+    )
+  );
+
+  @Effect()
+  validateParticipant$ = this.actions$.pipe(
+    ofType<ValidateParticipantAction>(ScopingActionTypes.VALIDATE_PARTICIPANT),
+    switchMap(action =>
+      this.scopingSvc
+        .checkParticipant(action.payload.uid, action.payload.sessionLink)
+        .pipe(
+          map(valid => {
+            if (valid) {
+              return new ParticipantValidatedAction(valid);
+            }
+            return new ValidateParticipantErrorAction({
+              message: 'invalid participant',
+            });
+          }),
+          catchError(error => {
+            return of(
+              new ValidateParticipantErrorAction({ message: error.message })
+            );
+          })
+        )
+    )
   );
 
   constructor(
