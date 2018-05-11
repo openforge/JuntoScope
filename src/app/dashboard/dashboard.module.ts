@@ -27,6 +27,7 @@ import { SessionDetailModalComponent } from '@app/dashboard/components/session-d
     JoinSessionComponent,
     SessionHistoryListComponent,
     SessionHistoryItemComponent,
+    SessionDetailModalComponent,
     CreateSessionComponent,
     SessionDetailModalComponent,
   ],
