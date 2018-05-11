@@ -24,12 +24,33 @@ import {
   SetEstimateSuccessAction,
   SetEstimateErrorAction,
   ScopingActionTypes,
+  LoadSessionSuccessAction,
+  LoadSessionErrorAction,
 } from '@app/scoping/state/scoping.actions';
 import { RouterFacade } from '@app/state/router.facade';
 import { PopupService } from '@app/shared/popup.service';
+import { HistoryService } from '@app/dashboard/services/history.service';
 
 @Injectable()
 export class ScopingFacade {
+  // @Effect()
+  // getSession = this.actions$.pipe(
+  //   ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION),
+  //   switchMap(action =>
+  //     this.historySvc
+  //       .getSession(action.payload.ownerId, action.payload.connectionId, action.payload.sessionId)
+  //       .then(() => {
+  //         console.log('Session fetched successfully');
+  //         return new LoadSessionSuccessAction(action.payload);
+  //       })
+  //       .catch(({ message }) => {
+  //         console.log('ERROR fetching session');
+  //         return new LoadSessionErrorAction({ message });
+  //       })
+  //   ),
+  //   catchError(error => of(new LoadSessionErrorAction({ message: error.message })))
+  // );
+
   @Effect()
   vote$ = this.actions$.pipe(
     ofType<VoteAction>(ScopingActionTypes.VOTE),
@@ -53,8 +74,9 @@ export class ScopingFacade {
     ofType<VoteAction>(ScopingActionTypes.VOTE_SUCCESS),
     tap(action => {
       const sessionId = action.payload.sessionId;
+      const taskId = action.payload.taskId;
       this.routerFacade.navigate({
-        path: [`/scoping/${sessionId}/tasks/${action.payload.taskId}/results`],
+        path: [`/scoping/${sessionId}/tasks/${taskId}/results`],
       });
     })
   );
@@ -116,6 +138,7 @@ export class ScopingFacade {
     private store: Store<AppState>,
     private actions$: Actions,
     private scopingSvc: ScopingService,
+    private historySvc: HistoryService,
     private routerFacade: RouterFacade,
     private popupService: PopupService
   ) {}
