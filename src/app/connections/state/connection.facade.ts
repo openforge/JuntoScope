@@ -11,6 +11,7 @@ import {
   tap,
   take,
   filter,
+  exhaustMap,
 } from 'rxjs/operators';
 import { of, combineLatest, empty } from 'rxjs';
 
@@ -26,6 +27,7 @@ import {
   SelectedProjectAction,
   AddConnectionErrorAction,
   NoConnectionsAction,
+  CreateSessionAction,
 } from '@app/connections/state/connection.actions';
 import { ConnectionService } from '@app/connections/services/connection.service';
 import { Connection } from '@models/connection';
@@ -126,9 +128,6 @@ export class ConnectionFacade {
                 changes: { projects },
               },
             })
-        ),
-        catchError(error =>
-          of(new AddConnectionErrorAction({ message: error.message }))
         )
       )
     )
@@ -155,10 +154,29 @@ export class ConnectionFacade {
                 },
               },
             });
-          }),
-          catchError(error =>
-            of(new AddConnectionErrorAction({ message: error.message }))
-          )
+          })
+        )
+    )
+  );
+
+  @Effect()
+  createSession$ = this.actions$.pipe(
+    ofType<CreateSessionAction>(ConnectionActionTypes.CREATE_SESSION),
+    exhaustMap(action =>
+      this.connectionSvc
+        .createSession(
+          action.payload.connectionId,
+          action.payload.projectId,
+          action.payload.taskListIds
+        )
+        .pipe(
+          // TODO: Open modal and/or redirect to scoping session;
+          tap(response =>
+            alert(
+              'Link:' + response.sessionCode + ' Access:' + response.accessCode
+            )
+          ),
+          map(response => new NoopAction())
         )
     )
   );
@@ -229,5 +247,15 @@ export class ConnectionFacade {
           })
         );
       });
+  }
+
+  createSession(
+    connectionId: string,
+    projectId: string,
+    taskListIds: string[]
+  ) {
+    this.store.dispatch(
+      new CreateSessionAction({ connectionId, projectId, taskListIds })
+    );
   }
 }

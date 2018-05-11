@@ -48,4 +48,17 @@ export class ConnectionService {
       switchMap(clnPath => this.afs.collection(clnPath).stateChanges())
     );
   }
+
+  createSession(
+    connectionId: string,
+    projectId: string,
+    taskListIds: string[]
+  ) {
+    return this.http.post<{ sessionCode: string; accessCode: string }>(
+      `${
+        environment.apiBaseUrl
+      }/connections/${connectionId}/projects/${projectId}/sessions`,
+      { taskListIds }
+    );
+  }
 }

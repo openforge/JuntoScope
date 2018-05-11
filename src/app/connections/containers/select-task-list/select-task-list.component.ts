@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { combineLatest } from 'rxjs';
-import { map, tap, filter, switchMap } from 'rxjs/operators';
+import { map, tap, filter, switchMap, take } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 
@@ -33,6 +33,10 @@ export class SelectTaskListComponent {
 
   selectedLists: { [taskListId: string]: boolean } = {};
 
+  get taskListIds() {
+    return _.invertBy(this.selectedLists)['true'];
+  }
+
   constructor(
     private routerFacade: RouterFacade,
     private connectionFacade: ConnectionFacade
@@ -43,6 +47,12 @@ export class SelectTaskListComponent {
   }
 
   startSession() {
-    const taskListIds = _.invertBy(this.selectedLists)['true'];
+    this.routerFacade.params$.pipe(take(1)).subscribe(params => {
+      this.connectionFacade.createSession(
+        params.connectionId,
+        params.projectId,
+        this.taskListIds
+      );
+    });
   }
 }

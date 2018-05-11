@@ -17,6 +17,7 @@ export enum ConnectionActionTypes {
 
   SELECTED = '[Connection] Selected',
   SELECTED_PROJECT = '[Connection] Selected Project',
+  CREATE_SESSION = '[Connection] Create Session',
 }
 
 export class QueryConnectionsAction implements Action {
@@ -64,6 +65,17 @@ export class SelectedProjectAction implements Action {
   constructor(public payload: { connection: Connection; project: Project }) {}
 }
 
+export class CreateSessionAction implements Action {
+  readonly type = ConnectionActionTypes.CREATE_SESSION;
+  constructor(
+    public payload: {
+      connectionId: string;
+      projectId: string;
+      taskListIds: string[];
+    }
+  ) {}
+}
+
 export type ConnectionActions =
   | QueryConnectionsAction
   | NoConnectionsAction
@@ -73,4 +85,5 @@ export type ConnectionActions =
   | AddConnectionAction
   | AddConnectionErrorAction
   | SelectedConnectionAction
-  | SelectedProjectAction;
+  | SelectedProjectAction
+  | CreateSessionAction;
