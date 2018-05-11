@@ -10,6 +10,7 @@ import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
 import { SessionUserType } from '@models/user';
 import { SessionStatus } from '@models/scoping-session';
+import { Connection } from '@models/connection';
 import {
   HistoryItemOptionEvent,
   HistoryItemDetailEvent,
@@ -44,7 +45,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   handleOptionClick(event: HistoryItemOptionEvent) {
-    this.popupSvc.openModal({component: SessionDetailModalComponent, componentProps: {'accountData': event} });
+    this.popupSvc.openModal({
+      component: SessionDetailModalComponent,
+      componentProps: { accountData: event },
+    });
   }
 
   handleDetailClick(event: HistoryItemDetailEvent) {
@@ -63,9 +67,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     console.log('Dashboard handling', sessionCode);
   }
 
-  createSession(connectionId) {
+  createSession(connection: Connection) {
     this.routerFacade.navigate({
-      path: [`/connections/${connectionId}/create-session`],
+      path: [`/connections/${connection.id}/projects`],
     });
   }
 
