@@ -17,7 +17,7 @@ export class SettingsService {
     private afs: AngularFirestore
   ) {}
 
-  getFaqs() {
+  queryFaqs() {
     return this.appFacade.faqsPath$.pipe(
       switchMap(faqsPath => this.afs.collection(faqsPath).stateChanges())
     );
