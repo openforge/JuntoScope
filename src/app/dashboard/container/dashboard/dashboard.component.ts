@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   handleOptionClick(event: HistoryItemOptionEvent) {
+    console.log(event);
     this.popupSvc.openModal({component: SessionDetailModalComponent, componentProps: {'accountData': event} });
   }
 

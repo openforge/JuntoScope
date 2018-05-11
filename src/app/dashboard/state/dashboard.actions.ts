@@ -10,6 +10,11 @@ export enum DashboardActionTypes {
   ADDED = '[Dashboard] History Item Added',
   MODIFIED = '[Dashboard] History Item Modified',
   REMOVED = '[Dashboard] History Item Removed',
+
+  REFRESH_ACCESS_CODE = '[Dashboard] Refresh Access Code',
+  REFRESH_ACCESS_CODE_SUCCESS = '[Dashboard] Refresh Access Code Success',
+  REFRESH_ACCESS_CODE_ERROR = '[Dashboard] Refresh Access Code Error',
+
 }
 
 export class LoadHistoryItemsAction implements Action {
@@ -41,10 +46,27 @@ export class RemovedHistoryItemAction implements Action {
   constructor(public payload: { historyItem: HistoryItem }) {}
 }
 
+export class RefreshAccessCodeAction implements Action {
+  readonly type = DashboardActionTypes.REFRESH_ACCESS_CODE;
+  constructor(public sessionCode: any) {}
+}
+
+export class RefreshAccessCodeSuccessAction implements Action {
+  readonly type = DashboardActionTypes.REFRESH_ACCESS_CODE_SUCCESS;
+  constructor(public payload?: any) {}
+}
+
+export class RefreshAccessCodeErrorAction implements Action {
+  readonly type = DashboardActionTypes.REFRESH_ACCESS_CODE_ERROR;
+  constructor(public payload?: any) {}
+}
 export type DashboardActions =
   | LoadHistoryItemsAction
   | LoadMoreHistoryItemsAction
   | NoHistoryItemsAction
   | AddedHistoryItemAction
   | ModifiedHistoryItemAction
-  | RemovedHistoryItemAction;
+  | RemovedHistoryItemAction
+  | RefreshAccessCodeAction
+  | RefreshAccessCodeSuccessAction
+  | RefreshAccessCodeErrorAction;
