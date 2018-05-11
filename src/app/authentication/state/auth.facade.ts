@@ -107,6 +107,10 @@ export class AuthFacade {
     this.store.dispatch(new LoginAction({ provider: 'facebook' }));
   }
 
+  twitterLogin() {
+    this.store.dispatch(new LoginAction({ provider: 'twitter' }));
+  }
+
   logout() {
     this.store.dispatch(new LogoutAction());
   }
