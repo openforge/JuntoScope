@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddConnectionComponent } from '@app/connections/containers/add-connection/add-connection.component';
-import { CreateSessionComponent } from '@app/connections/containers/create-session/create-session.component';
 import { ConnectionDetailsComponent } from '@app/connections/containers/connection-details/connection-details.component';
+import { SelectProjectComponent } from '@app/connections/containers/select-project/select-project.component';
+import { SelectTaskListComponent } from '@app/connections/containers/select-task-list/select-task-list.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,12 @@ const routes: Routes = [
     component: ConnectionDetailsComponent,
   },
   {
-    path: ':connectionId/create-session',
-    component: CreateSessionComponent,
+    path: ':connectionId/projects',
+    component: SelectProjectComponent,
+  },
+  {
+    path: ':connectionId/projects/:projectId',
+    component: SelectTaskListComponent,
   },
 ];
 

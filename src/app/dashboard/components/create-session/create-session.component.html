@@ -1,0 +1,13 @@
+
+<ion-list-header>
+  Create Session
+</ion-list-header>
+
+<ion-list>
+    <button ion-item *ngFor="let connection of connections" (click)="goSelectProject(connection)">
+      {{connection.externalData.company}} {{connection.type}}
+    </button>
+    <ion-item>
+      Add Connection
+    </ion-item>
+</ion-list>
