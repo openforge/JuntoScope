@@ -29,8 +29,6 @@ import { scopingReducer } from '@app/scoping/state/scoping.reducer';
     SessionAccessComponent,
     SessionScopingComponent,
     SessionResultsComponent,
-    SessionScopingComponent,
-    SessionResultsComponent,
     CountedVotesComponent,
     TaskCardComponent,
     SessionHeaderComponent,
