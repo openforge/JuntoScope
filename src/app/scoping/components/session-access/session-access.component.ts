@@ -32,7 +32,7 @@ export class SessionAccessComponent implements OnInit {
         sessionLink: this.sessionLink,
         accessCode: this.accessForm.get('code').value,
       };
-      this.onAccess.emit(sessionValidation);
+      this.access.emit(sessionValidation);
     } else {
       this.accessForm.get('code').markAsDirty();
     }
