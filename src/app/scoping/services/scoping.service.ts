@@ -1,10 +1,40 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { HistoryService } from '@app/dashboard/services/history.service';
 
 @Injectable()
 export class ScopingService {
-  constructor(private afs: AngularFirestore) {}
+  constructor(
+    private afs: AngularFirestore,
+    private appFacade: AppFacade,
+    private historySvc: HistoryService,
+    private http: HttpClient
+  ) {}
+
+  getSession(sessionCode) {
+    return this.afs
+      .doc<ScopingSession>(`/public/data/sessions/${sessionCode}`)
+      .valueChanges()
+      .pipe(
+        switchMap(session =>
+          this.historySvc
+            .getSession({
+              ownerId: session.ownerId,
+              connectionId: session.connectionId,
+              sessionId: session.sessionId,
+            })
+            .pipe(
+              map(usersSession => {
+                return {
+                  ...session,
+                  ...usersSession,
+                };
+              })
+            )
+        )
+      );
+  }
 
   vote(payload): Promise<any> {
     const {

@@ -6,6 +6,7 @@ export interface HistoryItem extends Partial<ScopingSession> {
   ownerId: string;
   connectionId: string;
   sessionId: string;
+  sessionCode: string;
   participants: { [uid: string]: number };
 }
 
