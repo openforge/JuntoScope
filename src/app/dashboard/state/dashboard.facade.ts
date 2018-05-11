@@ -22,6 +22,8 @@ import {
   ModifiedHistoryItemAction,
   RemovedHistoryItemAction,
   NoHistoryItemsAction,
+  DeleteSessionAction,
+  DeleteSessionErrorAction,
 } from '@app/dashboard/state/dashboard.actions';
 import { HistoryService } from '@app/dashboard/services/history.service';
 import { HistoryItem } from '@models/history-item';
@@ -86,6 +88,21 @@ export class DashboardFacade {
           return new RemovedHistoryItemAction({ historyItem });
       }
     })
+  );
+
+  @Effect()
+  deleteSession$ = this.actions$.pipe(
+    ofType<DeleteSessionAction>(DashboardActionTypes.DELETE_SESSION),
+    switchMap(action =>
+      this.historySvc
+        .deleteSession(action.sessionLink)
+        .pipe(
+          map(() => new NoopAction()),
+          catchError(error =>
+            of(new DeleteSessionErrorAction({ message: error.message }))
+          )
+        )
+    )
   );
 
   constructor(

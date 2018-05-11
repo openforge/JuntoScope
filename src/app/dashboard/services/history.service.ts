@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import {
   AngularFirestore,
@@ -13,6 +14,7 @@ import { AppFacade } from '@app/state/app.facade';
 import { ScopingSession } from '@models/scoping-session';
 import { HistoryItem } from '@models/history-item';
 import { Task } from '@models/task';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +42,7 @@ export class HistoryService {
     direction: 'desc' | 'asc';
   } = { limit: 2, direction: 'desc' };
 
-  constructor(private appFacade: AppFacade, private afs: AngularFirestore) {}
+  constructor(private appFacade: AppFacade, private afs: AngularFirestore, private http: HttpClient) {}
 
   loadHistoryItems() {
     this.refresh.next();
@@ -82,6 +84,10 @@ export class HistoryService {
           )
         )
       );
+  }
+
+  deleteSession(sessionLink) {
+    return this.http.delete(`${environment.apiBaseUrl}/session-links/${sessionLink}`);
   }
 
   private getSessionTask(

@@ -10,6 +10,10 @@ export enum DashboardActionTypes {
   ADDED = '[Dashboard] History Item Added',
   MODIFIED = '[Dashboard] History Item Modified',
   REMOVED = '[Dashboard] History Item Removed',
+
+  DELETE_SESSION = '[Dashboard] Delete Session',
+  DELETE_SESSION_SUCCESS = '[Dashboard] Delete Session Success',
+  DELETE_SESSION_ERROR = '[Dashboard] Delete Session error',
 }
 
 export class LoadHistoryItemsAction implements Action {
@@ -41,10 +45,28 @@ export class RemovedHistoryItemAction implements Action {
   constructor(public payload: { historyItem: HistoryItem }) {}
 }
 
+export class DeleteSessionAction implements Action {
+  readonly type = DashboardActionTypes.DELETE_SESSION;
+  constructor(public sessionLink: any) {}
+}
+
+export class DeleteSessionSuccessAction implements Action {
+  readonly type = DashboardActionTypes.DELETE_SESSION_SUCCESS;
+  constructor(public payload?: any) {}
+}
+
+export class DeleteSessionErrorAction implements Action {
+  readonly type = DashboardActionTypes.DELETE_SESSION_ERROR;
+  constructor(public payload?: any) {}
+}
+
 export type DashboardActions =
   | LoadHistoryItemsAction
   | LoadMoreHistoryItemsAction
   | NoHistoryItemsAction
   | AddedHistoryItemAction
   | ModifiedHistoryItemAction
-  | RemovedHistoryItemAction;
+  | RemovedHistoryItemAction
+  | DeleteSessionAction
+  | DeleteSessionSuccessAction
+  | DeleteSessionErrorAction;
