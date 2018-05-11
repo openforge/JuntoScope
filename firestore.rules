@@ -49,8 +49,8 @@ service cloud.firestore {
           match /tasks/{taskId} {
             // Helper function to validate vote hours
             function isVoteValid() {
-              return request.resource.data.votes[request.auth.uid] > 0
-                && !math.isInfinite(request.resource.data.votes[request.auth.uid]);
+              // -1 = 'not applicable', 0 = 'More info needed', 'value > 0' is estimate
+              return !math.isNaN(request.resource.data.votes[request.auth.uid]);
             }
 
             // Allow session participants to view session tasks

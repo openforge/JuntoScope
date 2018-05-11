@@ -18,6 +18,8 @@ export enum ConnectionUiState {
 export interface ConnectionState extends EntityState<Connection> {
   uiState: ConnectionUiState;
   error: string;
+  selectedId: string;
+  selectedProjectId: string;
 }
 
 export const adapter: EntityAdapter<Connection> = createEntityAdapter<
@@ -27,6 +29,8 @@ export const adapter: EntityAdapter<Connection> = createEntityAdapter<
 export const initialConnectionState: ConnectionState = adapter.getInitialState({
   uiState: ConnectionUiState.NOT_LOADED,
   error: null,
+  selectedId: null,
+  selectedProjectId: null,
 });
 
 export function connectionReducer(
@@ -34,6 +38,18 @@ export function connectionReducer(
   action: ConnectionActions
 ): ConnectionState {
   switch (action.type) {
+    case ConnectionActionTypes.SELECTED: {
+      return { ...state, selectedId: action.payload.connectionId };
+    }
+
+    case ConnectionActionTypes.SELECTED_PROJECT: {
+      return {
+        ...state,
+        selectedId: action.payload.connection.id,
+        selectedProjectId: action.payload.project.id,
+      };
+    }
+
     case ConnectionActionTypes.QUERY_ALL: {
       return { ...state, uiState: ConnectionUiState.LOADING };
     }
@@ -85,4 +101,24 @@ export namespace ConnectionQuery {
     state => state.uiState
   );
   export const selectError = createSelector(selectSlice, state => state.error);
+  export const selectSelectedId = createSelector(
+    selectSlice,
+    state => state.selectedId
+  );
+  export const selectSelectedConnection = createSelector(
+    selectSelectedId,
+    selectEntities,
+    (id, entities) => entities[id]
+  );
+  export const selectProjectId = createSelector(
+    selectSlice,
+    state => state.selectedProjectId
+  );
+
+  export const selectProject = createSelector(
+    selectProjectId,
+    selectSelectedConnection,
+    (projectId, connection) =>
+      connection && projectId && connection.projects[projectId]
+  );
 }

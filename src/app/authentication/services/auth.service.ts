@@ -11,13 +11,19 @@ import { User } from '@models/user';
 @Injectable()
 export class AuthService {
   private googleProvider = new firebase.auth.GoogleAuthProvider();
+  private facebookProvider = new firebase.auth.FacebookAuthProvider();
+  private twitterProvider = new firebase.auth.TwitterAuthProvider();
 
   constructor(private afAuth: AngularFireAuth) {}
 
-  login(provider = 'google') {
+  login(provider) {
     switch (provider) {
       case 'google':
         return this.afAuth.auth.signInWithPopup(this.googleProvider);
+      case 'facebook':
+        return this.afAuth.auth.signInWithPopup(this.facebookProvider);
+      case 'twitter':
+        return this.afAuth.auth.signInWithPopup(this.twitterProvider);
       default:
         return Promise.reject(Error('Unknown AuthProvider Passed'));
     }

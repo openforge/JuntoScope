@@ -1,10 +1,17 @@
 import * as express from 'express';
 import { auth } from 'firebase-admin';
 
-import { firestore, teamworkService, encryptionService } from './../../services';
+import {
+  firestore,
+  teamworkService,
+  encryptionService,
+} from './../../services';
 
-export async function addConnection(req: express.Request, res: express.Response) {
-  const { type, token } = req.body as { type: string, token: string };
+export async function addConnection(
+  req: express.Request,
+  res: express.Response
+) {
+  const { type, token } = req.body as { type: string; token: string };
   const uid = res.locals.user.uid;
 
   if (!type) {
@@ -20,11 +27,12 @@ export async function addConnection(req: express.Request, res: express.Response)
       let teamworkResponse;
       try {
         teamworkResponse = await teamworkService.validateToken(token);
-      } catch(error) {
+      } catch (error) {
         return res.status(400).json({ message: error.message });
       }
 
-      let snapshot = await firestore.collection(`/users/${uid}/connections`)
+      const snapshot = await firestore
+        .collection(`/users/${uid}/connections`)
         .where('type', '==', type.toLowerCase())
         .where('externalData.id', '==', teamworkResponse.id)
         .get();
@@ -36,10 +44,13 @@ export async function addConnection(req: express.Request, res: express.Response)
       await firestore.collection(`/users/${uid}/connections`).add({
         type: 'teamwork',
         token: encryptionService.encrypt(token),
-        externalData: teamworkResponse
+        externalData: teamworkResponse,
       });
 
-      return res.status(201).send();
+      return res.status(201).send({
+        type: 'teamwork',
+        externalData: teamworkResponse,
+      });
     }
 
     default: {

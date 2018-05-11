@@ -3,8 +3,17 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 
-import { switchMap, catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import {
+  switchMap,
+  catchError,
+  map,
+  mergeMap,
+  tap,
+  take,
+  filter,
+  exhaustMap,
+} from 'rxjs/operators';
+import { of, combineLatest, empty } from 'rxjs';
 
 import { AppState } from '@app/state/app.reducer';
 import {
@@ -14,13 +23,23 @@ import {
   ModifiedConnectionAction,
   RemovedConnectionAction,
   AddConnectionAction,
+  SelectedConnectionAction,
+  SelectedProjectAction,
   AddConnectionErrorAction,
   NoConnectionsAction,
+  CreateSessionAction,
 } from '@app/connections/state/connection.actions';
 import { ConnectionService } from '@app/connections/services/connection.service';
 import { Connection } from '@models/connection';
-import { ConnectionQuery } from '@app/connections/state/connection.reducer';
+import { Project } from '@models/project';
+import {
+  ConnectionQuery,
+  ConnectionUiState,
+} from '@app/connections/state/connection.reducer';
 import { NoopAction } from '@app/state/app.actions';
+import { PopupService } from '@app/shared/popup.service';
+import { RouterFacade } from '@app/state/router.facade';
+import * as RouterActions from '@app/state/router.actions';
 
 @Injectable()
 export class ConnectionFacade {
@@ -32,6 +51,12 @@ export class ConnectionFacade {
   uiState$ = this.store.pipe(select(ConnectionQuery.selectUiState));
 
   error$ = this.store.pipe(select(ConnectionQuery.selectError));
+
+  selectedConnection$ = this.store.pipe(
+    select(ConnectionQuery.selectSelectedConnection)
+  );
+
+  selectedProject$ = this.store.pipe(select(ConnectionQuery.selectProject));
 
   /*
    * Module-level Effects
@@ -72,7 +97,16 @@ export class ConnectionFacade {
       this.connectionSvc
         .addConnection(action.payload.connection)
         .pipe(
-          map(() => new NoopAction()),
+          switchMap((response: any) =>
+            this.popupSvc.simpleAlert(
+              'Verify Account',
+              `Connection type: ${response.type} Company name: ${
+                response.externalData.company
+              } Account name: ${response.externalData.name}`,
+              'Next'
+            )
+          ),
+          map(() => new RouterActions.GoAction({ path: ['/dashboard'] })),
           catchError(error =>
             of(new AddConnectionErrorAction({ message: error.message }))
           )
@@ -80,10 +114,78 @@ export class ConnectionFacade {
     )
   );
 
+  @Effect()
+  selectConnection$ = this.actions$.pipe(
+    ofType<SelectedConnectionAction>(ConnectionActionTypes.SELECTED),
+    switchMap(action =>
+      this.connectionSvc.getProjects(action.payload.connectionId).pipe(
+        map(
+          projects =>
+            new ModifiedConnectionAction({
+              update: {
+                id: action.payload.connectionId,
+                changes: { projects },
+              },
+            })
+        )
+      )
+    )
+  );
+
+  @Effect()
+  selectProject$ = this.actions$.pipe(
+    ofType<SelectedProjectAction>(ConnectionActionTypes.SELECTED_PROJECT),
+    switchMap(action =>
+      this.connectionSvc
+        .getTaskLists(action.payload.connection.id, action.payload.project.id)
+        .pipe(
+          map(taskLists => {
+            const updatedProject = { ...action.payload.project, taskLists };
+            const projectsChanges = {
+              ...action.payload.connection.projects,
+              [action.payload.project.id]: updatedProject,
+            };
+            return new ModifiedConnectionAction({
+              update: {
+                id: action.payload.connection.id,
+                changes: {
+                  projects: projectsChanges,
+                },
+              },
+            });
+          })
+        )
+    )
+  );
+
+  @Effect()
+  createSession$ = this.actions$.pipe(
+    ofType<CreateSessionAction>(ConnectionActionTypes.CREATE_SESSION),
+    exhaustMap(action =>
+      this.connectionSvc
+        .createSession(
+          action.payload.connectionId,
+          action.payload.projectId,
+          action.payload.taskListIds
+        )
+        .pipe(
+          // TODO: Open modal and/or redirect to scoping session;
+          tap(response =>
+            alert(
+              'Link:' + response.sessionCode + ' Access:' + response.accessCode
+            )
+          ),
+          map(response => new NoopAction())
+        )
+    )
+  );
+
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
-    private connectionSvc: ConnectionService
+    private connectionSvc: ConnectionService,
+    private popupSvc: PopupService,
+    private routerFacade: RouterFacade
   ) {}
 
   /*
@@ -95,5 +197,64 @@ export class ConnectionFacade {
 
   addConnection(connection: Connection) {
     this.store.dispatch(new AddConnectionAction({ connection }));
+  }
+
+  selectConnection(connectionId: string) {
+    this.uiState$
+      .pipe(
+        take(1),
+        switchMap(currentState => {
+          if (currentState === ConnectionUiState.LOADED) {
+            return of(currentState);
+          } else if (currentState !== ConnectionUiState.LOADING) {
+            this.getConnections();
+
+            return this.uiState$.pipe(
+              filter(state => state === ConnectionUiState.LOADED),
+              take(1)
+            );
+          }
+        })
+      )
+      .subscribe(() => {
+        this.store.dispatch(new SelectedConnectionAction({ connectionId }));
+      });
+  }
+
+  selectProject(connectionId: string, projectId: string) {
+    this.selectedConnection$
+      .pipe(
+        tap(connection => {
+          if (!connection || connection.id !== connectionId) {
+            this.selectConnection(connectionId);
+          }
+        }),
+        filter(
+          connection =>
+            connection &&
+            connection.id === connectionId &&
+            connection.projects &&
+            !!connection.projects[projectId]
+        ),
+        take(1)
+      )
+      .subscribe(connection => {
+        this.store.dispatch(
+          new SelectedProjectAction({
+            connection,
+            project: connection.projects[projectId],
+          })
+        );
+      });
+  }
+
+  createSession(
+    connectionId: string,
+    projectId: string,
+    taskListIds: string[]
+  ) {
+    this.store.dispatch(
+      new CreateSessionAction({ connectionId, projectId, taskListIds })
+    );
   }
 }
