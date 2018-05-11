@@ -17,3 +17,8 @@ export enum SessionStatus {
   COMPLETE = 'Session Completed',
   INCOMPLETE = 'Session Incomplete',
 }
+
+export interface SessionValidation {
+  sessionLink: string;
+  accessCode: string;
+}

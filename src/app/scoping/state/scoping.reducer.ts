@@ -1,5 +1,6 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { AppState } from '@app/state/app.reducer';
 
 import {
   ScopingActions,
@@ -15,10 +16,14 @@ export enum ScopingUiState {
   VOTED = 'Voted',
   SETTING_ESTIMATE = 'Setting Estimate',
   ESTIMATE_SET = 'Estimate Set',
+  CHECKING_PARTICIPANT = 'Checking',
+  PARTICIPANT_VALIDATED = 'Validated',
+  PARTICIPANT_INVALID = 'Invalid',
 }
 
 export interface ScopingState extends EntityState<ScopingSession> {
   uiState: ScopingUiState;
+  error: string;
 }
 
 export const adapter: EntityAdapter<ScopingSession> = createEntityAdapter<
@@ -27,6 +32,7 @@ export const adapter: EntityAdapter<ScopingSession> = createEntityAdapter<
 
 export const initialScopingState: ScopingState = adapter.getInitialState({
   uiState: ScopingUiState.NOT_LOADED,
+  error: null,
 });
 
 export function scopingReducer(
@@ -73,6 +79,27 @@ export function scopingReducer(
       };
     }
 
+    case ScopingActionTypes.SESSION_JOIN_ERROR: {
+      return {
+        ...state,
+        error: action.payload.message,
+      };
+    }
+
+    case ScopingActionTypes.VALIDATE_PARTICIPANT_ERROR: {
+      return {
+        ...state,
+        uiState: ScopingUiState.PARTICIPANT_INVALID,
+      };
+    }
+
+    case ScopingActionTypes.PARTICIPANT_VALIDATED: {
+      return {
+        ...state,
+        uiState: ScopingUiState.PARTICIPANT_VALIDATED,
+      };
+    }
+
     default: {
       return state;
     }
@@ -88,4 +115,5 @@ export namespace ScopingQuery {
     selectSlice,
     state => state.uiState
   );
+  export const selectError = createSelector(selectSlice, state => state.error);
 }

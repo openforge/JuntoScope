@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 
 import { idTokenAuth } from './middleware';
-import { apiRouter } from './api'
+import { apiRouter } from './api';
 
 const app = express();
 app.disable('X-Powered-By');
@@ -11,9 +11,6 @@ app.disable('X-Powered-By');
 app.use(cors({ origin: true }));
 
 app.use(idTokenAuth);
-app.use('/test', (req: express.Request, res: express.Response) => {
-  res.send("Success");
-});
 
 app.use(apiRouter);
 app.get('/*', (req: express.Request, res: express.Response) => {

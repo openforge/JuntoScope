@@ -13,16 +13,17 @@ export class SessionService {
 
   constructor(private firestore: Firestore) {}
 
-  async createSession(ownerId, connectionId, projectId, sessionData) {
+  async createSession(ownerId, connectionId, projectId, sessionTasks) {
     const { accessCode, expirationDate } = this.generateAccessCode();
 
     const sessionDocRef = this.firestore
       .collection(`/users/${ownerId}/connections/${connectionId}/sessions`)
       .doc();
+    const sessionTasksRef = sessionDocRef.collection('/tasks');
 
-    const sessionLink = await this.firestore.runTransaction(
+    const sessionCode = await this.firestore.runTransaction(
       async transaction => {
-        const sessionCode = await transaction
+        const sessionUrlCode = await transaction
           .get(this.publicDataDocRef)
           .then(publicSessionsDoc => {
             // TODO: Use and update a distrbuted counter to minimize any potential impact on performance.
@@ -43,22 +44,36 @@ export class SessionService {
             return Promise.resolve(this.encode(uniqueNum));
           });
 
+        const taskIds = Object.keys(sessionTasks);
+        taskIds.forEach(taskId => {
+          transaction = transaction.set(
+            sessionTasksRef.doc(taskId),
+            sessionTasks[taskId]
+          );
+        });
+
         await transaction
           .set(sessionDocRef, {
-            ...sessionData,
-            sessionCode,
+            sessionCode: sessionUrlCode,
             accessCode,
             expirationDate,
+            currentTaskId: taskIds[0],
+            numTasks: taskIds.length,
+            numScopedTasks: 0,
           })
-          .set(this.publicSessionsRef.doc(sessionCode), {
+          .set(this.publicSessionsRef.doc(sessionUrlCode), {
             ownerId,
             connectionId,
             projectId,
             sessionId: sessionDocRef.id,
             participants: { [ownerId]: Date.now() },
           });
+
+        return sessionUrlCode;
       }
     );
+
+    return { sessionCode, accessCode };
   }
 
   async refreshAccessCode(sessionLink: string, uid: string) {

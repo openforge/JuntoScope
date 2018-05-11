@@ -2,6 +2,8 @@ import { Action } from '@ngrx/store';
 
 import { Connection } from '@models/connection';
 
+import { Project } from '@models/project';
+
 export enum ConnectionActionTypes {
   QUERY_ALL = '[Connection] Query All',
   NO_CONNECTIONS = '[Connection] None Found',
@@ -12,6 +14,10 @@ export enum ConnectionActionTypes {
 
   ADD = '[Connection] Add',
   ADD_ERROR = '[Connection] Add Error',
+
+  SELECTED = '[Connection] Selected',
+  SELECTED_PROJECT = '[Connection] Selected Project',
+  CREATE_SESSION = '[Connection] Create Session',
 }
 
 export class QueryConnectionsAction implements Action {
@@ -49,6 +55,27 @@ export class AddConnectionErrorAction implements Action {
   constructor(public payload: { message: string }) {}
 }
 
+export class SelectedConnectionAction implements Action {
+  readonly type = ConnectionActionTypes.SELECTED;
+  constructor(public payload: { connectionId: string }) {}
+}
+
+export class SelectedProjectAction implements Action {
+  readonly type = ConnectionActionTypes.SELECTED_PROJECT;
+  constructor(public payload: { connection: Connection; project: Project }) {}
+}
+
+export class CreateSessionAction implements Action {
+  readonly type = ConnectionActionTypes.CREATE_SESSION;
+  constructor(
+    public payload: {
+      connectionId: string;
+      projectId: string;
+      taskListIds: string[];
+    }
+  ) {}
+}
+
 export type ConnectionActions =
   | QueryConnectionsAction
   | NoConnectionsAction
@@ -56,4 +83,7 @@ export type ConnectionActions =
   | ModifiedConnectionAction
   | RemovedConnectionAction
   | AddConnectionAction
-  | AddConnectionErrorAction;
+  | AddConnectionErrorAction
+  | SelectedConnectionAction
+  | SelectedProjectAction
+  | CreateSessionAction;
