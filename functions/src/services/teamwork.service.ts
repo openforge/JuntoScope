@@ -1,5 +1,7 @@
 import * as request from 'request-promise-native';
 
+import * as _ from 'lodash';
+
 export class TeamworkService {
   validateToken(token: string) {
     const uri = 'https://authenticate.teamwork.com/authenticate.json';
@@ -108,82 +110,31 @@ export class TeamworkService {
 
   async getTasks(token: string, baseUrl: string, tasklistId: string) {
     try {
-      const tasksData = await this.getTasksData(token, baseUrl, tasklistId, 1);
-      let tasks = tasksData.tasks;
+      const teamworkResponse = await this.getTasksData(
+        token,
+        baseUrl,
+        tasklistId,
+        1
+      );
+      let tasks = teamworkResponse.tasks;
 
-      if (tasksData.pages > 1) {
-        const taskPromises = [];
-        for (let i = 2; i <= tasksData.pages; i++) {
-          taskPromises.push(this.getTasksData(token, baseUrl, tasklistId, i));
+      if (teamworkResponse.pages > 1) {
+        const promises = [];
+        for (let i = 2; i <= teamworkResponse.pages; i++) {
+          promises.push(this.getTasksData(token, baseUrl, tasklistId, i));
         }
-        const moreTasksData = await Promise.all(taskPromises);
-        moreTasksData.map(t => {
-          tasks = tasks.concat(t.tasks);
+
+        await Promise.all(promises).then(responses => {
+          responses.forEach(t => {
+            tasks = tasks.concat(t.tasks);
+          });
         });
       }
 
-      const tasksTree = tasks.filter(t => t.parent === '');
-      this.fillChildTasks(tasksTree, tasks);
-
-      return {
-        tasks: tasksTree,
-      };
+      return { tasks: _.keyBy(tasks, 'id') };
     } catch (error) {
       throw error;
     }
-  }
-
-  private fillChildTasks(tasks, allTasks) {
-    tasks.map(t => {
-      t.childTasks = allTasks.filter(c => c.parent === t.id);
-      if (t.childTasks.length > 0) {
-        this.fillChildTasks(t.childTasks, allTasks);
-      }
-    });
-  }
-
-  private async getTasksData(
-    token: string,
-    baseUrl: string,
-    tasklistId: string,
-    page: number
-  ) {
-    const uri = `${baseUrl}tasklists/${tasklistId}/tasks.json?page=${page}`;
-    const headers = this.getReqHeaders(token);
-
-    const options: request.OptionsWithUri = {
-      uri,
-      method: 'GET',
-      headers,
-      json: true,
-      resolveWithFullResponse: true,
-    };
-
-    return request(options)
-      .then(response => {
-        const tasks = response.body['todo-items'];
-        const responseHeaders = response.headers;
-
-        return {
-          page: responseHeaders['x-page'],
-          pages: responseHeaders['x-pages'],
-          tasks: tasks.map(t => {
-            const estimatedHours = +t['estimated-minutes'] / 60;
-            return {
-              id: t.id,
-              name: t.content,
-              description: t.description,
-              parent: t.parentTaskId,
-              estimation: estimatedHours,
-            };
-          }),
-        };
-      })
-      .catch(error => {
-        throw new Error(
-          'Unable to get tasks from Teamwork. Please verify your token and task list id and try again later.'
-        );
-      });
   }
 
   async getTask(token: string, baseUrl: string, taskId: string) {
@@ -248,6 +199,51 @@ export class TeamworkService {
           'Unable to update task on Teamwork. Please verify your token and task id try again later.'
         );
       });
+  }
+
+  private async getTasksData(
+    token: string,
+    baseUrl: string,
+    tasklistId: string,
+    startPage: number
+  ) {
+    const uri = `${baseUrl}tasklists/${tasklistId}/tasks.json?page=${startPage}`;
+    const headers = this.getReqHeaders(token);
+
+    const options: request.OptionsWithUri = {
+      uri,
+      method: 'GET',
+      headers,
+      json: true,
+      resolveWithFullResponse: true,
+    };
+
+    try {
+      const response = await request(options);
+      const tasks = response.body['todo-items'];
+      const responseHeaders = response.headers;
+      const page = responseHeaders['x-page'];
+      const pages = responseHeaders['x-pages'];
+
+      return {
+        page,
+        pages,
+        tasks: tasks.map(task => {
+          const estimatedHours = parseInt(task['estimated-minutes'], 10) / 60;
+          return {
+            id: task.id.toString(),
+            name: task.content,
+            description: task.description,
+            parentId: task.parentTaskId || null,
+            estimate: estimatedHours,
+          };
+        }),
+      };
+    } catch (error) {
+      return Promise.reject(
+        'Unable to get tasks from Teamwork. Please verify your token and task list id and try again later.'
+      );
+    }
   }
 
   private getReqHeaders(token: string) {
