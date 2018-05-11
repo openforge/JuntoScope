@@ -27,7 +27,7 @@ import { CreateSessionComponent } from './components/create-session/create-sessi
     JoinSessionComponent,
     SessionHistoryListComponent,
     SessionHistoryItemComponent,
-    SessionDetailModalComponent
+    SessionDetailModalComponent,
     CreateSessionComponent,
   ],
   entryComponents: [
