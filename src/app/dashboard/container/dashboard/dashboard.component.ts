@@ -7,6 +7,7 @@ import { map, filter, withLatestFrom, take, tap } from 'rxjs/operators';
 import { AppFacade } from '@app/state/app.facade';
 import { RouterFacade } from '@app/state/router.facade';
 import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
+import { ConnectionFacade } from '@app/connections/state/connection.facade';
 import { SessionUserType } from '@models/user';
 import { SessionStatus } from '@models/scoping-session';
 import {
@@ -25,16 +26,19 @@ import { SessionDetailModalComponent } from '@app/dashboard/components/session-d
 export class DashboardComponent implements OnInit, OnDestroy {
   uid$ = this.appFacade.uid$;
   historyItems$ = this.dashboardFacade.historyItems$;
+  connections$ = this.connectionFacade.connections$;
 
   constructor(
     private appFacade: AppFacade,
     private routerFacade: RouterFacade,
     private dashboardFacade: DashboardFacade,
-    private popupSvc: PopupService
+    private popupSvc: PopupService,
+    private connectionFacade: ConnectionFacade
   ) {}
 
   ngOnInit() {
     this.dashboardFacade.getHistory();
+    this.connectionFacade.getConnections();
   }
 
   ngOnDestroy() {}

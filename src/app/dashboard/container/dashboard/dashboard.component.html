@@ -10,6 +10,7 @@
 
 <ion-content>
   <app-join-session (join)="handleJoin($event)"></app-join-session>
+  <app-create-session [connections]="connections$ | async"></app-create-session>
 
   <div>
     Reuse list of connections cmp
@@ -31,4 +32,3 @@
     Logout
   </button> -->
 </ion-content>
-
