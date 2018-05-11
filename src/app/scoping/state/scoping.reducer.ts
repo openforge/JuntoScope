@@ -16,6 +16,9 @@ export enum ScopingUiState {
   VOTED = 'Voted',
   SETTING_ESTIMATE = 'Setting Estimate',
   ESTIMATE_SET = 'Estimate Set',
+}
+
+export enum ParticipantState {
   CHECKING_PARTICIPANT = 'Checking',
   PARTICIPANT_VALIDATED = 'Validated',
   PARTICIPANT_INVALID = 'Invalid',
@@ -23,6 +26,7 @@ export enum ScopingUiState {
 
 export interface ScopingState extends EntityState<ScopingSession> {
   uiState: ScopingUiState;
+  participantState: ParticipantState;
   error: string;
 }
 
@@ -32,6 +36,7 @@ export const adapter: EntityAdapter<ScopingSession> = createEntityAdapter<
 
 export const initialScopingState: ScopingState = adapter.getInitialState({
   uiState: ScopingUiState.NOT_LOADED,
+  participantState: ParticipantState.CHECKING_PARTICIPANT,
   error: null,
 });
 
@@ -79,6 +84,13 @@ export function scopingReducer(
       };
     }
 
+    case ScopingActionTypes.SESSION_VERIFIED: {
+      return {
+        ...state,
+        participantState: ParticipantState.PARTICIPANT_VALIDATED,
+      };
+    }
+
     case ScopingActionTypes.SESSION_JOIN_ERROR: {
       return {
         ...state,
@@ -86,17 +98,24 @@ export function scopingReducer(
       };
     }
 
+    case ScopingActionTypes.VALIDATE_PARTICIPANT: {
+      return {
+        ...state,
+        participantState: ParticipantState.CHECKING_PARTICIPANT,
+      };
+    }
+
     case ScopingActionTypes.VALIDATE_PARTICIPANT_ERROR: {
       return {
         ...state,
-        uiState: ScopingUiState.PARTICIPANT_INVALID,
+        participantState: ParticipantState.PARTICIPANT_INVALID,
       };
     }
 
     case ScopingActionTypes.PARTICIPANT_VALIDATED: {
       return {
         ...state,
-        uiState: ScopingUiState.PARTICIPANT_VALIDATED,
+        participantState: ParticipantState.PARTICIPANT_VALIDATED,
       };
     }
 
@@ -114,6 +133,10 @@ export namespace ScopingQuery {
   export const selectUiState = createSelector(
     selectSlice,
     state => state.uiState
+  );
+  export const selectParticipantState = createSelector(
+    selectSlice,
+    state => state.participantState
   );
   export const selectError = createSelector(selectSlice, state => state.error);
 }
