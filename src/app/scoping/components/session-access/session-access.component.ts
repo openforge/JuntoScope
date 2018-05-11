@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 import { RouterFacade } from '@app/state/router.facade';
-import { take } from 'rxjs/operators';
+import { SessionValidation } from '@models/scoping-session';
 
 @Component({
   selector: 'app-session-access',
@@ -11,9 +11,10 @@ import { take } from 'rxjs/operators';
 })
 export class SessionAccessComponent implements OnInit {
   accessForm: FormGroup;
-  sessionLink: string;
-  params$ = this.routerFacade.params$;
   error$ = this.scopingFacade.error$;
+
+  @Input() sessionLink: string;
+  @Output() access = new EventEmitter<SessionValidation>();
 
   constructor(
     private fb: FormBuilder,
@@ -23,9 +24,6 @@ export class SessionAccessComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.params$.pipe(take(1)).subscribe(params => {
-      this.sessionLink = params.sessionCode;
-    });
   }
 
   continue() {
@@ -34,8 +32,7 @@ export class SessionAccessComponent implements OnInit {
         sessionLink: this.sessionLink,
         accessCode: this.accessForm.get('code').value,
       };
-
-      this.scopingFacade.validateSession(sessionValidation);
+      this.onAccess.emit(sessionValidation);
     } else {
       this.accessForm.get('code').markAsDirty();
     }
