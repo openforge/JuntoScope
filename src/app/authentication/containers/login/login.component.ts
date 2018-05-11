@@ -81,4 +81,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.routerFacade.navigate(navOptions);
     });
   }
+
+  twitterLogin() {
+    this.authFacade.twitterLogin();
+
+    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
+      this.routerFacade.navigate(navOptions);
+    });
+  }
 }
