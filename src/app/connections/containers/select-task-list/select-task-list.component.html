@@ -9,6 +9,6 @@
   <ion-list *ngIf="taskLists$ | async as taskLists">
     <app-task-list *ngFor="let taskList of taskLists" [taskList]="taskList" (toggle)="handleToggle($event, taskList)"></app-task-list>
 
-    <ion-button (click)="startSession()">Start</ion-button>
+    <ion-button (click)="startSession()" [disabled]="!taskListIds || taskListIds.length === 0">Start</ion-button>
   </ion-list>
 </ion-content>

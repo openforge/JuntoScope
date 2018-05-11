@@ -24,11 +24,13 @@ import {
   ConnectionQuery,
   ConnectionUiState,
 } from '@app/connections/state/connection.reducer';
+import { DashboardState } from '@app/dashboard/state/dashboard.reducer';
 
 interface FullAppState {
   router: RouterState;
   auth: AuthState;
   connection: ConnectionState;
+  dashboard: DashboardState;
 }
 
 export type AppState = Partial<FullAppState>;
@@ -59,7 +61,7 @@ export namespace AppQuery {
         return { path: ['/login'] };
       }
 
-      return { path: ['/connections/add'] };
+      return { path: ['/dashboard'] };
     }
   );
 
