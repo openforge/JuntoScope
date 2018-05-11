@@ -23,13 +23,7 @@ export enum ScopingActionTypes {
 
 export class LoadSessionAction implements Action {
   readonly type = ScopingActionTypes.LOAD_SESSION;
-  constructor(
-    public payload?: {
-      ownerId: string;
-      connectionId: string;
-      sessionId: string;
-    }
-  ) {}
+  constructor(public payload?: string) {}
 }
 
 export class LoadSessionSuccessAction implements Action {

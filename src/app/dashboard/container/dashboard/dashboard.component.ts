@@ -46,6 +46,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   handleDetailClick(event: HistoryItemDetailEvent) {
     console.log('details for session status', event);
+    this.routerFacade.navigate({
+      path: [`/scoping/${event.item.sessionCode}`],
+    });
   }
 
   refresh() {

@@ -21,19 +21,17 @@ export enum ScopingUiState {
   PARTICIPANT_INVALID = 'Invalid',
 }
 
-export interface ScopingState extends EntityState<ScopingSession> {
+export interface ScopingState {
+  session: ScopingSession;
   uiState: ScopingUiState;
   error: string;
 }
 
-export const adapter: EntityAdapter<ScopingSession> = createEntityAdapter<
-  ScopingSession
->();
-
-export const initialScopingState: ScopingState = adapter.getInitialState({
+export const initialScopingState: ScopingState = {
+  session: null,
   uiState: ScopingUiState.NOT_LOADED,
   error: null,
-});
+};
 
 export function scopingReducer(
   state = initialScopingState,
@@ -41,14 +39,25 @@ export function scopingReducer(
 ): ScopingState {
   switch (action.type) {
     case ScopingActionTypes.LOAD_SESSION: {
-      return adapter.removeAll({ ...state, uiState: ScopingUiState.LOADING });
+      return {
+        ...state,
+        uiState: ScopingUiState.LOADING,
+      };
     }
 
     case ScopingActionTypes.LOAD_SESSION_SUCCESS: {
-      return adapter.upsertOne(action.payload, {
+      return {
+        ...state,
+        session: action.payload,
+        uiState: ScopingUiState.LOADED,
+      };
+    }
+
+    case ScopingActionTypes.LOAD_SESSION_ERROR: {
+      return {
         ...state,
         uiState: ScopingUiState.LOADED,
-      });
+      };
     }
 
     case ScopingActionTypes.VOTE: {
@@ -108,12 +117,13 @@ export function scopingReducer(
 
 export namespace ScopingQuery {
   const selectSlice = createFeatureSelector<ScopingState>('scoping');
-  export const { selectIds, selectEntities, selectAll } = adapter.getSelectors(
-    selectSlice
-  );
   export const selectUiState = createSelector(
     selectSlice,
     state => state.uiState
+  );
+  export const selectSession = createSelector(
+    selectSlice,
+    state => state.session
   );
   export const selectError = createSelector(selectSlice, state => state.error);
 }

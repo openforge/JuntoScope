@@ -11,15 +11,15 @@ const routes: Routes = [
     component: SessionAccessComponent,
   },
   {
-    path: ':sessionId',
+    path: ':sessionCode',
     component: SessionScopingComponent,
   },
   {
-    path: ':sessionId/results',
+    path: ':sessionCode/results',
     component: SessionResultsComponent,
   },
   {
-    path: ':sessionId/tasks/:taskId/results',
+    path: ':sessionCode/tasks/:taskId/results',
     component: TaskResultsComponent,
   },
 ];

@@ -28,47 +28,7 @@ export class TaskResultsComponent implements OnInit {
     this.user$.subscribe(user => {
       this.user = user;
     });
-
-    this.session = {
-      id: 'xIUiPVQX1pn0sbKdC6EF',
-      ownerId: '4unCMQb5lGgORDo2Y5UUWlBcUHj1',
-      connectionId: 'THfDyZ5ql7PbyDvzuyuZ',
-      projectName: 'Test project',
-      currentTaskId: 'prFpkJAGoM4HnRkajCys',
-      numTasks: 2,
-      numScopedTasks: 0,
-      tasks: {
-        prFpkJAGoM4HnRkajCys: {
-          name: 'Test task 1',
-          description: 'This is a description',
-          votes: {
-            '4unCMQb5lGgORDo2Y5UUWlBcUHj1': 3,
-          },
-          estimate: null,
-        },
-      },
-      participants: {
-        '4unCMQb5lGgORDo2Y5UUWlBcUHj1': 1111,
-      },
-    };
   }
 
   ngOnInit() {}
-
-  setFinalEstimate(estimate) {
-    this.finalEstimate = estimate;
-  }
-
-  saveFinalEstimate() {
-    if (this.user && this.session) {
-      this.scopingFacade.setFinalEstimate(
-        this.user.uid,
-        this.session.ownerId,
-        this.session.connectionId,
-        this.session.id,
-        this.session.currentTaskId,
-        this.finalEstimate
-      );
-    }
-  }
 }

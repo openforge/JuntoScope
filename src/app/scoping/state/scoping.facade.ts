@@ -32,6 +32,7 @@ import {
   ValidateParticipantAction,
   ParticipantValidatedAction,
   ValidateParticipantErrorAction,
+  LoadSessionAction,
 } from '@app/scoping/state/scoping.actions';
 import { RouterFacade } from '@app/state/router.facade';
 import { PopupService } from '@app/shared/popup.service';
@@ -42,33 +43,47 @@ import { SessionValidation } from '@models/scoping-session';
 
 @Injectable()
 export class ScopingFacade {
-  /*
-    * Observable Store Queries
-    */
+  /**
+   * Observable Store Queries
+   */
+
   error$ = this.store.pipe(select(ScopingQuery.selectError));
   uiState$ = this.store.pipe(select(ScopingQuery.selectUiState));
+  session$ = this.store.pipe(select(ScopingQuery.selectSession));
 
-  /*
-    * Module-level Effects
-    */
+  /**
+   * Module-level Effects
+   */
 
-  // @Effect()
-  // getSession = this.actions$.pipe(
-  //   ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION),
-  //   switchMap(action =>
-  //     this.historySvc
-  //       .getSession(action.payload.ownerId, action.payload.connectionId, action.payload.sessionId)
-  //       .then(() => {
-  //         console.log('Session fetched successfully');
-  //         return new LoadSessionSuccessAction(action.payload);
-  //       })
-  //       .catch(({ message }) => {
-  //         console.log('ERROR fetching session');
-  //         return new LoadSessionErrorAction({ message });
-  //       })
-  //   ),
-  //   catchError(error => of(new LoadSessionErrorAction({ message: error.message })))
-  // );
+  @Effect()
+  getSession = this.actions$.pipe(
+    ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION),
+    switchMap(action =>
+      this.scopingSvc
+        .getSession(action.payload)
+        .pipe(
+          map(session => new LoadSessionSuccessAction(session)),
+          catchError(error =>
+            of(new LoadSessionErrorAction({ message: error.message }))
+          )
+        )
+    ),
+    catchError(error =>
+      of(new LoadSessionErrorAction({ message: error.message }))
+    )
+  );
+
+  @Effect({ dispatch: false })
+  getSessionError$ = this.actions$.pipe(
+    ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION_ERROR),
+    tap(action => {
+      this.popupService.simpleAlert(
+        'Error',
+        'An error occurred while trying to load your session. Please, try again.',
+        'Ok'
+      );
+    })
+  );
 
   @Effect()
   vote$ = this.actions$.pipe(
@@ -88,17 +103,17 @@ export class ScopingFacade {
     catchError(error => of(new VoteErrorAction({ message: error.message })))
   );
 
-  @Effect({ dispatch: false })
-  voteSuccess$ = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.VOTE_SUCCESS),
-    tap(action => {
-      const sessionId = action.payload.sessionId;
-      const taskId = action.payload.taskId;
-      this.routerFacade.navigate({
-        path: [`/scoping/${sessionId}/tasks/${taskId}/results`],
-      });
-    })
-  );
+  // @Effect({ dispatch: false })
+  // voteSuccess$ = this.actions$.pipe(
+  //   ofType<VoteAction>(ScopingActionTypes.VOTE_SUCCESS),
+  //   tap(action => {
+  //     const sessionId = action.payload.sessionId;
+  //     const taskId = action.payload.taskId;
+  //     this.routerFacade.navigate({
+  //       path: [`/scoping/${sessionId}/tasks/${taskId}/results`],
+  //     });
+  //   })
+  // );
 
   @Effect({ dispatch: false })
   voteError$ = this.actions$.pipe(
@@ -218,9 +233,14 @@ export class ScopingFacade {
     private popupService: PopupService
   ) {}
 
-  /*
-  * Action Creators
-  */
+  /**
+   * Action Creators
+   */
+
+  loadSession(sessionCode) {
+    this.store.dispatch(new LoadSessionAction(sessionCode));
+  }
+
   vote(userId, moderatorId, connectionId, sessionId, taskId, estimate) {
     this.store.dispatch(
       new VoteAction({

@@ -3,6 +3,7 @@ import { User } from '@models/user';
 
 export interface ScopingSession {
   id: string;
+  sessionId: string;
   projectName: string;
   ownerId: string;
   connectionId: string;

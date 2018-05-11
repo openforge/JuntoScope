@@ -7,6 +7,8 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from '@app/state/app.reducer';
 import { AuthQuery } from '@app/authentication/state/auth.reducer';
 import { ScopingFacade } from '@app/scoping/state/scoping.facade';
+import { RouterFacade } from '@app/state/router.facade';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-session-results',
@@ -15,11 +17,19 @@ import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 })
 export class SessionResultsComponent implements OnInit {
   session: ScopingSession;
+  sessionCode: string;
+  params$ = this.routerFacade.params$;
 
   constructor(
     private store: Store<AppState>,
-    private scopingFacade: ScopingFacade
+    private scopingFacade: ScopingFacade,
+    private routerFacade: RouterFacade
   ) {
+    this.params$.pipe(take(1)).subscribe(params => {
+      this.sessionCode = params.sessionCode;
+      this.scopingFacade.loadSession(this.sessionCode);
+    });
+    /*
     this.session = {
       id: 'xIUiPVQX1pn0sbKdC6EF',
       ownerId: '4unCMQb5lGgORDo2Y5UUWlBcUHj1',
@@ -42,6 +52,7 @@ export class SessionResultsComponent implements OnInit {
         '4unCMQb5lGgORDo2Y5UUWlBcUHj1': 1111,
       },
     };
+    */
   }
 
   ngOnInit() {}
