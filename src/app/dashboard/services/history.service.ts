@@ -38,7 +38,7 @@ export class HistoryService {
     field?: string;
     limit: number;
     direction: 'desc' | 'asc';
-  } = { limit: 2, direction: 'desc' };
+  } = { limit: 5, direction: 'desc' };
 
   constructor(private appFacade: AppFacade, private afs: AngularFirestore) {}
 
