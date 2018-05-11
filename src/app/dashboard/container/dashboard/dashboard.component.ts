@@ -10,6 +10,7 @@ import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
 import { SessionUserType } from '@models/user';
 import { SessionStatus } from '@models/scoping-session';
+import { Connection } from '@models/connection';
 import {
   HistoryItemOptionEvent,
   HistoryItemDetailEvent,
@@ -65,9 +66,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.routerFacade.navigate({ path: [`/scoping/access/${sessionCode}`] });
   }
 
-  createSession(connectionId) {
+  createSession(connection: Connection) {
     this.routerFacade.navigate({
-      path: [`/connections/${connectionId}/create-session`],
+      path: [`/connections/${connection.id}/projects`],
     });
   }
 

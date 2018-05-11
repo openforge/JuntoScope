@@ -10,25 +10,11 @@
 
 <ion-content>
   <app-join-session (join)="handleJoin($event)"></app-join-session>
-  <app-create-session [connections]="connections$ | async"></app-create-session>
 
-  <div>
-    Reuse list of connections cmp
-  </div>
+  <app-connection-list [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
 
   <app-session-history-list [uid]="uid$ | async" [items]="historyItems$ | async" (options)="handleOptionClick($event)" (detail)="handleDetailClick($event)"></app-session-history-list>
 
   <ion-button (click)="loadMore()">Moar</ion-button>
   <ion-button (click)="refresh()">rfrsh</ion-button>
-
-
-  <!--
-  <a href="javascript:void(0)" (click)="createSession(123)">Start New Session</a>
-  <a href="javascript:void(0)" (click)="addConnection()">addConnection</a>
-  <a href="javascript:void(0)" (click)="resumeSession(123)">Resume Scoping Session</a>
-  <a href="javascript:void(0)" (click)="viewResults(123)">View Scoping Results</a>
-
-  <button (click)="logout()">
-    Logout
-  </button> -->
 </ion-content>

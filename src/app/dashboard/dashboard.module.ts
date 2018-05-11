@@ -14,6 +14,7 @@ import { dashboardReducer } from '@app/dashboard/state/dashboard.reducer';
 import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
 import { CreateSessionComponent } from './components/create-session/create-session.component';
 import { SessionDetailModalComponent } from '@app/dashboard/components/session-detail-modal/session-detail-modal.component';
+import { ConnectionsModule } from '@app/connections/connections.module';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { SessionDetailModalComponent } from '@app/dashboard/components/session-d
     StoreModule.forFeature('dashboard', dashboardReducer),
     EffectsModule.forFeature([DashboardFacade]),
     SharedModule,
+    ConnectionsModule,
   ],
   declarations: [
     DashboardComponent,
