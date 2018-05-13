@@ -9,7 +9,8 @@ install:
   - npm install
 branches:
   only:
-  - develop
+  - gh-pages
+  - /.*/
 script:
   - npm run build
   - npm run firebase:deploy
