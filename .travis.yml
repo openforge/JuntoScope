@@ -1,12 +1,19 @@
 language: node_js
 node_js:
 - '8.11'
+cache:
+  directories:
+    - ~/.npm
+    - node_modules
+install:
+  - npm install
 branches:
   only:
   - develop
 script:
-- npm run build
-- npm run firebase:deploy
+  - npm run build
+  - npm run firebase:deploy
+  - $(npm bin)/cypress run --record
 notifications:
   slack:
     rooms:
