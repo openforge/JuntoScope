@@ -11,6 +11,7 @@ import { InstructionsComponent } from '@app/connections/components/instructions/
 import { connectionReducer } from '@app/connections/state/connection.reducer';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
 import { ConnectionService } from '@app/connections/services/connection.service';
+import { VerifyModalComponent } from '@app/connections/components/verify-modal/verify-modal.component';
 import { ProjectListComponent } from './components/project-list/project-list.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { ProjectItemComponent } from './components/project-item/project-item.component';
@@ -28,12 +29,16 @@ import { SelectTaskListComponent } from './containers/select-task-list/select-ta
     AddConnectionComponent,
     InstructionsComponent,
     ConnectionDetailsComponent,
+    VerifyModalComponent,
     ProjectListComponent,
     TaskListComponent,
     ProjectItemComponent,
     SelectProjectComponent,
     SelectTaskListComponent,
   ],
+  entryComponents: [
+    VerifyModalComponent
+  ]
 })
 export class ConnectionsModule {
   static forRoot(): ModuleWithProviders {
