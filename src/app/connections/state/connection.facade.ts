@@ -98,8 +98,13 @@ export class ConnectionFacade {
       this.connectionSvc
         .addConnection(action.payload.connection)
         .pipe(
-          switchMap((response: any) => this.popupSvc.openModal({component: VerifyModalComponent, componentProps: {'connectionData': response} })),
-          map(() => new RouterActions.GoAction({path: ['/dashboard']})),
+          switchMap((response: any) =>
+            this.popupSvc.openModal({
+              component: VerifyModalComponent,
+              componentProps: { connectionData: response },
+            })
+          ),
+          map(() => new RouterActions.GoAction({ path: ['/dashboard'] })),
           catchError(error =>
             of(new AddConnectionErrorAction({ message: error.message }))
           )

@@ -8,7 +8,6 @@ import { PopupService } from '@app/shared/popup.service';
   styleUrls: ['./info-modal.component.scss'],
 })
 export class InfoModalComponent implements OnInit {
-
   title;
   text;
   label;

@@ -64,6 +64,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   handleDetailClick(event: HistoryItemDetailEvent) {
     console.log('details for session status', event);
+    this.routerFacade.navigate({
+      path: [`/scoping/${event.item.sessionCode}`],
+    });
   }
 
   // Unused
@@ -77,7 +80,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   handleJoin(sessionCode: string) {
-    console.log('Dashboard handling', sessionCode);
+    this.routerFacade.navigate({ path: [`/scoping/${sessionCode}`] });
   }
 
   createSession(connection: Connection) {
