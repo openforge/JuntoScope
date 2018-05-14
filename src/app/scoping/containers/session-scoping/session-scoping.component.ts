@@ -50,7 +50,7 @@ export class SessionScopingComponent implements OnInit {
       this.session = session;
       if (this.session && this.user) {
         const votes = this.session.tasks[this.session.currentTaskId].votes;
-        if (votes[this.user.uid]) {
+        if (votes && votes[this.user.uid]) {
           this.hasVoted = true;
         } else {
           this.hasVoted = false;

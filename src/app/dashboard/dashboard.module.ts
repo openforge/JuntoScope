@@ -13,7 +13,7 @@ import { HistoryService } from '@app/dashboard/services/history.service';
 import { dashboardReducer } from '@app/dashboard/state/dashboard.reducer';
 import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
 import { SessionDetailModalComponent } from '@app/dashboard/components/session-detail-modal/session-detail-modal.component';
-import { CreateSessionComponent } from './components/create-session/create-session.component';
+import { ConnectionsModule } from '@app/connections/connections.module';
 
 @NgModule({
   imports: [
@@ -21,6 +21,7 @@ import { CreateSessionComponent } from './components/create-session/create-sessi
     StoreModule.forFeature('dashboard', dashboardReducer),
     EffectsModule.forFeature([DashboardFacade]),
     SharedModule,
+    ConnectionsModule,
   ],
   declarations: [
     DashboardComponent,
@@ -28,7 +29,6 @@ import { CreateSessionComponent } from './components/create-session/create-sessi
     SessionHistoryListComponent,
     SessionHistoryItemComponent,
     SessionDetailModalComponent,
-    CreateSessionComponent,
   ],
   entryComponents: [SessionDetailModalComponent],
 })

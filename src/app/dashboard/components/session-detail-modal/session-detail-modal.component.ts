@@ -2,6 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 import { PopupService } from '@app/shared/popup.service';
 import { InfoModalComponent } from '@app/shared/components/info-modal/info-modal.component';
+import { Store } from '@ngrx/store';
+import { AppState } from '@app/state/app.reducer';
+import { DeleteSessionAction } from '@app/dashboard/state/dashboard.actions';
+import { RefreshAccessCodeAction } from '@app/dashboard/state/dashboard.actions';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-session-detail-modal',
@@ -11,17 +17,27 @@ import { InfoModalComponent } from '@app/shared/components/info-modal/info-modal
 export class SessionDetailModalComponent implements OnInit {
   accountData;
   isModerator: boolean;
+  expirationDate;
 
-  constructor(private popupSvc: PopupService, private params: NavParams) {}
+  constructor(
+    private popupSvc: PopupService,
+    private params: NavParams,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit() {
     this.accountData = this.params.data.accountData;
     this.isModerator =
       this.params.data.accountData.userType === 'Session Moderator';
+    const now = moment();
+    this.expirationDate = now.to(this.accountData.item.expirationDate);
   }
 
-  dismiss() {
+  refreshCode() {
     this.popupSvc.closeModal();
+    this.store.dispatch(
+      new RefreshAccessCodeAction(this.accountData.item.sessionCode)
+    );
   }
 
   deleteSession() {
@@ -32,7 +48,10 @@ export class SessionDetailModalComponent implements OnInit {
         title: 'Are you sure?',
         text: 'If you delete the session there is no come back.',
         label: 'Delete',
-        callback: () => console.log('accepted to delete session'),
+        callback: () =>
+          this.store.dispatch(
+            new DeleteSessionAction(this.accountData.item.sessionCode)
+          ),
       },
     });
   }

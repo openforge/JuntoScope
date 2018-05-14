@@ -1,5 +1,6 @@
 import { Firestore } from '@google-cloud/firestore';
 import { encryptionService } from '.';
+import { deleteSession } from '../api/session-links/delete-session';
 
 // Shuffled alphanumerics w/o vowels and ambiguous I, l, 1, 0, O, o.
 const CHARS = 'vdR8gYZ43DpNJPQkBnWXGtysHfF7z2x-Mjh9bK6Tr5c_wVLCSqm';
@@ -143,6 +144,33 @@ export class SessionService {
 
         return publicSessionDocRef.update(`participants.${uid}`, nowTimestamp);
       });
+  }
+
+  async deleteSession(uid, sessionLink) {
+    const publicSessionDocRef = this.publicSessionsRef.doc(sessionLink);
+
+    return await publicSessionDocRef.get().then(doc => {
+      const docData = doc.data();
+
+      if (!docData) {
+        return Promise.reject('Invalid Session Link.');
+      }
+
+      const { ownerId, connectionId, sessionId } = docData;
+
+      if (uid !== ownerId) {
+        return Promise.reject('You are no the owner of this session.');
+      }
+
+      const batch = this.firestore.batch();
+      batch.delete(this.firestore.doc(`/public/data/sessions/${sessionLink}`));
+      batch.delete(
+        this.firestore.doc(
+          `/users/${ownerId}/connections/${connectionId}/sessions/${sessionId}`
+        )
+      );
+      return batch.commit();
+    });
   }
 
   private generateAccessCode() {
