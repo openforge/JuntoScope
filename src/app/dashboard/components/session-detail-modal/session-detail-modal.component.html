@@ -1,6 +1,6 @@
 <ion-content>
   <p>URL: {{ 'https://juntoscope.com/' + accountData.item.sessionCode }}</p>
-  <p>Code: {{ accountData.item.accessCode }}</p>
-  <ion-button *ngIf="isModerator" (click)="dismiss()">New Code</ion-button>
+  <p>Code: {{ accountData.item.accessCode }} expires {{ expirationDate }}</p>
+  <ion-button *ngIf="isModerator" (click)="refreshCode()">New Code</ion-button>
   <ion-button *ngIf="isModerator" (click)="deleteSession()">Delete Session</ion-button>
 </ion-content>

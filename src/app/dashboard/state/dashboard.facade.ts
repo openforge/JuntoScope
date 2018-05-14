@@ -24,6 +24,8 @@ import {
   NoHistoryItemsAction,
   DeleteSessionAction,
   DeleteSessionErrorAction,
+  RefreshAccessCodeAction,
+  RefreshAccessCodeErrorAction,
 } from '@app/dashboard/state/dashboard.actions';
 import { HistoryService } from '@app/dashboard/services/history.service';
 import { HistoryItem } from '@models/history-item';
@@ -100,6 +102,21 @@ export class DashboardFacade {
           map(() => new NoopAction()),
           catchError(error =>
             of(new DeleteSessionErrorAction({ message: error.message }))
+          )
+        )
+    )
+  );
+
+  @Effect()
+  refreshAccessCode$ = this.actions$.pipe(
+    ofType<RefreshAccessCodeAction>(DashboardActionTypes.REFRESH_ACCESS_CODE),
+    switchMap(action =>
+      this.historySvc
+        .refreshAccessCode(action.sessionCode)
+        .pipe(
+          map(() => new NoopAction()),
+          catchError(error =>
+            of(new RefreshAccessCodeErrorAction({ message: error.message }))
           )
         )
     )

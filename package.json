@@ -41,6 +41,7 @@
     "firebase": "4.12.1",
     "functions": "file:functions",
     "lodash": "^4.17.10",
+    "moment": "^2.22.1",
     "ngrx-store-freeze": "^0.2.1",
     "ngx-take-until-destroy": "^2.2.1",
     "rxjs": "^6.0.0",
