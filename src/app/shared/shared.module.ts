@@ -11,6 +11,7 @@ import {
   ObjectValuesPipe,
   ObjectKeyValuePipe,
 } from './pipes/object-iterators.pipe';
+import { InfoModalComponent } from '@app/shared/components/info-modal/info-modal.component';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule, IonicModule],
@@ -22,8 +23,15 @@ import {
     ObjectKeysPipe,
     ObjectValuesPipe,
     ObjectKeyValuePipe,
+    InfoModalComponent,
   ],
-  declarations: [ObjectKeysPipe, ObjectValuesPipe, ObjectKeyValuePipe],
+  declarations: [
+    ObjectKeysPipe,
+    ObjectValuesPipe,
+    ObjectKeyValuePipe,
+    InfoModalComponent,
+  ],
+  entryComponents: [InfoModalComponent],
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
