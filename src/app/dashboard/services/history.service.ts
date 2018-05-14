@@ -14,7 +14,6 @@ import { AppFacade } from '@app/state/app.facade';
 import { ScopingSession } from '@models/scoping-session';
 import { HistoryItem } from '@models/history-item';
 import { Task } from '@models/task';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 
 @Injectable({
