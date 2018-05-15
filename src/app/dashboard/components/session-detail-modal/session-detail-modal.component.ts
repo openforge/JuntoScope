@@ -33,6 +33,10 @@ export class SessionDetailModalComponent implements OnInit {
     this.expirationDate = now.to(this.accountData.item.expirationDate);
   }
 
+  closeModal() {
+    this.popupSvc.closeModal();
+  }
+
   refreshCode() {
     this.popupSvc.closeModal();
     this.store.dispatch(
