@@ -41,7 +41,7 @@ export class SettingsFacade {
   ) {}
 
   @Effect()
-  queryFaqs = this.actions$.pipe(
+  getFaqs = this.actions$.pipe(
     ofType<QueryFaqsAction>(SettingsActionTypes.QUERY_FAQS),
     switchMap(action => {
       return this.settingsService.getFaqs();
@@ -59,11 +59,6 @@ export class SettingsFacade {
     catchError(error =>
       of(new QueryFaqsErrorAction({ message: error.message }))
     )
-  );
-
-  selectFaqsDocPath$ = this.store.pipe(
-    select(SettingsQuery.selectFaqsDocPath),
-    filter(exists => !!exists)
   );
 }
 

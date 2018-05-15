@@ -24,6 +24,7 @@ import {
   ConnectionQuery,
   ConnectionUiState,
 } from '@app/connections/state/connection.reducer';
+import { SettingsQuery } from '@app/settings/state/settings.reducer';
 import { ScopingState, ScopingQuery } from '@app/scoping/state/scoping.reducer';
 import { DashboardState } from '@app/dashboard/state/dashboard.reducer';
 
@@ -74,6 +75,10 @@ export namespace AppQuery {
   export const selectConnectionsClnPath = createSelector(
     selectUidDocPath,
     uidPath => uidPath && `${uidPath}/connections`
+  );
+  export const selectFaqsDocPath = createSelector(
+    selectUidDocPath,
+    uidPath => uidPath && `${uidPath}/faqs`
   );
   export const selectPublicSessionsClnPath = 'public/data/sessions';
 }
