@@ -80,7 +80,7 @@ export class SessionScopingComponent implements OnInit {
         this.user.uid,
         this.session.ownerId,
         this.session.connectionId,
-        this.session.id,
+        this.session.sessionId,
         this.session.currentTaskId,
         estimate
       );
