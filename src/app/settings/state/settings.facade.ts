@@ -8,6 +8,7 @@ import {
   catchError,
   map,
   mergeMap,
+  filter,
   tap,
   mergeAll,
 } from 'rxjs/operators';
@@ -43,7 +44,7 @@ export class SettingsFacade {
   queryFaqs = this.actions$.pipe(
     ofType<QueryFaqsAction>(SettingsActionTypes.QUERY_FAQS),
     switchMap(action => {
-      return this.settingsService.queryFaqs();
+      return this.settingsService.getFaqs();
     }),
     mergeMap(changeActions =>
       merge(
@@ -58,6 +59,11 @@ export class SettingsFacade {
     catchError(error =>
       of(new QueryFaqsErrorAction({ message: error.message }))
     )
+  );
+
+  selectFaqsDocPath$ = this.store.pipe(
+    select(SettingsQuery.selectFaqsDocPath),
+    filter(exists => !!exists)
   );
 }
 

@@ -5,7 +5,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 
 import { environment } from '@env/environment';
 import { Faq } from '@models/faq';
-import { AppFacade } from '@app/state/app.facade';
+import { SettingsFacade } from '@app/settings/state/settings.facade';
 
 import { switchMap, map, catchError } from 'rxjs/operators';
 
@@ -13,12 +13,12 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 export class SettingsService {
   constructor(
     private http: HttpClient,
-    private appFacade: AppFacade,
+    private settingsFacade: SettingsFacade,
     private afs: AngularFirestore
   ) {}
 
-  queryFaqs() {
-    return this.appFacade.faqsPath$.pipe(
+  getFaqs() {
+    return this.settingsFacade.selectFaqsDocPath$.pipe(
       switchMap(faqsPath => this.afs.collection(faqsPath).stateChanges())
     );
   }
