@@ -1,22 +1,30 @@
 import { Component, Injectable } from '@angular/core';
-import { ModalController, AlertController, PopoverController } from '@ionic/angular';
+import {
+  ModalController,
+  AlertController,
+  PopoverController,
+} from '@ionic/angular';
 
 @Injectable()
 export class PopupService {
-
   constructor(
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private popoverCtrl: PopoverController) {}
+    private popoverCtrl: PopoverController
+  ) {}
 
-    /**
-     * Shows up a simple alert with one button
-     * @param header The header for the alert
-     * @param message The message for the alert
-     * @param buttonLabel The label for the button
-     */
+  /**
+   * Shows up a simple alert with one button
+   * @param header The header for the alert
+   * @param message The message for the alert
+   * @param buttonLabel The label for the button
+   */
   async simpleAlert(header: string, message: string, buttonLabel: string) {
-    const alert = await this.alertCtrl.create({ header, message, buttons:[{text: buttonLabel, handler: () => true}] });
+    const alert = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: [{ text: buttonLabel, handler: () => true }],
+    });
     await alert.present();
     return alert.onDidDismiss();
   }
@@ -28,8 +36,17 @@ export class PopupService {
    * @param buttonLabel The label for the button
    * @param callback The callback to fire after click the button
    */
-  async customCallbackAlert(header: string, message: string, buttonLabel: string, callback: any) {
-    const alert = await this.alertCtrl.create({ header, message, buttons:[{text: buttonLabel, handler: callback}] });
+  async customCallbackAlert(
+    header: string,
+    message: string,
+    buttonLabel: string,
+    callback: any
+  ) {
+    const alert = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: [{ text: buttonLabel, handler: callback }],
+    });
     await alert.present();
     return alert.onDidDismiss();
   }
@@ -52,7 +69,11 @@ export class PopupService {
    * @param message The message for the alert
    */
   async promptYesNo(header: string, message: string) {
-    const alert = await this.alertCtrl.create({ header, message, buttons: [{ text: 'No' }, { text: 'Yes' }]});
+    const alert = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: [{ text: 'No' }, { text: 'Yes' }],
+    });
     await alert.present();
   }
 
@@ -62,7 +83,11 @@ export class PopupService {
    * @param message The message for the alert
    */
   async promptOkCancel(header: string, message: string) {
-    const alert = await this.alertCtrl.create({ header, message, buttons: [{ text: 'Cancel' }, { text: 'Ok' }]});
+    const alert = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: [{ text: 'Cancel' }, { text: 'Ok' }],
+    });
     await alert.present();
   }
 

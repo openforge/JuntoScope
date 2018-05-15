@@ -6,13 +6,32 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { ApiInterceptor } from '@app/shared/api.interceptor';
 import { PopupService } from '@app/shared/popup.service';
+import {
+  ObjectKeysPipe,
+  ObjectValuesPipe,
+  ObjectKeyValuePipe,
+} from './pipes/object-iterators.pipe';
 import { InfoModalComponent } from '@app/shared/components/info-modal/info-modal.component';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule, IonicModule],
-  exports: [CommonModule, ReactiveFormsModule, HttpClientModule, IonicModule, InfoModalComponent],
-  declarations: [InfoModalComponent],
-  entryComponents: [InfoModalComponent]
+  exports: [
+    CommonModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    IonicModule,
+    ObjectKeysPipe,
+    ObjectValuesPipe,
+    ObjectKeyValuePipe,
+    InfoModalComponent,
+  ],
+  declarations: [
+    ObjectKeysPipe,
+    ObjectValuesPipe,
+    ObjectKeyValuePipe,
+    InfoModalComponent,
+  ],
+  entryComponents: [InfoModalComponent],
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
@@ -24,7 +43,7 @@ export class SharedModule {
           useClass: ApiInterceptor,
           multi: true,
         },
-        PopupService
+        PopupService,
       ],
     };
   }

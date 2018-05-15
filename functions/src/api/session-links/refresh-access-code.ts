@@ -19,5 +19,5 @@ export async function refreshAccessCode(
     return res.status(400).json({ message: error });
   }
 
-  return res.send(204);
+  return res.sendStatus(204);
 }

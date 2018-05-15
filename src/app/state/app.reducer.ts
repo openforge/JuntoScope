@@ -24,12 +24,14 @@ import {
   ConnectionQuery,
   ConnectionUiState,
 } from '@app/connections/state/connection.reducer';
+import { ScopingState, ScopingQuery } from '@app/scoping/state/scoping.reducer';
 import { DashboardState } from '@app/dashboard/state/dashboard.reducer';
 
 interface FullAppState {
   router: RouterState;
   auth: AuthState;
   connection: ConnectionState;
+  scoping: ScopingState;
   dashboard: DashboardState;
 }
 
@@ -73,4 +75,5 @@ export namespace AppQuery {
     selectUidDocPath,
     uidPath => uidPath && `${uidPath}/connections`
   );
+  export const selectPublicSessionsClnPath = 'public/data/sessions';
 }
