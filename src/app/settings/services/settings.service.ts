@@ -6,7 +6,6 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { environment } from '@env/environment';
 import { Faq } from '@models/faq';
 import { AppFacade } from './../../state/app.facade';
-import { SettingsFacade } from '@app/settings/state/settings.facade';
 
 import { switchMap, map, catchError } from 'rxjs/operators';
 
