@@ -40,7 +40,7 @@ import { ShareScopeLinkComponent } from './containers/share-scope-link/share-sco
     ConnectionListComponent,
     ShareScopeLinkComponent,
   ],
-  entryComponents: [VerifyModalComponent],
+  entryComponents: [VerifyModalComponent, ShareScopeLinkComponent],
   exports: [ConnectionListComponent],
 })
 export class ConnectionsModule {
