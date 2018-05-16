@@ -1,19 +1,43 @@
-<ng-container *ngIf="session && session.tasks">
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/"></ion-back-button>
+  </ion-buttons>
+  <ion-title>Scoping Results</ion-title>
+</ion-toolbar>
 
-  <ion-content>
+<ion-content>
 
-    <h1>{{ session.projectName }}</h1>
+  <ng-container *ngIf="(uiState$ | async) === 'Loading' || participantState === ParticipantState.CHECKING_PARTICIPANT">
 
-    {{ session.numScopedTasks }} Tasks scoped
+    Loading...
 
-    <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
+  </ng-container>
 
-    <ul>
-      <li *ngFor="let task of (session.tasks | objValues)">
-        {{ task.name }}
-      </li>
-    </ul>
+  <app-session-access *ngIf="participantState === ParticipantState.PARTICIPANT_INVALID" [sessionLink]="sessionCode" (access)="access($event)">
+  </app-session-access>
 
-  </ion-content>
+  <ng-container *ngIf="participantState === ParticipantState.PARTICIPANT_VALIDATED">
 
-</ng-container>
+    <ng-container *ngIf="(session$ | async); let session;">
+
+      <ng-container *ngIf="session.tasks">
+
+        <h1>{{ session.projectName }}</h1>
+
+        {{ session.numScopedTasks }} Tasks scoped
+
+        <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
+
+        <ul>
+          <li *ngFor="let task of (session.tasks | objValues)">
+            {{ task.name }}
+          </li>
+        </ul>
+
+      </ng-container>
+
+    </ng-container>
+
+  </ng-container>
+
+</ion-content>

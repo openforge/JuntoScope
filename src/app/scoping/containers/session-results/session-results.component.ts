@@ -9,6 +9,7 @@ import { AuthQuery } from '@app/authentication/state/auth.reducer';
 import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 import { RouterFacade } from '@app/state/router.facade';
 import { take } from 'rxjs/operators';
+import { ParticipantState } from '@app/scoping/state/scoping.reducer';
 
 @Component({
   selector: 'app-session-results',
@@ -16,44 +17,40 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./session-results.component.scss'],
 })
 export class SessionResultsComponent implements OnInit {
-  session: ScopingSession;
+  ParticipantState = ParticipantState;
   sessionCode: string;
+
+  uiState$ = this.scopingFacade.uiState$;
+  session$ = this.scopingFacade.session$;
+
+  user$: Observable<User>;
   params$ = this.routerFacade.params$;
+  participantState$ = this.scopingFacade.participantState$;
+  participantState: ParticipantState;
+  user: User;
 
   constructor(
     private store: Store<AppState>,
     private scopingFacade: ScopingFacade,
     private routerFacade: RouterFacade
   ) {
-    this.params$.pipe(take(1)).subscribe(params => {
-      this.sessionCode = params.sessionCode;
-      this.scopingFacade.loadSession(this.sessionCode);
+    this.user$ = this.store.pipe(select(AuthQuery.selectUser));
+    this.user$.subscribe(user => {
+      this.user = user;
     });
-    /*
-    this.session = {
-      id: 'xIUiPVQX1pn0sbKdC6EF',
-      ownerId: '4unCMQb5lGgORDo2Y5UUWlBcUHj1',
-      connectionId: 'THfDyZ5ql7PbyDvzuyuZ',
-      projectName: 'Test project',
-      currentTaskId: 'prFpkJAGoM4HnRkajCys',
-      numTasks: 1,
-      numScopedTasks: 1,
-      tasks: {
-        prFpkJAGoM4HnRkajCys: {
-          name: 'Test task 1',
-          description: 'This is a description',
-          votes: {
-            '4unCMQb5lGgORDo2Y5UUWlBcUHj1': 3,
-          },
-          estimate: 5,
-        },
-      },
-      participants: {
-        '4unCMQb5lGgORDo2Y5UUWlBcUHj1': 1111,
-      },
-    };
-    */
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.params$.pipe(take(1)).subscribe(params => {
+      this.sessionCode = params.sessionCode;
+      this.scopingFacade.validateParticipant(this.user.uid, this.sessionCode);
+    });
+
+    this.participantState$.subscribe(participantState => {
+      this.participantState = participantState;
+      if (participantState === ParticipantState.PARTICIPANT_VALIDATED) {
+        this.scopingFacade.loadSession(this.sessionCode);
+      }
+    });
+  }
 }

@@ -9,6 +9,9 @@ import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 import { RouterFacade } from '@app/state/router.facade';
 import { take } from 'rxjs/operators';
 import { ParticipantState } from '@app/scoping/state/scoping.reducer';
+import * as _ from 'lodash';
+import { TIMER_FOR_NEXT_TASK } from '@app/app.constants';
+import { Task } from '@models/task';
 
 @Component({
   selector: 'app-session-scoping',
@@ -16,8 +19,12 @@ import { ParticipantState } from '@app/scoping/state/scoping.reducer';
   styleUrls: ['./session-scoping.component.scss'],
 })
 export class SessionScopingComponent implements OnInit {
+  _ = _;
+
   ParticipantState = ParticipantState;
   session: ScopingSession;
+  task: Task;
+  taskId: string;
   user$: Observable<User>;
   params$ = this.routerFacade.params$;
   participantState$ = this.scopingFacade.participantState$;
@@ -32,6 +39,7 @@ export class SessionScopingComponent implements OnInit {
   finalEstimate: number;
   sessionLink: string;
   participantState: ParticipantState;
+  navigateTimer: any;
 
   constructor(
     private store: Store<AppState>,
@@ -47,13 +55,25 @@ export class SessionScopingComponent implements OnInit {
     //   this.uiState = state;
     // });
     this.session$.subscribe(session => {
-      this.session = session;
-      if (this.session && this.user) {
-        const votes = this.session.tasks[this.session.currentTaskId].votes;
-        if (votes && votes[this.user.uid]) {
-          this.hasVoted = true;
-        } else {
-          this.hasVoted = false;
+      if (session && this.user) {
+        this.session = session;
+        this.isModerator = session.ownerId === this.user.uid;
+
+        // If no taskId set, use current from session
+        if (!this.taskId) {
+          this.taskId = session.currentTaskId;
+        }
+
+        // Always update task so the results become updated
+        this.task = this.session.tasks[this.taskId];
+        this.nextTask();
+
+        // If estimate given, show results for 5 sec, otherwise show straight away
+        if (session.tasks[this.taskId].estimate) {
+          this.taskId = session.currentTaskId;
+          this.navigateTimer = setTimeout(() => {
+            this.nextTask();
+          }, TIMER_FOR_NEXT_TASK);
         }
       }
     });
@@ -81,7 +101,7 @@ export class SessionScopingComponent implements OnInit {
         this.session.ownerId,
         this.session.connectionId,
         this.session.sessionId,
-        this.session.currentTaskId,
+        this.taskId,
         estimate
       );
     }
@@ -98,7 +118,7 @@ export class SessionScopingComponent implements OnInit {
         this.session.ownerId,
         this.session.connectionId,
         this.session.id,
-        this.session.currentTaskId,
+        this.taskId,
         this.finalEstimate
       );
     }
@@ -106,5 +126,28 @@ export class SessionScopingComponent implements OnInit {
 
   access(sessionValidation: SessionValidation) {
     this.scopingFacade.validateSession(sessionValidation);
+  }
+
+  nextTask() {
+    console.log('Next task');
+    if (this.navigateTimer) {
+      clearTimeout(this.navigateTimer);
+    }
+
+    // Is all tasks estimated?
+    if (this.session.numTasks === this.session.numScopedTasks) {
+      this.routerFacade.navigate({
+        path: [`/scoping/${this.sessionCode}/results`],
+      });
+    } else {
+      this.task = this.session.tasks[this.taskId];
+      const votes = this.task.votes;
+      const voteValue = votes[this.user.uid];
+      if (votes && voteValue !== undefined) {
+        this.hasVoted = true;
+      } else {
+        this.hasVoted = false;
+      }
+    }
   }
 }
