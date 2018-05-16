@@ -42,6 +42,8 @@ import { RouterFacade } from '@app/state/router.facade';
 import * as RouterActions from '@app/state/router.actions';
 import { VerifyModalComponent } from '@app/connections/components/verify-modal/verify-modal.component';
 
+import { ShareScopeLinkComponent } from '@app/connections/containers/share-scope-link/share-scope-link.component';
+
 @Injectable()
 export class ConnectionFacade {
   /*
@@ -95,20 +97,18 @@ export class ConnectionFacade {
   addConnection$ = this.actions$.pipe(
     ofType<AddConnectionAction>(ConnectionActionTypes.ADD),
     switchMap(action =>
-      this.connectionSvc
-        .addConnection(action.payload.connection)
-        .pipe(
-          switchMap((response: any) =>
-            this.popupSvc.openModal({
-              component: VerifyModalComponent,
-              componentProps: { connectionData: response },
-            })
-          ),
-          map(() => new RouterActions.GoAction({ path: ['/dashboard'] })),
-          catchError(error =>
-            of(new AddConnectionErrorAction({ message: error.message }))
-          )
+      this.connectionSvc.addConnection(action.payload.connection).pipe(
+        switchMap((response: any) =>
+          this.popupSvc.openModal({
+            component: VerifyModalComponent,
+            componentProps: { connectionData: response },
+          })
+        ),
+        map(() => new RouterActions.GoAction({ path: ['/dashboard'] })),
+        catchError(error =>
+          of(new AddConnectionErrorAction({ message: error.message }))
         )
+      )
     )
   );
 
@@ -167,12 +167,33 @@ export class ConnectionFacade {
           action.payload.taskListIds
         )
         .pipe(
-          // TODO: Open modal and/or redirect to scoping session;
-          tap(response =>
-            alert(
-              'Link:' + response.sessionCode + ' Access:' + response.accessCode
-            )
-          ),
+          tap(response => {
+            // There's gotta be a better way to do this
+            let connectionName;
+            this.selectedConnection$
+              .subscribe(connection => {
+                connectionName =
+                  connection.externalData.company + ' - ' + connection.type;
+              })
+              .unsubscribe();
+            // There's gotta be a better way to do this
+            let projectName;
+            this.selectedProject$
+              .subscribe(project => {
+                projectName = project.name;
+              })
+              .unsubscribe();
+
+            this.popupSvc.openModal({
+              component: ShareScopeLinkComponent,
+              componentProps: {
+                connectionName: connectionName,
+                projectName: projectName,
+                sessionUrl: response.sessionCode,
+                accessCode: response.accessCode,
+              },
+            });
+          }),
           map(response => new NoopAction())
         )
     )
