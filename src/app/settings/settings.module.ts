@@ -12,7 +12,6 @@ import { settingsReducer } from '@app/settings/state/settings.reducer';
 
 @NgModule({
   imports: [
-    SharedModule,
     SettingsRoutingModule,
     StoreModule.forFeature('settings', settingsReducer),
     EffectsModule.forFeature([SettingsFacade]),
