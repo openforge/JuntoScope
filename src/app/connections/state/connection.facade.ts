@@ -176,6 +176,7 @@ export class ConnectionFacade {
                   connection.externalData.company + ' - ' + connection.type;
               })
               .unsubscribe();
+
             // There's gotta be a better way to do this
             let projectName;
             this.selectedProject$
@@ -236,7 +237,9 @@ export class ConnectionFacade {
         })
       )
       .subscribe(() => {
-        this.store.dispatch(new SelectedConnectionAction({ connectionId }));
+        if (connectionId) {
+          this.store.dispatch(new SelectedConnectionAction({ connectionId }));
+        }
       });
   }
 
