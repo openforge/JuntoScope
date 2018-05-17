@@ -77,8 +77,8 @@ export namespace AppQuery {
     uidPath => uidPath && `${uidPath}/connections`
   );
   export const selectFaqsDocPath = createSelector(
-    selectUidDocPath,
-    uidPath => uidPath && `${uidPath}/faqs`
+    SettingsQuery.faqsDocPath,
+    docPath => docPath && `/faqs`
   );
   export const selectPublicSessionsClnPath = 'public/data/sessions';
 }

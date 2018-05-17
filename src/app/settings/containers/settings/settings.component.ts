@@ -37,6 +37,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.connectionFacade.getConnections();
+    this.settingsFacade.getFaqs();
   }
 
   viewConnectionDetails(connectionId) {

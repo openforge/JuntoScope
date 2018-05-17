@@ -41,29 +41,33 @@ export class SettingsFacade {
   ) {}
 
   @Effect()
-  getFaqs = this.actions$.pipe(
+  getFaqs$ = this.actions$.pipe(
     ofType<QueryFaqsAction>(SettingsActionTypes.QUERY_FAQS),
-    switchMap(action => {
-      return this.settingsService.getFaqs();
+    tap(res => console.log('QueryFaqsAction just got called:', res)),
+    switchMap(() => this.settingsService.getFaqs()),
+    // tap(() => console.log('Hi Everybody!'),
+    // mergeMap(changeActions => changeActions),
+    map(changeActions => {
+      return new NoopAction();
     }),
-    mergeMap(changeActions =>
-      merge(
-        of(changeActions),
-        concat(
-          changeActions.map(change => {
-            return itemFromChangeAction(change);
-          })
-        )
-      )
-    ),
     catchError(error =>
       of(new QueryFaqsErrorAction({ message: error.message }))
     )
   );
+
+  getFaqs() {
+    this.store.dispatch(new QueryFaqsAction());
+  }
 }
 
-const itemFromChangeAction = (change: DocumentChangeAction): Partial<Faq> => {
-  const id = change.payload.doc.id;
-  const data = change.payload.doc.data();
-  return { id, ...data };
+const itemsFromChangeActions = (changes: DocumentChangeAction[]): Faq[] => {
+  let faqs;
+  const dfsdf = changes.forEach(change => {
+    const id = change.payload.doc.id;
+    const data = change.payload.doc.data();
+    console.log('inside of itemsFromChangeActions()');
+    faqs += { id, ...data };
+  });
+
+  return faqs;
 };

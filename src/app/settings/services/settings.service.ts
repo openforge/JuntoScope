@@ -7,7 +7,8 @@ import { environment } from '@env/environment';
 import { Faq } from '@models/faq';
 import { AppFacade } from './../../state/app.facade';
 
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable()
 export class SettingsService {
@@ -19,7 +20,10 @@ export class SettingsService {
 
   getFaqs() {
     return this.appFacade.selectFaqsDocPath$.pipe(
-      switchMap(faqsPath => this.afs.collection(faqsPath).stateChanges())
+      tap(res => console.log('getFaqs response from SettingsService:', res)),
+      switchMap(faqsPath =>
+        this.afs.collection(`${faqsPath}/faqs`).stateChanges()
+      )
     );
   }
 }

@@ -59,7 +59,7 @@ export namespace SettingsQuery {
     selectSlice
   );
   export const selectFaqs = createSelector(selectSlice, state => state.faqs);
-  export const selectFaqsDocPath = createSelector(
+  export const faqsDocPath = createSelector(
     selectFaqs,
     faqPath => faqPath && `${faqPath}/settings`
   );
