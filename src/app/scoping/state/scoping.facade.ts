@@ -107,18 +107,6 @@ export class ScopingFacade {
     catchError(error => of(new VoteErrorAction({ message: error.message })))
   );
 
-  // @Effect({ dispatch: false })
-  // voteSuccess$ = this.actions$.pipe(
-  //   ofType<VoteAction>(ScopingActionTypes.VOTE_SUCCESS),
-  //   tap(action => {
-  //     const sessionId = action.payload.sessionId;
-  //     const taskId = action.payload.taskId;
-  //     this.routerFacade.navigate({
-  //       path: [`/scoping/${sessionId}/tasks/${taskId}/results`],
-  //     });
-  //   })
-  // );
-
   @Effect({ dispatch: false })
   voteError$ = this.actions$.pipe(
     ofType<VoteAction>(ScopingActionTypes.VOTE_ERROR),
@@ -135,30 +123,23 @@ export class ScopingFacade {
   setEstimate$ = this.actions$.pipe(
     ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE),
     switchMap(action =>
-      this.scopingSvc
-        .setEstimate(action.payload)
-        .then(() => {
-          console.log('Estimate saved successfully');
-          return new SetEstimateSuccessAction(action.payload);
+      this.scopingSvc.setEstimate(action.payload).pipe(
+        map(data => new SetEstimateSuccessAction(action.payload)),
+        catchError(error => {
+          return of(new SetEstimateErrorAction({ message: error.message }));
         })
-        .catch(({ message }) => {
-          console.log('ERROR saving estimate');
-          return new SetEstimateErrorAction({ message });
-        })
-    ),
-    catchError(error =>
-      of(new SetEstimateErrorAction({ message: error.message }))
+      )
     )
   );
 
-  @Effect({ dispatch: false })
-  setEstimateSuccess$ = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE_SUCCESS),
-    tap(action => {
-      const sessionId = action.payload.sessionId;
-      this.routerFacade.navigate({ path: [`/scoping/${sessionId}/results`] });
-    })
-  );
+  // @Effect({ dispatch: false })
+  // setEstimateSuccess$ = this.actions$.pipe(
+  //   ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE_SUCCESS),
+  //   tap(action => {
+  //     const sessionId = action.payload.sessionId;
+  //     this.routerFacade.navigate({ path: [`/scoping/${sessionId}/results`] });
+  //   })
+  // );
 
   @Effect({ dispatch: false })
   setEstimateError$ = this.actions$.pipe(

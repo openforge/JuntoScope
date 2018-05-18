@@ -10,6 +10,8 @@ import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 import { RouterFacade } from '@app/state/router.facade';
 import { take } from 'rxjs/operators';
 import { ParticipantState } from '@app/scoping/state/scoping.reducer';
+import * as _ from 'lodash';
+import { Task } from '@models/task';
 
 @Component({
   selector: 'app-session-results',
@@ -52,5 +54,19 @@ export class SessionResultsComponent implements OnInit {
         this.scopingFacade.loadSession(this.sessionCode);
       }
     });
+  }
+
+  isFinished(session) {
+    return session.numTasks === session.numScopedTasks;
+  }
+
+  getTotal(tasks: Array<Task>) {
+    if (tasks) {
+      const s = _.sumBy(tasks, t => {
+        return t.estimate;
+      });
+      return s;
+    }
+    return '';
   }
 }

@@ -77,7 +77,7 @@ export class ScopingService {
     });
   }
 
-  setEstimate(payload): Promise<any> {
+  setEstimate(payload) {
     const {
       userId,
       moderatorId,
@@ -86,6 +86,15 @@ export class ScopingService {
       taskId,
       estimate,
     } = payload;
+
+    return this.http.put(
+      `${
+        environment.apiBaseUrl
+      }/estimate/${moderatorId}/connections/${connectionId}/sessions/${sessionId}/tasks/${taskId}`,
+      { estimate: estimate }
+    );
+
+    /*
     const taskRef = this.afs.firestore.doc(
       '/users/' +
         moderatorId +
@@ -100,6 +109,7 @@ export class ScopingService {
     return taskRef.update({
       estimate: estimate,
     });
+    */
   }
 
   validateSession(sessionValidation: SessionValidation) {
