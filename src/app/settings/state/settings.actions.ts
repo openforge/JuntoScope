@@ -1,27 +1,35 @@
 import { Action } from '@ngrx/store';
 
-import { Faq } from '../../../models/faq';
+import { Faq } from '@models/faq';
 
 export enum SettingsActionTypes {
-  QUERY_FAQS = '[Settings] Query Faqs',
+  QUERY = '[Settings] Query Faqs',
 
-  SET_FAQS = '[Settings] Set Faqs',
-  NO_FAQS = '[Settings] No Faqs Found',
+  ADDED = '[Settings] added',
+  MODIFIED = '[Settings] modified',
+  REMOVED = '[Settings] removed',
 
   QUERY_FAQS_ERROR = '[Settings] Query Faqs Error',
 }
 
 export class QueryFaqsAction implements Action {
-  readonly type = SettingsActionTypes.QUERY_FAQS;
+  readonly type = SettingsActionTypes.QUERY;
+  constructor() {}
 }
 
-export class SetFaqsAction implements Action {
-  readonly type = SettingsActionTypes.SET_FAQS;
-  constructor(public payload: Faq[]) {}
+export class AddedFaqAction implements Action {
+  readonly type = SettingsActionTypes.ADDED;
+  constructor(public payload: Faq) {}
 }
 
-export class NoFaqsFoundAction implements Action {
-  readonly type = SettingsActionTypes.NO_FAQS;
+export class ModifiedFaqAction implements Action {
+  readonly type = SettingsActionTypes.MODIFIED;
+  constructor(public payload: Faq) {}
+}
+
+export class RemovedFaqAction implements Action {
+  readonly type = SettingsActionTypes.REMOVED;
+  constructor(public payload: Faq) {}
 }
 
 export class QueryFaqsErrorAction implements Action {
@@ -31,6 +39,7 @@ export class QueryFaqsErrorAction implements Action {
 
 export type SettingsActions =
   | QueryFaqsAction
-  | SetFaqsAction
-  | NoFaqsFoundAction
+  | AddedFaqAction
+  | ModifiedFaqAction
+  | RemovedFaqAction
   | QueryFaqsErrorAction;

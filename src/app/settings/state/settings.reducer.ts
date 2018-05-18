@@ -13,39 +13,30 @@ import {
   SettingsActionTypes,
 } from '@app/settings/state/settings.actions';
 
-import { Faq } from '../../../models/faq';
+import { Faq } from '@models/faq';
 import { Connection } from '@models/connection';
 
-export interface SettingsState extends EntityState<Faq> {
-  faqs: any[];
-  error: string;
-}
-
 export const adapter: EntityAdapter<Faq> = createEntityAdapter<Faq>();
+export interface State extends EntityState<Faq> {}
 
-export const initialSettingsState: SettingsState = adapter.getInitialState({
-  faqs: null,
-  error: null,
-});
+export const initialState: State = adapter.getInitialState();
 
 export function settingsReducer(
-  state = initialSettingsState,
+  state = initialState,
   action: SettingsActions
-): SettingsState {
+): State {
   switch (action.type) {
-    case SettingsActionTypes.SET_FAQS: {
-      return {
-        ...state,
-        faqs: action.payload,
-      };
-    }
+    case SettingsActionTypes.ADDED:
+      return adapter.addOne(action.payload, state);
 
-    case SettingsActionTypes.QUERY_FAQS_ERROR: {
-      return {
-        ...state,
-        error: action.payload.message,
-      };
-    }
+    case SettingsActionTypes.MODIFIED:
+      return adapter.updateOne(
+        {
+          id: action.payload.id,
+          changes: action.payload,
+        },
+        state
+      );
 
     default: {
       return state;
@@ -54,13 +45,11 @@ export function settingsReducer(
 }
 
 export namespace SettingsQuery {
-  const selectSlice = createFeatureSelector<SettingsState>('settings');
-  export const { selectIds, selectEntities, selectAll } = adapter.getSelectors(
-    selectSlice
-  );
-  export const selectFaqs = createSelector(selectSlice, state => state.faqs);
-  export const faqsDocPath = createSelector(
-    selectFaqs,
-    faqPath => faqPath && `${faqPath}/settings`
-  );
+  const selectSlice = createFeatureSelector<State>('settings');
+  export const {
+    selectIds,
+    selectEntities,
+    selectAll,
+    selectTotal,
+  } = adapter.getSelectors(selectSlice);
 }

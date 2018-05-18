@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { Store, select } from '@ngrx/store';
+import { Store, select, Action } from '@ngrx/store';
 import { Actions, ofType, Effect } from '@ngrx/effects';
+
+import { Observable } from 'rxjs/Observable';
 
 import {
   switchMap,
@@ -18,8 +20,6 @@ import { AppState } from '@app/state/app.reducer';
 import {
   SettingsActionTypes,
   QueryFaqsAction,
-  SetFaqsAction,
-  NoFaqsFoundAction,
   QueryFaqsErrorAction,
 } from '@app/settings/state/settings.actions';
 import { SettingsQuery } from '@app/settings/state/settings.reducer';
@@ -32,7 +32,7 @@ import { DocumentChangeAction } from 'angularfire2/firestore';
 
 @Injectable()
 export class SettingsFacade {
-  faqs$ = this.store.pipe(select(SettingsQuery.selectFaqs));
+  faqs$ = this.store.pipe(select(SettingsQuery.selectAll));
 
   constructor(
     private store: Store<AppState>,
@@ -41,38 +41,22 @@ export class SettingsFacade {
   ) {}
 
   @Effect()
-  getFaqs$ = this.actions$.pipe(
-    ofType<QueryFaqsAction>(SettingsActionTypes.QUERY_FAQS),
-    tap(res => console.log('QueryFaqsAction just got called:', res)),
-    switchMap(() => this.settingsService.getFaqs()),
-    // tap(() => console.log('Hi Everybody!'),
-    // mergeMap(changeActions => changeActions),
-    map(changeActions => {
-      console.log('Array of changeActions:', changeActions);
-      console.log('About to call a new NoopAction()');
-      // const faqs = itemsFromChangeActions(changeActions)
-      // console.log('array of Faqs in SettingsFacade:', faqs)
-      return new NoopAction();
-      // return new SetFaqsAction(faqs);
-    }),
-    catchError(error =>
-      of(new QueryFaqsErrorAction({ message: error.message }))
-    )
-  );
+  query$: Observable<Action> = this.actions$
+    .ofType<QueryFaqsAction>(SettingsActionTypes.QUERY)
+    .pipe(
+      switchMap(action => {
+        return this.settingsService.getFaqs();
+      }),
+      mergeMap(actions => actions),
+      map(action => {
+        return {
+          type: `[Settings] ${action.type}`,
+          payload: { id: action.payload.doc.id, ...action.payload.doc.data() },
+        };
+      })
+    );
 
   getFaqs() {
     this.store.dispatch(new QueryFaqsAction());
   }
 }
-
-const itemsFromChangeActions = (changes: DocumentChangeAction[]): Faq[] => {
-  let faqs;
-  const dfsdf = changes.forEach(change => {
-    const id = change.payload.doc.id;
-    const data = change.payload.doc.data();
-    console.log('inside of itemsFromChangeActions()');
-    faqs += { id, ...data };
-  });
-
-  return faqs;
-};

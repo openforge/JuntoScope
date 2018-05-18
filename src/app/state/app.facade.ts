@@ -28,11 +28,6 @@ export class AppFacade {
     filter(exists => !!exists)
   );
 
-  selectFaqsDocPath$ = this.store.pipe(
-    select(AppQuery.selectFaqsDocPath),
-    filter(exists => !!exists)
-  );
-
   /*
    * Module-level Effects
    */
