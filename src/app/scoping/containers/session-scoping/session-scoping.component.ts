@@ -40,6 +40,7 @@ export class SessionScopingComponent implements OnInit {
   sessionLink: string;
   participantState: ParticipantState;
   navigateTimer: any;
+  timerToNextSet = false;
 
   constructor(
     private store: Store<AppState>,
@@ -66,10 +67,13 @@ export class SessionScopingComponent implements OnInit {
 
         // Always update task so the results become updated
         this.task = this.session.tasks[this.taskId];
-        this.nextTask();
+        if (!this.timerToNextSet) {
+          this.nextTask();
+        }
 
         // If estimate given, show results for 5 sec, otherwise show straight away
         if (session.tasks[this.taskId].estimate) {
+          this.timerToNextSet = true;
           this.taskId = session.currentTaskId;
           this.navigateTimer = setTimeout(() => {
             this.nextTask();
