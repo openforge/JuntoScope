@@ -15,11 +15,11 @@
   <ion-list class="list-connections">
     <ion-item *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
       {{connection.externalData.company}} {{connection.type}}
-      <ion-icon name="ion-chevron-right"></ion-icon>
+      <!-- <ion-icon name="ion-chevron-right"></ion-icon> -->
     </ion-item>
     <ion-item (click)="addConnection()">
       Add Connection
-      <ion-icon name="ion-chevron-right"></ion-icon>
+      <!-- <ion-icon name="ion-chevron-right"></ion-icon> -->
     </ion-item>
   </ion-list>
 
