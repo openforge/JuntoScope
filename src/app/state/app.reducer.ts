@@ -40,6 +40,7 @@ export type AppState = Partial<FullAppState>;
 
 export const reducers: ActionReducerMap<AppState> = {
   router: routerReducer,
+  // settings: settingsReducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = environment.production
@@ -78,7 +79,7 @@ export namespace AppQuery {
   );
   export const selectFaqsDocPath = createSelector(
     SettingsQuery.faqsDocPath,
-    docPath => docPath && `/faqs`
+    docPath => `faqs` // docPath && `faqs`
   );
   export const selectPublicSessionsClnPath = 'public/data/sessions';
 }
