@@ -76,6 +76,7 @@ export class SessionScopingComponent implements OnInit {
           this.timerToNextSet = true;
           this.taskId = session.currentTaskId;
           this.navigateTimer = setTimeout(() => {
+            this.timerToNextSet = false;
             this.nextTask();
           }, TIMER_FOR_NEXT_TASK);
         }
