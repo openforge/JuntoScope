@@ -48,7 +48,12 @@ export class SettingsFacade {
     // tap(() => console.log('Hi Everybody!'),
     // mergeMap(changeActions => changeActions),
     map(changeActions => {
+      console.log('Array of changeActions:', changeActions);
+      console.log('About to call a new NoopAction()');
+      // const faqs = itemsFromChangeActions(changeActions)
+      // console.log('array of Faqs in SettingsFacade:', faqs)
       return new NoopAction();
+      // return new SetFaqsAction(faqs);
     }),
     catchError(error =>
       of(new QueryFaqsErrorAction({ message: error.message }))
