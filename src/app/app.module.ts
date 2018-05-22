@@ -17,6 +17,8 @@ import { NotFoundComponent } from '@app/not-found.component';
 import { AuthGuard } from '@app/auth.guard';
 import { UnAuthGuard } from '@app/un-auth.guard';
 
+import { TokenInterceptor } from '@app/http.interceptor';
+
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
   imports: [
@@ -29,7 +31,15 @@ import { UnAuthGuard } from '@app/un-auth.guard';
     AngularFirestoreModule,
     AuthenticationModule.forRoot(),
   ],
-  providers: [AuthGuard, UnAuthGuard],
+  providers: [
+    AuthGuard,
+    UnAuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

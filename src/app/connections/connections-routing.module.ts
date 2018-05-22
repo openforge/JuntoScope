@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ConnectComponent } from './containers/connect/connect.component';
-import { TeamworkComponent } from './containers/teamwork/teamwork.component';
+import { ConnectComponent } from '@app/connections/containers/connect/connect.component';
+import { TeamworkComponent } from '@app/connections/containers/teamwork/teamwork.component';
 
 const routes: Routes = [
   {

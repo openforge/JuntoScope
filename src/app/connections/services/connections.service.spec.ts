@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ConnectionsService } from './connections.service';
+import { ConnectionsService } from '@app/connections/services/connections.service';
 
 describe('ConnectionsService', () => {
   beforeEach(() => {

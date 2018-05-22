@@ -8,7 +8,7 @@ import {
   initialRouterState,
 } from '@app/state/router.reducer';
 import { AuthState } from '@app/authentication/state/auth.reducer';
-import { ConnectionsState } from '../connections/state/connections.reducer';
+import { ConnectionsState } from '@app/connections/state/connections.reducer';
 
 interface FullAppState {
   router: RouterState;

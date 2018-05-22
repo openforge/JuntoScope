@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 
 import { AppState } from '../../../state/app.state';
 import { Store } from '@ngrx/store';
@@ -19,10 +24,12 @@ export class TeamworkComponent implements OnInit {
   user$ = this.authFacade.user$;
   tokenForm: FormGroup;
 
-  constructor(private authFacade: AuthFacade,
-              private fb: FormBuilder,
-              private http: HttpClient,
-              private store: Store<AppState>) {}
+  constructor(
+    private authFacade: AuthFacade,
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit() {
     this.createForm();
@@ -31,7 +38,12 @@ export class TeamworkComponent implements OnInit {
   continue(event: UIEvent) {
     event.preventDefault();
     if (this.tokenForm.valid) {
-      this.store.dispatch(new ConnectionsActions.AddConnectionAction({token: this.tokenForm.get('token').value,  type: 'teamwork'}));
+      this.store.dispatch(
+        new ConnectionsActions.AddConnectionAction({
+          token: this.tokenForm.get('token').value,
+          type: 'teamwork',
+        })
+      );
     } else {
       this.tokenForm.get('token').markAsDirty();
     }

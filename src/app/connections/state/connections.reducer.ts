@@ -3,9 +3,9 @@ import { createSelector } from '@ngrx/store';
 import {
   ConnectionsActions,
   ConnectionsActionTypes,
-} from './connections.actions';
-import { Connection } from '../../../../models/connection';
-import { AppState } from '../../state/app.state';
+} from '@app/connections/state/connections.actions';
+import { Connection } from '@models/connection';
+import { AppState } from '@app/state/app.state';
 
 export enum ConnectionsCase {
   LOADING = 'Loading',
