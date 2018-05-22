@@ -7,21 +7,22 @@ import {
   StoreRouterConnectingModule,
 } from '@ngrx/router-store';
 
-import { CustomSerializer } from './state/router.reducer';
-import { RouterFacade } from './state/router.facade';
-import { NotFoundComponent } from './not-found.component';
-import { UnAuthGuard } from './un-auth.guard';
-import { AuthGuard } from './auth.guard';
+import { CustomSerializer } from '@app/state/router.reducer';
+import { RouterFacade } from '@app/state/router.facade';
+import { NotFoundComponent } from '@app/not-found.component';
+import { UnAuthGuard } from '@app/un-auth.guard';
+import { AuthGuard } from '@app/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './authentication/authentication.module#AuthenticationModule',
+    loadChildren:
+      '@app/authentication/authentication.module#AuthenticationModule',
     canActivate: [UnAuthGuard],
   },
   {
     path: 'scoping',
-    loadChildren: './scoping/scoping.module#ScopingModule',
+    loadChildren: '@app/scoping/scoping.module#ScopingModule',
     canActivate: [AuthGuard],
   },
   {

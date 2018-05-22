@@ -7,9 +7,9 @@ import {
 
 import { map, tap, filter, switchMap, first, take } from 'rxjs/operators';
 
-import { RouterFacade } from './state/router.facade';
-import { AuthFacade } from './authentication/state/auth.facade';
-import { AuthCase } from './authentication/state/auth.reducer';
+import { RouterFacade } from '@app/state/router.facade';
+import { AuthFacade } from '@app/authentication/state/auth.facade';
+import { AuthCase } from '@app/authentication/state/auth.reducer';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
