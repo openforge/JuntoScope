@@ -134,7 +134,9 @@ export class SessionScopingComponent implements OnInit {
   }
 
   nextTask() {
-    console.log('Next task');
+    let votes;
+    let voteValue;
+
     if (this.navigateTimer) {
       clearTimeout(this.navigateTimer);
     }
@@ -146,8 +148,13 @@ export class SessionScopingComponent implements OnInit {
       });
     } else {
       this.task = this.session.tasks[this.taskId];
-      const votes = this.task.votes;
-      const voteValue = votes[this.user.uid];
+      if (!this.task.votes) {
+        console.log('there are no votes');
+      } else {
+        votes = this.task.votes;
+        voteValue = votes[this.user.uid];
+      }
+
       if (votes && voteValue !== undefined) {
         this.hasVoted = true;
       } else {
