@@ -11,6 +11,7 @@ import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { tap, share, takeUntil, switchMap, map } from 'rxjs/operators';
 
 import { AppFacade } from '@app/state/app.facade';
+import { AuthFacade } from '@app/authentication/state/auth.facade';
 import { ScopingSession } from '@models/scoping-session';
 import { HistoryItem } from '@models/history-item';
 import { Task } from '@models/task';
@@ -44,6 +45,7 @@ export class HistoryService {
 
   constructor(
     private appFacade: AppFacade,
+    private authFacade: AuthFacade,
     private afs: AngularFirestore,
     private http: HttpClient
   ) {}
@@ -51,10 +53,10 @@ export class HistoryService {
   loadHistoryItems() {
     this.refresh.next();
 
-    this.appFacade.uid$
+    this.authFacade.user$
       .pipe(
-        tap(uid => {
-          this.query.field = `participants.${uid}`;
+        tap(user => {
+          this.query.field = `participants.${user.uid}`;
         }),
         switchMap(() => this.getHistoryItems())
       )
