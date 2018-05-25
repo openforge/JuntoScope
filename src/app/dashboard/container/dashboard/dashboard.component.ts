@@ -30,7 +30,6 @@ import { SessionDetailModalComponent } from '@app/dashboard/components/session-d
 export class DashboardComponent implements OnInit, OnDestroy {
   private infiniteScroll: InfiniteScroll;
 
-  user$ = this.authFacade.user$;
   historyItems$ = this.dashboardFacade.historyItems$.pipe(
     tap(items => {
       if (this.infiniteScroll) {

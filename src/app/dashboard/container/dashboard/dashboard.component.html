@@ -9,7 +9,6 @@
 </ion-toolbar>
 
 <ion-content>
-  {{ user$ | async | json}}
   <app-join-session (join)="handleJoin($event)"></app-join-session>
 
   <app-connection-list [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
