@@ -8,6 +8,7 @@ import { map, filter, withLatestFrom, take, tap } from 'rxjs/operators';
 
 import { AppFacade } from '@app/state/app.facade';
 import { RouterFacade } from '@app/state/router.facade';
+import { AuthFacade } from '@app/authentication/state/auth.facade';
 import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
 import { ConnectionFacade } from '@app/connections/state/connection.facade';
 import { SessionUserType } from '@models/user';
@@ -29,7 +30,7 @@ import { SessionDetailModalComponent } from '@app/dashboard/components/session-d
 export class DashboardComponent implements OnInit, OnDestroy {
   private infiniteScroll: InfiniteScroll;
 
-  uid$ = this.appFacade.uid$;
+  user$ = this.authFacade.user$;
   historyItems$ = this.dashboardFacade.historyItems$.pipe(
     tap(items => {
       if (this.infiniteScroll) {
@@ -45,7 +46,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private routerFacade: RouterFacade,
     private dashboardFacade: DashboardFacade,
     private popupSvc: PopupService,
-    private connectionFacade: ConnectionFacade
+    private connectionFacade: ConnectionFacade,
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit() {
