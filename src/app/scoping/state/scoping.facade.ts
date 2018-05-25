@@ -100,7 +100,7 @@ export class ScopingFacade {
           return new VoteSuccessAction(action.payload);
         })
         .catch(({ message }) => {
-          console.log('ERROR saving vote');
+          console.log('ERROR saving vote', message);
           return new VoteErrorAction({ message });
         })
     ),
@@ -121,7 +121,7 @@ export class ScopingFacade {
 
   @Effect()
   setEstimate$ = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE),
+    ofType<SetEstimateAction>(ScopingActionTypes.SET_ESTIMATE),
     switchMap(action =>
       this.scopingSvc.setEstimate(action.payload).pipe(
         map(data => new SetEstimateSuccessAction(action.payload)),
