@@ -46,5 +46,5 @@ export async function setEstimate(req: express.Request, res: express.Response) {
     return res.status(400).json({ message: error });
   }
 
-  return res.send(204);
+  return res.sendStatus(204);
 }

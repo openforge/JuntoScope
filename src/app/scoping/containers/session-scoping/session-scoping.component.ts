@@ -9,9 +9,10 @@ import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 import { RouterFacade } from '@app/state/router.facade';
 import { take } from 'rxjs/operators';
 import { ParticipantState } from '@app/scoping/state/scoping.reducer';
-import * as _ from 'lodash';
 import { TIMER_FOR_NEXT_TASK } from '@app/app.constants';
 import { Task } from '@models/task';
+
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-session-scoping',
@@ -21,32 +22,34 @@ import { Task } from '@models/task';
 export class SessionScopingComponent implements OnInit {
   _ = _;
 
-  ParticipantState = ParticipantState;
-  session: ScopingSession;
-  task: Task;
-  taskId: string;
-  user$: Observable<User>;
-  params$ = this.routerFacade.params$;
-  participantState$ = this.scopingFacade.participantState$;
-  user: User;
-  sessionCode: string;
   error$ = this.scopingFacade.error$;
   uiState$ = this.scopingFacade.uiState$;
   session$ = this.scopingFacade.session$;
+  params$ = this.routerFacade.params$;
+  participantState$ = this.scopingFacade.participantState$;
+  user$: Observable<User>;
+  participantState: ParticipantState;
+  session: ScopingSession;
+  user: User;
+  task: Task;
+  taskId: string;
+  sessionCode: string;
+  sessionLink: string;
+  finalEstimate: number;
+  navigateTimer: any;
+  ParticipantState = ParticipantState;
   hasVoted = false;
   hasResults = false;
   isModerator = true;
-  finalEstimate: number;
-  sessionLink: string;
-  participantState: ParticipantState;
-  navigateTimer: any;
   timerToNextSet = false;
 
   constructor(
     private store: Store<AppState>,
     private scopingFacade: ScopingFacade,
     private routerFacade: RouterFacade
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.user$ = this.store.pipe(select(AuthQuery.selectUser));
     this.user$.subscribe(user => {
       this.user = user;
@@ -56,14 +59,17 @@ export class SessionScopingComponent implements OnInit {
     //   this.uiState = state;
     // });
     this.session$.subscribe(session => {
+      console.log('session emitted ', session);
+
       if (session && this.user) {
         this.session = session;
         this.isModerator = session.ownerId === this.user.uid;
 
         // If no taskId set, use current from session
-        if (!this.taskId) {
-          this.taskId = session.currentTaskId;
-        }
+        // if (!this.taskId) {
+        //   this.taskId = session.currentTaskId;
+        // }
+        this.taskId = session.currentTaskId;
 
         // Always update task so the results become updated
         this.task = this.session.tasks[this.taskId];
@@ -73,6 +79,11 @@ export class SessionScopingComponent implements OnInit {
 
         // If estimate given, show results for 5 sec, otherwise show straight away
         if (session.tasks[this.taskId].estimate) {
+          console.log(
+            "there's an estimate",
+            session.tasks[this.taskId].estimate
+          );
+
           this.timerToNextSet = true;
           this.taskId = session.currentTaskId;
           this.navigateTimer = setTimeout(() => {
@@ -82,9 +93,11 @@ export class SessionScopingComponent implements OnInit {
         }
       }
     });
-  }
 
-  ngOnInit() {
+    /* 
+      TODO: Figure out why session.currentTaskId is not being updated
+    */
+
     this.params$.pipe(take(1)).subscribe(params => {
       this.sessionCode = params.sessionCode;
       this.scopingFacade.validateParticipant(this.user.uid, this.sessionCode);
@@ -134,6 +147,8 @@ export class SessionScopingComponent implements OnInit {
   }
 
   nextTask() {
+    console.log('NEXT TASK');
+
     let votes;
     let voteValue;
 
@@ -141,7 +156,7 @@ export class SessionScopingComponent implements OnInit {
       clearTimeout(this.navigateTimer);
     }
 
-    // Is all tasks estimated?
+    // Are all tasks estimated?
     if (this.session.numTasks === this.session.numScopedTasks) {
       this.routerFacade.navigate({
         path: [`/scoping/${this.sessionCode}/results`],

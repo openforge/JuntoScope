@@ -203,7 +203,7 @@ export class SessionService {
           .get()
           .then(tasksDoc => {
             const tasks = [];
-            tasksDoc.forEach(function(doc) {
+            tasksDoc.forEach(doc => {
               tasks.push({ ...doc.data(), id: doc.id });
             });
             return sessionRef
@@ -213,11 +213,17 @@ export class SessionService {
 
                 // Resolve the current scoped tasks count and next currentTaskId
                 const scopedTasks = tasks.filter(t => t.estimate !== undefined);
-                const scopedCount = scopedTasks ? scopedTasks.length : 0;
-                const taskIndex = tasks.indexOf(taskId);
+                const scopedCount = scopedTasks ? scopedTasks.length - 1 : 0;
+
+                let taskIndex;
+                tasks.forEach((task, index) => {
+                  if (task.id === taskId) {
+                    taskIndex = index;
+                  }
+                });
+
                 let nextId;
                 if (taskIndex < tasks.length - 1) {
-                  const taskIds = Object.keys(tasks);
                   nextId = tasks[taskIndex + 1].id;
                 } else {
                   nextId = session.currentTaskId;

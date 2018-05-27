@@ -61,7 +61,7 @@ export class ScopingFacade {
 
   @Effect()
   getSession = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION),
+    ofType<LoadSessionAction>(ScopingActionTypes.LOAD_SESSION),
     switchMap(action =>
       this.scopingSvc
         .getSession(action.payload)
@@ -79,7 +79,7 @@ export class ScopingFacade {
 
   @Effect({ dispatch: false })
   getSessionError$ = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION_ERROR),
+    ofType<LoadSessionErrorAction>(ScopingActionTypes.LOAD_SESSION_ERROR),
     tap(action => {
       this.popupService.simpleAlert(
         'Error',
@@ -100,7 +100,7 @@ export class ScopingFacade {
           return new VoteSuccessAction(action.payload);
         })
         .catch(({ message }) => {
-          console.log('ERROR saving vote', message);
+          console.log('ERROR saving vote');
           return new VoteErrorAction({ message });
         })
     ),
@@ -109,7 +109,7 @@ export class ScopingFacade {
 
   @Effect({ dispatch: false })
   voteError$ = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.VOTE_ERROR),
+    ofType<VoteErrorAction>(ScopingActionTypes.VOTE_ERROR),
     tap(action => {
       this.popupService.simpleAlert(
         'Error',

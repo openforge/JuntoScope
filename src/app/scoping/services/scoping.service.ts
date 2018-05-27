@@ -93,23 +93,6 @@ export class ScopingService {
       }/estimate/${moderatorId}/connections/${connectionId}/sessions/${sessionId}/tasks/${taskId}`,
       { estimate: estimate }
     );
-
-    /*
-    const taskRef = this.afs.firestore.doc(
-      '/users/' +
-        moderatorId +
-        '/connections/' +
-        connectionId +
-        '/sessions/' +
-        sessionId +
-        '/tasks/' +
-        taskId
-    );
-    // Only update estimate attribute.
-    return taskRef.update({
-      estimate: estimate,
-    });
-    */
   }
 
   validateSession(sessionValidation: SessionValidation) {
