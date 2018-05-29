@@ -35,6 +35,7 @@ export class SessionScopingComponent implements OnInit {
   taskId: string;
   sessionCode: string;
   sessionLink: string;
+  scopedCount: number;
   finalEstimate: number;
   navigateTimer: any;
   ParticipantState = ParticipantState;
@@ -42,6 +43,7 @@ export class SessionScopingComponent implements OnInit {
   hasResults = false;
   isModerator = true;
   timerToNextSet = false;
+  estimateSubmitted = false;
 
   constructor(
     private store: Store<AppState>,
@@ -55,33 +57,28 @@ export class SessionScopingComponent implements OnInit {
       this.user = user;
     });
 
-    // this.uiState$.subscribe(state => {
-    //   this.uiState = state;
-    // });
     this.session$.subscribe(session => {
       if (session && this.user) {
         this.session = session;
         this.isModerator = session.ownerId === this.user.uid;
-
-        // If no taskId set, use current from session
-        // if (!this.taskId) {
-        //   this.taskId = session.currentTaskId;
-        // }
         this.taskId = session.currentTaskId;
-
         // Always update task so the results become updated
         this.task = this.session.tasks[this.taskId];
+
+        if (!this.scopedCount) {
+          this.scopedCount = this.session.numScopedTasks;
+        } else if (this.scopedCount < this.session.numScopedTasks) {
+          this.estimateSubmitted = true;
+        } else {
+          this.estimateSubmitted = false;
+        }
+
         if (!this.timerToNextSet) {
           this.nextTask();
         }
 
-        // If estimate given, show results for 5 sec, otherwise show straight away
-        if (session.tasks[this.taskId].estimate) {
-          console.log(
-            "there's an estimate",
-            session.tasks[this.taskId].estimate
-          );
-
+        // If estimate submitted, show results for 5 sec
+        if (this.estimateSubmitted) {
           this.timerToNextSet = true;
           this.taskId = session.currentTaskId;
           this.navigateTimer = setTimeout(() => {
@@ -91,10 +88,6 @@ export class SessionScopingComponent implements OnInit {
         }
       }
     });
-
-    /* 
-      TODO: Figure out why session.currentTaskId is not being updated
-    */
 
     this.params$.pipe(take(1)).subscribe(params => {
       this.sessionCode = params.sessionCode;
@@ -145,7 +138,7 @@ export class SessionScopingComponent implements OnInit {
   }
 
   nextTask() {
-    console.log('NEXT TASK');
+    console.log('Next task');
 
     let votes;
     let voteValue;
