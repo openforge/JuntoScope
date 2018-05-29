@@ -212,8 +212,8 @@ export class SessionService {
                 const session = sessionDoc.data();
 
                 // Resolve the current scoped tasks count and next currentTaskId
-                const scopedTasks = tasks.filter(t => t.estimate !== undefined);
-                const scopedCount = scopedTasks ? scopedTasks.length - 1 : 0;
+                const scopedTasks = tasks.filter(t => t.estimate !== 0);
+                const scopedCount = scopedTasks ? scopedTasks.length : 0;
 
                 let taskIndex;
                 tasks.forEach((task, index) => {

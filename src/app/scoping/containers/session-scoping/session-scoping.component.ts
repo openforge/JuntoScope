@@ -59,8 +59,6 @@ export class SessionScopingComponent implements OnInit {
     //   this.uiState = state;
     // });
     this.session$.subscribe(session => {
-      console.log('session emitted ', session);
-
       if (session && this.user) {
         this.session = session;
         this.isModerator = session.ownerId === this.user.uid;
