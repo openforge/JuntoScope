@@ -19,8 +19,7 @@
     "paths": {
       "@app/*": ["src/app/*"],
       "@env/*": ["src/environments/*"],
-      "@models/*": ["src/models/*"],
-      "@test/*": ["src/test/*"]
+      "@models/*": ["src/models/*"]
     }
   }
 }

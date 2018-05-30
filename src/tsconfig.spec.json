@@ -7,16 +7,10 @@
     "types": [
       "jasmine",
       "node"
-    ],
-    "paths": {
-      "@app/*": ["app/*"],
-      "@env/*": ["environments/*"],
-      "@models/*": ["models/*"],
-      "@test/*": ["test/*"]
-    }
+    ]
   },
   "files": [
-    "test/jest-test.ts",
+    "test.ts",
     "polyfills.ts"
   ],
   "include": [

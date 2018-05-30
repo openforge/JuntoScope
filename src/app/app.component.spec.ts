@@ -1,7 +1,6 @@
-import { async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ConfigureFn, configureTests } from '@test/jest-test.helper';
 import { AppComponent } from '@app/app.component';
 
 describe('AppComponent', () => {
@@ -9,26 +8,17 @@ describe('AppComponent', () => {
   let component: AppComponent;
 
   beforeEach(async(() => {
-    const configure: ConfigureFn = testBed => {
-      testBed.configureTestingModule({
-        imports: [RouterTestingModule],
-        declarations: [AppComponent],
-      });
-    };
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [AppComponent],
+    }).compileComponents();
 
-    configureTests(configure).then(testBed => {
-      fixture = testBed.createComponent(AppComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   }));
 
   it('should create the app', async(() => {
-    const app = component;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   }));
-
-  it('snaps', () => {
-    expect(fixture).toMatchSnapshot();
-  });
 });
