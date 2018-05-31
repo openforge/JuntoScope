@@ -13,7 +13,7 @@ import {
 } from 'rxjs/operators';
 import { of, merge, forkJoin, concat } from 'rxjs';
 
-import { AppState } from '@app/state/app.reducer';
+import { AppState } from '../../state/app.reducer';
 import {
   LoadHistoryItemsAction,
   LoadMoreHistoryItemsAction,
@@ -26,13 +26,13 @@ import {
   DeleteSessionErrorAction,
   RefreshAccessCodeAction,
   RefreshAccessCodeErrorAction,
-} from '@app/dashboard/state/dashboard.actions';
-import { HistoryService } from '@app/dashboard/services/history.service';
-import { HistoryItem } from '@models/history-item';
-import { DashboardQuery } from '@app/dashboard/state/dashboard.reducer';
-import { NoopAction } from '@app/state/app.actions';
+} from '../state/dashboard.actions';
+import { HistoryService } from '../services/history.service';
+import { HistoryItem } from '../../../models/history-item';
+import { DashboardQuery } from '../state/dashboard.reducer';
+import { NoopAction } from '../../state/app.actions';
 import { DocumentChangeAction } from 'angularfire2/firestore';
-import { ScopingSession } from '@models/scoping-session';
+import { ScopingSession } from '../../../models/scoping-session';
 
 @Injectable()
 export class DashboardFacade {
@@ -96,14 +96,12 @@ export class DashboardFacade {
   deleteSession$ = this.actions$.pipe(
     ofType<DeleteSessionAction>(DashboardActionTypes.DELETE_SESSION),
     switchMap(action =>
-      this.historySvc
-        .deleteSession(action.sessionLink)
-        .pipe(
-          map(() => new NoopAction()),
-          catchError(error =>
-            of(new DeleteSessionErrorAction({ message: error.message }))
-          )
+      this.historySvc.deleteSession(action.sessionLink).pipe(
+        map(() => new NoopAction()),
+        catchError(error =>
+          of(new DeleteSessionErrorAction({ message: error.message }))
         )
+      )
     )
   );
 
@@ -111,14 +109,12 @@ export class DashboardFacade {
   refreshAccessCode$ = this.actions$.pipe(
     ofType<RefreshAccessCodeAction>(DashboardActionTypes.REFRESH_ACCESS_CODE),
     switchMap(action =>
-      this.historySvc
-        .refreshAccessCode(action.sessionCode)
-        .pipe(
-          map(() => new NoopAction()),
-          catchError(error =>
-            of(new RefreshAccessCodeErrorAction({ message: error.message }))
-          )
+      this.historySvc.refreshAccessCode(action.sessionCode).pipe(
+        map(() => new NoopAction()),
+        catchError(error =>
+          of(new RefreshAccessCodeErrorAction({ message: error.message }))
         )
+      )
     )
   );
 

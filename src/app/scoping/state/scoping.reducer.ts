@@ -1,12 +1,9 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { AppState } from '@app/state/app.reducer';
+import { AppState } from '../../state/app.reducer';
 
-import {
-  ScopingActions,
-  ScopingActionTypes,
-} from '@app/scoping/state/scoping.actions';
-import { ScopingSession } from '@models/scoping-session';
+import { ScopingActions, ScopingActionTypes } from '../state/scoping.actions';
+import { ScopingSession } from '../../../models/scoping-session';
 
 export enum ScopingUiState {
   LOADING = 'Loading',

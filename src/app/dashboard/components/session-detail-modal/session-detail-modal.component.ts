@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NavParams } from '@ionic/angular';
-import { PopupService } from '@app/shared/popup.service';
-import { InfoModalComponent } from '@app/shared/components/info-modal/info-modal.component';
+import { PopupService } from '../../../shared/popup.service';
+import { InfoModalComponent } from '../../../shared/components/info-modal/info-modal.component';
 import { Store } from '@ngrx/store';
-import { AppState } from '@app/state/app.reducer';
-import { DeleteSessionAction } from '@app/dashboard/state/dashboard.actions';
-import { RefreshAccessCodeAction } from '@app/dashboard/state/dashboard.actions';
+import { AppState } from '../../../state/app.reducer';
+import { DeleteSessionAction } from '../../state/dashboard.actions';
+import { RefreshAccessCodeAction } from '../../state/dashboard.actions';
 
 import * as moment from 'moment';
 

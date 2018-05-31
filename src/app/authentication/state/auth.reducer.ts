@@ -1,10 +1,7 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import {
-  AuthActions,
-  AuthActionTypes,
-} from '@app/authentication/state/auth.actions';
-import { User } from '@models/user';
+import { AuthActions, AuthActionTypes } from './auth.actions';
+import { User } from '../../../models/user';
 
 export enum AuthUiState {
   UNKNOWN = 'Unknown',

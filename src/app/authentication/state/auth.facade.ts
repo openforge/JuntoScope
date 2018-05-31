@@ -13,8 +13,8 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { AppState } from '@app/state/app.reducer';
-import { AuthQuery, AuthUiState } from '@app/authentication/state/auth.reducer';
+import { AppState } from '../../state/app.reducer';
+import { AuthQuery, AuthUiState } from '../state/auth.reducer';
 import {
   AuthActionTypes,
   GetUserAction,
@@ -23,8 +23,8 @@ import {
   AuthenticatedAction,
   LoginAction,
   LogoutAction,
-} from '@app/authentication/state/auth.actions';
-import { AuthService } from '@app/authentication/services/auth.service';
+} from '../state/auth.actions';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthFacade {
@@ -91,7 +91,10 @@ export class AuthFacade {
 
   checkAuth() {
     this.uiState$
-      .pipe(take(1), map(uiState => uiState === AuthUiState.UNKNOWN))
+      .pipe(
+        take(1),
+        map(uiState => uiState === AuthUiState.UNKNOWN)
+      )
       .subscribe(unchecked => {
         if (unchecked) {
           this.store.dispatch(new GetUserAction());

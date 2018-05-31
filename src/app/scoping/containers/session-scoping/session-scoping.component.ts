@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ScopingSession, SessionValidation } from '@models/scoping-session';
+import {
+  ScopingSession,
+  SessionValidation,
+} from '../../../../models/scoping-session';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { AppState } from '@app/state/app.reducer';
-import { AuthQuery } from '@app/authentication/state/auth.reducer';
-import { User } from '@models/user';
-import { ScopingFacade } from '@app/scoping/state/scoping.facade';
-import { RouterFacade } from '@app/state/router.facade';
+import { AppState } from '../../../state/app.reducer';
+import { AuthQuery } from '../../../authentication/state/auth.reducer';
+import { User } from '../../../../models/user';
+import { ScopingFacade } from '../../state/scoping.facade';
+import { RouterFacade } from '../../../state/router.facade';
 import { take } from 'rxjs/operators';
-import { ParticipantState } from '@app/scoping/state/scoping.reducer';
+import { ParticipantState } from '../../state/scoping.reducer';
 
 @Component({
   selector: 'app-session-scoping',

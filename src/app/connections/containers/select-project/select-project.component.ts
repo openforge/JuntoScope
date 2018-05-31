@@ -10,10 +10,10 @@ import {
   distinctUntilChanged,
 } from 'rxjs/operators';
 
-import { RouterFacade } from '@app/state/router.facade';
-import { ConnectionFacade } from '@app/connections/state/connection.facade';
+import { RouterFacade } from '../../../state/router.facade';
+import { ConnectionFacade } from '../../state/connection.facade';
 import { ActivatedRoute } from '@angular/router';
-import { Project } from '@models/project';
+import { Project } from '../../../../models/project';
 
 @Component({
   selector: 'app-select-project',

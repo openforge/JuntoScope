@@ -15,7 +15,7 @@ import {
 } from 'rxjs/operators';
 import { of, combineLatest, empty } from 'rxjs';
 
-import { AppState } from '@app/state/app.reducer';
+import { AppState } from '../../state/app.reducer';
 import {
   ConnectionActionTypes,
   QueryConnectionsAction,
@@ -28,19 +28,16 @@ import {
   AddConnectionErrorAction,
   NoConnectionsAction,
   CreateSessionAction,
-} from '@app/connections/state/connection.actions';
-import { ConnectionService } from '@app/connections/services/connection.service';
-import { Connection } from '@models/connection';
-import { Project } from '@models/project';
-import {
-  ConnectionQuery,
-  ConnectionUiState,
-} from '@app/connections/state/connection.reducer';
-import { NoopAction } from '@app/state/app.actions';
-import { PopupService } from '@app/shared/popup.service';
-import { RouterFacade } from '@app/state/router.facade';
-import * as RouterActions from '@app/state/router.actions';
-import { VerifyModalComponent } from '@app/connections/components/verify-modal/verify-modal.component';
+} from './connection.actions';
+import { ConnectionService } from '../services/connection.service';
+import { Connection } from '../../../models/connection';
+import { Project } from '../../../models/project';
+import { ConnectionQuery, ConnectionUiState } from './connection.reducer';
+import { NoopAction } from '../../state/app.actions';
+import { PopupService } from '../../shared/popup.service';
+import { RouterFacade } from '../../state/router.facade';
+import * as RouterActions from '../../state/router.actions';
+import { VerifyModalComponent } from '../components/verify-modal/verify-modal.component';
 
 @Injectable()
 export class ConnectionFacade {
@@ -95,20 +92,18 @@ export class ConnectionFacade {
   addConnection$ = this.actions$.pipe(
     ofType<AddConnectionAction>(ConnectionActionTypes.ADD),
     switchMap(action =>
-      this.connectionSvc
-        .addConnection(action.payload.connection)
-        .pipe(
-          switchMap((response: any) =>
-            this.popupSvc.openModal({
-              component: VerifyModalComponent,
-              componentProps: { connectionData: response },
-            })
-          ),
-          map(() => new RouterActions.GoAction({ path: ['/dashboard'] })),
-          catchError(error =>
-            of(new AddConnectionErrorAction({ message: error.message }))
-          )
+      this.connectionSvc.addConnection(action.payload.connection).pipe(
+        switchMap((response: any) =>
+          this.popupSvc.openModal({
+            component: VerifyModalComponent,
+            componentProps: { connectionData: response },
+          })
+        ),
+        map(() => new RouterActions.GoAction({ path: ['/dashboard'] })),
+        catchError(error =>
+          of(new AddConnectionErrorAction({ message: error.message }))
         )
+      )
     )
   );
 

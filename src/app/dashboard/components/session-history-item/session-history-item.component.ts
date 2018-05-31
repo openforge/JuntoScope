@@ -6,9 +6,9 @@ import {
   EventEmitter,
 } from '@angular/core';
 
-import { HistoryItem } from '@models/history-item';
-import { SessionUserType } from '@models/user';
-import { SessionStatus } from '@models/scoping-session';
+import { HistoryItem } from '../../../../models/history-item';
+import { SessionUserType } from '../../../../models/user';
+import { SessionStatus } from '../../../../models/scoping-session';
 
 @Component({
   selector: 'app-session-history-item',

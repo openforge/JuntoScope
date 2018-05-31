@@ -6,7 +6,7 @@ import {
   ChangeDetectionStrategy,
   EventEmitter,
 } from '@angular/core';
-import { TaskList } from '@models/task-list';
+import { TaskList } from '../../../../models/task-list';
 
 @Component({
   selector: 'app-task-list',

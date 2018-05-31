@@ -1,5 +1,5 @@
-import { ScopingSession, SessionStatus } from '@models/scoping-session';
-import { SessionUserType } from '@models/user';
+import { ScopingSession, SessionStatus } from '../models/scoping-session';
+import { SessionUserType } from '../models/user';
 
 export interface HistoryItem extends Partial<ScopingSession> {
   id?: string;

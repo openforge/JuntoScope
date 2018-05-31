@@ -3,7 +3,7 @@ import { Params, RouterStateSnapshot } from '@angular/router';
 import { createSelector } from '@ngrx/store';
 import { RouterStateSerializer, RouterReducerState } from '@ngrx/router-store';
 
-import { AppState } from '@app/state/app.reducer';
+import { AppState } from '../state/app.reducer';
 
 interface SerializedRouterState {
   url: string;

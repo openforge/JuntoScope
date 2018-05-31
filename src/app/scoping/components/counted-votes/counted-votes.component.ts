@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Votes } from '@models/task';
+import { Votes } from '../../../../models/task';
 import * as _ from 'lodash';
 
 @Component({

@@ -7,7 +7,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 
-import { Connection } from '@models/connection';
+import { Connection } from '../../../../models/connection';
 
 @Component({
   selector: 'app-connection-list',

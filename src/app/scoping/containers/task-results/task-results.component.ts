@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ScopingSession } from '@models/scoping-session';
+import { ScopingSession } from '../../../../models/scoping-session';
 import { Observable } from 'rxjs/Observable';
-import { User } from '@models/user';
+import { User } from '../../../../models/user';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '@app/state/app.reducer';
-import { AuthQuery } from '@app/authentication/state/auth.reducer';
-import { ScopingFacade } from '@app/scoping/state/scoping.facade';
+import { AppState } from '../../../state/app.reducer';
+import { AuthQuery } from '../../../authentication/state/auth.reducer';
+import { ScopingFacade } from '../../state/scoping.facade';
 
 @Component({
   selector: 'app-task-results',

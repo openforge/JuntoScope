@@ -9,9 +9,9 @@ import {
   HistoryItem,
   HistoryItemOptionEvent,
   HistoryItemDetailEvent,
-} from '@models/history-item';
-import { SessionUserType } from '@models/user';
-import { SessionStatus } from '@models/scoping-session';
+} from '../../../../models/history-item';
+import { SessionUserType } from '../../../../models/user';
+import { SessionStatus } from '../../../../models/scoping-session';
 
 @Component({
   selector: 'app-session-history-list',

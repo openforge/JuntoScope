@@ -6,19 +6,19 @@ import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 
 import { map, filter, withLatestFrom, take, tap } from 'rxjs/operators';
 
-import { AppFacade } from '@app/state/app.facade';
-import { RouterFacade } from '@app/state/router.facade';
-import { DashboardFacade } from '@app/dashboard/state/dashboard.facade';
-import { ConnectionFacade } from '@app/connections/state/connection.facade';
-import { SessionUserType } from '@models/user';
-import { SessionStatus } from '@models/scoping-session';
-import { Connection } from '@models/connection';
+import { AppFacade } from '../../../state/app.facade';
+import { RouterFacade } from '../../../state/router.facade';
+import { DashboardFacade } from '../../state/dashboard.facade';
+import { ConnectionFacade } from '../../../connections/state/connection.facade';
+import { SessionUserType } from '../../../../models/user';
+import { SessionStatus } from '../../../../models/scoping-session';
+import { Connection } from '../../../../models/connection';
 import {
   HistoryItemOptionEvent,
   HistoryItemDetailEvent,
-} from '@models/history-item';
-import { PopupService } from '@app/shared/popup.service';
-import { SessionDetailModalComponent } from '@app/dashboard/components/session-detail-modal/session-detail-modal.component';
+} from '../../../../models/history-item';
+import { PopupService } from '../../../shared/popup.service';
+import { SessionDetailModalComponent } from '../../components/session-detail-modal/session-detail-modal.component';
 
 @TakeUntilDestroy()
 @Component({

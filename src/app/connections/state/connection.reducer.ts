@@ -1,11 +1,8 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
-import {
-  ConnectionActions,
-  ConnectionActionTypes,
-} from '@app/connections/state/connection.actions';
-import { Connection } from '@models/connection';
+import { ConnectionActions, ConnectionActionTypes } from './connection.actions';
+import { Connection } from '../../../models/connection';
 
 export enum ConnectionUiState {
   LOADING = 'Loading',

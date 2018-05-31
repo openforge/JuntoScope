@@ -5,9 +5,9 @@ import { map, tap, filter, switchMap, take } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 
-import { RouterFacade } from '@app/state/router.facade';
-import { ConnectionFacade } from '@app/connections/state/connection.facade';
-import { TaskList } from '@models/task-list';
+import { RouterFacade } from '../../../state/router.facade';
+import { ConnectionFacade } from '../../state/connection.facade';
+import { TaskList } from '../../../../models/task-list';
 
 @Component({
   selector: 'app-select-task-list',

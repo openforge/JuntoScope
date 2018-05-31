@@ -1,6 +1,9 @@
 import { Action } from '@ngrx/store';
-import { ScopingSession, SessionValidation } from '@models/scoping-session';
-import { Task } from '@models/task';
+import {
+  ScopingSession,
+  SessionValidation,
+} from '../../../models/scoping-session';
+import { Task } from '../../../models/task';
 
 export enum ScopingActionTypes {
   LOAD_SESSION = '[Scoping] Load Session',

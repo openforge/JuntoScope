@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ScopingSession } from '@models/scoping-session';
+import { ScopingSession } from '../../../../models/scoping-session';
 
 @Component({
   selector: 'app-session-header',

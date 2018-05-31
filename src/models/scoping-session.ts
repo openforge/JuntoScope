@@ -1,5 +1,5 @@
-import { Task } from '@models/task';
-import { User } from '@models/user';
+import { Task } from '../models/task';
+import { User } from '../models/user';
 
 export interface ScopingSession {
   id: string;

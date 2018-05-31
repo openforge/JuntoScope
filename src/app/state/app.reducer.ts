@@ -6,26 +6,26 @@ import {
 } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 
-import { environment } from '@env/environment';
+import { environment } from '../../environments/environment';
 import {
   RouterState,
   routerReducer,
   initialRouterState,
   RouterQuery,
-} from '@app/state/router.reducer';
-import { NavigationOptions } from '@app/state/router.actions';
+} from './router.reducer';
+import { NavigationOptions } from './router.actions';
 import {
   AuthState,
   AuthQuery,
   AuthUiState,
-} from '@app/authentication/state/auth.reducer';
+} from '../authentication/state/auth.reducer';
 import {
   ConnectionState,
   ConnectionQuery,
   ConnectionUiState,
-} from '@app/connections/state/connection.reducer';
-import { ScopingState, ScopingQuery } from '@app/scoping/state/scoping.reducer';
-import { DashboardState } from '@app/dashboard/state/dashboard.reducer';
+} from '../connections/state/connection.reducer';
+import { ScopingState, ScopingQuery } from '../scoping/state/scoping.reducer';
+import { DashboardState } from '../dashboard/state/dashboard.reducer';
 
 interface FullAppState {
   router: RouterState;

@@ -10,10 +10,10 @@ import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 
 import { map, tap, filter, withLatestFrom, take } from 'rxjs/operators';
 
-import { AuthFacade } from '@app/authentication/state/auth.facade';
-import { AuthUiState } from '@app/authentication/state/auth.reducer';
-import { RouterFacade } from '@app/state/router.facade';
-import { AppFacade } from '@app/state/app.facade';
+import { AuthFacade } from '../../state/auth.facade';
+import { AuthUiState } from '../../state/auth.reducer';
+import { RouterFacade } from '../../../state/router.facade';
+import { AppFacade } from '../../../state/app.facade';
 
 @TakeUntilDestroy()
 @Component({

@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ScopingFacade } from '@app/scoping/state/scoping.facade';
-import { RouterFacade } from '@app/state/router.facade';
-import { SessionValidation } from '@models/scoping-session';
+import { ScopingFacade } from '../../state/scoping.facade';
+import { RouterFacade } from '../../../state/router.facade';
+import { SessionValidation } from '../../../../models/scoping-session';
 
 @Component({
   selector: 'app-session-access',

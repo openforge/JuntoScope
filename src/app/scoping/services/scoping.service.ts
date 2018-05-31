@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from '@env/environment';
+import { environment } from '../../../environments/environment';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { SessionValidation, ScopingSession } from '@models/scoping-session';
-import { AppFacade } from '@app/state/app.facade';
+import {
+  SessionValidation,
+  ScopingSession,
+} from '../../../models/scoping-session';
+import { AppFacade } from '../../state/app.facade';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { HistoryService } from '@app/dashboard/services/history.service';
+import { HistoryService } from '../../dashboard/services/history.service';
 
 @Injectable()
 export class ScopingService {

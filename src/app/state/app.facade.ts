@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Store, select } from '@ngrx/store';
 
-import { AppState, AppQuery } from '@app/state/app.reducer';
+import { AppState, AppQuery } from '../state/app.reducer';
 import { filter } from 'rxjs/operators';
 
 @Injectable()

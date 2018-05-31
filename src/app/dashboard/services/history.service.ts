@@ -10,11 +10,11 @@ import {
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { tap, share, takeUntil, switchMap, map } from 'rxjs/operators';
 
-import { AppFacade } from '@app/state/app.facade';
-import { ScopingSession } from '@models/scoping-session';
-import { HistoryItem } from '@models/history-item';
-import { Task } from '@models/task';
-import { environment } from '@env/environment';
+import { AppFacade } from '../../state/app.facade';
+import { ScopingSession } from '../../../models/scoping-session';
+import { HistoryItem } from '../../../models/history-item';
+import { Task } from '../../../models/task';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

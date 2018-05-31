@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterFacade } from '@app/state/router.facade';
+import { RouterFacade } from '../../../state/router.facade';
 
 @Component({
   selector: 'app-terms',

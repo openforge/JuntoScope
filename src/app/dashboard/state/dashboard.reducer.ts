@@ -4,8 +4,8 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import {
   DashboardActions,
   DashboardActionTypes,
-} from '@app/dashboard/state/dashboard.actions';
-import { HistoryItem } from '@models/history-item';
+} from '../state/dashboard.actions';
+import { HistoryItem } from '../../../models/history-item';
 
 export enum DashboardUiState {
   LOADING = 'Loading',

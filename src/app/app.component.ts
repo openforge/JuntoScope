@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthFacade } from '@app/authentication/state/auth.facade';
+import { AuthFacade } from './authentication/state/auth.facade';
 
 @Component({
   selector: 'app-root',

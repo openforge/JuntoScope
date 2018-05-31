@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterFacade } from '@app/state/router.facade';
+import { RouterFacade } from '../../../state/router.facade';
 
 import { take } from 'rxjs/operators';
 import { Observable } from '@firebase/util';
-import { Connection } from '@models/connection';
-import { ConnectionFacade } from '@app/connections/state/connection.facade';
+import { Connection } from '../../../../models/connection';
+import { ConnectionFacade } from '../../state/connection.facade';
 
 @Component({
   selector: 'app-connection-details',

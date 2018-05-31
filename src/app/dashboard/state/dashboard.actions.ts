@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { HistoryItem } from '@models/history-item';
+import { HistoryItem } from '../../../models/history-item';
 
 export enum DashboardActionTypes {
   LOAD_HISTORY = '[Dashboard] Load History Items',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NOT_APPLICABLE, MORE_INFO_NEEDED } from '@app/app.constants';
+import { NOT_APPLICABLE, MORE_INFO_NEEDED } from '../../../app.constants';
 
 @Component({
   selector: 'app-vote',

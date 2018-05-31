@@ -13,9 +13,9 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { AppState } from '@app/state/app.reducer';
-import { ScopingService } from '@app/scoping/services/scoping.service';
-import { Task } from '@models/task';
+import { AppState } from '../../state/app.reducer';
+import { ScopingService } from '../services/scoping.service';
+import { Task } from '../../../models/task';
 import {
   VoteAction,
   VoteSuccessAction,
@@ -33,13 +33,13 @@ import {
   ParticipantValidatedAction,
   ValidateParticipantErrorAction,
   LoadSessionAction,
-} from '@app/scoping/state/scoping.actions';
-import { RouterFacade } from '@app/state/router.facade';
-import { PopupService } from '@app/shared/popup.service';
-import { HistoryService } from '@app/dashboard/services/history.service';
-import { ScopingQuery } from '@app/scoping/state/scoping.reducer';
-import { GoAction } from '@app/state/router.actions';
-import { SessionValidation } from '@models/scoping-session';
+} from './scoping.actions';
+import { RouterFacade } from '../../state/router.facade';
+import { PopupService } from '../../shared/popup.service';
+import { HistoryService } from '../../dashboard/services/history.service';
+import { ScopingQuery } from './scoping.reducer';
+import { GoAction } from '../../state/router.actions';
+import { SessionValidation } from '../../../models/scoping-session';
 
 @Injectable()
 export class ScopingFacade {
@@ -63,14 +63,12 @@ export class ScopingFacade {
   getSession = this.actions$.pipe(
     ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION),
     switchMap(action =>
-      this.scopingSvc
-        .getSession(action.payload)
-        .pipe(
-          map(session => new LoadSessionSuccessAction(session)),
-          catchError(error =>
-            of(new LoadSessionErrorAction({ message: error.message }))
-          )
+      this.scopingSvc.getSession(action.payload).pipe(
+        map(session => new LoadSessionSuccessAction(session)),
+        catchError(error =>
+          of(new LoadSessionErrorAction({ message: error.message }))
         )
+      )
     ),
     catchError(error =>
       of(new LoadSessionErrorAction({ message: error.message }))
