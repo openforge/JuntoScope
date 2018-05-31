@@ -86,8 +86,16 @@
               "src/styles.css"
             ],
             "assets": [
-              "src/assets",
-              "src/favicon.ico"
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "/",
+                "output": "/"
+              }
             ]
           }
         },
