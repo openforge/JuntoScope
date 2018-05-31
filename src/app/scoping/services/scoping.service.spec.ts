@@ -1,5 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { ScopingService } from '@app/scoping/services/scoping.service';
+import { ScopingService } from './scoping.service';
 
 describe('ScopingService', () => {
   beforeEach(() => {
@@ -8,10 +8,10 @@ describe('ScopingService', () => {
     });
   });
 
-  it(
-    'should be created',
-    inject([ScopingService], (service: ScopingService) => {
+  it('should be created', inject(
+    [ScopingService],
+    (service: ScopingService) => {
       expect(service).toBeTruthy();
-    })
-  );
+    }
+  ));
 });

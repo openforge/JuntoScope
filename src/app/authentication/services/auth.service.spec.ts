@@ -4,8 +4,8 @@
 
 // import { AngularFireAuth } from 'angularfire2/auth';
 
-// import { AuthService } from '@app/authentication/services/auth.service';
-// import { User } from '@models/user';
+// import { AuthService } from './auth.service';
+// import { User } from '../../../models/user';
 
 // const testUser: User = { uid: 'testUid', displayName: 'testName' };
 

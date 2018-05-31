@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ConnectionService } from '@app/connections/services/connection.service';
+import { ConnectionService } from './connection.service';
 
 describe('ConnectionService', () => {
   beforeEach(() => {
@@ -9,10 +9,10 @@ describe('ConnectionService', () => {
     });
   });
 
-  it(
-    'should be created',
-    inject([ConnectionService], (service: ConnectionService) => {
+  it('should be created', inject(
+    [ConnectionService],
+    (service: ConnectionService) => {
       expect(service).toBeTruthy();
-    })
-  );
+    }
+  ));
 });

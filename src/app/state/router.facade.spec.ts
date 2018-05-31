@@ -17,9 +17,9 @@
 
 // import { Observable } from 'rxjs/Observable';
 
-// import { AppState, reducers, initialState } from '@app/state/app.reducer';
-// import { RouterFacade } from '@app/state/router.facade';
-// import { CustomSerializer } from '@app/state/router.reducer';
+// import { AppState, reducers, initialState } from '../../state/app.reducer';
+// import { RouterFacade } from './router.facade';
+// import { CustomSerializer } from './router.reducer';
 // import { Component } from '@angular/core';
 // import {
 //   GoAction,
@@ -27,7 +27,7 @@
 //   ForwardAction,
 //   RouterActionTypes,
 //   NavigationOptions,
-// } from '@app/state/router.actions';
+// } from './router.actions';
 
 // @Component({
 //   template: '<div></div>',

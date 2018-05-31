@@ -1,5 +1,5 @@
-import { CustomSerializer, RouterQuery } from '@app/state/router.reducer';
-import { AppState } from '@app/state/app.reducer';
+import { CustomSerializer, RouterQuery } from './router.reducer';
+import { AppState } from './app.reducer';
 
 const testParams = { one: '1', two: '2' };
 

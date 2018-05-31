@@ -1,8 +1,8 @@
-import { ObjectIteratorsPipe } from './object-iterators.pipe';
+import { ObjectKeysPipe } from './object-iterators.pipe';
 
 describe('ObjectIteratorsPipe', () => {
   it('create an instance', () => {
-    const pipe = new ObjectIteratorsPipe();
+    const pipe = new ObjectKeysPipe();
     expect(pipe).toBeTruthy();
   });
 });

@@ -14,8 +14,8 @@
 //   AuthState,
 //   authReducer,
 //   initialAuthState,
-// } from '@app/authentication/state/auth.reducer';
-// import { AuthFacade } from '@app/authentication/state/auth.facade';
+// } from './auth.reducer';
+// import { AuthFacade } from './auth.facade';
 // import {
 //   AuthActionTypes,
 //   GetUserAction,
@@ -24,9 +24,9 @@
 //   AuthenticatedAction,
 //   LoginAction,
 //   LogoutAction,
-// } from '@app/authentication/state/auth.actions';
-// import { AuthService } from '@app/authentication/services/auth.service';
-// import { User } from '@models/user';
+// } from '../..//authentication/state/auth.actions';
+// import { AuthService } from './auth.service';
+// import { User } from '../../../models/user';
 
 // const testUser: User = { uid: 'testUid', displayName: 'testName' };
 
