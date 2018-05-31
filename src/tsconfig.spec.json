@@ -9,11 +9,6 @@
       "node"
     ]
   },
-  "paths": {
-    "@app/*": ["./app/*"],
-    "@env/*": ["./environments/*"],
-    "@models/*": ["./models/*"]
-  },
   "files": [
     "test.ts",
     "polyfills.ts"
