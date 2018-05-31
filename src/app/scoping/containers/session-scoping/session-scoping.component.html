@@ -21,7 +21,7 @@
 
     <ng-container *ngIf="(uiState$ | async) !== 'Loading'">
 
-      <ng-container *ngIf="session && session.tasks; else noSession">
+      <ng-container *ngIf="session && session.tasks && !timerOn; else nextTask">
 
         <ng-container *ngIf="!hasVoted && task">
           <app-session-header [session]="session"></app-session-header>
@@ -67,8 +67,8 @@
         </ng-container>
       </ng-container>
 
-      <ng-template #noSession>
-        No session found
+      <ng-template #nextTask>
+        Next task...
       </ng-template>
 
     </ng-container>

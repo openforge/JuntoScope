@@ -7,7 +7,7 @@ import { AuthQuery } from '@app/authentication/state/auth.reducer';
 import { User } from '@models/user';
 import { ScopingFacade } from '@app/scoping/state/scoping.facade';
 import { RouterFacade } from '@app/state/router.facade';
-import { take } from 'rxjs/operators';
+import { take, debounceTime } from 'rxjs/operators';
 import { ParticipantState } from '@app/scoping/state/scoping.reducer';
 import { TIMER_FOR_NEXT_TASK } from '@app/app.constants';
 import { Task } from '@models/task';
@@ -21,6 +21,8 @@ import * as _ from 'lodash';
 })
 export class SessionScopingComponent implements OnInit {
   _ = _;
+
+  sessionObservable$: Observable<ScopingSession>;
 
   error$ = this.scopingFacade.error$;
   uiState$ = this.scopingFacade.uiState$;
@@ -44,6 +46,7 @@ export class SessionScopingComponent implements OnInit {
   isModerator = true;
   timerToNextSet = false;
   estimateSubmitted = false;
+  timerOn = false;
 
   constructor(
     private store: Store<AppState>,
@@ -57,32 +60,31 @@ export class SessionScopingComponent implements OnInit {
       this.user = user;
     });
 
-    this.session$.subscribe(session => {
+    this.sessionObservable$ = this.session$.pipe(debounceTime(500));
+
+    this.sessionObservable$.subscribe(session => {
       if (session && this.user) {
         this.session = session;
         this.isModerator = session.ownerId === this.user.uid;
-        this.taskId = session.currentTaskId;
-        // Always update task so the results become updated
+        this.taskId = this.session.currentTaskId;
         this.task = this.session.tasks[this.taskId];
 
-        if (!this.scopedCount) {
+        console.log('Did you vote? ', this.didVote());
+
+        if (this.scopedCount === undefined) {
           this.scopedCount = this.session.numScopedTasks;
         } else if (this.scopedCount < this.session.numScopedTasks) {
+          this.scopedCount = this.session.numScopedTasks;
           this.estimateSubmitted = true;
         } else {
           this.estimateSubmitted = false;
         }
 
-        if (!this.timerToNextSet) {
-          this.nextTask();
-        }
-
-        // If estimate submitted, show results for 5 sec
+        // if has voted and estimate submitted, go to next task
         if (this.estimateSubmitted) {
-          this.timerToNextSet = true;
-          this.taskId = session.currentTaskId;
-          this.navigateTimer = setTimeout(() => {
-            this.timerToNextSet = false;
+          console.log('setting timer...');
+          this.timerOn = true;
+          setTimeout(() => {
             this.nextTask();
           }, TIMER_FOR_NEXT_TASK);
         }
@@ -137,15 +139,31 @@ export class SessionScopingComponent implements OnInit {
     this.scopingFacade.validateSession(sessionValidation);
   }
 
-  nextTask() {
-    console.log('Next task');
-
+  didVote() {
+    // const task = this.session.tasks[this.taskId];
     let votes;
     let voteValue;
 
-    if (this.navigateTimer) {
-      clearTimeout(this.navigateTimer);
+    if (!this.task.votes) {
+      console.log('there are no votes');
+    } else {
+      votes = this.task.votes;
+      voteValue = votes[this.user.uid];
     }
+
+    if (votes && voteValue !== undefined) {
+      this.hasVoted = true;
+      return true;
+    } else {
+      this.hasVoted = false;
+      return false;
+    }
+  }
+
+  nextTask() {
+    console.log('Next task');
+
+    this.estimateSubmitted = false;
 
     // Are all tasks estimated?
     if (this.session.numTasks === this.session.numScopedTasks) {
@@ -153,19 +171,7 @@ export class SessionScopingComponent implements OnInit {
         path: [`/scoping/${this.sessionCode}/results`],
       });
     } else {
-      this.task = this.session.tasks[this.taskId];
-      if (!this.task.votes) {
-        console.log('there are no votes');
-      } else {
-        votes = this.task.votes;
-        voteValue = votes[this.user.uid];
-      }
-
-      if (votes && voteValue !== undefined) {
-        this.hasVoted = true;
-      } else {
-        this.hasVoted = false;
-      }
+      this.timerOn = false;
     }
   }
 }
