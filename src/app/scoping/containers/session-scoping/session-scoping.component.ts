@@ -69,7 +69,10 @@ export class SessionScopingComponent implements OnInit {
         this.taskId = this.session.currentTaskId;
         this.task = this.session.tasks[this.taskId];
 
-        console.log('Did you vote? ', this.didVote());
+        // Check if all tasks are estimated
+        this.isComplete();
+        // Check if user submitted vote
+        this.didVote();
 
         if (this.scopedCount === undefined) {
           this.scopedCount = this.session.numScopedTasks;
@@ -102,6 +105,16 @@ export class SessionScopingComponent implements OnInit {
         this.scopingFacade.loadSession(this.sessionCode);
       }
     });
+  }
+
+  isComplete() {
+    // Are all tasks estimated?
+    if (this.session.numTasks === this.session.numScopedTasks) {
+      this.routerFacade.navigate({
+        path: [`/scoping/${this.sessionCode}/results`],
+        extras: { skipLocationChange: true },
+      });
+    }
   }
 
   vote(estimate) {
@@ -165,13 +178,7 @@ export class SessionScopingComponent implements OnInit {
 
     this.estimateSubmitted = false;
 
-    // Are all tasks estimated?
-    if (this.session.numTasks === this.session.numScopedTasks) {
-      this.routerFacade.navigate({
-        path: [`/scoping/${this.sessionCode}/results`],
-      });
-    } else {
-      this.timerOn = false;
-    }
+    this.isComplete();
+    this.timerOn = false;
   }
 }
