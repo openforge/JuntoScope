@@ -41,6 +41,13 @@ export function dashboardReducer(
       };
     }
 
+    case DashboardActionTypes.DELETE_SESSION: {
+      return {
+        ...state,
+        uiState: DashboardUiState.LOADING,
+      };
+    }
+
     case DashboardActionTypes.NO_HISTORY: {
       return {
         ...state,
@@ -60,7 +67,10 @@ export function dashboardReducer(
     }
 
     case DashboardActionTypes.REMOVED: {
-      return adapter.removeOne(action.payload.historyItem.id, state);
+      return adapter.removeOne(action.payload.historyItemId, {
+        ...state,
+        uiState: DashboardUiState.LOADED,
+      });
     }
 
     default: {

@@ -63,11 +63,12 @@ export class DashboardFacade {
         of(changeActions),
         concat(
           changeActions.map(changeAction => {
-            const historyItem = itemFromChangeAction(changeAction);
-
-            return this.historySvc
-              .getSession(historyItem)
-              .pipe(map(toChangeAction(historyItem)));
+            if (changeAction.type !== 'removed') {
+              const historyItem = itemFromChangeAction(changeAction);
+              return this.historySvc
+                .getSession(historyItem)
+                .pipe(map(toChangeAction(historyItem)));
+            }
           })
         )
       )
@@ -87,7 +88,9 @@ export class DashboardFacade {
           return new ModifiedHistoryItemAction({ update: { id, changes } });
 
         case 'removed':
-          return new RemovedHistoryItemAction({ historyItem });
+          return new RemovedHistoryItemAction({
+            historyItemId: historyItem.sessionId,
+          });
       }
     })
   );
@@ -99,7 +102,13 @@ export class DashboardFacade {
       this.historySvc
         .deleteSession(action.sessionLink)
         .pipe(
-          map(() => new NoopAction()),
+          map(
+            () =>
+              new RemovedHistoryItemAction({
+                historyItemId: action.sessionLink,
+              })
+          ),
+          map(() => new LoadHistoryItemsAction()),
           catchError(error =>
             of(new DeleteSessionErrorAction({ message: error.message }))
           )
