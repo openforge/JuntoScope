@@ -47,7 +47,10 @@ export class DashboardFacade {
       DashboardActionTypes.LOAD_MORE_HISTORY
     ),
     switchMap(action => {
-      if (action.type === DashboardActionTypes.LOAD_HISTORY) {
+      if (
+        action.type === DashboardActionTypes.LOAD_HISTORY ||
+        action.type === DashboardActionTypes.LOAD_MORE_HISTORY
+      ) {
         return this.historySvc.loadHistoryItems().pipe(
           tap(changeActions => {
             if (!changeActions.length) {
@@ -56,7 +59,6 @@ export class DashboardFacade {
           })
         );
       }
-      return this.historySvc.loadMoreHistoryItems();
     }),
     mergeMap(changeActions =>
       merge(
