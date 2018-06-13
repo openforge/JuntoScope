@@ -39,6 +39,8 @@ import { RouterFacade } from '../../state/router.facade';
 import * as RouterActions from '../../state/router.actions';
 import { VerifyModalComponent } from '../components/verify-modal/verify-modal.component';
 
+import { ShareScopeLinkComponent } from '@app/connections/containers/share-scope-link/share-scope-link.component';
+
 @Injectable()
 export class ConnectionFacade {
   /*
@@ -162,12 +164,34 @@ export class ConnectionFacade {
           action.payload.taskListIds
         )
         .pipe(
-          // TODO: Open modal and/or redirect to scoping session;
-          tap(response =>
-            alert(
-              'Link:' + response.sessionCode + ' Access:' + response.accessCode
-            )
-          ),
+          tap(response => {
+            // There's gotta be a better way to do this
+            let connectionName;
+            this.selectedConnection$
+              .subscribe(connection => {
+                connectionName =
+                  connection.externalData.company + ' - ' + connection.type;
+              })
+              .unsubscribe();
+
+            // There's gotta be a better way to do this
+            let projectName;
+            this.selectedProject$
+              .subscribe(project => {
+                projectName = project.name;
+              })
+              .unsubscribe();
+
+            this.popupSvc.openModal({
+              component: ShareScopeLinkComponent,
+              componentProps: {
+                connectionName: connectionName,
+                projectName: projectName,
+                sessionUrl: response.sessionCode,
+                accessCode: response.accessCode,
+              },
+            });
+          }),
           map(response => new NoopAction())
         )
     )
@@ -210,7 +234,9 @@ export class ConnectionFacade {
         })
       )
       .subscribe(() => {
-        this.store.dispatch(new SelectedConnectionAction({ connectionId }));
+        if (connectionId) {
+          this.store.dispatch(new SelectedConnectionAction({ connectionId }));
+        }
       });
   }
 

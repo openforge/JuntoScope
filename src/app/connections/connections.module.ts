@@ -18,6 +18,7 @@ import { ProjectItemComponent } from './components/project-item/project-item.com
 import { SelectProjectComponent } from './containers/select-project/select-project.component';
 import { SelectTaskListComponent } from './containers/select-task-list/select-task-list.component';
 import { ConnectionListComponent } from './components/connection-list/connection-list.component';
+import { ShareScopeLinkComponent } from './containers/share-scope-link/share-scope-link.component';
 
 @NgModule({
   imports: [
@@ -37,8 +38,9 @@ import { ConnectionListComponent } from './components/connection-list/connection
     SelectProjectComponent,
     SelectTaskListComponent,
     ConnectionListComponent,
+    ShareScopeLinkComponent,
   ],
-  entryComponents: [VerifyModalComponent],
+  entryComponents: [VerifyModalComponent, ShareScopeLinkComponent],
   exports: [ConnectionListComponent],
 })
 export class ConnectionsModule {
