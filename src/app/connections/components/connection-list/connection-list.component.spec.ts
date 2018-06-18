@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConnectionListComponent } from './connection-list.component';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 describe('ConnectionListComponent', () => {
   let component: ConnectionListComponent;
   let fixture: ComponentFixture<ConnectionListComponent>;
@@ -9,6 +11,7 @@ describe('ConnectionListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ConnectionListComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
