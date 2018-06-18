@@ -6,7 +6,7 @@ describe('Authentication Actions', () => {
     it('should create action', () => {
       const action = new AuthActions.GetUserAction();
 
-      expect(action).toEqual({ type: AuthActions.AuthActionTypes.GET_USER });
+      expect(action.type).toEqual(AuthActions.AuthActionTypes.GET_USER);
     });
   });
 
@@ -15,10 +15,8 @@ describe('Authentication Actions', () => {
       const payload: User = { uid: 'testuid', displayName: 'testUser' };
       const action = new AuthActions.AuthenticatedAction(payload);
 
-      expect(action).toEqual({
-        type: AuthActions.AuthActionTypes.AUTHENTICATED,
-        payload,
-      });
+      expect(action.type).toEqual(AuthActions.AuthActionTypes.AUTHENTICATED);
+      expect(action.payload).toEqual(payload);
     });
   });
 
@@ -26,9 +24,9 @@ describe('Authentication Actions', () => {
     it('should create action', () => {
       const action = new AuthActions.NotAuthenticatedAction();
 
-      expect(action).toEqual({
-        type: AuthActions.AuthActionTypes.NOT_AUTHENTICATED,
-      });
+      expect(action.type).toEqual(
+        AuthActions.AuthActionTypes.NOT_AUTHENTICATED
+      );
     });
   });
 
@@ -37,10 +35,8 @@ describe('Authentication Actions', () => {
       const payload = { provider: 'testProvider' };
       const action = new AuthActions.LoginAction(payload);
 
-      expect(action).toEqual({
-        type: AuthActions.AuthActionTypes.LOGIN,
-        payload,
-      });
+      expect(action.type).toEqual(AuthActions.AuthActionTypes.LOGIN);
+      expect(action.payload).toEqual(payload);
     });
   });
 
@@ -49,10 +45,8 @@ describe('Authentication Actions', () => {
       const payload = { message: 'test error message' };
       const action = new AuthActions.AuthErrorAction(payload);
 
-      expect(action).toEqual({
-        type: AuthActions.AuthActionTypes.AUTH_ERROR,
-        payload,
-      });
+      expect(action.type).toEqual(AuthActions.AuthActionTypes.AUTH_ERROR);
+      expect(action.payload).toEqual(payload);
     });
   });
 
@@ -60,7 +54,7 @@ describe('Authentication Actions', () => {
     it('should create action', () => {
       const action = new AuthActions.LogoutAction();
 
-      expect(action).toEqual({ type: AuthActions.AuthActionTypes.LOGOUT });
+      expect(action.type).toEqual(AuthActions.AuthActionTypes.LOGOUT);
     });
   });
 });
