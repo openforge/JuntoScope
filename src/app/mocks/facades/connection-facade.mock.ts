@@ -7,17 +7,17 @@ import { Actions } from '@ngrx/effects';
 
 import { AppState } from './../../state/app.reducer';
 
-import { RouterFacade } from './../../state/router.facade';
+import { ConnectionFacade } from '../../connections/state/connection.facade';
 
-export class RouterFacadeMock extends RouterFacade {
-  constructor(
-    store: Store<AppState>,
-    location: Location,
-    actions$: Actions,
-    router: Router
-  ) {
-    super(store, actions$, router, location);
-  }
+export class ConnectionFacadeMock extends ConnectionFacade {
+  // constructor(
+  //   store: Store<AppState>,
+  //   location: Location,
+  //   actions$: Actions,
+  //   router: Router
+  // ) {
+  //   super(store, actions$, router, location)
+  // }
 
   params$: Observable<Params> = new Observable<Params>();
 }
