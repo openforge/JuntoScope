@@ -1,16 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { AuthFacade } from '@app/authentication/state/auth.facade';
-
+import { HomePageComponent } from '../pages/home/home';
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  templateUrl: 'app.html',
 })
-export class AppComponent implements OnInit {
-  constructor(private authFacade: AuthFacade) {}
+export class MyAppComponent {
+  rootPage: any = HomePageComponent;
 
-  ngOnInit() {
-    this.authFacade.checkAuth();
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen
+  ) {
+    platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      statusBar.styleDefault();
+      splashScreen.hide();
+    });
   }
 }
