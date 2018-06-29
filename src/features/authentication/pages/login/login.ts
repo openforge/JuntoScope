@@ -12,7 +12,7 @@ import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
 
 import { map, tap, filter, withLatestFrom, take } from "rxjs/operators";
 
-import { AuthFacade } from "../../store/auth.facade";
+import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
 import { AppFacade } from "../../../../store/app.facade";
 
@@ -46,10 +46,11 @@ export class LoginPage implements OnInit, OnDestroy {
   //   })
   // );
 
-  constructor() // private fb: FormBuilder,
-  // private appFacade: AppFacade,
-  // private authFacade: AuthFacade,
-  {}
+  constructor(
+    private fb: FormBuilder,
+    private appFacade: AppFacade,
+    private authFacade: AuthEffects
+  ) {}
 
   ngOnInit() {
     // this.createForm();
