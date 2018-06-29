@@ -29,14 +29,14 @@
   </p>
 
   <div>
-<!-- 
+
     <form [formGroup]="agreeForm">
       <ion-checkbox class="form-control" formControlName="agree" name="agree"></ion-checkbox>
-    </form> -->
+    </form>
 
-    <a routerLink="/terms">Terms</a>
+    <button (click)="goToTerms()">Terms</button>
     and
-    <a routerLink="/privacy">Privacy Policy</a>
+    <button (click)="goToPrivacy()">Privacy Policy</button>
 
   </div>
 </ion-content>

@@ -6,7 +6,7 @@ import { AppState, AppQuery } from "./app.reducer";
 import { filter } from "rxjs/operators";
 
 @Injectable()
-export class AppFacade {
+export class AppEffects {
   /*
    * Observable Store Queries
    */

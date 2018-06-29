@@ -1,12 +1,20 @@
 import { Component, OnInit } from "@angular/core";
+import { IonicPage, NavController } from "ionic-angular";
 
+@IonicPage({
+  segment: "TermsPage",
+  priority: "high"
+})
 @Component({
   selector: "app-terms",
-  templateUrl: "./terms.html",
-  styleUrls: ["./terms.scss"]
+  templateUrl: "./terms.html"
 })
 export class TermsPage implements OnInit {
-  constructor() {}
+  constructor(private navCtrl: NavController) {}
 
   ngOnInit() {}
+
+  goToLogin() {
+    this.navCtrl.push("LoginPage");
+  }
 }

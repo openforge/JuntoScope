@@ -14,7 +14,7 @@ import { map, tap, filter, withLatestFrom, take } from "rxjs/operators";
 
 import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
-import { AppFacade } from "../../../../store/app.facade";
+import { AppEffects } from "../../../../store/app.effects";
 
 @IonicPage({
   segment: "LoginPage",
@@ -25,13 +25,13 @@ import { AppFacade } from "../../../../store/app.facade";
   templateUrl: "./login.html"
 })
 export class LoginPage implements OnInit, OnDestroy {
-  // agreeForm: FormGroup;
+  agreeForm: FormGroup;
   // loading$ = this.authFacade.uiState$.pipe(
   //   map(uiState => uiState === AuthUiState.LOADING)
   // );
 
   // authError$ = this.authFacade.error$;
-  // hasAgreed = false;
+  hasAgreed = false;
 
   // private loginRedirect$ = this.appFacade.authRedirect$.pipe(
   //   untilDestroyed(this),
@@ -48,32 +48,41 @@ export class LoginPage implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private appFacade: AppFacade,
-    private authFacade: AuthEffects
+    private appEffects: AppEffects,
+    private authFacade: AuthEffects,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
-    // this.createForm();
+    this.createForm();
   }
 
   ngOnDestroy() {}
 
-  // createForm() {
-  //   this.agreeForm = this.fb.group({
-  //     agree: ['', Validators.required],
-  //   });
+  createForm() {
+    this.agreeForm = this.fb.group({
+      agree: ["", Validators.required]
+    });
 
-  //   this.agreeForm.valueChanges.subscribe(data => {
-  //     this.hasAgreed = data.agree;
-  //   });
-  // }
+    this.agreeForm.valueChanges.subscribe(data => {
+      this.hasAgreed = data.agree;
+    });
+  }
+
+  goToTerms() {
+    this.navCtrl.push("TermsPage");
+  }
+
+  goToPrivacy() {
+    this.navCtrl.push("PrivacyPage");
+  }
 
   // googleLogin() {
   //   this.authFacade.googleLogin();
 
-  //   // this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-  //   //   this.routerFacade.navigate(navOptions);
-  //   // });
+  //   this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
+  //     this.routerFacade.navigate(navOptions);
+  //   });
   // }
 
   // facebookLogin() {

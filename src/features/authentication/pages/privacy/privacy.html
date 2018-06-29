@@ -1,8 +1,7 @@
 <ion-toolbar>
-  <button ion-button slot="start">
-    <ion-back-button></ion-back-button>
-  </button>
-  <ion-title>JuntoScope</ion-title>
+  <ion-navbar>
+    <ion-title>JuntoScope</ion-title>
+  </ion-navbar>
 </ion-toolbar>
 
 <ion-content>
@@ -10,5 +9,5 @@
     privacy works!
   </p>
 
-  <!-- <ion-button (click)="routerFacade.back()">Back</ion-button> -->
+  <button ion-button (click)="goToLogin()">Back</button>
 </ion-content>

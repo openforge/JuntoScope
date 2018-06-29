@@ -14,7 +14,7 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFirestoreModule } from "angularfire2/firestore";
 
 import { reducers, initialState, metaReducers } from "../store/app.reducer";
-import { AppFacade } from "../store/app.facade";
+import { AppEffects } from "../store/app.effects";
 
 import { environment } from "../environment";
 
@@ -43,7 +43,7 @@ import { AuthEffects } from "../features/authentication/store/auth.effects";
   bootstrap: [IonicApp],
   entryComponents: [JuntoScopeComponent],
   providers: [
-    AppFacade,
+    AppEffects,
     AuthService,
     StatusBar,
     SplashScreen,
