@@ -1,11 +1,13 @@
 import { NgModule } from "@angular/core";
+import { IonicModule } from "ionic-angular";
 
-import { SharedModule } from "@app/shared/shared.module";
-import { SettingsRoutingModule } from "@app/settings/settings-routing.module";
-import { SettingsComponent } from "@app/settings/containers/settings/settings.component";
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
-  imports: [SharedModule, SettingsRoutingModule],
-  declarations: [SettingsComponent]
+  imports: [IonicModule, SharedModule],
+  declarations: [],
+  exports: [],
+  entryComponents: [],
+  providers: []
 })
 export class SettingsModule {}

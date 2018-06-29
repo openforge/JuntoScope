@@ -19,8 +19,9 @@ import { AppEffects } from "../store/app.effects";
 import { environment } from "../environment";
 
 import { JuntoScopeComponent } from "./app.component";
-import { AuthenticationModule } from "../features/authentication/authentication.module";
 import { SharedModule } from "../shared/shared.module";
+import { AuthenticationModule } from "../features/authentication/authentication.module";
+import { SettingsModule } from "../features/settings/settings.module";
 
 import { AuthService } from "../features/authentication/services/auth.service";
 
@@ -38,7 +39,8 @@ import { AuthEffects } from "../features/authentication/store/auth.effects";
     AngularFireAuthModule,
     AngularFirestoreModule,
     AuthenticationModule,
-    SharedModule
+    SharedModule,
+    SettingsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [JuntoScopeComponent],
