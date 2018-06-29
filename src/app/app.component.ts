@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { Component } from "@angular/core";
+import { Platform } from "ionic-angular";
+import { StatusBar } from "@ionic-native/status-bar";
+import { SplashScreen } from "@ionic-native/splash-screen";
 
-import { HomePageComponent } from '../pages/home/home';
+// import { AuthFacade } from '@app/authentication/state/auth.facade';
+
 @Component({
-  templateUrl: 'app.html',
+  templateUrl: "app.html"
 })
-export class MyAppComponent {
-  rootPage: any = HomePageComponent;
+export class JuntoScopeComponent {
+  rootPage: any = "LoginPage";
 
   constructor(
     platform: Platform,

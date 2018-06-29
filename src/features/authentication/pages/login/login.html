@@ -1,0 +1,42 @@
+<ion-toolbar>
+  <ion-title>JuntoScope</ion-title>
+</ion-toolbar>
+
+<ion-content>
+  <p>
+    First, we need a way of identifying your participation. 
+    Please sign in with:
+  </p>
+
+  <button ion-button (click)="facebookLogin()" [disabled]="!hasAgreed">
+    Facebook
+  </button>
+
+  <button ion-button (click)="googleLogin()" [disabled]="!hasAgreed">
+    Google
+  </button>
+
+  <button ion-button (click)="twitterLogin()" [disabled]="!hasAgreed">
+    Twitter
+  </button>
+
+  <p *ngIf="loading$ | async">
+    Authenticating ...
+  </p>
+
+  <p *ngIf="authError$ | async as message">
+    Auth Error: {{ message }}
+  </p>
+
+  <div>
+<!-- 
+    <form [formGroup]="agreeForm">
+      <ion-checkbox class="form-control" formControlName="agree" name="agree"></ion-checkbox>
+    </form> -->
+
+    <a routerLink="/terms">Terms</a>
+    and
+    <a routerLink="/privacy">Privacy Policy</a>
+
+  </div>
+</ion-content>
