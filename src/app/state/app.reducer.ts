@@ -24,6 +24,7 @@ import {
   ConnectionQuery,
   ConnectionUiState,
 } from '@app/connections/state/connection.reducer';
+import { SettingsQuery } from '@app/settings/state/settings.reducer';
 import { ScopingState, ScopingQuery } from '@app/scoping/state/scoping.reducer';
 import { DashboardState } from '@app/dashboard/state/dashboard.reducer';
 
@@ -39,6 +40,7 @@ export type AppState = Partial<FullAppState>;
 
 export const reducers: ActionReducerMap<AppState> = {
   router: routerReducer,
+  // settings: settingsReducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = environment.production
