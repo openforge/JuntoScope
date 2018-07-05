@@ -173,6 +173,82 @@ export class SessionService {
     });
   }
 
+  async setTaskEstimate(
+    userId,
+    ownerId,
+    connectionId,
+    sessionId,
+    taskId,
+    estimate
+  ) {
+    const sessionRef = this.firestore.doc(
+      `/users/${ownerId}/connections/${connectionId}/sessions/${sessionId}`
+    );
+    const tasksRef = this.firestore.collection(
+      `/users/${ownerId}/connections/${connectionId}/sessions/${sessionId}/tasks`
+    );
+    const taskRef = this.firestore.doc(
+      `/users/${ownerId}/connections/${connectionId}/sessions/${sessionId}/tasks/${taskId}`
+    );
+
+    /**
+     * 1. update estimate for the task
+     * 2. get all the session's tasks
+     * 3. update session attributes based on the task statuses etc
+     */
+    return taskRef
+      .update({ estimate })
+      .then(result => {
+        return tasksRef
+          .get()
+          .then(tasksDoc => {
+            const tasks = [];
+            tasksDoc.forEach(doc => {
+              tasks.push({ ...doc.data(), id: doc.id });
+            });
+            return sessionRef
+              .get()
+              .then(sessionDoc => {
+                const session = sessionDoc.data();
+
+                // Resolve the current scoped tasks count and next currentTaskId
+                const scopedTasks = tasks.filter(t => t.estimate !== 0);
+                const scopedCount = scopedTasks ? scopedTasks.length : 0;
+
+                let taskIndex;
+                tasks.forEach((task, index) => {
+                  if (task.id === taskId) {
+                    taskIndex = index;
+                  }
+                });
+
+                let nextId;
+                if (taskIndex < tasks.length - 1) {
+                  nextId = tasks[taskIndex + 1].id;
+                } else {
+                  nextId = session.currentTaskId;
+                }
+
+                session.numScopedTasks = scopedCount;
+                session.currentTaskId = nextId;
+
+                return sessionRef.update(session);
+              })
+              .catch(error => {
+                throw new Error('Unable to update session. Try again later.');
+              });
+          })
+          .catch(error => {
+            throw new Error(
+              'Unable to load tasks for the session. Try again later.'
+            );
+          });
+      })
+      .catch(error => {
+        throw new Error('Unable to update the task. Try again later.');
+      });
+  }
+
   private generateAccessCode() {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const expirationDate = Date.now() + ACCESS_CODE_DURATION;

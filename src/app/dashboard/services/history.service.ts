@@ -77,12 +77,16 @@ export class HistoryService {
       .valueChanges()
       .pipe(
         switchMap(session =>
-          this.getSessionTask(
-            { ownerId, connectionId, sessionId },
-            session.currentTaskId
-          ).pipe(
-            map(task => {
-              session.tasks = { [session.currentTaskId]: task };
+          this.getSessionTasks({ ownerId, connectionId, sessionId }).pipe(
+            map(tasks => {
+              session.tasks = {};
+
+              tasks.forEach(task => {
+                const id = task.id;
+                delete task.id;
+                session.tasks[id] = task;
+              });
+
               return session;
             })
           )
@@ -102,6 +106,19 @@ export class HistoryService {
     );
   }
 
+  private getSessionTasks({
+    ownerId,
+    connectionId,
+    sessionId,
+  }: Partial<HistoryItem>) {
+    return this.afs
+      .collection<Task>(
+        `users/${ownerId}/connections/${connectionId}/sessions/${sessionId}/tasks`
+      )
+      .valueChanges();
+  }
+
+  // Currently not being used
   private getSessionTask(
     { ownerId, connectionId, sessionId }: Partial<HistoryItem>,
     taskId: string
