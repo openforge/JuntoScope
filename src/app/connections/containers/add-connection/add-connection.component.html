@@ -10,11 +10,15 @@
     <ng-container *ngIf="!type">
       <ion-button (click)="setType('teamwork')" >Teamwork</ion-button>
     </ng-container>
-    
+
     <ng-container *ngIf="type">
       <form [formGroup]="connectionForm" (ngSubmit)="continue()">
-        <ion-input class="form-control" type="text" formControlName="token" name="token"></ion-input>
-        
+        <ion-input
+        class="form-control" type="text"
+        ngDefaultControl
+        formControlName="token"
+        name="token"></ion-input>
+
         <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
           <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
             Token is required

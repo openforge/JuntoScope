@@ -20,4 +20,8 @@ export class ConnectionFacadeMock extends ConnectionFacade {
   // }
 
   params$: Observable<Params> = new Observable<Params>();
+
+  addConnection() {
+    return Observable.of({});
+  }
 }

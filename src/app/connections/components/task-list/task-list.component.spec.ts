@@ -41,7 +41,7 @@ describe('TaskListComponent', () => {
     expect(component.taskList).toContain(checkboxTask);
   });
 
-  fit('Should emit an event if the task is checked', () => {
+  it('Should emit an event if the task is checked', () => {
     const toggleEmitter = spyOn(component.toggle, 'emit');
 
     const checkboxTask = fixture.debugElement.query(
