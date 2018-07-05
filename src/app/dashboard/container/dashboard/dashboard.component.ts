@@ -19,6 +19,7 @@ import {
 } from '@models/history-item';
 import { PopupService } from '@app/shared/popup.service';
 import { SessionDetailModalComponent } from '@app/dashboard/components/session-detail-modal/session-detail-modal.component';
+import { DashboardUiState } from '@app/dashboard/state/dashboard.reducer';
 
 @TakeUntilDestroy()
 @Component({
@@ -30,14 +31,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private infiniteScroll: InfiniteScroll;
 
   uid$ = this.appFacade.uid$;
-  historyItems$ = this.dashboardFacade.historyItems$.pipe(
-    tap(items => {
-      if (this.infiniteScroll) {
-        this.infiniteScroll.complete();
-        this.infiniteScroll = null;
-      }
-    })
-  );
+  historyItems$ = this.dashboardFacade.historyItems$;
+  uiState$ = this.dashboardFacade.uiState$.subscribe(uiState => {
+    if (uiState === DashboardUiState.LOADED && this.infiniteScroll) {
+      this.infiniteScroll.complete();
+      this.infiniteScroll = null;
+    }
+  });
   connections$ = this.connectionFacade.connections$;
 
   constructor(
@@ -74,9 +74,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dashboardFacade.getHistory();
   }
 
-  loadMore(infiniteScroll: InfiniteScroll) {
-    this.infiniteScroll = infiniteScroll;
-    this.dashboardFacade.getMoreHistory();
+  loadMore(infiniteScroll) {
+    console.log('happens once');
+    this.infiniteScroll = infiniteScroll.target;
+    setTimeout(() => {
+      this.dashboardFacade.getMoreHistory();
+    }, 1000);
   }
 
   handleJoin(sessionCode: string) {

@@ -15,7 +15,7 @@
 
   <app-session-history-list [uid]="uid$ | async" [items]="historyItems$ | async" (options)="handleOptionClick($event)" (detail)="handleDetailClick($event)"></app-session-history-list>
 
-  <ion-infinite-scroll #infiniteScroll (ionInfinite)="loadMore(infiniteScroll)">
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
