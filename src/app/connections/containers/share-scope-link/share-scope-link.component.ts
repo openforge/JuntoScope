@@ -2,9 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { NavParams } from '@ionic/angular';
 
-import { RouterFacade } from '@app/state/router.facade';
+import { RouterFacade } from './../../../state/router.facade';
 
-import { PopupService } from '@app/shared/popup.service';
+import { PopupService } from './../../../shared/popup.service';
 
 @Component({
   selector: 'app-share-scope-link',

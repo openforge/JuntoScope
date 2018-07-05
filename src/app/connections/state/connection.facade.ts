@@ -38,8 +38,7 @@ import { PopupService } from '../../shared/popup.service';
 import { RouterFacade } from '../../state/router.facade';
 import * as RouterActions from '../../state/router.actions';
 import { VerifyModalComponent } from '../components/verify-modal/verify-modal.component';
-
-import { ShareScopeLinkComponent } from '@app/connections/containers/share-scope-link/share-scope-link.component';
+import { ShareScopeLinkComponent } from './../../connections/containers/share-scope-link/share-scope-link.component';
 
 @Injectable()
 export class ConnectionFacade {
