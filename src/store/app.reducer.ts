@@ -38,7 +38,7 @@ interface FullAppState {
 export type AppState = Partial<FullAppState>;
 
 export const reducers: ActionReducerMap<AppState> = {
-  // router: routerReducer,
+  router: routerReducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = environment.production
@@ -46,7 +46,7 @@ export const metaReducers: MetaReducer<AppState>[] = environment.production
   : [storeFreeze];
 
 export const initialState: AppState = {
-  // router: initialRouterState,
+  router: initialRouterState
 };
 
 export namespace AppQuery {

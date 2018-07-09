@@ -8,7 +8,7 @@ import {
 import { map, tap, filter, switchMap } from "rxjs/operators";
 
 import { RouterFacade } from "../store/router.facade";
-import { AuthFacade } from "../features/authentication/store/auth.facade";
+import { AuthEffects } from "../features/authentication/store/auth.effects";
 import { AuthUiState } from "../features/authentication/store/auth.reducer";
 import { AppEffects } from "../store/app.effects";
 
@@ -17,14 +17,14 @@ export class UnAuthGuard implements CanActivate {
   constructor(
     private appEffects: AppEffects,
     private routerFacade: RouterFacade,
-    private authFacade: AuthFacade
+    private authEffects: AuthEffects
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.appEffects.authRedirect$.pipe(
       filter(navOptions => !!navOptions),
       switchMap(navOptions =>
-        this.authFacade.uiState$.pipe(
+        this.authEffects.uiState$.pipe(
           filter(uiState => uiState !== AuthUiState.LOADING),
           map(uiState => uiState === AuthUiState.NOT_AUTHENTICATED),
           tap(unAuth => {

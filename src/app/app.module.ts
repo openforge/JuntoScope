@@ -28,11 +28,13 @@ import { AuthService } from "../features/authentication/services/auth.service";
 import { AuthEffects } from "../features/authentication/store/auth.effects";
 import { AppRoutingModule } from "./app-routing.module";
 import { NotFoundComponent } from "./not-found.component";
+import { LoginPageModule } from "../features/authentication/pages/login/login.module";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
   imports: [
     BrowserModule,
+    LoginPageModule,
     IonicModule.forRoot(JuntoScopeComponent, { preloadModules: true }),
     AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),

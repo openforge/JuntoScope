@@ -51,7 +51,7 @@ export class LoginPage implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private appEffects: AppEffects,
-    private authFacade: AuthEffects,
+    private authEffects: AuthEffects,
     private navCtrl: NavController,
     private routerFacade: RouterFacade
   ) {}
@@ -81,7 +81,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   googleLogin() {
-    this.authFacade.googleLogin();
+    this.authEffects.googleLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
       this.routerFacade.navigate(navOptions);
@@ -89,7 +89,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   facebookLogin() {
-    this.authFacade.facebookLogin();
+    this.authEffects.facebookLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
       this.routerFacade.navigate(navOptions);
@@ -97,7 +97,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   twitterLogin() {
-    this.authFacade.twitterLogin();
+    this.authEffects.twitterLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
       this.routerFacade.navigate(navOptions);

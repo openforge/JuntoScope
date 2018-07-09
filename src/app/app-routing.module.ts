@@ -11,12 +11,13 @@ import { CustomSerializer } from "../store/router.reducer";
 import { RouterFacade } from "../store/router.facade";
 import { NotFoundComponent } from "./not-found.component";
 import { AuthGuard } from "./auth.guard";
+import { AuthenticationModule } from "../features/authentication/authentication.module";
 
 const routes: Routes = [
   {
     path: "",
     loadChildren:
-      "../features/authentication/authentication.module#AuthenticationModule"
+      "app/features/authentication/authentication.module#AuthenticationModule"
   },
   {
     path: "dashboard",
