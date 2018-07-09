@@ -15,6 +15,7 @@ import { map, tap, filter, withLatestFrom, take } from "rxjs/operators";
 import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
 import { AppEffects } from "../../../../store/app.effects";
+import { RouterFacade } from "../../../../store/router.facade";
 
 @IonicPage({
   segment: "LoginPage",
@@ -22,6 +23,7 @@ import { AppEffects } from "../../../../store/app.effects";
 })
 @Component({
   selector: "app-login",
+  providers: [RouterFacade],
   templateUrl: "./login.html"
 })
 export class LoginPage implements OnInit, OnDestroy {
@@ -33,24 +35,25 @@ export class LoginPage implements OnInit, OnDestroy {
   // authError$ = this.authFacade.error$;
   hasAgreed = false;
 
-  // private loginRedirect$ = this.appFacade.authRedirect$.pipe(
-  //   untilDestroyed(this),
-  //   filter(redirectUrl => !!redirectUrl),
-  //   withLatestFrom(this.routerFacade.queryParams$),
-  //   map(([navOptions, query]) => {
-  //     if (query && query.returnUrl) {
-  //       navOptions.path = [query.returnUrl];
-  //     }
+  private loginRedirect$ = this.appEffects.authRedirect$.pipe(
+    untilDestroyed(this),
+    filter(redirectUrl => !!redirectUrl),
+    withLatestFrom(this.routerFacade.queryParams$),
+    map(([navOptions, query]) => {
+      if (query && query.returnUrl) {
+        navOptions.path = [query.returnUrl];
+      }
 
-  //     return navOptions;
-  //   })
-  // );
+      return navOptions;
+    })
+  );
 
   constructor(
     private fb: FormBuilder,
     private appEffects: AppEffects,
     private authFacade: AuthEffects,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private routerFacade: RouterFacade
   ) {}
 
   ngOnInit() {
@@ -77,27 +80,27 @@ export class LoginPage implements OnInit, OnDestroy {
     this.navCtrl.push("PrivacyPage");
   }
 
-  // googleLogin() {
-  //   this.authFacade.googleLogin();
+  googleLogin() {
+    this.authFacade.googleLogin();
 
-  //   this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-  //     this.routerFacade.navigate(navOptions);
-  //   });
-  // }
+    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
+      this.routerFacade.navigate(navOptions);
+    });
+  }
 
-  // facebookLogin() {
-  //   this.authFacade.facebookLogin();
+  facebookLogin() {
+    this.authFacade.facebookLogin();
 
-  //   // this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-  //   //   this.routerFacade.navigate(navOptions);
-  //   // });
-  // }
+    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
+      this.routerFacade.navigate(navOptions);
+    });
+  }
 
-  // twitterLogin() {
-  //   this.authFacade.twitterLogin();
+  twitterLogin() {
+    this.authFacade.twitterLogin();
 
-  //   // this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-  //   //   this.routerFacade.navigate(navOptions);
-  //   // });
-  // }
+    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
+      this.routerFacade.navigate(navOptions);
+    });
+  }
 }

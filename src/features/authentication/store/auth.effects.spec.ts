@@ -11,13 +11,9 @@ import { provideMockActions } from "@ngrx/effects/testing";
 import { Observable } from "rxjs/Observable";
 
 import { cold, hot } from "jest-marbles";
-import { ConfigureFn, configureTests } from "@test/jest-test.helper";
-import {
-  AuthState,
-  authReducer,
-  initialAuthState
-} from "@app/authentication/state/auth.reducer";
-import { AuthFacade } from "@app/authentication/state/auth.facade";
+import { ConfigureFn, configureTests } from "../../../test/jest-test.helper";
+import { AuthState, authReducer, initialAuthState } from "./auth.reducer";
+import { AuthEffects } from "./auth.effects";
 import {
   AuthActionTypes,
   GetUserAction,
@@ -26,9 +22,9 @@ import {
   AuthenticatedAction,
   LoginAction,
   LogoutAction
-} from "@app/authentication/state/auth.actions";
-import { AuthService } from "@app/authentication/services/auth.service";
-import { User } from "@models/user";
+} from "./auth.actions";
+import { AuthService } from "../services/auth.service";
+import { User } from "../../../models/user";
 
 const testUser: User = { uid: "testUid", displayName: "testName" };
 
@@ -44,12 +40,12 @@ class MockAuthService {
   }
 }
 
-describe("AuthFacade", () => {
+describe("AuthEffects", () => {
   let store: Store<AuthState>;
   let actions$: Observable<Action>;
   let service: AuthService;
-  let facade: AuthFacade;
-  let metadata: EffectsMetadata<AuthFacade>;
+  let facade: AuthEffects;
+  let metadata: EffectsMetadata<AuthEffects>;
 
   beforeEach(async(() => {
     const configure: ConfigureFn = testBed => {
@@ -59,14 +55,14 @@ describe("AuthFacade", () => {
             { auth: authReducer },
             { initialState: { auth: initialAuthState } }
           ),
-          EffectsModule.forRoot([AuthFacade])
+          EffectsModule.forRoot([AuthEffects])
         ],
         providers: [
           {
             provide: AuthService,
             useClass: MockAuthService
           },
-          AuthFacade,
+          AuthEffects,
           provideMockActions(() => actions$)
         ]
       });
@@ -75,7 +71,7 @@ describe("AuthFacade", () => {
     configureTests(configure).then(testBed => {
       store = testBed.get(Store);
       service = testBed.get(AuthService);
-      facade = testBed.get(AuthFacade);
+      facade = testBed.get(AuthEffects);
       metadata = getEffectsMetadata(facade);
     });
   }));
@@ -156,7 +152,7 @@ describe("AuthFacade", () => {
 
     it("should call AuthService#login", () => {
       const passThrough = service.login;
-      jest.spyOn(service, "login").mockImplementation(() => passThrough());
+      jest.spyOn(service, "login").mockImplementation(() => passThrough("")); // Might fail
 
       const a = new LoginAction({ provider: "google" });
       actions$ = hot("--a-", { a });
@@ -217,7 +213,7 @@ describe("AuthFacade", () => {
         .spyOn(store, "dispatch")
         .mockImplementation(action => (dispatchedAction = action));
 
-      facade.checkAuth().subscribe();
+      facade.checkAuth(); // .subscribe()
 
       expect(dispatchedAction.type).toBe(AuthActionTypes.GET_USER);
     });

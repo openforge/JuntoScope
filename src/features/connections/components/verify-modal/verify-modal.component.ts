@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { NavParams } from "@ionic/angular";
-import { PopupService } from "@app/shared/popup.service";
+import { NavParams } from "ionic-angular";
+import { PopupService } from "../../../../shared/popup.service";
 
 @Component({
   selector: "app-verify-modal",

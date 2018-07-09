@@ -6,10 +6,9 @@ import { AngularFireAuth } from "angularfire2/auth";
 
 import { cold, hot } from "jest-marbles";
 
-import { ConfigureFn, configureTests } from "@test/jest-test.helper";
+import { ConfigureFn, configureTests } from "../../../test/jest-test.helper";
 import { AuthService } from "./auth.service";
-import { User } from "@models/user";
-
+import { User } from "../../../models/user";
 const testUser: User = { uid: "testUid", displayName: "testName" };
 
 class MockAngularFireAuth {
@@ -63,7 +62,7 @@ describe("AuthService", () => {
           actualProviderId = provider.providerId;
         });
 
-      service.login();
+      service.login(""); // Might fail
 
       expect(actualProviderId).toEqual(expectedProviderId);
     });

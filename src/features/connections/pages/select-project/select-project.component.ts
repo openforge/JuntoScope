@@ -10,10 +10,12 @@ import {
   distinctUntilChanged
 } from "rxjs/operators";
 
-import { RouterFacade } from "@app/state/router.facade";
-import { ConnectionFacade } from "@app/connections/state/connection.facade";
+import { RouterFacade } from "../../../../store/router.facade";
+import { ConnectionFacade } from "../../store/connection.facade";
 import { ActivatedRoute } from "@angular/router";
-import { Project } from "@models/project";
+import { Project } from "../../../../models/project";
+
+import { Connection } from "../../../../models/connection";
 
 @Component({
   selector: "app-select-project",
@@ -29,8 +31,14 @@ export class SelectProjectComponent {
     ),
     switchMap(params =>
       this.connectionFacade.selectedConnection$.pipe(
-        filter(connection => !!connection && !!connection.projects),
-        map(connection => Object.values(connection.projects))
+        filter(
+          (connection: Connection) => !!connection && !!connection.projects
+        ),
+        map((connection: Connection) =>
+          Object.keys(connection.projects).map(
+            keys => connection.projects[keys]
+          )
+        )
       )
     )
   );

@@ -11,7 +11,7 @@ export class AppEffects {
    * Observable Store Queries
    */
 
-  // authRedirect$ = this.store.pipe(select(AppQuery.selectAuthRedirect));
+  authRedirect$ = this.store.pipe(select(AppQuery.selectAuthRedirect));
 
   uid$ = this.store.pipe(
     select(AppQuery.selectUid),

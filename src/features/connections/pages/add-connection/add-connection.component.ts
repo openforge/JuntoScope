@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import { ConnectionFacade } from "@app/connections/state/connection.facade";
+import { ConnectionFacade } from "../../store/connection.facade";
 
 @Component({
   selector: "app-add-connection",

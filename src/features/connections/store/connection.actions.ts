@@ -1,8 +1,8 @@
 import { Action } from "@ngrx/store";
 
-import { Connection } from "@models/connection";
+import { Connection } from "../../../models/connection";
 
-import { Project } from "@models/project";
+import { Project } from "../../../models/project";
 
 export enum ConnectionActionTypes {
   QUERY_ALL = "[Connection] Query All",

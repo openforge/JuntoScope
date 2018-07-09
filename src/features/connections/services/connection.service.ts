@@ -7,16 +7,16 @@ import { switchMap, map, tap, catchError } from "rxjs/operators";
 
 import * as _ from "lodash";
 
-import { environment } from "@env/environment";
-import { Project } from "@models/project";
-import { TaskList } from "@models/task-list";
-import { Connection } from "@models/connection";
-import { AppFacade } from "@app/state/app.facade";
+import { environment } from "../../../environment";
+import { Project } from "../../../models/project";
+import { TaskList } from "../../../models/task-list";
+import { Connection } from "../../../models/connection";
+import { AppEffects } from "../../../store/app.effects";
 
 @Injectable()
 export class ConnectionService {
   constructor(
-    private appFacade: AppFacade,
+    private appFacade: AppEffects,
     private afs: AngularFirestore,
     private http: HttpClient
   ) {}

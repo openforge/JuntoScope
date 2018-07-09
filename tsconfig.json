@@ -21,6 +21,13 @@
     "src/**/*.spec.ts",
     "src/**/__tests__/*.ts"
   ],
+  "baseUrl": "./src/",
+  "paths": {
+    "@app/*": ["app/*"],
+    "@env/*": ["environments/*"],
+    "@models/*": ["models/*"],
+    "@test/*": ["test/*"]
+  },
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false

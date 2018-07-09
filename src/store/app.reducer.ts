@@ -7,13 +7,13 @@ import {
 import { storeFreeze } from "ngrx-store-freeze";
 
 import { environment } from "../environment";
-// import {
-//   RouterState,
-//   routerReducer,
-//   initialRouterState,
-//   RouterQuery,
-// } from '@app/state/router.reducer';
-// import { NavigationOptions } from '@app/state/router.actions';
+import {
+  RouterState,
+  routerReducer,
+  initialRouterState,
+  RouterQuery
+} from "./router.reducer";
+import { NavigationOptions } from "./router.actions";
 import {
   AuthState,
   AuthQuery,
@@ -28,7 +28,7 @@ import {
 // import { DashboardState } from '@app/dashboard/state/dashboard.reducer';
 
 interface FullAppState {
-  // router: RouterState;
+  router: RouterState;
   auth: AuthState;
   // connection: ConnectionState;
   // scoping: ScopingState;
@@ -55,17 +55,17 @@ export namespace AppQuery {
     user => user.uid
   );
 
-  // export const selectAuthRedirect = createSelector(
-  //   AuthQuery.selectUiState,
-  //   RouterQuery.getQueryParams,
-  //   (authUiState, routeQueryParams): NavigationOptions => {
-  //     if (authUiState === AuthUiState.NOT_AUTHENTICATED) {
-  //       return { path: ['/login'] };
-  //     }
+  export const selectAuthRedirect = createSelector(
+    AuthQuery.selectUiState,
+    RouterQuery.getQueryParams,
+    (authUiState, routeQueryParams): NavigationOptions => {
+      if (authUiState === AuthUiState.NOT_AUTHENTICATED) {
+        return { path: ["/login"] };
+      }
 
-  //     return { path: ['/dashboard'] };
-  //   }
-  // );
+      return { path: ["/dashboard"] };
+    }
+  );
 
   export const selectUidDocPath = createSelector(
     AuthQuery.selectUser,

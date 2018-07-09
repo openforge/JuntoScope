@@ -15,7 +15,7 @@ import {
 } from "rxjs/operators";
 import { of, combineLatest, empty } from "rxjs";
 
-import { AppState } from "@app/state/app.reducer";
+import { AppState } from "../../../store/app.reducer";
 import {
   ConnectionActionTypes,
   QueryConnectionsAction,
@@ -28,21 +28,18 @@ import {
   AddConnectionErrorAction,
   NoConnectionsAction,
   CreateSessionAction
-} from "@app/connections/state/connection.actions";
-import { ConnectionService } from "@app/connections/services/connection.service";
-import { Connection } from "@models/connection";
-import { Project } from "@models/project";
-import {
-  ConnectionQuery,
-  ConnectionUiState
-} from "@app/connections/state/connection.reducer";
-import { NoopAction } from "@app/state/app.actions";
-import { PopupService } from "@app/shared/popup.service";
-import { RouterFacade } from "@app/state/router.facade";
-import * as RouterActions from "@app/state/router.actions";
-import { VerifyModalComponent } from "@app/connections/components/verify-modal/verify-modal.component";
+} from "./connection.actions";
+import { ConnectionService } from "../services/connection.service";
+import { Connection } from "../../../models/connection";
+import { Project } from "../../../models/project";
+import { ConnectionQuery, ConnectionUiState } from "./connection.reducer";
+import { NoopAction } from "../../../store/app.actions";
+import { PopupService } from "../../../shared/popup.service";
+import { RouterFacade } from "../../../store/router.facade";
+import * as RouterActions from "../../../store/router.actions";
+import { VerifyModalComponent } from "../components/verify-modal/verify-modal.component";
 
-import { ShareScopeLinkComponent } from "@app/connections/containers/share-scope-link/share-scope-link.component";
+import { ShareScopeLinkComponent } from "../pages/share-scope-link/share-scope-link.component";
 
 @Injectable()
 export class ConnectionFacade {

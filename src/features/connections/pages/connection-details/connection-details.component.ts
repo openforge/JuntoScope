@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { RouterFacade } from "@app/state/router.facade";
+import { RouterFacade } from "../../../../store/router.facade";
 
 import { take } from "rxjs/operators";
 import { Observable } from "@firebase/util";
-import { Connection } from "@models/connection";
-import { ConnectionFacade } from "@app/connections/state/connection.facade";
+import { Connection } from "../../../../models/connection";
+import { ConnectionFacade } from "../../store/connection.facade";
 
 @Component({
   selector: "app-connection-details",
@@ -23,13 +23,15 @@ export class ConnectionDetailsComponent implements OnInit {
   ngOnInit() {
     this.connectionFacade.getConnections();
     this.params$.pipe(take(1)).subscribe(params => {
-      this.connectionFacade.connections$.subscribe(connections => {
-        if (connections) {
-          this.connection = connections.filter(
-            c => c.id === params.connectionId
-          )[0];
+      this.connectionFacade.connections$.subscribe(
+        (connections: Connection[]) => {
+          if (connections) {
+            this.connection = connections.filter(
+              c => c.id === params.connectionId
+            )[0];
+          }
         }
-      });
+      );
     });
   }
 }

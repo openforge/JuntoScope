@@ -5,9 +5,10 @@ import { map, tap, filter, switchMap, take } from "rxjs/operators";
 
 import * as _ from "lodash";
 
-import { RouterFacade } from "@app/state/router.facade";
-import { ConnectionFacade } from "@app/connections/state/connection.facade";
-import { TaskList } from "@models/task-list";
+import { RouterFacade } from "../../../../store/router.facade";
+import { ConnectionFacade } from "../../store/connection.facade";
+import { TaskList } from "../../../../models/task-list";
+import { Connection } from "../../../../models/connection";
 
 @Component({
   selector: "app-select-task-list",
@@ -24,8 +25,10 @@ export class SelectTaskListComponent {
         filter(connection =>
           _.has(connection, `projects.${params.projectId}.taskLists`)
         ),
-        map(connection =>
-          Object.values(connection.projects[params.projectId].taskLists)
+        map((connection: Connection) =>
+          Object.keys(connection.projects[params.projectId].taskLists).map(
+            keys => connection.projects[params.projectId].taskLists[keys]
+          )
         )
       )
     )

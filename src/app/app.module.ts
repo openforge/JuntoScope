@@ -26,12 +26,15 @@ import { SettingsModule } from "../features/settings/settings.module";
 import { AuthService } from "../features/authentication/services/auth.service";
 
 import { AuthEffects } from "../features/authentication/store/auth.effects";
+import { AppRoutingModule } from "./app-routing.module";
+import { NotFoundComponent } from "./not-found.component";
 
 @NgModule({
-  declarations: [JuntoScopeComponent],
+  declarations: [JuntoScopeComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(JuntoScopeComponent, { preloadModules: true }),
+    AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AuthEffects]),
