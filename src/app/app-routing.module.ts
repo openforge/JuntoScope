@@ -16,8 +16,7 @@ import { AuthenticationModule } from "../features/authentication/authentication.
 const routes: Routes = [
   {
     path: "",
-    loadChildren:
-      "app/features/authentication/authentication.module#AuthenticationModule"
+    loadChildren: () => AuthenticationModule
   },
   {
     path: "dashboard",

@@ -7,11 +7,7 @@ import { SharedModule } from "../../../../shared/shared.module";
 
 @NgModule({
   declarations: [LoginPage],
-  imports: [
-    IonicPageModule.forChild(LoginPage),
-    AuthenticationModule,
-    SharedModule
-  ],
+  imports: [IonicPageModule.forChild(LoginPage)],
   exports: [LoginPage]
 })
 export class LoginPageModule {}

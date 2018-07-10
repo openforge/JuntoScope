@@ -34,7 +34,6 @@ import { LoginPageModule } from "../features/authentication/pages/login/login.mo
   declarations: [JuntoScopeComponent, NotFoundComponent],
   imports: [
     BrowserModule,
-    LoginPageModule,
     IonicModule.forRoot(JuntoScopeComponent, { preloadModules: true }),
     AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
@@ -44,8 +43,7 @@ import { LoginPageModule } from "../features/authentication/pages/login/login.mo
     AngularFireAuthModule,
     AngularFirestoreModule,
     AuthenticationModule,
-    SharedModule,
-    SettingsModule
+    SharedModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [JuntoScopeComponent],

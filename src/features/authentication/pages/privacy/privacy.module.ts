@@ -5,7 +5,7 @@ import { AuthenticationModule } from "../../authentication.module";
 
 @NgModule({
   declarations: [PrivacyPage],
-  imports: [IonicPageModule.forChild(PrivacyPage), AuthenticationModule],
+  imports: [IonicPageModule.forChild(PrivacyPage)],
   exports: [PrivacyPage]
 })
 export class PrivacyPageModule {}
