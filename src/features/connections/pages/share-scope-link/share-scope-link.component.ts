@@ -8,8 +8,7 @@ import { PopupService } from "../../../../shared/popup.service";
 
 @Component({
   selector: "app-share-scope-link",
-  templateUrl: "./share-scope-link.component.html",
-  styleUrls: ["./share-scope-link.component.scss"]
+  templateUrl: "./share-scope-link.component.html"
 })
 export class ShareScopeLinkComponent implements OnInit {
   connectionName;

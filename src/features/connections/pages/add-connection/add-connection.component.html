@@ -8,7 +8,7 @@
 <ion-content>
 
     <ng-container *ngIf="!type">
-      <ion-button (click)="setType('teamwork')" >Teamwork</ion-button>
+      <button ion-button (click)="setType('teamwork')" >Teamwork</button>
     </ng-container>
     
     <ng-container *ngIf="type">
@@ -26,10 +26,10 @@
         </h6>
 
         <p>
-          <ion-button href="">Where do I find this?</ion-button>
+          <button ion-button href="">Where do I find this?</button>
         </p>
 
-        <ion-button type="submit">Allow access</ion-button>
+        <button ion-button type="submit">Allow access</button>
       </form>
     </ng-container>
 </ion-content>

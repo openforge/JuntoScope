@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
+import { NavController } from "ionic-angular";
 
 import { Store, select } from "@ngrx/store";
 import { Effect, Actions, ofType } from "@ngrx/effects";
 
-import { map, tap } from "rxjs/operators";
+import { map, tap, catchError } from "rxjs/operators";
 
 import { AppState } from "./app.reducer";
 import { RouterQuery } from "./router.reducer";
@@ -39,9 +40,9 @@ export class RouterFacade {
   go$ = this.actions$.pipe(
     ofType<GoAction>(RouterActionTypes.GO),
     map(action => action.payload),
-    tap(({ path, query: queryParams, extras }) =>
-      this.router.navigate(path, { queryParams, ...extras })
-    )
+    tap(({ path, query: queryParams, extras }) => {
+      this.router.navigate(path, { queryParams, ...extras });
+    })
   );
 
   @Effect({ dispatch: false })
@@ -68,6 +69,7 @@ export class RouterFacade {
    */
 
   navigate(options: NavigationOptions) {
+    console.log("trying to dispatch");
     this.store.dispatch(new GoAction(options));
   }
 

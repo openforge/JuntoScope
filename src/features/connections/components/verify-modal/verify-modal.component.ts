@@ -4,8 +4,7 @@ import { PopupService } from "../../../../shared/popup.service";
 
 @Component({
   selector: "app-verify-modal",
-  templateUrl: "./verify-modal.component.html",
-  styleUrls: ["./verify-modal.component.scss"]
+  templateUrl: "./verify-modal.component.html"
 })
 export class VerifyModalComponent implements OnInit {
   connectionData;

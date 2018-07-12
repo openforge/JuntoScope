@@ -11,9 +11,8 @@ import { Connection } from "../../../../models/connection";
 
 @Component({
   selector: "app-connection-list",
-  templateUrl: "./connection-list.component.html",
-  styleUrls: ["./connection-list.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: "./connection-list.component.html"
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConnectionListComponent {
   @Input() connections: Connection[];

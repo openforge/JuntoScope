@@ -19,8 +19,7 @@ import { Connection } from "../../../../models/connection";
 
 @Component({
   selector: "app-select-project",
-  templateUrl: "./select-project.component.html",
-  styleUrls: ["./select-project.component.scss"]
+  templateUrl: "./select-project.component.html"
 })
 export class SelectProjectComponent {
   projects$ = this.routerFacade.params$.pipe(

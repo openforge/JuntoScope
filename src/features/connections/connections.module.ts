@@ -13,18 +13,23 @@ import { ProjectListComponent } from "./components/project-list/project-list.com
 import { TaskListComponent } from "./components/task-list/task-list.component";
 import { ProjectItemComponent } from "./components/project-item/project-item.component";
 import { InstructionsComponent } from "./components/instructions/instructions.component";
+import { ConnectionListComponent } from "./components/connection-list/connection-list.component";
+import { JoinSessionComponent } from "../dashboard/components/join-session/join-session.component";
+import { HistoryService } from "../dashboard/services/history.service";
+import { HttpClient } from "@angular/common/http";
 
 @NgModule({
   imports: [IonicModule, SharedModule],
-  exports: [],
+  exports: [ConnectionListComponent],
   declarations: [
     InstructionsComponent,
     VerifyModalComponent,
     ProjectListComponent,
     TaskListComponent,
-    ProjectItemComponent
+    ProjectItemComponent,
+    ConnectionListComponent
   ],
   entryComponents: [VerifyModalComponent],
-  providers: []
+  providers: [HistoryService]
 })
 export class ConnectionsModule {}

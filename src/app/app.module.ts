@@ -21,19 +21,21 @@ import { environment } from "../environment";
 import { JuntoScopeComponent } from "./app.component";
 import { SharedModule } from "../shared/shared.module";
 import { AuthenticationModule } from "../features/authentication/authentication.module";
-import { SettingsModule } from "../features/settings/settings.module";
 
 import { AuthService } from "../features/authentication/services/auth.service";
 
 import { AuthEffects } from "../features/authentication/store/auth.effects";
 import { AppRoutingModule } from "./app-routing.module";
 import { NotFoundComponent } from "./not-found.component";
-import { LoginPageModule } from "../features/authentication/pages/login/login.module";
+import { DashboardModule } from "../features/dashboard/dashboard.module";
+import { HttpClientModule } from "@angular/common/http";
+import { AuthGuard } from "./auth.guard";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(JuntoScopeComponent, { preloadModules: true }),
     AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
@@ -43,6 +45,7 @@ import { LoginPageModule } from "../features/authentication/pages/login/login.mo
     AngularFireAuthModule,
     AngularFirestoreModule,
     AuthenticationModule,
+    DashboardModule,
     SharedModule
   ],
   bootstrap: [IonicApp],
@@ -50,6 +53,7 @@ import { LoginPageModule } from "../features/authentication/pages/login/login.mo
   providers: [
     AppEffects,
     AuthService,
+    AuthGuard,
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler }

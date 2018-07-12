@@ -12,6 +12,8 @@ import { RouterFacade } from "../store/router.facade";
 import { NotFoundComponent } from "./not-found.component";
 import { AuthGuard } from "./auth.guard";
 import { AuthenticationModule } from "../features/authentication/authentication.module";
+import { DashboardModule } from "../features/dashboard/dashboard.module";
+import { ConnectionsModule } from "../features/connections/connections.module";
 
 const routes: Routes = [
   {
@@ -20,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: "dashboard",
-    loadChildren: "@app/dashboard/dashboard.module#DashboardModule",
+    loadChildren: () => DashboardModule,
     canActivate: [AuthGuard]
   },
   {
@@ -30,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: "connections",
-    loadChildren: "@app/connections/connections.module#ConnectionsModule",
+    loadChildren: () => ConnectionsModule,
     canActivate: [AuthGuard]
   },
   {
@@ -47,7 +49,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    EffectsModule.forRoot([RouterFacade]),
+    EffectsModule.forFeature([RouterFacade]),
     StoreRouterConnectingModule.forRoot()
   ],
   exports: [RouterModule]

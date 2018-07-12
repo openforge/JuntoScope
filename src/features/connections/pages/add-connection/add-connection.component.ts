@@ -5,8 +5,7 @@ import { ConnectionFacade } from "../../store/connection.facade";
 
 @Component({
   selector: "app-add-connection",
-  templateUrl: "./add-connection.component.html",
-  styleUrls: ["./add-connection.component.scss"]
+  templateUrl: "./add-connection.component.html"
 })
 export class AddConnectionComponent implements OnInit {
   connectionForm: FormGroup;

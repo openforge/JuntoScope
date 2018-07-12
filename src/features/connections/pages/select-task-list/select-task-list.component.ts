@@ -12,8 +12,7 @@ import { Connection } from "../../../../models/connection";
 
 @Component({
   selector: "app-select-task-list",
-  templateUrl: "./select-task-list.component.html",
-  styleUrls: ["./select-task-list.component.scss"]
+  templateUrl: "./select-task-list.component.html"
 })
 export class SelectTaskListComponent {
   taskLists$ = this.routerFacade.params$.pipe(

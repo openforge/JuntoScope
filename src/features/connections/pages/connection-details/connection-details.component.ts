@@ -8,8 +8,7 @@ import { ConnectionFacade } from "../../store/connection.facade";
 
 @Component({
   selector: "app-connection-details",
-  templateUrl: "./connection-details.component.html",
-  styleUrls: ["./connection-details.component.scss"]
+  templateUrl: "./connection-details.component.html"
 })
 export class ConnectionDetailsComponent implements OnInit {
   params$ = this.routerFacade.params$;
