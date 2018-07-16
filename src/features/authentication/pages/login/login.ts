@@ -94,6 +94,7 @@ export class LoginPage implements OnInit, OnDestroy {
       console.log(navOptions);
       console.log(user);
       if (user) {
+        console.log("Trying to navigate");
         this.navCtrl.push("DashboardComponent");
       }
     });

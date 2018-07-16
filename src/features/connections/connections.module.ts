@@ -19,7 +19,12 @@ import { HistoryService } from "../dashboard/services/history.service";
 import { HttpClient } from "@angular/common/http";
 
 @NgModule({
-  imports: [IonicModule, SharedModule],
+  imports: [
+    IonicModule,
+    SharedModule,
+    StoreModule.forFeature("connection", connectionReducer),
+    EffectsModule.forFeature([ConnectionFacade])
+  ],
   exports: [ConnectionListComponent],
   declarations: [
     InstructionsComponent,

@@ -52,8 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // this.dashboardFacade.getHistory();
-    // this.connectionFacade.getConnections();
+    this.dashboardFacade.getHistory();
+    this.connectionFacade.getConnections();
   }
 
   ngOnDestroy() {}
