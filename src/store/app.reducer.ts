@@ -19,20 +19,20 @@ import {
   AuthQuery,
   AuthUiState
 } from "../features/authentication/store/auth.reducer";
-// import {
-//   ConnectionState,
-//   ConnectionQuery,
-//   ConnectionUiState,
-// } from '@app/connections/state/connection.reducer';
+import {
+  ConnectionState,
+  ConnectionQuery,
+  ConnectionUiState
+} from "../features/connections/store/connection.reducer";
 // import { ScopingState, ScopingQuery } from '@app/scoping/state/scoping.reducer';
-// import { DashboardState } from '@app/dashboard/state/dashboard.reducer';
+import { DashboardState } from "../features/dashboard/store/dashboard.reducer";
 
 interface FullAppState {
   router: RouterState;
   auth: AuthState;
-  // connection: ConnectionState;
+  connection: ConnectionState;
   // scoping: ScopingState;
-  // dashboard: DashboardState;
+  dashboard: DashboardState;
 }
 
 export type AppState = Partial<FullAppState>;
@@ -60,10 +60,10 @@ export namespace AppQuery {
     RouterQuery.getQueryParams,
     (authUiState, routeQueryParams): NavigationOptions => {
       if (authUiState === AuthUiState.NOT_AUTHENTICATED) {
-        return { path: ["/login"] };
+        return { path: ["LoginPage"] };
       }
 
-      return { path: ["/dashboard"] };
+      return { path: ["DashboardComponent"] };
     }
   );
 

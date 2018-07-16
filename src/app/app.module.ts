@@ -1,7 +1,13 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { ErrorHandler, NgModule } from "@angular/core";
 
-import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
+import {
+  IonicApp,
+  IonicErrorHandler,
+  IonicModule,
+  NavController,
+  ViewController
+} from "ionic-angular";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 
@@ -25,11 +31,13 @@ import { AuthenticationModule } from "../features/authentication/authentication.
 import { AuthService } from "../features/authentication/services/auth.service";
 
 import { AuthEffects } from "../features/authentication/store/auth.effects";
-import { AppRoutingModule } from "./app-routing.module";
+// import { AppRoutingModule } from "./app-routing.module";
 import { NotFoundComponent } from "./not-found.component";
 import { DashboardModule } from "../features/dashboard/dashboard.module";
 import { HttpClientModule } from "@angular/common/http";
 import { AuthGuard } from "./auth.guard";
+import { PopupService } from "../shared/popup.service";
+import { RouterFacade } from "../store/router.facade";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
@@ -37,7 +45,7 @@ import { AuthGuard } from "./auth.guard";
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(JuntoScopeComponent, { preloadModules: true }),
-    AppRoutingModule.forRoot(),
+    // AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AuthEffects]),
@@ -56,6 +64,8 @@ import { AuthGuard } from "./auth.guard";
     AuthGuard,
     StatusBar,
     SplashScreen,
+    PopupService,
+    RouterFacade,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

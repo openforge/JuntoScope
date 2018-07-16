@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 
-import { InfiniteScroll } from "ionic-angular";
+import { InfiniteScroll, IonicPage } from "ionic-angular";
 
 import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
 
@@ -21,6 +21,10 @@ import { PopupService } from "../../../../shared/popup.service";
 import { SessionDetailModalComponent } from "../../components/session-detail-modal/session-detail-modal.component";
 
 @TakeUntilDestroy()
+@IonicPage({
+  segment: "DashboardPage",
+  priority: "high"
+})
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html"
@@ -48,8 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.dashboardFacade.getHistory();
-    this.connectionFacade.getConnections();
+    // this.dashboardFacade.getHistory();
+    // this.connectionFacade.getConnections();
   }
 
   ngOnDestroy() {}

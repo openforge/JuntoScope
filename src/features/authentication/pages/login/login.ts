@@ -35,6 +35,8 @@ export class LoginPage implements OnInit, OnDestroy {
   // authError$ = this.authFacade.error$;
   hasAgreed = false;
 
+  user$ = this.authEffects.user$;
+
   private loginRedirect$ = this.appEffects.authRedirect$.pipe(
     untilDestroyed(this),
     filter(redirectUrl => !!redirectUrl),
@@ -82,9 +84,18 @@ export class LoginPage implements OnInit, OnDestroy {
 
   googleLogin() {
     this.authEffects.googleLogin();
-
+    let navOptions;
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-      this.routerFacade.navigate(navOptions);
+      // this.routerFacade.navigate(navOptions);
+      // this.navCtrl.push(navOptions.path[0]);
+      navOptions = navOptions;
+    });
+    this.user$.subscribe(user => {
+      console.log(navOptions);
+      console.log(user);
+      if (user) {
+        this.navCtrl.push("DashboardComponent");
+      }
     });
   }
 

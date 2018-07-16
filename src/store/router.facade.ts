@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Location } from "@angular/common";
-import { Router } from "@angular/router";
-import { NavController } from "ionic-angular";
+// import { Router } from "@angular/router";
+import { ViewChild } from "@angular/core";
+import { Nav } from "ionic-angular";
 
 import { Store, select } from "@ngrx/store";
 import { Effect, Actions, ofType } from "@ngrx/effects";
@@ -32,6 +33,8 @@ export class RouterFacade {
 
   queryParams$ = this.store.pipe(select(RouterQuery.getQueryParams));
 
+  @ViewChild(Nav) nav: Nav;
+
   /*
    * Module-level Effects
    */
@@ -41,7 +44,8 @@ export class RouterFacade {
     ofType<GoAction>(RouterActionTypes.GO),
     map(action => action.payload),
     tap(({ path, query: queryParams, extras }) => {
-      this.router.navigate(path, { queryParams, ...extras });
+      // this.router.navigate(path, { queryParams, ...extras });
+      // this.nav.push(path[0]);
     })
   );
 
@@ -60,7 +64,7 @@ export class RouterFacade {
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
-    private router: Router,
+    // private router: Router,
     private location: Location
   ) {}
 

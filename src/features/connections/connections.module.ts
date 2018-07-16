@@ -30,6 +30,6 @@ import { HttpClient } from "@angular/common/http";
     ConnectionListComponent
   ],
   entryComponents: [VerifyModalComponent],
-  providers: [HistoryService]
+  providers: [HistoryService, ConnectionFacade, ConnectionService]
 })
 export class ConnectionsModule {}
