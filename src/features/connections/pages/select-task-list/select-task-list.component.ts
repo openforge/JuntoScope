@@ -47,6 +47,7 @@ export class SelectTaskListComponent implements OnInit {
     //Add 'implements OnInit' to the class.
     this.connectionId = this.navParams.get("connectionId");
     this.projectId = this.navParams.get("projectId");
+    this.connectionFacade.selectProject(this.connectionId, this.projectId);
   }
 
   handleToggle(checked: boolean, taskList: TaskList) {

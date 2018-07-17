@@ -74,5 +74,9 @@ export class SelectProjectComponent implements OnInit {
     //   });
     //   this.navCtrl.push(SelectTaskListComponent);
     // });
+    this.navCtrl.push(SelectTaskListComponent, {
+      connectionId: this.connectionId,
+      projectId: project.id
+    });
   }
 }
