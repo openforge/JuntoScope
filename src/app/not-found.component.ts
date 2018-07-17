@@ -1,7 +1,5 @@
 import { Component } from "@angular/core";
 
-import { RouterFacade } from "../store/router.facade";
-
 @Component({
   selector: "app-not-found",
   template: `
@@ -12,7 +10,7 @@ import { RouterFacade } from "../store/router.facade";
   styles: []
 })
 export class NotFoundComponent {
-  url$ = this.routerFacade.url$;
+  // url$ = this.routerFacade.url$;
 
-  constructor(private routerFacade: RouterFacade) {}
+  constructor() {}
 }

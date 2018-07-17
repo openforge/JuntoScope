@@ -39,13 +39,13 @@ export const initialRouterState: RouterState = {
 
 export { routerReducer } from "@ngrx/router-store";
 
-export namespace RouterQuery {
-  const getSlice = (state: AppState) => state.router;
-  export const getState = createSelector(getSlice, state => state.state);
-  export const getUrl = createSelector(getState, state => state.url);
-  export const getParams = createSelector(getState, state => state.params);
-  export const getQueryParams = createSelector(
-    getState,
-    state => state.queryParams
-  );
-}
+// export namespace RouterQuery {
+//   const getSlice = (state: AppState) => state.router;
+//   export const getState = createSelector(getSlice, state => state.state);
+//   export const getUrl = createSelector(getState, state => state.url);
+//   export const getParams = createSelector(getState, state => state.params);
+//   export const getQueryParams = createSelector(
+//     getState,
+//     state => state.queryParams
+//   );
+// }

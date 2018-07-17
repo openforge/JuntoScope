@@ -6,7 +6,7 @@ import {
   Validators
 } from "@angular/forms";
 
-import { IonicPage, NavController } from "ionic-angular";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
 
@@ -15,7 +15,6 @@ import { map, tap, filter, withLatestFrom, take } from "rxjs/operators";
 import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
 import { AppEffects } from "../../../../store/app.effects";
-import { RouterFacade } from "../../../../store/router.facade";
 
 @IonicPage({
   segment: "LoginPage",
@@ -23,7 +22,7 @@ import { RouterFacade } from "../../../../store/router.facade";
 })
 @Component({
   selector: "app-login",
-  providers: [RouterFacade],
+  providers: [],
   templateUrl: "./login.html"
 })
 export class LoginPage implements OnInit, OnDestroy {
@@ -40,8 +39,8 @@ export class LoginPage implements OnInit, OnDestroy {
   private loginRedirect$ = this.appEffects.authRedirect$.pipe(
     untilDestroyed(this),
     filter(redirectUrl => !!redirectUrl),
-    withLatestFrom(this.routerFacade.queryParams$),
-    map(([navOptions, query]) => {
+    map(navOptions => {
+      const query = this.navParams.get("query");
       if (query && query.returnUrl) {
         navOptions.path = [query.returnUrl];
       }
@@ -55,7 +54,7 @@ export class LoginPage implements OnInit, OnDestroy {
     private appEffects: AppEffects,
     private authEffects: AuthEffects,
     private navCtrl: NavController,
-    private routerFacade: RouterFacade
+    private navParams: NavParams
   ) {}
 
   ngOnInit() {
@@ -84,19 +83,20 @@ export class LoginPage implements OnInit, OnDestroy {
 
   googleLogin() {
     this.authEffects.googleLogin();
-    let navOptions;
+    // let navOptions;
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-      // this.routerFacade.navigate(navOptions);
+      console.log("navOptions: ", navOptions);
       // this.navCtrl.push(navOptions.path[0]);
-      navOptions = navOptions;
-    });
-    this.user$.subscribe(user => {
-      console.log(navOptions);
-      console.log(user);
-      if (user) {
-        console.log("Trying to navigate");
-        this.navCtrl.push("DashboardComponent");
-      }
+      // navOptions = navOptions;
+
+      this.user$.subscribe(user => {
+        console.log(navOptions);
+        console.log(user);
+        if (user) {
+          console.log("Trying to navigate");
+          this.navCtrl.push(navOptions.path[0]);
+        }
+      });
     });
   }
 
@@ -104,7 +104,7 @@ export class LoginPage implements OnInit, OnDestroy {
     this.authEffects.facebookLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-      this.routerFacade.navigate(navOptions);
+      // this.routerFacade.navigate(navOptions);
     });
   }
 
@@ -112,7 +112,7 @@ export class LoginPage implements OnInit, OnDestroy {
     this.authEffects.twitterLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-      this.routerFacade.navigate(navOptions);
+      // this.routerFacade.navigate(navOptions);
     });
   }
 }

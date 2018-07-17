@@ -13,6 +13,9 @@ import { ConnectionsModule } from "../connections/connections.module";
 import { SharedModule } from "../../shared/shared.module";
 import { IonicModule } from "ionic-angular";
 import { DashboardPageModule } from "./pages/dashboard/dashboard.component.module";
+import { SelectProjectComponent } from "../connections/pages/select-project/select-project.component";
+import { SelectTaskListComponent } from "../connections/pages/select-task-list/select-task-list.component";
+import { ProjectListComponent } from "../connections/components/project-list/project-list.component";
 
 @NgModule({
   imports: [
@@ -21,10 +24,15 @@ import { DashboardPageModule } from "./pages/dashboard/dashboard.component.modul
     StoreModule.forFeature("dashboard", dashboardReducer),
     EffectsModule.forFeature([DashboardEffects]),
     DashboardPageModule,
-    SharedModule
+    SharedModule,
+    ConnectionsModule
   ],
   declarations: [],
-  entryComponents: [DashboardComponent]
+  entryComponents: [
+    DashboardComponent,
+    SelectProjectComponent,
+    SelectTaskListComponent
+  ]
 })
 export class DashboardModule {
   static forRoot(): ModuleWithProviders {

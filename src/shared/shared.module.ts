@@ -15,17 +15,31 @@ import { InfoModalComponent } from "./components/info-modal/info-modal";
 @NgModule({
   imports: [IonicModule],
   declarations: [
-    // ObjectKeysPipe,
-    // ObjectValuesPipe,
-    // ObjectKeyValuePipe,
+    ObjectKeysPipe,
+    ObjectValuesPipe,
+    ObjectKeyValuePipe,
     InfoModalComponent
   ],
   entryComponents: [InfoModalComponent],
   exports: [
-    // ObjectKeysPipe,
-    // ObjectValuesPipe,
-    // ObjectKeyValuePipe,
+    ObjectKeysPipe,
+    ObjectValuesPipe,
+    ObjectKeyValuePipe,
     InfoModalComponent
   ]
 })
-export class SharedModule {}
+export class SharedModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: [
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: ApiInterceptor,
+          multi: true
+        },
+        PopupService
+      ]
+    };
+  }
+}

@@ -37,7 +37,7 @@ import { DashboardModule } from "../features/dashboard/dashboard.module";
 import { HttpClientModule } from "@angular/common/http";
 import { AuthGuard } from "./auth.guard";
 import { PopupService } from "../shared/popup.service";
-import { RouterFacade } from "../store/router.facade";
+import { AppRoutingModule } from "./app-routing.module";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
@@ -45,7 +45,7 @@ import { RouterFacade } from "../store/router.facade";
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(JuntoScopeComponent, { preloadModules: true }),
-    // AppRoutingModule.forRoot(),
+    AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AuthEffects]),
@@ -54,7 +54,7 @@ import { RouterFacade } from "../store/router.facade";
     AngularFirestoreModule,
     AuthenticationModule,
     DashboardModule,
-    SharedModule
+    SharedModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [JuntoScopeComponent],
@@ -65,7 +65,6 @@ import { RouterFacade } from "../store/router.facade";
     StatusBar,
     SplashScreen,
     PopupService,
-    RouterFacade,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

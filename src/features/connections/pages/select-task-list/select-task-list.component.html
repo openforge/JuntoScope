@@ -1,9 +1,9 @@
-<ion-toolbar>
-  <ion-buttons slot="start">
+<ion-navbar>
+  <!-- <ion-buttons slot="start">
     <ion-back-button defaultHref="/"></ion-back-button>
-  </ion-buttons>
+  </ion-buttons> -->
   <ion-title>Select Task List</ion-title>
-</ion-toolbar>
+</ion-navbar>
 
 <ion-content>
   <ion-list *ngIf="taskLists$ | async as taskLists">

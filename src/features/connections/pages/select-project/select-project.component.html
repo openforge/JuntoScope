@@ -1,9 +1,11 @@
-<ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-back-button defaultHref="/"></ion-back-button>
-  </ion-buttons>
-  <ion-title>Select Project</ion-title>
-</ion-toolbar>
+<ion-header>
+  <ion-navbar>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons> -->
+    <ion-title>Select Project</ion-title>
+  </ion-navbar>
+</ion-header>
 
 <ion-content>
   <app-project-list [projects]="projects$ | async" (select)="handleProjectSelect($event)"></app-project-list>

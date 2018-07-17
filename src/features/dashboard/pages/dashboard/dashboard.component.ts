@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 
-import { InfiniteScroll, IonicPage } from "ionic-angular";
+import { InfiniteScroll, IonicPage, NavController } from "ionic-angular";
 
 import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
 
@@ -19,6 +19,7 @@ import {
 } from "../../../../models/history-item";
 import { PopupService } from "../../../../shared/popup.service";
 import { SessionDetailModalComponent } from "../../components/session-detail-modal/session-detail-modal.component";
+import { SelectProjectComponent } from "../../../connections/pages/select-project/select-project.component";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -48,7 +49,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private routerFacade: RouterFacade,
     private dashboardFacade: DashboardEffects,
     private popupSvc: PopupService,
-    private connectionFacade: ConnectionFacade
+    private connectionFacade: ConnectionFacade,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -87,9 +89,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   createSession(connection: Connection) {
-    this.routerFacade.navigate({
-      path: [`/connections/${connection.id}/projects`]
-    });
+    // this.routerFacade.navigate({
+    //   path: [`/connections/${connection.id}/projects`]
+    // });
+    console.log("How bout this: ", connection.id);
+    this.navCtrl.push(SelectProjectComponent, { connectionId: connection.id });
   }
 
   goSettings() {

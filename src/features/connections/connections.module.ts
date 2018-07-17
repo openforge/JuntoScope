@@ -17,6 +17,8 @@ import { ConnectionListComponent } from "./components/connection-list/connection
 import { JoinSessionComponent } from "../dashboard/components/join-session/join-session.component";
 import { HistoryService } from "../dashboard/services/history.service";
 import { HttpClient } from "@angular/common/http";
+import { SelectProjectComponent } from "./pages/select-project/select-project.component";
+import { SelectTaskListComponent } from "./pages/select-task-list/select-task-list.component";
 
 @NgModule({
   imports: [
@@ -32,7 +34,9 @@ import { HttpClient } from "@angular/common/http";
     ProjectListComponent,
     TaskListComponent,
     ProjectItemComponent,
-    ConnectionListComponent
+    ConnectionListComponent,
+    SelectProjectComponent,
+    SelectTaskListComponent
   ],
   entryComponents: [VerifyModalComponent],
   providers: [HistoryService, ConnectionFacade, ConnectionService]

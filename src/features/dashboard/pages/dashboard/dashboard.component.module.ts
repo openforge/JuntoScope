@@ -7,6 +7,9 @@ import { SessionHistoryListComponent } from "../../components/session-history-li
 import { SessionHistoryItemComponent } from "../../components/session-history-item/session-history-item.component";
 import { SessionDetailModalComponent } from "../../components/session-detail-modal/session-detail-modal.component";
 import { ConnectionsModule } from "../../../connections/connections.module";
+import { SelectProjectComponent } from "../../../connections/pages/select-project/select-project.component";
+import { SelectTaskListComponent } from "../../../connections/pages/select-task-list/select-task-list.component";
+import { ProjectListComponent } from "../../../connections/components/project-list/project-list.component";
 
 @NgModule({
   declarations: [
@@ -15,6 +18,7 @@ import { ConnectionsModule } from "../../../connections/connections.module";
     SessionHistoryListComponent,
     SessionHistoryItemComponent,
     SessionDetailModalComponent
+    // SelectTaskListComponent,
   ],
   imports: [IonicPageModule.forChild(DashboardComponent), ConnectionsModule],
   exports: [DashboardComponent]

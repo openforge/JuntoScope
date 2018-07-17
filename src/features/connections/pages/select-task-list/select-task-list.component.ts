@@ -9,26 +9,23 @@ import { RouterFacade } from "../../../../store/router.facade";
 import { ConnectionFacade } from "../../store/connection.facade";
 import { TaskList } from "../../../../models/task-list";
 import { Connection } from "../../../../models/connection";
+import { NavParams } from "ionic-angular";
 
 @Component({
   selector: "app-select-task-list",
   templateUrl: "./select-task-list.component.html"
 })
-export class SelectTaskListComponent {
-  taskLists$ = this.routerFacade.params$.pipe(
-    tap(params =>
-      this.connectionFacade.selectProject(params.connectionId, params.projectId)
+export class SelectTaskListComponent implements OnInit {
+  connectionId: string;
+  projectId: string;
+
+  taskLists$ = this.connectionFacade.selectedConnection$.pipe(
+    filter(connection =>
+      _.has(connection, `projects.${this.projectId}.taskLists`)
     ),
-    switchMap(params =>
-      this.connectionFacade.selectedConnection$.pipe(
-        filter(connection =>
-          _.has(connection, `projects.${params.projectId}.taskLists`)
-        ),
-        map((connection: Connection) =>
-          Object.keys(connection.projects[params.projectId].taskLists).map(
-            keys => connection.projects[params.projectId].taskLists[keys]
-          )
-        )
+    map((connection: Connection) =>
+      Object.keys(connection.projects[this.projectId].taskLists).map(
+        keys => connection.projects[this.projectId].taskLists[keys]
       )
     )
   );
@@ -41,20 +38,26 @@ export class SelectTaskListComponent {
 
   constructor(
     private routerFacade: RouterFacade,
-    private connectionFacade: ConnectionFacade
+    private connectionFacade: ConnectionFacade,
+    private navParams: NavParams
   ) {}
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.connectionId = this.navParams.get("connectionId");
+    this.projectId = this.navParams.get("projectId");
+  }
 
   handleToggle(checked: boolean, taskList: TaskList) {
     this.selectedLists[taskList.id] = checked;
   }
 
   startSession() {
-    this.routerFacade.params$.pipe(take(1)).subscribe(params => {
-      this.connectionFacade.createSession(
-        params.connectionId,
-        params.projectId,
-        this.taskListIds
-      );
-    });
+    this.connectionFacade.createSession(
+      this.connectionId,
+      this.projectId,
+      this.taskListIds
+    );
   }
 }

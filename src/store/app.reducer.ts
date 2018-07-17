@@ -7,28 +7,35 @@ import {
 import { storeFreeze } from "ngrx-store-freeze";
 
 import { environment } from "../environment";
-import {
-  RouterState,
-  routerReducer,
-  initialRouterState,
-  RouterQuery
-} from "./router.reducer";
+// import {
+//   RouterState,
+//   routerReducer,
+//   initialRouterState,
+//   RouterQuery
+// } from "./router.reducer";
 import { NavigationOptions } from "./router.actions";
 import {
   AuthState,
   AuthQuery,
-  AuthUiState
+  AuthUiState,
+  authReducer
 } from "../features/authentication/store/auth.reducer";
 import {
   ConnectionState,
   ConnectionQuery,
-  ConnectionUiState
+  ConnectionUiState,
+  connectionReducer,
+  initialConnectionState
 } from "../features/connections/store/connection.reducer";
 // import { ScopingState, ScopingQuery } from '@app/scoping/state/scoping.reducer';
-import { DashboardState } from "../features/dashboard/store/dashboard.reducer";
+import {
+  DashboardState,
+  dashboardReducer,
+  initialDashboardState
+} from "../features/dashboard/store/dashboard.reducer";
 
 interface FullAppState {
-  router: RouterState;
+  // router: RouterState;
   auth: AuthState;
   connection: ConnectionState;
   // scoping: ScopingState;
@@ -38,7 +45,10 @@ interface FullAppState {
 export type AppState = Partial<FullAppState>;
 
 export const reducers: ActionReducerMap<AppState> = {
-  router: routerReducer
+  // router: routerReducer
+  // auth: authReducer,
+  connection: connectionReducer,
+  dashboard: dashboardReducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = environment.production
@@ -46,7 +56,9 @@ export const metaReducers: MetaReducer<AppState>[] = environment.production
   : [storeFreeze];
 
 export const initialState: AppState = {
-  router: initialRouterState
+  // router: initialRouterState
+  connection: initialConnectionState,
+  dashboard: initialDashboardState
 };
 
 export namespace AppQuery {
@@ -57,8 +69,7 @@ export namespace AppQuery {
 
   export const selectAuthRedirect = createSelector(
     AuthQuery.selectUiState,
-    RouterQuery.getQueryParams,
-    (authUiState, routeQueryParams): NavigationOptions => {
+    (authUiState): NavigationOptions => {
       if (authUiState === AuthUiState.NOT_AUTHENTICATED) {
         return { path: ["LoginPage"] };
       }

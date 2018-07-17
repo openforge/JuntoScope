@@ -1,7 +1,7 @@
 {
   "name": "juntoscope",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular"
 }
