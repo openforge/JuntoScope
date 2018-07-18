@@ -16,6 +16,8 @@ import { DashboardPageModule } from "./pages/dashboard/dashboard.component.modul
 import { SelectProjectComponent } from "../connections/pages/select-project/select-project.component";
 import { SelectTaskListComponent } from "../connections/pages/select-task-list/select-task-list.component";
 import { ProjectListComponent } from "../connections/components/project-list/project-list.component";
+import { AddConnectionComponent } from "../connections/pages/add-connection/add-connection.component";
+import { ShareScopeLinkComponent } from "../connections/pages/share-scope-link/share-scope-link.component";
 
 @NgModule({
   imports: [
@@ -31,7 +33,8 @@ import { ProjectListComponent } from "../connections/components/project-list/pro
   entryComponents: [
     DashboardComponent,
     SelectProjectComponent,
-    SelectTaskListComponent
+    SelectTaskListComponent,
+    ShareScopeLinkComponent
   ]
 })
 export class DashboardModule {

@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from "@angular/core";
 
 import { NavParams } from "ionic-angular";
 
-import { RouterFacade } from "../../../../store/router.facade";
-
 import { PopupService } from "../../../../shared/popup.service";
 
 @Component({
@@ -16,11 +14,7 @@ export class ShareScopeLinkComponent implements OnInit {
   sessionUrl;
   accessCode;
 
-  constructor(
-    private params: NavParams,
-    private routerFacade: RouterFacade,
-    private popupSvc: PopupService
-  ) {}
+  constructor(private params: NavParams, private popupSvc: PopupService) {}
 
   ngOnInit() {
     this.connectionName = this.params.data.connectionName;
@@ -32,13 +26,13 @@ export class ShareScopeLinkComponent implements OnInit {
   startScoping() {
     console.log("Going scoping");
     this.popupSvc.closeModal();
-    this.routerFacade.navigate({ path: [`/scoping/${this.sessionUrl}`] });
+    // this.routerFacade.navigate({ path: [`/scoping/${this.sessionUrl}`] });
   }
 
   goDashboard() {
     this.popupSvc.closeModal();
-    this.routerFacade.navigate({
-      path: ["/dashboard"]
-    });
+    // this.routerFacade.navigate({
+    //   path: ["/dashboard"]
+    // });
   }
 }

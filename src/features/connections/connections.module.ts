@@ -19,6 +19,7 @@ import { HistoryService } from "../dashboard/services/history.service";
 import { HttpClient } from "@angular/common/http";
 import { SelectProjectComponent } from "./pages/select-project/select-project.component";
 import { SelectTaskListComponent } from "./pages/select-task-list/select-task-list.component";
+import { ShareScopeLinkComponent } from "./pages/share-scope-link/share-scope-link.component";
 
 @NgModule({
   imports: [
@@ -27,7 +28,7 @@ import { SelectTaskListComponent } from "./pages/select-task-list/select-task-li
     StoreModule.forFeature("connection", connectionReducer),
     EffectsModule.forFeature([ConnectionFacade])
   ],
-  exports: [ConnectionListComponent],
+  exports: [ConnectionListComponent, ShareScopeLinkComponent],
   declarations: [
     InstructionsComponent,
     VerifyModalComponent,
@@ -36,9 +37,10 @@ import { SelectTaskListComponent } from "./pages/select-task-list/select-task-li
     ProjectItemComponent,
     ConnectionListComponent,
     SelectProjectComponent,
-    SelectTaskListComponent
+    SelectTaskListComponent,
+    ShareScopeLinkComponent
   ],
-  entryComponents: [VerifyModalComponent],
+  entryComponents: [VerifyModalComponent, ShareScopeLinkComponent],
   providers: [HistoryService, ConnectionFacade, ConnectionService]
 })
 export class ConnectionsModule {}
