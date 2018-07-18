@@ -1,21 +1,22 @@
-
-<ion-navbar>
+<ion-header>
+  <ion-navbar>
     <ion-title>Share Scope Link</ion-title>
     <ion-buttons slot="end">
       <button ion-button (click)="goDashboard()">
         Dashboard
       </button>
     </ion-buttons>
-</ion-navbar>
+  </ion-navbar>
+</ion-header>
   
-  <ion-content>
-    <h2>{{connectionName}}</h2>
-    <h2>{{projectName}}</h2>
+<ion-content>
+  <h2>{{connectionName}}</h2>
+  <h2>{{projectName}}</h2>
 
-    <p>SessionUrl: https://juntoscope.com/{{sessionUrl}}</p>
-    <p>AccessCode: {{accessCode}}</p>
+  <p>SessionUrl: https://juntoscope.com/{{sessionUrl}}</p>
+  <p>AccessCode: {{accessCode}}</p>
 
-    <button ion-button (click)="startScoping()">
-      Start Scoping
-    </button>
-  </ion-content>
+  <button ion-button (click)="startScoping()">
+    Start Scoping
+  </button>
+</ion-content>
