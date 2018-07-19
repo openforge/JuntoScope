@@ -18,6 +18,8 @@ import { SelectTaskListComponent } from "../connections/pages/select-task-list/s
 import { ProjectListComponent } from "../connections/components/project-list/project-list.component";
 import { AddConnectionComponent } from "../connections/pages/add-connection/add-connection.component";
 import { ShareScopeLinkComponent } from "../connections/pages/share-scope-link/share-scope-link.component";
+import { SessionScopingComponent } from "../scoping/pages/session-scoping/session-scoping.component";
+import { ScopingModule } from "../scoping/scoping.module";
 
 @NgModule({
   imports: [
@@ -25,8 +27,8 @@ import { ShareScopeLinkComponent } from "../connections/pages/share-scope-link/s
     IonicModule,
     StoreModule.forFeature("dashboard", dashboardReducer),
     EffectsModule.forFeature([DashboardEffects]),
+    // ScopingModule,
     DashboardPageModule,
-    SharedModule,
     ConnectionsModule
   ],
   declarations: [],
@@ -35,6 +37,7 @@ import { ShareScopeLinkComponent } from "../connections/pages/share-scope-link/s
     SelectProjectComponent,
     SelectTaskListComponent,
     ShareScopeLinkComponent
+    // SessionScopingComponent,
   ]
 })
 export class DashboardModule {
