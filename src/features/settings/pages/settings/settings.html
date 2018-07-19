@@ -1,25 +1,24 @@
-<ion-navbar>
+<ion-header>
   <ion-navbar>
-    <button ion-button></button>
     <ion-title>Settings</ion-title>
   </ion-navbar>
-</ion-navbar>
+</ion-header>
 
 <ion-content>
-  <!-- <ion-button type="button" (click)="logout()">
+  <button ion-button (click)="logout()">
     Logout
-  </ion-button>
+  </button>
 
   <p>Connections</p>
 
   <ion-list>
-      <ion-item *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
-        {{connection.externalData.company}} {{connection.type}}
-      </ion-item>
-      <ion-item (click)="addConnection()">
-        Add Connection
-      </ion-item>
-  </ion-list> -->
+    <ion-item *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
+      {{connection.externalData.company}} {{connection.type}}
+    </ion-item>
+    <ion-item (click)="addConnection()">
+      Add Connection
+    </ion-item>
+  </ion-list>
 
   <p>FAQ</p>
 

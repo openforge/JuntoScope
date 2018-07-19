@@ -20,6 +20,8 @@ import {
 import { PopupService } from "../../../../shared/popup.service";
 import { SessionDetailModalComponent } from "../../components/session-detail-modal/session-detail-modal.component";
 import { SelectProjectComponent } from "../../../connections/pages/select-project/select-project.component";
+import { SettingsPage } from "../../../settings/pages/settings/settings";
+import { AddConnectionComponent } from "../../../connections/pages/add-connection/add-connection.component";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -97,11 +99,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   goSettings() {
-    this.routerFacade.navigate({ path: ["/settings"] });
+    // this.routerFacade.navigate({ path: ["/settings"] });
+    this.navCtrl.push(SettingsPage);
   }
 
   addConnection() {
-    this.routerFacade.navigate({ path: ["/connections/add"] });
+    // this.routerFacade.navigate({ path: ["/connections/add"] });
+    this.navCtrl.push(AddConnectionComponent);
   }
 
   resumeSession(sessionId) {

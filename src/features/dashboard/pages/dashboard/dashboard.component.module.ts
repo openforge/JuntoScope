@@ -10,6 +10,8 @@ import { ConnectionsModule } from "../../../connections/connections.module";
 import { SelectProjectComponent } from "../../../connections/pages/select-project/select-project.component";
 import { SelectTaskListComponent } from "../../../connections/pages/select-task-list/select-task-list.component";
 import { ProjectListComponent } from "../../../connections/components/project-list/project-list.component";
+import { AddConnectionComponent } from "../../../connections/pages/add-connection/add-connection.component";
+import { ShareScopeLinkComponent } from "../../../connections/pages/share-scope-link/share-scope-link.component";
 
 @NgModule({
   declarations: [
@@ -17,10 +19,12 @@ import { ProjectListComponent } from "../../../connections/components/project-li
     JoinSessionComponent,
     SessionHistoryListComponent,
     SessionHistoryItemComponent,
-    SessionDetailModalComponent
+    SessionDetailModalComponent,
+    AddConnectionComponent
     // SelectTaskListComponent,
   ],
   imports: [IonicPageModule.forChild(DashboardComponent), ConnectionsModule],
-  exports: [DashboardComponent]
+  exports: [DashboardComponent],
+  entryComponents: [ShareScopeLinkComponent]
 })
 export class DashboardPageModule {}

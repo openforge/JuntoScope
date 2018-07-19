@@ -11,9 +11,8 @@ export class PopupService {
   constructor(
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private popoverCtrl: PopoverController
-  ) // private viewController: ViewController
-  {}
+    private popoverCtrl: PopoverController // private viewController: ViewController
+  ) {}
 
   /**
    * Shows up a simple alert with one button
@@ -98,7 +97,10 @@ export class PopupService {
    * @param modalOptions The options object to create the modal
    */
   async openModal(modalOptions) {
-    const modal = await this.modalCtrl.create(modalOptions);
+    const modal = await this.modalCtrl.create(
+      modalOptions.component,
+      modalOptions.componentProps
+    );
     await modal.present();
   }
 

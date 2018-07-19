@@ -38,6 +38,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { AuthGuard } from "./auth.guard";
 import { PopupService } from "../shared/popup.service";
 import { AppRoutingModule } from "./app-routing.module";
+// import { ScopingModule } from "../features/scoping/scoping.module";
+import { ConnectionsModule } from "../features/connections/connections.module";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
@@ -53,6 +55,8 @@ import { AppRoutingModule } from "./app-routing.module";
     AngularFireAuthModule,
     AngularFirestoreModule,
     AuthenticationModule,
+    // ScopingModule,
+    ConnectionsModule,
     DashboardModule,
     SharedModule.forRoot()
   ],

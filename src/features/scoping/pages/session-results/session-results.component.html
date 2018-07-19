@@ -1,0 +1,19 @@
+<ng-container *ngIf="session && session.tasks">
+
+        <ion-content>
+      
+          <h1>{{ session.projectName }}</h1>
+      
+          {{ session.numScopedTasks }} Tasks scoped
+      
+          <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
+      
+          <ul>
+            <li *ngFor="let task of (session.tasks | objValues)">
+              {{ task.name }}
+            </li>
+        </ul>
+    
+    </ion-content>
+    
+</ng-container>
