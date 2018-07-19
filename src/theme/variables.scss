@@ -73,6 +73,7 @@ $searchbar-ios-input-placeholder-color: color($grayscale, fourth);
 // Item detail-push
 $item-ios-detail-push-color: $primary-orange;
 
+
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
@@ -87,6 +88,9 @@ $searchbar-md-input-text-color: color($grayscale, first);
 // Item detail-push
 $item-md-detail-push-show: true;
 $item-md-detail-push-color: $primary-orange;
+
+// Checkbox
+$checkbox-md-icon-border-color-off: $primary-orange;
 
 
 // App Windows Variables

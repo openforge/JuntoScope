@@ -1,0 +1,45 @@
+app-login {
+	ion-header.header {
+		display: none;
+	}
+
+	.content {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		justify-content: center;
+		width: 100%;
+
+		p {
+			width: 70%;
+			font-weight: 600;
+		}
+
+		ion-list.list {
+			margin-top: 2rem;
+
+			button {
+				width: 60%;
+				margin: .75rem;
+
+				&:disabled {
+					background-color: white;
+					border: 2px solid $primary-orange;
+					color: $primary-orange;
+				}
+			}
+		}
+
+		ion-item.item.item-block .item-inner {
+			border: none;
+		}
+
+		.--terms {
+			flex-direction: row;
+			a {
+				font-weight: 600;
+			}
+		}
+	}
+}
