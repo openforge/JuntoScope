@@ -66,7 +66,7 @@ $text-color: $primary-orange;
 
 // Searchbar
 $searchbar-ios-toolbar-input-background: white;
-$searchbar-ios-input-clear-icon-color: color($grayscale, third);
+$searchbar-ios-input-clear-icon-color: $primary-orange;
 $searchbar-ios-input-search-icon-color: color($grayscale, fourth);
 $searchbar-ios-input-placeholder-color: color($grayscale, fourth);
 
@@ -79,10 +79,10 @@ $item-ios-detail-push-color: $primary-orange;
 // Material Design only Sass variables can go here
 
 // Searchbar
-$searchbar-md-background-color: color($grayscale, fifth);
+$searchbar-md-background-color: white;
 $searchbar-md-input-box-shadow: none;
+$searchbar-md-input-clear-icon-color: $primary-orange;
 $searchbar-md-input-placeholder-color: color($grayscale, fourth);
-$searchbar-md-input-search-icon-color: color($grayscale, fourth);
 $searchbar-md-input-text-color: color($grayscale, first);
 
 // Item detail-push
@@ -98,8 +98,9 @@ $checkbox-md-icon-border-color-off: $primary-orange;
 // Windows only Sass variables can go here
 
 // Searchbar
-$searchbar-wp-background-color: color($grayscale, background);
-$searchbar-wp-border-color: color($grayscale, background);
+$searchbar-wp-background-color: white;
+$searchbar-wp-border-color: $primary-orange;
+$searchbar-wp-input-clear-icon-color: $primary-orange;
 $searchbar-wp-input-placeholder-color: color($grayscale, fourth);
 $searchbar-wp-input-text-color: color($grayscale, first);
 

@@ -1,23 +1,7 @@
-<ion-list>
-    <ion-list-header>
-      Join Session
-    </ion-list-header>
-  
-    <ion-item>
-      <ion-label>
-        Enter Session URL:
-      </ion-label>
-    </ion-item>
-  
-    <ion-item>
-      <div slot="start">
-        https://juntoscope.com/
-      </div>
-  
-      <ion-input #codeInput placeholder></ion-input>
-  
-      <button ion-button slot="end" (click)="onJoin(codeInput.value)">
-        Go
-      </button>
-    </ion-item>
-</ion-list>
+
+<div class="container">
+  <ion-item no-lines>
+    <ion-searchbar #codeInput placeholder="Enter Session URL"></ion-searchbar>
+    <button ion-button strong item-right (click)="onJoin(codeInput.value)">Join</button>
+  </ion-item>
+</div>

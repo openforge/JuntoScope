@@ -104,11 +104,11 @@ ion-icon {
   
     // Buttons
     .bar-button-default-ios, 
-      .bar-button-default
-      .bar-button-ios-default, 
-      .bar-button-clear-ios-default {
-              color: white;
-      }
+    .bar-button-default
+    .bar-button-ios-default, 
+    .bar-button-clear-ios-default {
+      color: white;
+    }
   }
   
   // md + wp Header
@@ -150,24 +150,19 @@ ion-icon {
   // ios Searchbar
   // --------------------------------------------------
   
-  .searchbar-ios {
-      background-color: white;
-      border: 0.55px solid $primary-orange;
-      border-radius: 10px;
-  
-      .button-ios {
-      width: 100%;
-      font-weight: 800;
-      }
+  .searchbar {
+    background-color: white;
+    border: 0.55px solid $primary-orange;
+    border-radius: 10px;
   }
   
   // md Searchbar
   // --------------------------------------------------
   
   .toolbar .searchbar-md {
-      background-color: white;
-      border: 0.55px solid $primary-orange;
-      border-radius: 10px;
+    background-color: white;
+    border: 0.55px solid $primary-orange;
+    border-radius: 10px;
   }
   
   // 4. End Searchbar
@@ -179,10 +174,12 @@ ion-icon {
   // --------------------------------------------------
   // All styles related to the list header
   
-  ion-list-header {
-    height: 0px;
-    min-height: 0px;
-  }
+
+  /// this is for an extra style of a compoent
+  // ion-list-header {
+  //   height: 0px;
+  //   min-height: 0px;
+  // }
   
   // 5. End List Header
   // **************************************************
