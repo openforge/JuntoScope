@@ -1,0 +1,33 @@
+app-connection-list {
+  ion-list.list {
+		background-color: $primary-orange;
+		border-bottom: 1px solid white !important;
+		width: 100%;
+
+		// header
+		ion-list-header.list-header {
+			background-color: $primary-orange;
+			padding: 3rem 0;
+			.icon, h2 {
+				color: white;
+				display: inline-block;
+				text-transform: none;
+				vertical-align: middle;
+			}
+		}
+
+		// existing projects
+		ion-item.item-block {
+			background-color: $primary-orange;
+			border-bottom: 1px solid $primary-orange;
+			color: white;
+
+			// new connection
+			&:last-child {
+				background-color: white;
+				border: 2px solid $primary-orange;
+				color: $primary-orange;
+			}
+		}
+	}
+}
