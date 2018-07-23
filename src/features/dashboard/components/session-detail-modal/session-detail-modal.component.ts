@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output } from "@angular/core";
-import { NavParams, ModalController } from "ionic-angular";
+import { NavParams, ModalController, ViewController } from "ionic-angular";
 import { PopupService } from "../../../../shared/popup.service";
 import { InfoModalComponent } from "../../../../shared/components/info-modal/info-modal";
 import { Store } from "@ngrx/store";
@@ -24,6 +24,7 @@ export class SessionDetailModalComponent implements OnInit {
   constructor(
     private popupSvc: PopupService,
     private modalCtrl: ModalController,
+    private viewCtrl: ViewController,
     private params: NavParams,
     private store: Store<AppState>
   ) {}
@@ -37,18 +38,18 @@ export class SessionDetailModalComponent implements OnInit {
   }
 
   closeModal() {
-    this.popupSvc.closeModal();
+    this.viewCtrl.dismiss();
   }
 
   refreshCode() {
-    this.popupSvc.closeModal();
+    this.viewCtrl.dismiss();
     this.store.dispatch(
       new RefreshAccessCodeAction(this.accountData.item.sessionCode)
     );
   }
 
   deleteSession() {
-    this.popupSvc.closeModal();
+    this.viewCtrl.dismiss();
     this.popupSvc.openModal({
       component: InfoModalComponent,
       componentProps: {

@@ -11,8 +11,9 @@ export class PopupService {
   constructor(
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private popoverCtrl: PopoverController // private viewController: ViewController
-  ) {}
+    private popoverCtrl: PopoverController
+  ) // private viewController: ViewController
+  {}
 
   /**
    * Shows up a simple alert with one button
