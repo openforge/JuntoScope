@@ -21,6 +21,10 @@ export class InfoModalComponent implements OnInit {
     this.callback = this.params.data.callback;
   }
 
+  closeModal() {
+    this.viewCtrl.dismiss();
+  }
+
   dismiss() {
     this.viewCtrl.dismiss();
     this.callback();

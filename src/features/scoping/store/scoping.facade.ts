@@ -131,23 +131,36 @@ export class ScopingFacade {
     })
   );
 
+  // @Effect()
+  // setEstimate$ = this.actions$.pipe(
+  //   ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE),
+  //   switchMap(action =>
+  //     this.scopingSvc
+  //       .setEstimate(action.payload)
+  //       .then(() => {
+  //         console.log("Estimate saved successfully");
+  //         return new SetEstimateSuccessAction(action.payload);
+  //       })
+  //       .catch(({ message }) => {
+  //         console.log("ERROR saving estimate");
+  //         return new SetEstimateErrorAction({ message });
+  //       })
+  //   ),
+  //   catchError(error =>
+  //     of(new SetEstimateErrorAction({ message: error.message }))
+  //   )
+  // );
+
   @Effect()
   setEstimate$ = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE),
+    ofType<SetEstimateAction>(ScopingActionTypes.SET_ESTIMATE),
     switchMap(action =>
-      this.scopingSvc
-        .setEstimate(action.payload)
-        .then(() => {
-          console.log("Estimate saved successfully");
-          return new SetEstimateSuccessAction(action.payload);
+      this.scopingSvc.setEstimate(action.payload).pipe(
+        map(data => new SetEstimateSuccessAction(action.payload)),
+        catchError(error => {
+          return of(new SetEstimateErrorAction({ message: error.message }));
         })
-        .catch(({ message }) => {
-          console.log("ERROR saving estimate");
-          return new SetEstimateErrorAction({ message });
-        })
-    ),
-    catchError(error =>
-      of(new SetEstimateErrorAction({ message: error.message }))
+      )
     )
   );
 
