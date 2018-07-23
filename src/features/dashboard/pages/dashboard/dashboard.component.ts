@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   handleJoin(sessionCode: string) {
-    this.routerFacade.navigate({ path: [`/scoping/${sessionCode}`] });
+    this.navCtrl.push(SessionScopingComponent, { sessionUrl: sessionCode });
   }
 
   createSession(connection: Connection) {
