@@ -22,6 +22,7 @@ import { SessionDetailModalComponent } from "../../components/session-detail-mod
 import { SelectProjectComponent } from "../../../connections/pages/select-project/select-project.component";
 import { SettingsPage } from "../../../settings/pages/settings/settings";
 import { AddConnectionComponent } from "../../../connections/pages/add-connection/add-connection.component";
+import { SessionScopingComponent } from "../../../scoping/pages/session-scoping/session-scoping.component";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -72,8 +73,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   handleDetailClick(event: HistoryItemDetailEvent) {
     console.log("details for session status", event);
-    this.routerFacade.navigate({
-      path: [`/scoping/${event.item.sessionCode}`]
+    // this.routerFacade.navigate({
+    //   path: [`/scoping/${event.item.sessionCode}`]
+    // });
+    this.navCtrl.push(SessionScopingComponent, {
+      sessionUrl: event.item.sessionCode
     });
   }
 
