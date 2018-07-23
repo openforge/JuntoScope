@@ -3,11 +3,9 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ScopingFacade } from "../../store/scoping.facade";
 
 import { SessionValidation } from "../../../../models/scoping-session";
-
 @Component({
   selector: "app-session-access",
-  templateUrl: "./session-access.component.html",
-  styleUrls: ["./session-access.component.scss"]
+  templateUrl: "./session-access.component.html"
 })
 export class SessionAccessComponent implements OnInit {
   accessForm: FormGroup;

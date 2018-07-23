@@ -102,6 +102,7 @@ export class PopupService {
       modalOptions.componentProps
     );
     await modal.present();
+    return modal;
   }
 
   /**

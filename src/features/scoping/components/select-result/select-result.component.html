@@ -1,10 +1,10 @@
 <div [class.selected]="selectedResult === SELECTED_RESULT.AVG_RESULT">
   Average:
-  <ion-button (click)="selectAvg($event)">{{avg}}</ion-button>
+  <button ion-button (click)="selectAvg($event)">{{avg}}</button>
 </div>
 <div [class.selected]="selectedResult === SELECTED_RESULT.MAX_RESULT">
   Max:
-  <ion-button (click)="selectMax($event)">{{max}}</ion-button>
+  <button ion-button (click)="selectMax($event)">{{max}}</button>
 </div>
 <div [class.selected]="selectedResult === SELECTED_RESULT.CUSTOM_RESULT">
   <form [formGroup]="selectionForm" (submit)="selectCustom()">

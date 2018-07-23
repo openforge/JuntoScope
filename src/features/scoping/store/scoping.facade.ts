@@ -40,7 +40,7 @@ import { HistoryService } from "../../dashboard/services/history.service";
 import { ScopingQuery } from "../store/scoping.reducer";
 
 import { SessionValidation } from "../../../models/scoping-session";
-import { NavController } from "ionic-angular";
+
 // import { SessionResultsComponent } from '../pages/session-results/session-results.component';
 
 @Injectable()
@@ -220,8 +220,7 @@ export class ScopingFacade {
     private actions$: Actions,
     private scopingSvc: ScopingService,
     private historySvc: HistoryService,
-    private popupService: PopupService,
-    private navCtrl: NavController
+    private popupService: PopupService
   ) {}
 
   /**

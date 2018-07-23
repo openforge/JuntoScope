@@ -1,4 +1,5 @@
-<ion-navbar>
+<ion-header>
+  <ion-navbar>
     <ion-buttons slot="start">
       <button ion-button (click)="closeModal()">
         Close
@@ -6,10 +7,12 @@
     </ion-buttons>
     <ion-title>Session Detail</ion-title>
   </ion-navbar>
-  
-  <ion-content>
-    <p>URL: {{ 'https://juntoscope.com/' + accountData.item.sessionCode }}</p>
-    <p>Code: {{ accountData.item.accessCode }} expires {{ expirationDate }}</p>
-    <button ion-button *ngIf="isModerator" (click)="refreshCode()">New Code</button>
-    <button ion-button *ngIf="isModerator" (click)="deleteSession()">Delete Session</button>
+</ion-header>
+
+
+<ion-content>
+  <p>URL: {{ 'https://juntoscope.com/' + accountData.item.sessionCode }}</p>
+  <p>Code: {{ accountData.item.accessCode }} expires {{ expirationDate }}</p>
+  <button ion-button *ngIf="isModerator" (click)="refreshCode()">New Code</button>
+  <button ion-button *ngIf="isModerator" (click)="deleteSession()">Delete Session</button>
 </ion-content>

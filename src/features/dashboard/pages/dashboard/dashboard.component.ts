@@ -34,6 +34,7 @@ import { AddConnectionComponent } from "../../../connections/pages/add-connectio
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   private infiniteScroll: InfiniteScroll;
+  private modal;
 
   uid$ = this.appFacade.uid$;
   historyItems$ = this.dashboardFacade.historyItems$.pipe(
@@ -63,7 +64,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   handleOptionClick(event: HistoryItemOptionEvent) {
-    this.popupSvc.openModal({
+    this.modal = this.popupSvc.openModal({
       component: SessionDetailModalComponent,
       componentProps: { accountData: event }
     });

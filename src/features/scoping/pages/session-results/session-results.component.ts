@@ -9,8 +9,7 @@ import { NavParams } from "ionic-angular";
 
 @Component({
   selector: "app-session-results",
-  templateUrl: "./session-results.component.html",
-  styleUrls: ["./session-results.component.scss"]
+  templateUrl: "./session-results.component.html"
 })
 export class SessionResultsComponent implements OnInit {
   // session: ScopingSession;

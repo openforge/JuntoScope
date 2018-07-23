@@ -7,8 +7,7 @@ import {
 
 @Component({
   selector: "app-vote",
-  templateUrl: "./vote.component.html",
-  styleUrls: ["./vote.component.scss"]
+  templateUrl: "./vote.component.html"
 })
 export class VoteComponent implements OnInit {
   @Output() vote = new EventEmitter<any>();

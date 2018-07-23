@@ -20,13 +20,16 @@ import { HttpClient } from "@angular/common/http";
 import { SelectProjectComponent } from "./pages/select-project/select-project.component";
 import { SelectTaskListComponent } from "./pages/select-task-list/select-task-list.component";
 import { ShareScopeLinkComponent } from "./pages/share-scope-link/share-scope-link.component";
+import { ScopingModule } from "../scoping/scoping.module";
+import { SessionScopingComponent } from "../scoping/pages/session-scoping/session-scoping.component";
 
 @NgModule({
   imports: [
     IonicModule,
     SharedModule,
     StoreModule.forFeature("connection", connectionReducer),
-    EffectsModule.forFeature([ConnectionFacade])
+    EffectsModule.forFeature([ConnectionFacade]),
+    ScopingModule
   ],
   exports: [ConnectionListComponent, ShareScopeLinkComponent],
   declarations: [
@@ -40,7 +43,11 @@ import { ShareScopeLinkComponent } from "./pages/share-scope-link/share-scope-li
     SelectTaskListComponent,
     ShareScopeLinkComponent
   ],
-  entryComponents: [VerifyModalComponent, ShareScopeLinkComponent],
+  entryComponents: [
+    VerifyModalComponent,
+    ShareScopeLinkComponent,
+    SessionScopingComponent
+  ],
   providers: [HistoryService, ConnectionFacade, ConnectionService]
 })
 export class ConnectionsModule {}

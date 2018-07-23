@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { NavParams } from "ionic-angular";
+import { Component, OnInit, Input, Output } from "@angular/core";
+import { NavParams, ModalController } from "ionic-angular";
 import { PopupService } from "../../../../shared/popup.service";
 import { InfoModalComponent } from "../../../../shared/components/info-modal/info-modal";
 import { Store } from "@ngrx/store";
@@ -10,6 +10,7 @@ import {
 } from "../../store/dashboard.actions";
 
 import * as moment from "moment";
+import { EventEmitter } from "events";
 
 @Component({
   selector: "app-session-detail-modal",
@@ -22,6 +23,7 @@ export class SessionDetailModalComponent implements OnInit {
 
   constructor(
     private popupSvc: PopupService,
+    private modalCtrl: ModalController,
     private params: NavParams,
     private store: Store<AppState>
   ) {}

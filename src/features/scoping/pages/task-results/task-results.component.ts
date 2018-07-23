@@ -9,8 +9,7 @@ import { ScopingFacade } from "../../store/scoping.facade";
 
 @Component({
   selector: "app-task-results",
-  templateUrl: "./task-results.component.html",
-  styleUrls: ["./task-results.component.scss"]
+  templateUrl: "./task-results.component.html"
 })
 export class TaskResultsComponent implements OnInit {
   session: ScopingSession;
