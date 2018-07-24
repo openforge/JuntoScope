@@ -2,17 +2,24 @@ app-connection-list {
   ion-list.list {
 		background-color: $primary-orange;
 		border-bottom: 1px solid white !important;
+		margin: 0;
 		width: 100%;
 
 		// header
 		ion-list-header.list-header {
 			background-color: $primary-orange;
-			padding: 3rem 0;
+			padding: 1rem 0;
 			.icon, h2 {
 				color: white;
 				display: inline-block;
 				text-transform: none;
 				vertical-align: middle;
+			}
+
+			ion-label.label {
+				border-bottom: 1px solid white;
+				padding: 2rem;
+				margin: 1rem;
 			}
 		}
 

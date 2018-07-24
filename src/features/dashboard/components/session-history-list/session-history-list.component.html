@@ -1,17 +1,21 @@
-<ion-list>
-    <ion-list-header>
-      <ion-label>
-        History
-      </ion-label>
+
+<div class="container" padding>
+  <ion-list>
+    <ion-list-header text-left no-lines>
+      <h2>HISTORY</h2>
+
+      <button ion-button clear item-end>
+        <ion-icon name="arrow-down"></ion-icon>
+      </button>
     </ion-list-header>
-  
-    <ion-item-group>
-      <ion-item-divider text-wrap>
-        <ion-label>
-          View completed session results or continue scoping
-        </ion-label>
-      </ion-item-divider>
-  
-      <app-session-history-item *ngFor="let item of items" [item]="item" [uid]="uid" [time]="item.participants[uid]" (options)="handleOptionClick($event, item)" (detail)="handleDetailClick($event, item)"></app-session-history-item>
-    </ion-item-group>
-</ion-list>
+
+    <app-session-history-item></app-session-history-item>
+
+  </ion-list>
+</div>
+
+
+
+
+
+

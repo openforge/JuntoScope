@@ -1,0 +1,16 @@
+app-session-history-item {
+	ion-card-header.card-header {
+		color: $primary-orange;
+	}
+
+	ion-card.card {
+		box-shadow: none;
+		border-bottom: 2px solid $primary-orange;
+		color: $primary-orange;
+
+		p {
+			color: $primary-orange;
+		}
+		
+	}
+}
