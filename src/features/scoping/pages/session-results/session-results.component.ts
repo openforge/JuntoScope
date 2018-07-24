@@ -6,13 +6,16 @@ import { AppState } from "../../../../store/app.reducer";
 // import { AuthQuery } from '@app/authentication/state/auth.reducer';
 import { ScopingFacade } from "../../store/scoping.facade";
 import { NavParams } from "ionic-angular";
+import { ScopingSession } from "../../../../models/scoping-session";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-session-results",
   templateUrl: "./session-results.component.html"
 })
 export class SessionResultsComponent implements OnInit {
-  // session: ScopingSession;
+  // session: Observable<ScopingSession>;
+  session: ScopingSession;
   sessionCode: string;
 
   constructor(
@@ -20,6 +23,9 @@ export class SessionResultsComponent implements OnInit {
     private scopingFacade: ScopingFacade,
     private navParams: NavParams
   ) {
+    // this.sessionCode = this.navParams.get('sessionUrl');
+    // this.scopingFacade.loadSession(this.sessionCode);
+    // this.session = this.scopingFacade.session$;
     // this.params$.pipe(take(1)).subscribe(params => {
     //   this.sessionCode = params.sessionCode;
     //   this.scopingFacade.loadSession(this.sessionCode);
@@ -50,6 +56,15 @@ export class SessionResultsComponent implements OnInit {
       },
     };
     */
+  }
+
+  ionViewCanEnter() {
+    // this.sessionCode = this.navParams.get('sessionUrl');
+    // console.log("Session code: ", this.sessionCode);
+    // this.scopingFacade.loadSession(this.sessionCode);
+    this.scopingFacade.session$.subscribe(session => {
+      this.session = session;
+    });
   }
 
   ngOnInit() {}

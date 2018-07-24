@@ -27,7 +27,6 @@ export class SessionScopingComponent implements OnInit {
   _ = _;
 
   sessionObservable$: Observable<ScopingSession>;
-
   error$ = this.scopingFacade.error$;
   uiState$ = this.scopingFacade.uiState$;
   session$ = this.scopingFacade.session$;

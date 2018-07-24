@@ -63,7 +63,7 @@ export class ScopingFacade {
 
   @Effect()
   getSession = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION),
+    ofType<LoadSessionAction>(ScopingActionTypes.LOAD_SESSION),
     switchMap(action =>
       this.scopingSvc.getSession(action.payload).pipe(
         // map(session => new LoadSessionSuccessAction(session)),
