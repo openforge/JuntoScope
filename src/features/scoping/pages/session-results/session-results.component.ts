@@ -23,6 +23,9 @@ export class SessionResultsComponent implements OnInit {
     private scopingFacade: ScopingFacade,
     private navParams: NavParams
   ) {
+    this.scopingFacade.session$.subscribe(session => {
+      this.session = session;
+    });
     // this.sessionCode = this.navParams.get('sessionUrl');
     // this.scopingFacade.loadSession(this.sessionCode);
     // this.session = this.scopingFacade.session$;
@@ -62,9 +65,9 @@ export class SessionResultsComponent implements OnInit {
     // this.sessionCode = this.navParams.get('sessionUrl');
     // console.log("Session code: ", this.sessionCode);
     // this.scopingFacade.loadSession(this.sessionCode);
-    this.scopingFacade.session$.subscribe(session => {
-      this.session = session;
-    });
+    // this.scopingFacade.session$.subscribe(session => {
+    //   this.session = session;
+    // });
   }
 
   ngOnInit() {}
