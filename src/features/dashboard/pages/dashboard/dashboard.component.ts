@@ -22,6 +22,8 @@ import { SessionDetailModalComponent } from "../../components/session-detail-mod
 import { SelectProjectComponent } from "../../../connections/pages/select-project/select-project.component";
 import { SettingsPage } from "../../../settings/pages/settings/settings.component";
 import { AddConnectionComponent } from "../../../connections/pages/add-connection/add-connection.component";
+import { SessionScopingComponent } from "../../../scoping/pages/session-scoping/session-scoping.component";
+import { DashboardUiState } from "../../store/dashboard.reducer";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -34,16 +36,16 @@ import { AddConnectionComponent } from "../../../connections/pages/add-connectio
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   private infiniteScroll: InfiniteScroll;
+  private modal;
 
   uid$ = this.appFacade.uid$;
-  historyItems$ = this.dashboardFacade.historyItems$.pipe(
-    tap(items => {
-      if (this.infiniteScroll) {
-        this.infiniteScroll.complete();
-        this.infiniteScroll = null;
-      }
-    })
-  );
+  historyItems$ = this.dashboardFacade.historyItems$;
+  uiState$ = this.dashboardFacade.uiState$.subscribe(uiState => {
+    if (uiState === DashboardUiState.LOADED && this.infiniteScroll) {
+      this.infiniteScroll.complete();
+      this.infiniteScroll = null;
+    }
+  });
   connections$ = this.connectionFacade.connections$;
 
   constructor(
@@ -63,7 +65,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   handleOptionClick(event: HistoryItemOptionEvent) {
-    this.popupSvc.openModal({
+    this.modal = this.popupSvc.openModal({
       component: SessionDetailModalComponent,
       componentProps: { accountData: event }
     });
@@ -71,8 +73,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   handleDetailClick(event: HistoryItemDetailEvent) {
     console.log("details for session status", event);
-    this.routerFacade.navigate({
-      path: [`/scoping/${event.item.sessionCode}`]
+    // this.routerFacade.navigate({
+    //   path: [`/scoping/${event.item.sessionCode}`]
+    // });
+    this.navCtrl.push(SessionScopingComponent, {
+      sessionUrl: event.item.sessionCode
     });
   }
 
@@ -81,13 +86,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dashboardFacade.getHistory();
   }
 
-  loadMore(infiniteScroll: InfiniteScroll) {
+  loadMore(infiniteScroll) {
+    console.log("happens once");
     this.infiniteScroll = infiniteScroll;
-    this.dashboardFacade.getMoreHistory();
+    setTimeout(() => {
+      this.dashboardFacade.getMoreHistory();
+    }, 1000);
   }
 
   handleJoin(sessionCode: string) {
-    this.routerFacade.navigate({ path: [`/scoping/${sessionCode}`] });
+    this.navCtrl.push(SessionScopingComponent, { sessionUrl: sessionCode });
   }
 
   createSession(connection: Connection) {

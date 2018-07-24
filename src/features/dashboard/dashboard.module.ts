@@ -20,6 +20,7 @@ import { AddConnectionComponent } from "../connections/pages/add-connection/add-
 import { ShareScopeLinkComponent } from "../connections/pages/share-scope-link/share-scope-link.component";
 import { SessionScopingComponent } from "../scoping/pages/session-scoping/session-scoping.component";
 import { ScopingModule } from "../scoping/scoping.module";
+import { SessionDetailModalComponent } from "./components/session-detail-modal/session-detail-modal.component";
 
 @NgModule({
   imports: [
@@ -36,7 +37,9 @@ import { ScopingModule } from "../scoping/scoping.module";
     DashboardComponent,
     SelectProjectComponent,
     SelectTaskListComponent,
-    ShareScopeLinkComponent
+    ShareScopeLinkComponent,
+    SessionDetailModalComponent,
+    AddConnectionComponent
     // SessionScopingComponent,
   ]
 })

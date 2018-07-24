@@ -81,7 +81,32 @@ export class ScopingService {
     });
   }
 
-  setEstimate(payload): Promise<any> {
+  // setEstimate(payload): Promise<any> {
+  //   const {
+  //     userId,
+  //     moderatorId,
+  //     connectionId,
+  //     sessionId,
+  //     taskId,
+  //     estimate
+  //   } = payload;
+  //   const taskRef = this.afs.firestore.doc(
+  //     "/users/" +
+  //       moderatorId +
+  //       "/connections/" +
+  //       connectionId +
+  //       "/sessions/" +
+  //       sessionId +
+  //       "/tasks/" +
+  //       taskId
+  //   );
+  //   // Only update estimate attribute.
+  //   return taskRef.update({
+  //     estimate: estimate
+  //   });
+  // }
+
+  setEstimate(payload) {
     const {
       userId,
       moderatorId,
@@ -90,20 +115,13 @@ export class ScopingService {
       taskId,
       estimate
     } = payload;
-    const taskRef = this.afs.firestore.doc(
-      "/users/" +
-        moderatorId +
-        "/connections/" +
-        connectionId +
-        "/sessions/" +
-        sessionId +
-        "/tasks/" +
-        taskId
+
+    return this.http.put(
+      `${
+        environment.apiBaseUrl
+      }/estimate/${moderatorId}/connections/${connectionId}/sessions/${sessionId}/tasks/${taskId}`,
+      { estimate: estimate }
     );
-    // Only update estimate attribute.
-    return taskRef.update({
-      estimate: estimate
-    });
   }
 
   validateSession(sessionValidation: SessionValidation) {

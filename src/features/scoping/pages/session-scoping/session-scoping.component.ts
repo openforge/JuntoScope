@@ -10,66 +10,104 @@ import { AuthQuery } from "../../../authentication/store/auth.reducer";
 import { User } from "../../../../models/user";
 import { ScopingFacade } from "../../store/scoping.facade";
 
-import { take } from "rxjs/operators";
+import { take, debounceTime } from "rxjs/operators";
 import { ParticipantState } from "../../store/scoping.reducer";
-import { NavParams } from "ionic-angular";
+import { NavParams, NavController } from "ionic-angular";
+import { Task } from "../../../../models/task";
+
+import * as _ from "lodash";
+import { TIMER_FOR_NEXT_TASK } from "../../../../app/app.constants";
+import { SessionResultsComponent } from "../session-results/session-results.component";
 
 @Component({
   selector: "app-session-scoping",
-  templateUrl: "./session-scoping.component.html",
-  styleUrls: ["./session-scoping.component.scss"]
+  templateUrl: "./session-scoping.component.html"
 })
 export class SessionScopingComponent implements OnInit {
-  ParticipantState = ParticipantState;
-  session: ScopingSession;
-  user$: Observable<User>;
+  _ = _;
 
-  participantState$ = this.scopingFacade.participantState$;
-  user: User;
-  sessionCode: string;
+  sessionObservable$: Observable<ScopingSession>;
+
   error$ = this.scopingFacade.error$;
   uiState$ = this.scopingFacade.uiState$;
   session$ = this.scopingFacade.session$;
+  // params$ = this.routerFacade.params$;
+  participantState$ = this.scopingFacade.participantState$;
+  user$: Observable<User>;
+  participantState: ParticipantState;
+  session: ScopingSession;
+  user: User;
+  task: Task;
+  taskId: string;
+  sessionCode: string;
+  sessionLink: string;
+  scopedCount: number;
+  finalEstimate: number;
+  navigateTimer: any;
+  ParticipantState = ParticipantState;
   hasVoted = false;
   hasResults = false;
   isModerator = true;
-  finalEstimate: number;
-  sessionLink: string;
-  participantState: ParticipantState;
+  timerToNextSet = false;
+  estimateSubmitted = false;
+  timerOn = false;
 
   constructor(
     private store: Store<AppState>,
     private scopingFacade: ScopingFacade,
-    private navParams: NavParams
-  ) {
+    private navParams: NavParams,
+    private navCtrl: NavController
+  ) {}
+
+  ngOnInit() {
     this.user$ = this.store.pipe(select(AuthQuery.selectUser));
     this.user$.subscribe(user => {
       this.user = user;
     });
 
-    // this.uiState$.subscribe(state => {
-    //   this.uiState = state;
-    // });
-    this.session$.subscribe(session => {
-      this.session = session;
-      if (this.session && this.user) {
-        const votes = this.session.tasks[this.session.currentTaskId].votes;
-        if (votes && votes[this.user.uid]) {
-          this.hasVoted = true;
+    this.sessionObservable$ = this.session$.pipe(debounceTime(500));
+
+    this.sessionObservable$.subscribe(session => {
+      if (session && this.user) {
+        this.session = session;
+        this.isModerator = session.ownerId === this.user.uid;
+        this.taskId = this.session.currentTaskId;
+        this.task = this.session.tasks[this.taskId];
+
+        // Check if all tasks are estimated
+        this.isComplete();
+        // Check if user submitted vote
+        this.didVote();
+
+        console.log(this.scopedCount);
+        console.log(this.session.numScopedTasks);
+
+        if (this.scopedCount === undefined) {
+          this.scopedCount = this.session.numScopedTasks;
+        } else if (this.scopedCount < this.session.numScopedTasks) {
+          this.scopedCount = this.session.numScopedTasks;
+          this.estimateSubmitted = true;
         } else {
-          this.hasVoted = false;
+          this.estimateSubmitted = false;
+        }
+
+        // if has voted and estimate submitted, go to next task
+        if (this.estimateSubmitted) {
+          console.log("setting timer...");
+          this.timerOn = true;
+          setTimeout(() => {
+            this.nextTask();
+          }, TIMER_FOR_NEXT_TASK);
         }
       }
     });
-  }
 
-  ngOnInit() {
     // this.params$.pipe(take(1)).subscribe(params => {
     //   this.sessionCode = params.sessionCode;
     //   this.scopingFacade.validateParticipant(this.user.uid, this.sessionCode);
     // });
 
-    this.sessionCode = this.navParams.get("sessionCode");
+    this.sessionCode = this.navParams.get("sessionUrl");
     this.scopingFacade.validateParticipant(this.user.uid, this.sessionCode);
 
     this.participantState$.subscribe(participantState => {
@@ -80,6 +118,19 @@ export class SessionScopingComponent implements OnInit {
     });
   }
 
+  isComplete() {
+    // Are all tasks estimated?
+    if (this.session.numTasks === this.session.numScopedTasks) {
+      // this.routerFacade.navigate({
+      //   path: [`/scoping/${this.sessionCode}/results`],
+      //   extras: { skipLocationChange: true },
+      // });
+      this.navCtrl.push(SessionResultsComponent, {
+        sessionCode: this.sessionCode
+      });
+    }
+  }
+
   vote(estimate) {
     estimate = parseInt(estimate, 10);
     if (this.user && this.session) {
@@ -88,7 +139,7 @@ export class SessionScopingComponent implements OnInit {
         this.session.ownerId,
         this.session.connectionId,
         this.session.sessionId,
-        this.session.currentTaskId,
+        this.taskId,
         estimate
       );
     }
@@ -104,8 +155,8 @@ export class SessionScopingComponent implements OnInit {
         this.user.uid,
         this.session.ownerId,
         this.session.connectionId,
-        this.session.id,
-        this.session.currentTaskId,
+        this.session.sessionId,
+        this.taskId,
         this.finalEstimate
       );
     }
@@ -113,5 +164,35 @@ export class SessionScopingComponent implements OnInit {
 
   access(sessionValidation: SessionValidation) {
     this.scopingFacade.validateSession(sessionValidation);
+  }
+
+  didVote() {
+    // const task = this.session.tasks[this.taskId];
+    let votes;
+    let voteValue;
+
+    if (!this.task.votes) {
+      console.log("there are no votes");
+    } else {
+      votes = this.task.votes;
+      voteValue = votes[this.user.uid];
+    }
+
+    if (votes && voteValue !== undefined) {
+      this.hasVoted = true;
+      return true;
+    } else {
+      this.hasVoted = false;
+      return false;
+    }
+  }
+
+  nextTask() {
+    console.log("Next task");
+
+    this.estimateSubmitted = false;
+
+    this.isComplete();
+    this.timerOn = false;
   }
 }

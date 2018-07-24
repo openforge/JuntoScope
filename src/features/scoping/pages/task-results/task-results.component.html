@@ -26,7 +26,7 @@
 
         <ion-footer *ngIf="isModerator">
             <ion-toolbar>
-                <ion-button [disabled]="!finalEstimate" (click)="saveFinalEstimate()">Submit</ion-button>
+                <button ion-button [disabled]="!finalEstimate" (click)="saveFinalEstimate()">Submit</button>
             </ion-toolbar>
         </ion-footer>
 
@@ -36,7 +36,7 @@
 
         <ion-footer *ngIf="!isModerator && session.tasks[session.currentTaskId].estimate">
             <ion-toolbar>
-                <ion-button>Next task</ion-button>
+                <button ion-button>Next task</button>
             </ion-toolbar>
         </ion-footer>
 

@@ -4,8 +4,7 @@ import * as _ from "lodash";
 
 @Component({
   selector: "app-counted-votes",
-  templateUrl: "./counted-votes.component.html",
-  styleUrls: ["./counted-votes.component.scss"]
+  templateUrl: "./counted-votes.component.html"
 })
 export class CountedVotesComponent implements OnInit {
   @Input() votes: Array<Votes>;

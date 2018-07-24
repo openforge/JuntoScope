@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 
-import { NavParams, NavController } from "ionic-angular";
+import { NavParams, NavController, ViewController } from "ionic-angular";
 
 import { PopupService } from "../../../../shared/popup.service";
 import { DashboardComponent } from "../../../dashboard/pages/dashboard/dashboard.component";
@@ -19,6 +19,7 @@ export class ShareScopeLinkComponent implements OnInit {
   constructor(
     private params: NavParams,
     private popupSvc: PopupService,
+    private viewCtrl: ViewController,
     private navCtrl: NavController
   ) {}
 
@@ -31,16 +32,12 @@ export class ShareScopeLinkComponent implements OnInit {
 
   startScoping() {
     console.log("Going scoping");
-    this.popupSvc.closeModal();
-    // this.routerFacade.navigate({ path: [`/scoping/${this.sessionUrl}`] });
+    this.viewCtrl.dismiss();
     this.navCtrl.push(SessionScopingComponent, { sessionUrl: this.sessionUrl });
   }
 
   goDashboard() {
-    this.popupSvc.closeModal();
-    // this.routerFacade.navigate({
-    //   path: ["/dashboard"]
-    // });
+    this.viewCtrl.dismiss();
     this.navCtrl.push(DashboardComponent);
   }
 }

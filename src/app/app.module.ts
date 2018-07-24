@@ -40,6 +40,8 @@ import { PopupService } from "../shared/popup.service";
 import { AppRoutingModule } from "./app-routing.module";
 // import { ScopingModule } from "../features/scoping/scoping.module";
 import { ConnectionsModule } from "../features/connections/connections.module";
+import { ScopingService } from "../features/scoping/services/scoping.service";
+import { ScopingFacade } from "../features/scoping/store/scoping.facade";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
@@ -69,6 +71,8 @@ import { ConnectionsModule } from "../features/connections/connections.module";
     StatusBar,
     SplashScreen,
     PopupService,
+    ScopingService,
+    ScopingFacade,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

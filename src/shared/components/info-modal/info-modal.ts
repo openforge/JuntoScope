@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { NavParams } from "ionic-angular";
+import { NavParams, ViewController } from "ionic-angular";
 import { PopupService } from "../../popup.service";
 
 @Component({
@@ -12,7 +12,7 @@ export class InfoModalComponent implements OnInit {
   label;
   callback;
 
-  constructor(private popupSvc: PopupService, private params: NavParams) {}
+  constructor(private viewCtrl: ViewController, private params: NavParams) {}
 
   ngOnInit() {
     this.title = this.params.data.title;
@@ -21,8 +21,12 @@ export class InfoModalComponent implements OnInit {
     this.callback = this.params.data.callback;
   }
 
+  closeModal() {
+    this.viewCtrl.dismiss();
+  }
+
   dismiss() {
+    this.viewCtrl.dismiss();
     this.callback();
-    // this.popupSvc.closeModal();
   }
 }

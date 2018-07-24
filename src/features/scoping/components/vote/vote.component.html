@@ -6,12 +6,12 @@
         {{ error }}
         </h6>
 
-        <ion-button type="submit" [disabled]="!voteForm.controls['estimate'].valid">Submit</ion-button>
+        <button ion-button type="submit" [disabled]="!voteForm.controls['estimate'].valid">Submit</button>
     </form>
 
     Need more info
-    <ion-button (click)="needMoreInfo()"><ion-icon name="information-circle"></ion-icon></ion-button>
+    <button ion-button (click)="needMoreInfo()"><ion-icon name="information-circle"></ion-icon></button>
 
     Not applicable
-    <ion-button (click)="notApplicable()">N/A</ion-button>
+    <button ion-button (click)="notApplicable()">N/A</button>
 </div>

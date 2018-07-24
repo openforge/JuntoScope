@@ -40,7 +40,7 @@ import { HistoryService } from "../../dashboard/services/history.service";
 import { ScopingQuery } from "../store/scoping.reducer";
 
 import { SessionValidation } from "../../../models/scoping-session";
-import { NavController } from "ionic-angular";
+
 // import { SessionResultsComponent } from '../pages/session-results/session-results.component';
 
 @Injectable()
@@ -131,23 +131,36 @@ export class ScopingFacade {
     })
   );
 
+  // @Effect()
+  // setEstimate$ = this.actions$.pipe(
+  //   ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE),
+  //   switchMap(action =>
+  //     this.scopingSvc
+  //       .setEstimate(action.payload)
+  //       .then(() => {
+  //         console.log("Estimate saved successfully");
+  //         return new SetEstimateSuccessAction(action.payload);
+  //       })
+  //       .catch(({ message }) => {
+  //         console.log("ERROR saving estimate");
+  //         return new SetEstimateErrorAction({ message });
+  //       })
+  //   ),
+  //   catchError(error =>
+  //     of(new SetEstimateErrorAction({ message: error.message }))
+  //   )
+  // );
+
   @Effect()
   setEstimate$ = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE),
+    ofType<SetEstimateAction>(ScopingActionTypes.SET_ESTIMATE),
     switchMap(action =>
-      this.scopingSvc
-        .setEstimate(action.payload)
-        .then(() => {
-          console.log("Estimate saved successfully");
-          return new SetEstimateSuccessAction(action.payload);
+      this.scopingSvc.setEstimate(action.payload).pipe(
+        map(data => new SetEstimateSuccessAction(action.payload)),
+        catchError(error => {
+          return of(new SetEstimateErrorAction({ message: error.message }));
         })
-        .catch(({ message }) => {
-          console.log("ERROR saving estimate");
-          return new SetEstimateErrorAction({ message });
-        })
-    ),
-    catchError(error =>
-      of(new SetEstimateErrorAction({ message: error.message }))
+      )
     )
   );
 
@@ -220,8 +233,7 @@ export class ScopingFacade {
     private actions$: Actions,
     private scopingSvc: ScopingService,
     private historySvc: HistoryService,
-    private popupService: PopupService,
-    private navCtrl: NavController
+    private popupService: PopupService
   ) {}
 
   /**

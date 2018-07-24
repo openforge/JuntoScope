@@ -16,17 +16,22 @@ import { ScopingService } from "./services/scoping.service";
 import { ScopingFacade } from "./store/scoping.facade";
 import { StoreModule } from "@ngrx/store";
 import { scopingReducer } from "./store/scoping.reducer";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { IonicModule } from "ionic-angular";
 
 @NgModule({
   imports: [
+    IonicModule,
     SharedModule,
     StoreModule.forFeature("scoping", scopingReducer),
-    EffectsModule.forFeature([ScopingFacade])
+    EffectsModule.forFeature([ScopingFacade]),
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     SessionAccessComponent,
     SessionScopingComponent,
-    // SessionResultsComponent,
+    SessionResultsComponent,
     CountedVotesComponent,
     TaskCardComponent,
     SessionHeaderComponent,
@@ -35,13 +40,13 @@ import { scopingReducer } from "./store/scoping.reducer";
     SelectResultComponent,
     TaskResultsComponent
   ],
-  entryComponents: []
+  entryComponents: [SessionResultsComponent]
 })
 export class ScopingModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: ScopingModule,
-      providers: [ScopingFacade, ScopingService]
+      providers: []
     };
   }
 }

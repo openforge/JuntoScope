@@ -9,8 +9,7 @@ enum SELECTED_RESULT {
 
 @Component({
   selector: "app-select-result",
-  templateUrl: "./select-result.component.html",
-  styleUrls: ["./select-result.component.scss"]
+  templateUrl: "./select-result.component.html"
 })
 export class SelectResultComponent implements OnInit {
   SELECTED_RESULT = SELECTED_RESULT;

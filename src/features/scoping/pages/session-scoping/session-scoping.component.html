@@ -1,8 +1,5 @@
 <ion-header>
     <ion-navbar>
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/"></ion-back-button>
-        </ion-buttons>
         <ion-title>Scoping Session</ion-title>
     </ion-navbar>
 </ion-header>
@@ -50,14 +47,14 @@
                         </ion-footer>
                         <ion-footer *ngIf="isModerator">
                             <ion-toolbar>
-                                <ion-button [disabled]="!finalEstimate" (click)="saveFinalEstimate()">Submit</ion-button>
+                                <button ion-button [disabled]="!finalEstimate" (click)="saveFinalEstimate()">Submit</button>
                             </ion-toolbar>
                         </ion-footer>
                     </ng-container>
                     <ng-container *ngIf="session.tasks[session.currentTaskId].estimate">
                         <ion-footer *ngIf="!isModerator && session.tasks[session.currentTaskId].estimate">
                             <ion-toolbar>
-                                <ion-button>Next task</ion-button>
+                                <button ion-button>Next task</button>
                             </ion-toolbar>
                         </ion-footer>
                     </ng-container>
