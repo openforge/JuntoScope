@@ -61,4 +61,12 @@ export class SettingsPage implements OnInit, OnDestroy {
   navigateManageConnections() {
     // this.routerFacade.navigate({ path: ['/settings/manage-connections'] });
   }
+
+  createSession() {
+    // this.routerFacade.navigate({
+    //   path: [`/connections/${connection.id}/projects`]
+    // });
+    // console.log("How bout this: ", connection.id);
+    // this.navCtrl.push(SelectProjectComponent, { connectionId: connection.id });
+  }
 }

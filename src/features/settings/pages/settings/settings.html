@@ -5,21 +5,27 @@
 </ion-header>
 
 <ion-content>
-  <button ion-button (click)="logout()">
-    Logout
-  </button>
 
-  <p>Connections</p>
+  <app-connection-list [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
+  
+  <ion-list class="faq">
 
-  <ion-list>
-    <ion-item *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
-      {{connection.externalData.company}} {{connection.type}}
+    <ion-list-header>
+      <h2>FAQ</h2>
+    </ion-list-header>
+
+    <ion-item no-lines detail-push>
+      <p>How do I ...?</p>
     </ion-item>
-    <ion-item (click)="addConnection()">
-      Add Connection
+
+    <ion-item no-lines detail-push>
+      <p>How do I find ..?</p>
     </ion-item>
+    
   </ion-list>
 
-  <p>FAQ</p>
+  <div class="logout" text-center>
+    <button ion-button (click)="logout()">LOG OUT</button>
+  </div>
 
 </ion-content>

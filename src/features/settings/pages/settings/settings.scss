@@ -1,0 +1,22 @@
+app-settings {
+	.faq {
+		margin: 0rem 1rem;
+		
+		ion-list-header.list-header {
+			border-bottom: 2px solid $primary-orange;
+		}
+
+		p, h2 {
+			color: $primary-orange;
+		}
+	}
+
+	.logout {
+		margin-top: 2rem;
+
+		button {
+			width: 60%;
+		}
+	}
+	
+}
