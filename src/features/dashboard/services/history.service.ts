@@ -8,7 +8,14 @@ import {
 } from "angularfire2/firestore";
 
 import { Observable, BehaviorSubject, Subject, of } from "rxjs";
-import { tap, share, takeUntil, switchMap, map } from "rxjs/operators";
+import {
+  tap,
+  share,
+  takeUntil,
+  switchMap,
+  map,
+  catchError
+} from "rxjs/operators";
 
 import { AppEffects } from "../../../store/app.effects";
 import { ScopingSession } from "../../../models/scoping-session";
@@ -87,11 +94,13 @@ export class HistoryService {
               return session;
             })
           )
-        )
+        ),
+        catchError(err => of(err))
       );
   }
 
   deleteSession(sessionLink) {
+    this.refresh.next();
     return this.http.delete(
       `${environment.apiBaseUrl}/session-links/${sessionLink}`
     );
@@ -116,10 +125,10 @@ export class HistoryService {
 
   private getHistoryItems({ paginating } = { paginating: false }) {
     return this.afs
-      .collection("public/data/sessions", refs => {
+      .collection("public/data/sessions", ref => {
         const { field, direction, limit } = this.query;
 
-        let query = refs.where(field, ">", 0).orderBy(field, direction);
+        let query = ref.where(field, ">", 0).orderBy(field, direction);
 
         if (paginating) {
           query = query.startAfter(this.lastDoc);
@@ -129,8 +138,8 @@ export class HistoryService {
       })
       .stateChanges()
       .pipe(
-        takeUntil(this.refresh$),
-        tap(changes => this.historyItemChanges.next(changes))
+        tap(changes => this.historyItemChanges.next(changes)),
+        takeUntil(this.refresh$)
       );
   }
 }

@@ -45,7 +45,7 @@ export class ModifiedHistoryItemAction implements Action {
 
 export class RemovedHistoryItemAction implements Action {
   readonly type = DashboardActionTypes.REMOVED;
-  constructor(public payload: { historyItem: HistoryItem }) {}
+  constructor(public payload: { historyItemId: string }) {}
 }
 
 export class DeleteSessionAction implements Action {
