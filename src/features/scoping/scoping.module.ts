@@ -31,7 +31,7 @@ import { IonicModule } from "ionic-angular";
   declarations: [
     SessionAccessComponent,
     SessionScopingComponent,
-    // SessionResultsComponent,
+    SessionResultsComponent,
     CountedVotesComponent,
     TaskCardComponent,
     SessionHeaderComponent,
@@ -40,7 +40,7 @@ import { IonicModule } from "ionic-angular";
     SelectResultComponent,
     TaskResultsComponent
   ],
-  entryComponents: []
+  entryComponents: [SessionResultsComponent]
 })
 export class ScopingModule {
   static forRoot(): ModuleWithProviders {
