@@ -1,37 +1,41 @@
 <ion-header>
   <ion-navbar>
-    <!-- <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons> -->
-    <ion-title>Add Connection</ion-title>
+    <ion-title>New Connection</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-    <ng-container *ngIf="!type">
-      <button ion-button (click)="setType('teamwork')" >Teamwork</button>
-    </ng-container>
-    
-    <ng-container *ngIf="type">
-      <form [formGroup]="connectionForm" (ngSubmit)="continue()">
-        <ion-input class="form-control" type="text" formControlName="token" name="token"></ion-input>
-        
-        <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
-          <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
-            Token is required
-          </h6>
-        </ng-container>
+  <ng-container *ngIf="!type" class="select">
+    <!-- consult design team about this design? -->
+    <ion-item (click)="setType('teamwork')" padding>
+      <ion-label>Teamwork</ion-label>
+      <button ion-button item-end>
+        <ion-icon name="arrow-dropright"></ion-icon>
+      </button>
+    </ion-item>
+  </ng-container>
+  
+  <ng-container *ngIf="type">
 
-        <h6 *ngIf="addError$ | async as error">
-          {{ error }}
+    <form [formGroup]="connectionForm" (ngSubmit)="continue()">
+      <ion-item no-lines>
+        <ion-input class="form-control" type="text" formControlName="token" name="token" clearInput></ion-input>
+      </ion-item>
+
+      <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
+        <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
+          Token is required
         </h6>
+      </ng-container>
 
-        <p>
-          <button ion-button href="">Where do I find this?</button>
-        </p>
+      <h6 *ngIf="addError$ | async as error">
+        {{ error }}
+      </h6>
 
-        <button ion-button type="submit">Allow access</button>
-      </form>
-    </ng-container>
+      <a href="">Where do I find this?</a>
+
+      <button ion-button type="submit">SUBMIT</button>
+    </form>
+  </ng-container>
 </ion-content>
