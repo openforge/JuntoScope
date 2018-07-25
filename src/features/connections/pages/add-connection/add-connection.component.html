@@ -7,11 +7,11 @@
 <ion-content>
 
   <ng-container *ngIf="!type" class="select">
-    <!-- consult design team about this design? -->
+    <!-- consult design team about this design for selecting the type -->
     <ion-item (click)="setType('teamwork')" padding>
       <ion-label>Teamwork</ion-label>
-      <button ion-button item-end>
-        <ion-icon name="arrow-dropright"></ion-icon>
+      <button ion-button clear item-end>
+        <ion-icon name="add-circle-outline"></ion-icon>
       </button>
     </ion-item>
   </ng-container>
