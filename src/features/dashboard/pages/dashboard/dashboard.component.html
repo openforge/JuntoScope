@@ -14,11 +14,11 @@
 <ion-content>
   <app-join-session (join)="handleJoin($event)"></app-join-session>
   
-  <app-connection-list [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
+  <app-connection-list padding [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
   
   <app-session-history-list [uid]="uid$ | async" [items]="historyItems$ | async" (options)="handleOptionClick($event)" (detail)="handleDetailClick($event)"></app-session-history-list>
   
-  <!-- <ion-infinite-scroll #infiniteScroll (ionInfinite)="loadMore(infiniteScroll)">
+  <ion-infinite-scroll #infiniteScroll (ionInfinite)="loadMore(infiniteScroll)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  </ion-infinite-scroll>
 </ion-content>

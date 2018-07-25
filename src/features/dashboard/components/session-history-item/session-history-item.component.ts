@@ -23,30 +23,30 @@ export class SessionHistoryItemComponent {
   @Output() options = new EventEmitter<SessionUserType>();
   @Output() detail = new EventEmitter<SessionStatus>();
 
-  // get sessionStatus(): string {
-  //   return this.isComplete() ? "Complete" : "Incomplete";
-  // }
+  get sessionStatus(): string {
+    return this.isComplete() ? "Complete" : "Incomplete";
+  }
 
-  // get ctaText(): string {
-  //   return this.isComplete() ? "View Results" : "Continue";
-  // }
+  get ctaText(): string {
+    return this.isComplete() ? "View Results" : "Continue";
+  }
 
-  // handleOptionsClick() {
-  //   const userType =
-  //     this.item.ownerId === this.uid
-  //       ? SessionUserType.MODERATOR
-  //       : SessionUserType.PARTICIPANT;
+  handleOptionsClick() {
+    const userType =
+      this.item.ownerId === this.uid
+        ? SessionUserType.MODERATOR
+        : SessionUserType.PARTICIPANT;
 
-  //   this.options.emit(userType);
-  // }
+    this.options.emit(userType);
+  }
 
-  // handleDetailClick() {
-  //   this.detail.emit(
-  //     this.isComplete() ? SessionStatus.COMPLETE : SessionStatus.INCOMPLETE
-  //   );
-  // }
+  handleDetailClick() {
+    this.detail.emit(
+      this.isComplete() ? SessionStatus.COMPLETE : SessionStatus.INCOMPLETE
+    );
+  }
 
-  // private isComplete() {
-  //   return this.item.numScopedTasks === this.item.numTasks;
-  // }
+  private isComplete() {
+    return this.item.numScopedTasks === this.item.numTasks;
+  }
 }
