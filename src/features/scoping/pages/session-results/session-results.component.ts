@@ -18,11 +18,7 @@ export class SessionResultsComponent implements OnInit {
   session: ScopingSession;
   sessionCode: string;
 
-  constructor(
-    private store: Store<AppState>,
-    private scopingFacade: ScopingFacade,
-    private navParams: NavParams
-  ) {
+  constructor(private scopingFacade: ScopingFacade) {
     this.scopingFacade.session$.subscribe(session => {
       this.session = session;
     });

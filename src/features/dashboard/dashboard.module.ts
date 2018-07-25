@@ -21,6 +21,8 @@ import { ShareScopeLinkComponent } from "../connections/pages/share-scope-link/s
 import { SessionScopingComponent } from "../scoping/pages/session-scoping/session-scoping.component";
 import { ScopingModule } from "../scoping/scoping.module";
 import { SessionDetailModalComponent } from "./components/session-detail-modal/session-detail-modal.component";
+import { ConnectionDetailsComponent } from "../connections/pages/connection-details/connection-details.component";
+import { SettingsModule } from "../settings/settings.module";
 
 @NgModule({
   imports: [
@@ -29,6 +31,7 @@ import { SessionDetailModalComponent } from "./components/session-detail-modal/s
     StoreModule.forFeature("dashboard", dashboardReducer),
     EffectsModule.forFeature([DashboardEffects]),
     // ScopingModule,
+    SettingsModule,
     DashboardPageModule,
     ConnectionsModule
   ],
@@ -39,7 +42,8 @@ import { SessionDetailModalComponent } from "./components/session-detail-modal/s
     SelectTaskListComponent,
     ShareScopeLinkComponent,
     SessionDetailModalComponent,
-    AddConnectionComponent
+    AddConnectionComponent,
+    ConnectionDetailsComponent
     // SessionScopingComponent,
   ]
 })
