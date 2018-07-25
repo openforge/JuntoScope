@@ -1,20 +1,33 @@
 <ion-header>
   <ion-navbar>
-    <!-- <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons> -->
     <ion-title>Connection Detail</ion-title>
   </ion-navbar>
 </ion-header>
   
   <ion-content>
   
-    <ng-container *ngIf="connection">
-      <p>{{connection.externalData.company}} {{connection.type}}</p>
+    <!-- *ngIf="connection"-->
+    <ng-container>
 
-      <p>Account: {{connection.type}}</p>
+      <ion-list>
+        <ion-list-header>
+          <h2> OpenForge Teamwork </h2>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Account: </ion-label> fjdsklj
+        <ion-item>
+          <ion-label>Name: </ion-label> jklsdfjdksjf
+        </ion-item>
+        <ion-item>
+          <ion-label>Company: </ion-label> jkfldsjflksj
+        </ion-item>
+        </ion-item>
+      </ion-list>
+
+      <!-- <p>Account: {{connection.type}}</p>
       <p>Name: {{connection.externalData.name}}</p>
-      <p>Company: {{connection.externalData.company}}</p>
+      <p>Company: {{connection.externalData.company}}</p> -->
 
       <button ion-button>Delete</button>
     </ng-container>

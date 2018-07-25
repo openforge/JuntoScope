@@ -19,11 +19,11 @@
     </ion-item>
 
     <!-- new connection-->
-    <ion-item>
+    <ion-item (click)="add.emit()">
       <ion-label>
         New Connection
       </ion-label>
-      <button ion-button clear item-end (click)="add.emit()">
+      <button ion-button clear item-end>
         <ion-icon name="add-circle-outline"></ion-icon>
       </button>
     </ion-item>

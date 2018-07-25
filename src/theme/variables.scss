@@ -38,15 +38,6 @@ $colors: (
   dark:       #222
 );
 
-$grayscale: (
-  first: #2e2e2e,
-  second: #5c5c5c,
-  third: #8b8b8b,
-  fourth: #b9b9b9,
-  fifth: #e7e7e7,
-  background: #f7f7f7
-);
-
 $primary-orange: #C94313;
 
 // Shared Variables
@@ -58,6 +49,7 @@ $primary-orange: #C94313;
 
 // primary textcolor
 $text-color: $primary-orange;
+$text-input-placeholder-color: $primary-orange;
 
 
 // App iOS Variables
@@ -67,14 +59,15 @@ $text-color: $primary-orange;
 // Searchbar
 $searchbar-ios-toolbar-input-background: white;
 $searchbar-ios-input-clear-icon-color: $primary-orange;
-$searchbar-ios-input-search-icon-color: color($grayscale, fourth);
-$searchbar-ios-input-placeholder-color: color($grayscale, fourth);
+$searchbar-ios-input-search-icon-color: gray;
+$searchbar-ios-input-placeholder-color: gray;
 
 // Item detail-push
 $item-ios-detail-push-color: $primary-orange;
 
 // Input
 $text-input-ios-input-clear-icon-color: $primary-orange;
+$text-input-ios-highlight-color: gray;
 
 
 // App Material Design Variables
@@ -85,8 +78,8 @@ $text-input-ios-input-clear-icon-color: $primary-orange;
 $searchbar-md-background-color: white;
 $searchbar-md-input-box-shadow: none;
 $searchbar-md-input-clear-icon-color: $primary-orange;
-$searchbar-md-input-placeholder-color: color($grayscale, fourth);
-$searchbar-md-input-text-color: color($grayscale, first);
+$searchbar-md-input-placeholder-color: gray;
+$searchbar-md-input-text-color: gray;
 
 // Item detail-push
 $item-md-detail-push-show: true;
@@ -97,6 +90,7 @@ $checkbox-md-icon-border-color-off: $primary-orange;
 
 // Input
 $text-input-md-input-clear-icon-color: $primary-orange;
+$text-input-md-highlight-color: gray;
 
 
 // App Windows Variables
@@ -107,8 +101,8 @@ $text-input-md-input-clear-icon-color: $primary-orange;
 $searchbar-wp-background-color: white;
 $searchbar-wp-border-color: $primary-orange;
 $searchbar-wp-input-clear-icon-color: $primary-orange;
-$searchbar-wp-input-placeholder-color: color($grayscale, fourth);
-$searchbar-wp-input-text-color: color($grayscale, first);
+$searchbar-wp-input-placeholder-color: gray;
+$searchbar-wp-input-text-color: gray;
 
 // Item detail-push
 $item-wp-detail-push-show: true;
@@ -116,6 +110,7 @@ $item-wp-detail-push-color: $primary-orange;
 
 // Input
 $text-input-wp-input-clear-icon-color: $primary-orange;
+$text-input-wp-highlight-color: gray;
 
 
 // App Theme
