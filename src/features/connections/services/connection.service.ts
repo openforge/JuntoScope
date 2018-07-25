@@ -25,6 +25,12 @@ export class ConnectionService {
     return this.http.post(`${environment.apiBaseUrl}/connections`, connection);
   }
 
+  deleteConnection(connectionId: string) {
+    return this.http.delete(
+      `${environment.apiBaseUrl}/connections/${connectionId}`
+    );
+  }
+
   getProjects(connectionId: string) {
     return this.http
       .get<{ projects: Project[] }>(

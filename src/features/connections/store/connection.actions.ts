@@ -10,6 +10,7 @@ export enum ConnectionActionTypes {
 
   ADDED = "[Connection] Added",
   MODIFIED = "[Connection] Modified",
+  REMOVE = "[Connection] Remove",
   REMOVED = "[Connection] Removed",
 
   ADD = "[Connection] Add",
@@ -40,9 +41,14 @@ export class ModifiedConnectionAction implements Action {
   ) {}
 }
 
+export class RemoveConnectionAction implements Action {
+  readonly type = ConnectionActionTypes.REMOVE;
+  constructor(public payload: { connectionId: string }) {}
+}
+
 export class RemovedConnectionAction implements Action {
   readonly type = ConnectionActionTypes.REMOVED;
-  constructor(public payload: { connection: Connection }) {}
+  constructor(public payload: { connectionId: string }) {}
 }
 
 export class AddConnectionAction implements Action {
@@ -86,4 +92,5 @@ export type ConnectionActions =
   | AddConnectionErrorAction
   | SelectedConnectionAction
   | SelectedProjectAction
+  | RemoveConnectionAction
   | CreateSessionAction;
