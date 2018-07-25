@@ -23,17 +23,7 @@ export class ConnectionDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.connectionFacade.getConnections();
-    // this.params$.pipe(take(1)).subscribe(params => {
-    //   this.connectionFacade.connections$.subscribe(
-    //     (connections: Connection[]) => {
-    //       if (connections) {
-    //         this.connection = connections.filter(
-    //           c => c.id === params.connectionId
-    //         )[0];
-    //       }
-    //     }
-    //   );
-    // });
+
     this.connectionFacade.connections$.subscribe(
       (connections: Connection[]) => {
         if (connections) {
@@ -43,5 +33,9 @@ export class ConnectionDetailsComponent implements OnInit {
         }
       }
     );
+  }
+
+  deleteConnection(connectionId) {
+    this.connectionFacade.removeConnection(connectionId);
   }
 }

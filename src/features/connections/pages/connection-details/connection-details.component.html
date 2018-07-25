@@ -16,7 +16,7 @@
       <p>Name: {{connection.externalData.name}}</p>
       <p>Company: {{connection.externalData.company}}</p>
 
-      <button ion-button>Delete</button>
+      <button ion-button (click)="deleteConnection(connection.id)">Delete</button>
     </ng-container>
 
   </ion-content>

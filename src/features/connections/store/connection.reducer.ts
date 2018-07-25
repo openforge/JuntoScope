@@ -66,8 +66,15 @@ export function connectionReducer(
       return adapter.updateOne(action.payload.update, state);
     }
 
+    case ConnectionActionTypes.REMOVE: {
+      return { ...state, uiState: ConnectionUiState.LOADING };
+    }
+
     case ConnectionActionTypes.REMOVED: {
-      return adapter.removeOne(action.payload.connection.id, state);
+      return adapter.removeOne(action.payload.connectionId, {
+        ...state,
+        uiState: ConnectionUiState.LOADED
+      });
     }
 
     case ConnectionActionTypes.ADD: {

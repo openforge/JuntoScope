@@ -22,6 +22,7 @@ import {
   AddedConnectionAction,
   ModifiedConnectionAction,
   RemovedConnectionAction,
+  RemoveConnectionAction,
   AddConnectionAction,
   SelectedConnectionAction,
   SelectedProjectAction,
@@ -85,7 +86,7 @@ export class ConnectionFacade {
           return new ModifiedConnectionAction({ update: { id, changes } });
 
         case "removed":
-          return new RemovedConnectionAction({ connection });
+          return new RemovedConnectionAction({ connectionId: id });
       }
     })
   );
@@ -107,6 +108,23 @@ export class ConnectionFacade {
         )
       )
     )
+  );
+
+  @Effect()
+  deleteConnection$ = this.actions$.pipe(
+    ofType<RemoveConnectionAction>(ConnectionActionTypes.REMOVE),
+    switchMap(action => {
+      return this.connectionSvc
+        .deleteConnection(action.payload.connectionId)
+        .pipe(
+          map(
+            () =>
+              new RemovedConnectionAction({
+                connectionId: action.payload.connectionId
+              })
+          )
+        );
+    })
   );
 
   @Effect()
@@ -214,6 +232,10 @@ export class ConnectionFacade {
 
   addConnection(connection: Connection) {
     this.store.dispatch(new AddConnectionAction({ connection }));
+  }
+
+  removeConnection(connectionId: string) {
+    this.store.dispatch(new RemoveConnectionAction({ connectionId }));
   }
 
   selectConnection(connectionId: string) {
