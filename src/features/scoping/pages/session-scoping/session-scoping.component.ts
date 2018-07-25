@@ -10,7 +10,7 @@ import { AuthQuery } from "../../../authentication/store/auth.reducer";
 import { User } from "../../../../models/user";
 import { ScopingFacade } from "../../store/scoping.facade";
 
-import { take, debounceTime } from "rxjs/operators";
+import { take, debounceTime, switchMap, share, concat } from "rxjs/operators";
 import { ParticipantState } from "../../store/scoping.reducer";
 import { NavParams, NavController } from "ionic-angular";
 import { Task } from "../../../../models/task";
@@ -18,6 +18,7 @@ import { Task } from "../../../../models/task";
 import * as _ from "lodash";
 import { TIMER_FOR_NEXT_TASK } from "../../../../app/app.constants";
 import { SessionResultsComponent } from "../session-results/session-results.component";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-session-scoping",
@@ -27,7 +28,6 @@ export class SessionScopingComponent implements OnInit {
   _ = _;
 
   sessionObservable$: Observable<ScopingSession>;
-
   error$ = this.scopingFacade.error$;
   uiState$ = this.scopingFacade.uiState$;
   session$ = this.scopingFacade.session$;
@@ -60,6 +60,7 @@ export class SessionScopingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // this.refresh.next();
     this.user$ = this.store.pipe(select(AuthQuery.selectUser));
     this.user$.subscribe(user => {
       this.user = user;
@@ -102,11 +103,6 @@ export class SessionScopingComponent implements OnInit {
       }
     });
 
-    // this.params$.pipe(take(1)).subscribe(params => {
-    //   this.sessionCode = params.sessionCode;
-    //   this.scopingFacade.validateParticipant(this.user.uid, this.sessionCode);
-    // });
-
     this.sessionCode = this.navParams.get("sessionUrl");
     this.scopingFacade.validateParticipant(this.user.uid, this.sessionCode);
 
@@ -121,13 +117,7 @@ export class SessionScopingComponent implements OnInit {
   isComplete() {
     // Are all tasks estimated?
     if (this.session.numTasks === this.session.numScopedTasks) {
-      // this.routerFacade.navigate({
-      //   path: [`/scoping/${this.sessionCode}/results`],
-      //   extras: { skipLocationChange: true },
-      // });
-      this.navCtrl.push(SessionResultsComponent, {
-        sessionCode: this.sessionCode
-      });
+      this.navCtrl.push(SessionResultsComponent);
     }
   }
 
@@ -167,7 +157,6 @@ export class SessionScopingComponent implements OnInit {
   }
 
   didVote() {
-    // const task = this.session.tasks[this.taskId];
     let votes;
     let voteValue;
 
@@ -189,6 +178,9 @@ export class SessionScopingComponent implements OnInit {
 
   nextTask() {
     console.log("Next task");
+
+    this.taskId = this.session.currentTaskId;
+    this.task = this.session.tasks[this.taskId];
 
     this.estimateSubmitted = false;
 

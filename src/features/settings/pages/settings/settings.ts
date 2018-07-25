@@ -9,6 +9,8 @@ import { AuthUiState } from "../../../authentication/store/auth.reducer";
 
 import { ConnectionFacade } from "../../../connections/store/connection.facade";
 import { LoginPage } from "../../../authentication/pages/login/login";
+import { ConnectionDetailsComponent } from "../../../connections/pages/connection-details/connection-details.component";
+import { AddConnectionComponent } from "../../../connections/pages/add-connection/add-connection.component";
 @TakeUntilDestroy()
 @IonicPage({
   segment: "SettingsPage",
@@ -43,10 +45,14 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   viewConnectionDetails(connectionId) {
     // this.routerFacade.navigate({ path: [`/connections/${connectionId}`] });
+    this.navCtrl.push(ConnectionDetailsComponent, {
+      connectionId: connectionId
+    });
   }
 
   addConnection() {
     // this.routerFacade.navigate({ path: ['/connections/add'] });
+    this.navCtrl.push(AddConnectionComponent);
   }
 
   logout() {

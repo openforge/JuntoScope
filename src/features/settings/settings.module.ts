@@ -2,11 +2,11 @@ import { NgModule } from "@angular/core";
 import { IonicModule } from "ionic-angular";
 
 import { SharedModule } from "../../shared/shared.module";
-import { ConnectionsModule } from "../connections/connections.module";
+import { ConnectionDetailsComponent } from "../connections/pages/connection-details/connection-details.component";
 
 @NgModule({
-  imports: [IonicModule, SharedModule, ConnectionsModule],
-  declarations: [],
+  imports: [IonicModule, SharedModule],
+  declarations: [ConnectionDetailsComponent],
   exports: [],
   entryComponents: [],
   providers: []

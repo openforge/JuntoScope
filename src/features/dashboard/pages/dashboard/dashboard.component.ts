@@ -24,6 +24,8 @@ import { SettingsPage } from "../../../settings/pages/settings/settings";
 import { AddConnectionComponent } from "../../../connections/pages/add-connection/add-connection.component";
 import { SessionScopingComponent } from "../../../scoping/pages/session-scoping/session-scoping.component";
 import { DashboardUiState } from "../../store/dashboard.reducer";
+import { SessionResultsComponent } from "../../../scoping/pages/session-results/session-results.component";
+import { ScopingFacade } from "../../../scoping/store/scoping.facade";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -54,7 +56,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private dashboardFacade: DashboardEffects,
     private popupSvc: PopupService,
     private connectionFacade: ConnectionFacade,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private scopingFacade: ScopingFacade
   ) {}
 
   ngOnInit() {
@@ -76,9 +79,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // this.routerFacade.navigate({
     //   path: [`/scoping/${event.item.sessionCode}`]
     // });
-    this.navCtrl.push(SessionScopingComponent, {
-      sessionUrl: event.item.sessionCode
-    });
+    this.scopingFacade.loadSession(event.item.id);
+
+    if (event.status === "Session Completed") {
+      this.navCtrl.push(SessionResultsComponent, {
+        sessionUrl: event.item.sessionCode
+      });
+    } else {
+      this.navCtrl.push(SessionScopingComponent, {
+        sessionUrl: event.item.sessionCode
+      });
+    }
   }
 
   // Unused
@@ -99,15 +110,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   createSession(connection: Connection) {
-    // this.routerFacade.navigate({
-    //   path: [`/connections/${connection.id}/projects`]
-    // });
     console.log("How bout this: ", connection.id);
     this.navCtrl.push(SelectProjectComponent, { connectionId: connection.id });
   }
 
   goSettings() {
-    // this.routerFacade.navigate({ path: ["/settings"] });
     this.navCtrl.push(SettingsPage);
   }
 
