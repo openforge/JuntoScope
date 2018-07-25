@@ -6,9 +6,15 @@
 
 <ion-content>
 
-  <app-connection-list [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
+  <ion-list class="container">
+    <ion-list-header>
+      <h2>Connections</h2>
+    </ion-list-header>
+
+    <app-connection-list [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
+  </ion-list>
   
-  <ion-list class="faq">
+  <ion-list class="container">
 
     <ion-list-header>
       <h2>FAQ</h2>
