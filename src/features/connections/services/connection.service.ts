@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { AngularFirestore } from "angularfire2/firestore";
 
-import { switchMap, map, tap, catchError } from "rxjs/operators";
+import { switchMap, map, takeUntil } from "rxjs/operators";
 
 import * as _ from "lodash";
 
@@ -12,6 +12,7 @@ import { Project } from "../../../models/project";
 import { TaskList } from "../../../models/task-list";
 import { Connection } from "../../../models/connection";
 import { AppEffects } from "../../../store/app.effects";
+import { Subject } from "../../../../node_modules/rxjs";
 
 @Injectable()
 export class ConnectionService {

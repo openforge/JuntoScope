@@ -39,6 +39,13 @@ export function authReducer(
         error: null
       };
 
+    case AuthActionTypes.LOGOUT:
+      return {
+        user: null,
+        uiState: AuthUiState.NOT_AUTHENTICATED,
+        error: null
+      };
+
     case AuthActionTypes.NOT_AUTHENTICATED:
       return {
         user: null,
@@ -60,7 +67,10 @@ export function authReducer(
 
 export namespace AuthQuery {
   const selectSlice = createFeatureSelector<AuthState>("auth");
-  export const selectUser = createSelector(selectSlice, state => state.user);
+  export const selectUser = createSelector(
+    selectSlice,
+    state => (state.user ? state.user : null)
+  );
   export const selectUiState = createSelector(
     selectSlice,
     state => state.uiState

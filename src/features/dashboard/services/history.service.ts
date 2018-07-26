@@ -7,7 +7,7 @@ import {
   DocumentChangeAction
 } from "angularfire2/firestore";
 
-import { Observable, BehaviorSubject, Subject, of } from "rxjs";
+import { Observable, BehaviorSubject, Subject, of, Subscription } from "rxjs";
 import {
   tap,
   share,
@@ -28,6 +28,7 @@ import { environment } from "../../../environment";
 // })
 @Injectable()
 export class HistoryService {
+  private uidSub: Subscription;
   private refresh = new Subject<never>();
   private refresh$ = this.refresh.asObservable().pipe(share());
 
@@ -59,7 +60,7 @@ export class HistoryService {
   loadHistoryItems() {
     this.refresh.next();
 
-    this.appFacade.uid$
+    this.uidSub = this.appFacade.uid$
       .pipe(
         tap(uid => {
           this.query.field = `participants.${uid}`;
@@ -67,8 +68,11 @@ export class HistoryService {
         switchMap(() => this.getHistoryItems())
       )
       .subscribe();
-
     return this.historyItemChanges$;
+  }
+
+  logOut() {
+    this.uidSub.unsubscribe();
   }
 
   loadMoreHistoryItems() {
