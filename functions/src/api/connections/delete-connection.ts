@@ -6,9 +6,9 @@ export async function deleteConnection(
   res: express.Response
 ) {
   const uid = res.locals.user.uid;
-  const connectionId = req.body;
-  const snapshot = await firestore
-    .doc(`users/${uid}/connection/${connectionId}`)
+  const connectionId = req.params.connectionId;
+  await firestore
+    .doc(`users/${uid}/connections/${connectionId}`)
     .delete()
     .then(
       () => {

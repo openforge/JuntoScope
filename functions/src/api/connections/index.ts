@@ -9,7 +9,7 @@ export const connectionsRouter = express.Router({ mergeParams: true });
 
 connectionsRouter.post("/", addConnection);
 
-connectionsRouter.post("/:connectionId", deleteConnection);
+connectionsRouter.delete("/:connectionId", deleteConnection);
 
 connectionsRouter.use("/:connectionId/projects", projectsRouter);
 
