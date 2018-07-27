@@ -12,7 +12,6 @@ import { Project } from "../../../models/project";
 import { TaskList } from "../../../models/task-list";
 import { Connection } from "../../../models/connection";
 import { AppEffects } from "../../../store/app.effects";
-import { Subject } from "../../../../node_modules/rxjs";
 
 @Injectable()
 export class ConnectionService {

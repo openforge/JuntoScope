@@ -15,7 +15,7 @@ import { map, tap, filter, withLatestFrom, take } from "rxjs/operators";
 import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
 import { AppEffects } from "../../../../store/app.effects";
-import { Subscription } from "../../../../../node_modules/rxjs";
+import { Subscription } from "rxjs";
 
 @TakeUntilDestroy()
 @IonicPage({

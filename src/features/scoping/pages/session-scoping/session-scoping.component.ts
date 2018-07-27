@@ -18,7 +18,8 @@ import { Task } from "../../../../models/task";
 import * as _ from "lodash";
 import { TIMER_FOR_NEXT_TASK } from "../../../../app/app.constants";
 import { SessionResultsComponent } from "../session-results/session-results.component";
-import { Subject } from "rxjs";
+import { Subject, Subscription } from "rxjs";
+import { DashboardComponent } from "../../../dashboard/pages/dashboard/dashboard.component";
 
 @Component({
   selector: "app-session-scoping",
@@ -26,12 +27,12 @@ import { Subject } from "rxjs";
 })
 export class SessionScopingComponent implements OnInit {
   _ = _;
-
+  sessionSub: Subscription;
+  participantSub: Subscription;
   sessionObservable$: Observable<ScopingSession>;
   error$ = this.scopingFacade.error$;
   uiState$ = this.scopingFacade.uiState$;
   session$ = this.scopingFacade.session$;
-  // params$ = this.routerFacade.params$;
   participantState$ = this.scopingFacade.participantState$;
   user$: Observable<User>;
   participantState: ParticipantState;
@@ -68,8 +69,9 @@ export class SessionScopingComponent implements OnInit {
 
     this.sessionObservable$ = this.session$.pipe(debounceTime(500));
 
-    this.sessionObservable$.subscribe(session => {
-      if (session && this.user) {
+    this.sessionSub = this.sessionObservable$.subscribe(session => {
+      if (session && session.currentTaskId && this.user) {
+        console.log("session: ", session);
         this.session = session;
         this.isModerator = session.ownerId === this.user.uid;
         this.taskId = this.session.currentTaskId;
@@ -106,7 +108,7 @@ export class SessionScopingComponent implements OnInit {
     this.sessionCode = this.navParams.get("sessionUrl");
     this.scopingFacade.validateParticipant(this.user.uid, this.sessionCode);
 
-    this.participantState$.subscribe(participantState => {
+    this.participantSub = this.participantState$.subscribe(participantState => {
       this.participantState = participantState;
       if (participantState === ParticipantState.PARTICIPANT_VALIDATED) {
         this.scopingFacade.loadSession(this.sessionCode);
@@ -114,9 +116,28 @@ export class SessionScopingComponent implements OnInit {
     });
   }
 
+  IonViewDidLeave() {
+    console.log("did this run?");
+    if (this.sessionSub) {
+      console.log("Unsubscribing!");
+      this.sessionSub.unsubscribe();
+    }
+    if (this.participantSub) {
+      this.participantSub.unsubscribe();
+    }
+  }
+
+  goDashboard() {
+    this.navCtrl.push(DashboardComponent);
+  }
+
   isComplete() {
     // Are all tasks estimated?
     if (this.session.numTasks === this.session.numScopedTasks) {
+      if (this.sessionSub) {
+        console.log("Unsubscribing!");
+        this.sessionSub.unsubscribe();
+      }
       this.navCtrl.push(SessionResultsComponent);
     }
   }

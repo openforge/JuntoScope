@@ -11,7 +11,7 @@ import { ConnectionFacade } from "../../../connections/store/connection.facade";
 import { LoginPage } from "../../../authentication/pages/login/login";
 import { ConnectionDetailsComponent } from "../../../connections/pages/connection-details/connection-details.component";
 import { AddConnectionComponent } from "../../../connections/pages/add-connection/add-connection.component";
-import { Subscription } from "../../../../../node_modules/rxjs";
+import { Subscription } from "rxjs";
 @TakeUntilDestroy()
 @IonicPage({
   segment: "SettingsPage",

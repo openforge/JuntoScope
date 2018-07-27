@@ -14,6 +14,7 @@ import {
   takeUntil,
   switchMap,
   map,
+  filter,
   catchError
 } from "rxjs/operators";
 
@@ -68,6 +69,7 @@ export class HistoryService {
         switchMap(() => this.getHistoryItems())
       )
       .subscribe();
+
     return this.historyItemChanges$;
   }
 
@@ -137,6 +139,8 @@ export class HistoryService {
         if (paginating) {
           query = query.startAfter(this.lastDoc);
         }
+
+        console.log("query: ", query);
 
         return query.limit(limit);
       })

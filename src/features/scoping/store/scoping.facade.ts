@@ -67,10 +67,10 @@ export class ScopingFacade {
     switchMap(action =>
       this.scopingSvc.getSession(action.payload).pipe(
         // map(session => new LoadSessionSuccessAction(session)),
-        map((session: any) => new LoadSessionSuccessAction(session)),
-        catchError(error =>
-          of(new LoadSessionErrorAction({ message: error.message }))
-        )
+        map((session: any) => new LoadSessionSuccessAction(session))
+        // catchError(error =>
+        //   of(new LoadSessionErrorAction({ message: error.message }))
+        // )
       )
     ),
     catchError(error =>
@@ -80,7 +80,7 @@ export class ScopingFacade {
 
   @Effect({ dispatch: false })
   getSessionError$ = this.actions$.pipe(
-    ofType<VoteAction>(ScopingActionTypes.LOAD_SESSION_ERROR),
+    ofType<LoadSessionErrorAction>(ScopingActionTypes.LOAD_SESSION_ERROR),
     tap(action => {
       this.popupService.simpleAlert(
         "Error",
