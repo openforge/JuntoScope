@@ -25,11 +25,16 @@ import { SelectTaskListComponent } from "../select-task-list/select-task-list.co
 })
 export class SelectProjectComponent implements OnInit {
   connectionId: string;
+  loaded: boolean = false;
   projects$ = this.connectionFacade.selectedConnection$.pipe(
     filter((connection: Connection) => !!connection && !!connection.projects),
-    map((connection: Connection) =>
-      Object.keys(connection.projects).map(keys => connection.projects[keys])
-    )
+    map((connection: Connection) => {
+      this.loaded = true;
+
+      return Object.keys(connection.projects).map(
+        keys => connection.projects[keys]
+      );
+    })
   );
   // projects$ = this.routerFacade.params$.pipe(
   //   pluck("connectionId"),

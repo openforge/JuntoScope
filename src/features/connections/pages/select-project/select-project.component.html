@@ -8,5 +8,6 @@
 </ion-header>
 
 <ion-content>
+  <ion-spinner *ngIf="!loaded"></ion-spinner>
   <app-project-list [projects]="projects$ | async" (select)="handleProjectSelect($event)"></app-project-list>
 </ion-content>
