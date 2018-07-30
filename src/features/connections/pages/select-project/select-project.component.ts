@@ -7,7 +7,8 @@ import {
   switchMap,
   take,
   pluck,
-  distinctUntilChanged
+  distinctUntilChanged,
+  find
 } from "rxjs/operators";
 
 import { RouterFacade } from "../../../../store/router.facade";
@@ -30,6 +31,10 @@ export class SelectProjectComponent implements OnInit {
     map((connection: Connection) =>
       Object.keys(connection.projects).map(keys => connection.projects[keys])
     )
+  );
+
+  connection$ = this.connectionFacade.selectConnection$.pipe(
+    find((connection: Connection) => connection.id == this.navParams.get("connectionId"))
   );
   // projects$ = this.routerFacade.params$.pipe(
   //   pluck("connectionId"),
@@ -65,6 +70,8 @@ export class SelectProjectComponent implements OnInit {
     this.connectionId = this.navParams.get("connectionId");
     console.log("Connection id: ", this.connectionId);
     this.connectionFacade.selectConnection(this.connectionId);
+
+    
   }
 
   handleProjectSelect(project: Project) {

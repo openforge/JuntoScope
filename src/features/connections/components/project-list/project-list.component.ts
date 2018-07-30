@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 
 import { Project } from "../../../../models/project";
+import { Connection } from "../../../../models/connection";
 
 @Component({
   selector: "app-project-list",
@@ -15,5 +16,6 @@ import { Project } from "../../../../models/project";
 })
 export class ProjectListComponent {
   @Input() projects: Project[];
+  // @Input() connections: Connection[];
   @Output() select = new EventEmitter<Project>();
 }

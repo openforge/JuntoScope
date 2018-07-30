@@ -8,5 +8,8 @@
 </ion-header>
 
 <ion-content>
+
+  {{ connection$ | async }}
+
   <app-project-list [projects]="projects$ | async" (select)="handleProjectSelect($event)"></app-project-list>
 </ion-content>

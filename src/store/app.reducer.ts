@@ -64,7 +64,7 @@ export const initialState: AppState = {
 export namespace AppQuery {
   export const selectUid = createSelector(
     AuthQuery.selectUser,
-    user => user.uid
+    user => user ? user.uid: null 
   );
 
   export const selectAuthRedirect = createSelector(
