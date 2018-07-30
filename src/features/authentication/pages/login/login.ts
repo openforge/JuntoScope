@@ -93,17 +93,8 @@ export class LoginPage implements OnInit, OnDestroy {
     // let navOptions;
     this.loginSub = this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
       console.log("navOptions: ", navOptions);
-      // this.navCtrl.push(navOptions.path[0]);
+      this.navCtrl.push(navOptions.path[0]);
       // navOptions = navOptions;
-
-      this.userSub = this.user$.subscribe(user => {
-        console.log(navOptions);
-        console.log(user);
-        if (user) {
-          console.log("Trying to navigate");
-          this.navCtrl.push(navOptions.path[0]);
-        }
-      });
     });
   }
 

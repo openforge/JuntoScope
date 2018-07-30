@@ -140,8 +140,6 @@ export class HistoryService {
           query = query.startAfter(this.lastDoc);
         }
 
-        console.log("query: ", query);
-
         return query.limit(limit);
       })
       .stateChanges()
