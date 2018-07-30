@@ -33,7 +33,6 @@ export class SettingsPage implements OnInit, OnDestroy {
   );
 
   constructor(
-    private authEffects: AuthEffects,
     private navCtrl: NavController,
     private connectionFacade: ConnectionFacade,
     private authFacade: AuthEffects
@@ -66,7 +65,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 
     this.logOutSub = this.logoutRedirect$.pipe(take(1)).subscribe(() => {
       // this.routerFacade.navigate({ path: ['/login'] });
-      window.location.reload();
+      // window.location.reload();
       this.navCtrl.push(LoginPage);
     });
   }
