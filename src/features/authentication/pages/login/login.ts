@@ -15,7 +15,9 @@ import { map, tap, filter, withLatestFrom, take } from "rxjs/operators";
 import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
 import { AppEffects } from "../../../../store/app.effects";
+import { Subscription } from "rxjs";
 
+@TakeUntilDestroy()
 @IonicPage({
   segment: "LoginPage",
   priority: "high"
@@ -27,6 +29,8 @@ import { AppEffects } from "../../../../store/app.effects";
 })
 export class LoginPage implements OnInit, OnDestroy {
   agreeForm: FormGroup;
+  userSub: Subscription;
+  loginSub: Subscription;
   // loading$ = this.authFacade.uiState$.pipe(
   //   map(uiState => uiState === AuthUiState.LOADING)
   // );
@@ -61,7 +65,10 @@ export class LoginPage implements OnInit, OnDestroy {
     this.createForm();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+    this.loginSub.unsubscribe();
+  }
 
   createForm() {
     this.agreeForm = this.fb.group({
@@ -84,19 +91,10 @@ export class LoginPage implements OnInit, OnDestroy {
   googleLogin() {
     this.authEffects.googleLogin();
     // let navOptions;
-    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
+    this.loginSub = this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
       console.log("navOptions: ", navOptions);
-      // this.navCtrl.push(navOptions.path[0]);
+      this.navCtrl.push(navOptions.path[0]);
       // navOptions = navOptions;
-
-      this.user$.subscribe(user => {
-        console.log(navOptions);
-        console.log(user);
-        if (user) {
-          console.log("Trying to navigate");
-          this.navCtrl.push(navOptions.path[0]);
-        }
-      });
     });
   }
 

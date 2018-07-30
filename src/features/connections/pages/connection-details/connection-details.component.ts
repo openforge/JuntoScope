@@ -6,7 +6,7 @@ import { Observable } from "@firebase/util";
 import { Connection } from "../../../../models/connection";
 import { ConnectionFacade } from "../../store/connection.facade";
 import { NavParams } from "ionic-angular";
-import { Subscription } from "../../../../../node_modules/rxjs";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-connection-details",

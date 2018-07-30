@@ -9,7 +9,8 @@ import {
   map,
   mergeMap,
   tap,
-  mergeAll
+  mergeAll,
+  filter
 } from "rxjs/operators";
 import { of, merge, forkJoin, concat } from "rxjs";
 
@@ -108,7 +109,7 @@ export class DashboardEffects {
               historyItemId: action.sessionLink
             })
         ),
-        map(() => new LoadHistoryItemsAction()),
+        // map(() => new LoadHistoryItemsAction()),
         catchError(error =>
           of(new DeleteSessionErrorAction({ message: error.message }))
         )

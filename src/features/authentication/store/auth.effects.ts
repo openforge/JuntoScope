@@ -25,6 +25,9 @@ import {
   LogoutAction
 } from "./auth.actions";
 import { AuthService } from "../services/auth.service";
+import { HistoryService } from "../../dashboard/services/history.service";
+import { ConnectionService } from "../../connections/services/connection.service";
+import { ConnectionFacade } from "../../connections/store/connection.facade";
 
 @Injectable()
 export class AuthEffects {
@@ -82,7 +85,8 @@ export class AuthEffects {
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private historySvc: HistoryService
   ) {}
 
   /*
@@ -115,6 +119,7 @@ export class AuthEffects {
   }
 
   logout() {
+    this.historySvc.logOut(); // Unsubscribes from uid
     this.store.dispatch(new LogoutAction());
   }
 }

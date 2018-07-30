@@ -11,6 +11,7 @@ import { ConnectionFacade } from "../../../connections/store/connection.facade";
 import { LoginPage } from "../../../authentication/pages/login/login";
 import { ConnectionDetailsComponent } from "../../../connections/pages/connection-details/connection-details.component";
 import { AddConnectionComponent } from "../../../connections/pages/add-connection/add-connection.component";
+import { Subscription } from "rxjs";
 @TakeUntilDestroy()
 @IonicPage({
   segment: "SettingsPage",
@@ -23,6 +24,7 @@ import { AddConnectionComponent } from "../../../connections/pages/add-connectio
 export class SettingsPage implements OnInit, OnDestroy {
   // user$ = this.authFacade.user$;
   connections$ = this.connectionFacade.connections$;
+  logOutSub: Subscription;
 
   private logoutRedirect$ = this.authFacade.uiState$.pipe(
     untilDestroyed(this),
@@ -31,13 +33,16 @@ export class SettingsPage implements OnInit, OnDestroy {
   );
 
   constructor(
-    private authEffects: AuthEffects,
     private navCtrl: NavController,
     private connectionFacade: ConnectionFacade,
     private authFacade: AuthEffects
   ) {}
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    if (this.logOutSub) {
+      this.logOutSub.unsubscribe();
+    }
+  }
 
   ngOnInit() {
     this.connectionFacade.getConnections();
@@ -58,8 +63,9 @@ export class SettingsPage implements OnInit, OnDestroy {
   logout() {
     this.authFacade.logout();
 
-    this.logoutRedirect$.pipe(take(1)).subscribe(() => {
+    this.logOutSub = this.logoutRedirect$.pipe(take(1)).subscribe(() => {
       // this.routerFacade.navigate({ path: ['/login'] });
+      // window.location.reload();
       this.navCtrl.push(LoginPage);
     });
   }

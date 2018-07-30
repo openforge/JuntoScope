@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { AngularFirestore } from "angularfire2/firestore";
 
-import { switchMap, map, tap, catchError } from "rxjs/operators";
+import { switchMap, map, takeUntil, filter } from "rxjs/operators";
 
 import * as _ from "lodash";
 
@@ -12,13 +12,18 @@ import { Project } from "../../../models/project";
 import { TaskList } from "../../../models/task-list";
 import { Connection } from "../../../models/connection";
 import { AppEffects } from "../../../store/app.effects";
+import { AuthEffects } from "../../authentication/store/auth.effects";
+import { AuthUiState } from "../../authentication/store/auth.reducer";
 
 @Injectable()
 export class ConnectionService {
+  authState$ = this.authFacade.uiState$;
+
   constructor(
     private appFacade: AppEffects,
     private afs: AngularFirestore,
-    private http: HttpClient
+    private http: HttpClient,
+    private authFacade: AuthEffects
   ) {}
 
   addConnection(connection: Connection) {
@@ -51,8 +56,15 @@ export class ConnectionService {
   }
 
   getConnections() {
+    const userLogout$ = this.authState$.pipe(
+      filter(authState => {
+        return authState === AuthUiState.NOT_AUTHENTICATED;
+      })
+    );
+
     return this.appFacade.connectionsClnPath$.pipe(
-      switchMap(clnPath => this.afs.collection(clnPath).stateChanges())
+      switchMap(clnPath => this.afs.collection(clnPath).stateChanges()),
+      takeUntil(userLogout$)
     );
   }
 

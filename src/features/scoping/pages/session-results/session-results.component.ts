@@ -5,9 +5,10 @@ import { Store } from "@ngrx/store";
 import { AppState } from "../../../../store/app.reducer";
 // import { AuthQuery } from '@app/authentication/state/auth.reducer';
 import { ScopingFacade } from "../../store/scoping.facade";
-import { NavParams } from "ionic-angular";
+import { NavParams, NavController } from "ionic-angular";
 import { ScopingSession } from "../../../../models/scoping-session";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
+import { DashboardComponent } from "../../../dashboard/pages/dashboard/dashboard.component";
 
 @Component({
   selector: "app-session-results",
@@ -17,9 +18,13 @@ export class SessionResultsComponent implements OnInit {
   // session: Observable<ScopingSession>;
   session: ScopingSession;
   sessionCode: string;
+  sessionSub: Subscription;
 
-  constructor(private scopingFacade: ScopingFacade) {
-    this.scopingFacade.session$.subscribe(session => {
+  constructor(
+    private scopingFacade: ScopingFacade,
+    private navCtrl: NavController
+  ) {
+    this.sessionSub = this.scopingFacade.session$.subscribe(session => {
       this.session = session;
     });
     // this.sessionCode = this.navParams.get('sessionUrl');
@@ -64,6 +69,16 @@ export class SessionResultsComponent implements OnInit {
     // this.scopingFacade.session$.subscribe(session => {
     //   this.session = session;
     // });
+  }
+
+  ionViewWillLeave() {
+    if (this.sessionSub) {
+      this.sessionSub.unsubscribe();
+    }
+  }
+
+  goDashboard() {
+    this.navCtrl.push(DashboardComponent);
   }
 
   ngOnInit() {}
