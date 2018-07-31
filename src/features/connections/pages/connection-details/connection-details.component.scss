@@ -1,0 +1,31 @@
+app-connection-details {
+
+    ion-list.list {
+		background-color: $primary-orange;
+		margin: 0;
+		width: 100%;
+
+		// header
+		ion-list-header.list-header {
+			background-color: $primary-orange;
+            padding: 1rem 1rem 0rem 1rem;
+			.icon, h2 {
+				color: white;
+				display: inline-block;
+				text-transform: none;
+				vertical-align: middle;
+			}
+
+			// ion-label.label {
+			// 	border-bottom: 1px solid white;
+			// 	padding: 2rem;
+			// 	margin: 1rem;
+			// }
+		}
+
+        ion-item.item.item-block .item-inner {
+            border-bottom: 2px solid $primary-orange;
+            margin-right: 3rem;
+        }
+    }
+}
