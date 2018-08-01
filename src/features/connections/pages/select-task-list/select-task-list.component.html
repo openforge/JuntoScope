@@ -25,4 +25,10 @@
       <button ion-button (click)="startSession()" [disabled]="!taskListIds || taskListIds.length === 0">START</button>
     </div>
   </ng-container>
+
+
+  <!-- TODO: Empty state for no task lists within project -->
+  <ng-container *ngIf="!taskLists$ | async as taskLists">
+    <h2>You have no task lists for this specific project!</h2>
+  </ng-container>
 </ion-content>
