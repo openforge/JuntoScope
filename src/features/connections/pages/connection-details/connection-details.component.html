@@ -9,8 +9,7 @@
     <ng-container>
 
       <ion-list>
-        <ion-list-header text-center>
-          <!-- Design : header spacing is weird with the navbar -->
+        <ion-list-header text-center no-lines>
           <ion-label>
             <ion-icon name="contacts"></ion-icon>
             <h2> {{ connection.externalData.company }} - {{ connection.type }} </h2>
@@ -18,17 +17,17 @@
         </ion-list-header>
 
         <ion-item>
-          <ion-label>Account: {{connection.type}} </ion-label>
+          <ion-label> Account: {{connection.type}} </ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Name: {{connection.externalData.name}} </ion-label>
+          <ion-label> Name: {{connection.externalData.name}} </ion-label>
         </ion-item>
         <ion-item no-lines>
-          <ion-label>Company: {{connection.externalData.company}} </ion-label>
+          <ion-label> Company: {{connection.externalData.company}} </ion-label>
         </ion-item>
       </ion-list>
 
-      <div text-center>
+      <div class="delete-btn" text-center>
         <button ion-button (click)="deleteConnection(connection.id)">Delete</button>
       </div>
 
