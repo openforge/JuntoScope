@@ -98,7 +98,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   loadMore(infiniteScroll) {
-    console.log("happens once");
     this.infiniteScroll = infiniteScroll;
     setTimeout(() => {
       this.dashboardFacade.getMoreHistory();
