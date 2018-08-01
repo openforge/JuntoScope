@@ -144,7 +144,9 @@ export class HistoryService {
       })
       .stateChanges()
       .pipe(
-        tap(changes => this.historyItemChanges.next(changes)),
+        tap(changes => {
+          this.historyItemChanges.next(changes);
+        }),
         takeUntil(this.refresh$)
       );
   }

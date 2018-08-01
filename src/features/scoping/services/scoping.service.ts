@@ -3,7 +3,7 @@ import * as firebase from "firebase";
 import { HttpClient } from "@angular/common/http";
 
 import { environment } from "../../../environment";
-import { switchMap, map, catchError, take } from "rxjs/operators";
+import { switchMap, map, tap, take } from "rxjs/operators";
 import {
   SessionValidation,
   ScopingSession
@@ -23,7 +23,6 @@ export class ScopingService {
   ) {}
 
   getSession(sessionCode) {
-    // HERE IS THE ISSUE
     return this.afs
       .doc<ScopingSession>(`/public/data/sessions/${sessionCode}`)
       .valueChanges()
@@ -136,10 +135,19 @@ export class ScopingService {
   }
 
   checkParticipant(uid: string, sessionLink: string) {
+    // this.afs
+    //   .collection("public/data/sessions")
+    //   .doc<ScopingSession>(sessionLink)
+    //   .valueChanges()
+    //   .map(session => !!session.participants[uid]);
+
     return this.afs
       .collection("public/data/sessions")
       .doc<ScopingSession>(sessionLink)
       .valueChanges()
-      .map(session => !!session.participants[uid]);
+      .pipe(
+        tap(session => console.log("Session: ", session)),
+        map(session => !!session.participants[uid])
+      );
   }
 }

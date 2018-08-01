@@ -76,6 +76,7 @@ export class DashboardEffects {
         )
       )
     ),
+    filter(changes => !!changes),
     mergeAll(),
     map(change => {
       const id = change.payload.doc.id;
@@ -91,6 +92,7 @@ export class DashboardEffects {
           return new ModifiedHistoryItemAction({ update: { id, changes } });
 
         case "removed":
+          this.store.dispatch(new LoadHistoryItemsAction());
           return new RemovedHistoryItemAction({
             historyItemId: historyItem.sessionId
           });
@@ -109,7 +111,6 @@ export class DashboardEffects {
               historyItemId: action.sessionLink
             })
         ),
-        // map(() => new LoadHistoryItemsAction()),
         catchError(error =>
           of(new DeleteSessionErrorAction({ message: error.message }))
         )
