@@ -1,23 +1,21 @@
 app-select-task-list {
+
+	
 	ion-list.list {
 		margin: 0;
 		width: 100%;
 
 		ion-list-header.list-header {
-			background-color: $primary-orange;
-			padding: 1rem 1rem 0rem 1rem;
-			margin-top: 2rem;
 
 			.icon, h2 {
-				color: white;
 				display: inline-block;
+				font-weight: bolder;
 				text-transform: none;
 				vertical-align: middle;
 			}
 
 			ion-label.label {
-				padding: 2rem;
-				margin: 1rem;
+				margin-top: 3rem;
 			}
 		}
 

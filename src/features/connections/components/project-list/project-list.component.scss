@@ -6,7 +6,6 @@ app-project-list {
 		ion-list-header.list-header {
 
 			.icon, h2 {
-				color: $primary-orange;
 				display: inline-block;
 				font-weight: bolder;
 				text-transform: none;
@@ -14,8 +13,7 @@ app-project-list {
 			}
 
 			ion-label.label {
-				padding: 2rem;
-				margin: 1rem;
+				margin-top: 3rem;
 			}
 		}
   	}
