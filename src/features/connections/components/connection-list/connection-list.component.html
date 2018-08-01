@@ -1,13 +1,18 @@
-<div class="container" padding>
-  <ion-list no-lines>
+<div class="list-headers">
+  <ion-list-header>
+    <h2>Connections</h2>
+  </ion-list-header>
+</div>
 
+<div padding>
+  <ion-list no-lines>
     <ion-list-header text-center>
       <ion-label>
         <ion-icon name="contacts"></ion-icon>
         <h2>Connections</h2>
       </ion-label>
     </ion-list-header>
-
+  
     <!-- existing connection(s)-->
     <ion-item button *ngFor="let connection of connections" (click)="select.emit(connection)">
       <ion-label>
@@ -17,7 +22,7 @@
         <ion-icon name="arrow-dropright"></ion-icon>
       </button>
     </ion-item>
-
+  
     <!-- new connection-->
     <ion-item (click)="add.emit()">
       <ion-label>
@@ -27,12 +32,7 @@
         <ion-icon name="add-circle-outline"></ion-icon>
       </button>
     </ion-item>
-  
   </ion-list>
-
-  <!-- no existing connections -->
-  
-
 </div>
 
 

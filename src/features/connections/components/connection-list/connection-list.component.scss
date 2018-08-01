@@ -37,4 +37,12 @@ app-connection-list {
 			}
 		}
 	}
+
+	.list-headers {
+		margin: 2rem 1rem;
+		
+		ion-list-header.list-header {
+			border-bottom: 2px solid $primary-orange;
+		}
+	}
 }

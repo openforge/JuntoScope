@@ -1,5 +1,12 @@
 
 <div class="container">
+
+  <div class="list-headers">
+    <ion-list-header>
+      <h2>Join Session</h2>
+    </ion-list-header>
+  </div>
+
   <ion-item no-lines>
     <ion-searchbar #codeInput placeholder="Enter Session URL"></ion-searchbar>
     <button ion-button strong item-right class="join" (click)="onJoin(codeInput.value)">Join</button>
