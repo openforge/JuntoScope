@@ -6,6 +6,8 @@ import {
   EventEmitter
 } from "@angular/core";
 
+import moment from "moment";
+
 import { HistoryItem } from "../../../../models/history-item";
 import { SessionUserType } from "../../../../models/user";
 import { SessionStatus } from "../../../../models/scoping-session";
@@ -29,6 +31,10 @@ export class SessionHistoryItemComponent {
 
   get ctaText(): string {
     return this.isComplete() ? "View Results" : "Continue";
+  }
+
+  get formattedTime(): string {
+    return moment(this.time).format("l");
   }
 
   handleOptionsClick() {
