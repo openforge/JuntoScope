@@ -1,12 +1,14 @@
 <p *ngIf="(votes | objKeys).length !== participantCount">{{ (votes | objKeys).length}} of {{ participantCount }} votes counted</p>
 <p *ngIf="(votes | objKeys).length === participantCount">{{ (votes | objKeys).length}} votes</p>
 
-<span *ngFor="let vote of votes | objValues">
-  {{ vote }}
-</span>
+<div class="votes-container">
+  <span *ngFor="let vote of votes | objValues" class="single-vote">
+    {{ vote }}
+  </span>
+</div>
 
-<ng-container *ngIf="(votes | objKeys).length !== participantCount">
-  <span *ngFor="let vote of (getRangeForEmptyVotes(participantCount - (votes | objKeys).length))">
+<div class="votes-container" *ngIf="(votes | objKeys).length !== participantCount">
+  <span class="single-vote" *ngFor="let vote of (getRangeForEmptyVotes(participantCount - (votes | objKeys).length))">
     -
   </span>
-</ng-container>
+</div>

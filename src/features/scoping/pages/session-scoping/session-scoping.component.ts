@@ -16,7 +16,11 @@ import { NavParams, NavController } from "ionic-angular";
 import { Task } from "../../../../models/task";
 
 import * as _ from "lodash";
-import { TIMER_FOR_NEXT_TASK } from "../../../../app/app.constants";
+import {
+  TIMER_FOR_NEXT_TASK,
+  NOT_APPLICABLE,
+  MORE_INFO_NEEDED
+} from "../../../../app/app.constants";
 import { SessionResultsComponent } from "../session-results/session-results.component";
 import { Subject, Subscription } from "rxjs";
 import { DashboardComponent } from "../../../dashboard/pages/dashboard/dashboard.component";
@@ -228,5 +232,13 @@ export class SessionScopingComponent implements OnInit {
     this.next.next();
 
     this.isComplete();
+  }
+
+  needMoreInfo() {
+    this.vote(MORE_INFO_NEEDED);
+  }
+
+  notApplicable() {
+    this.vote(NOT_APPLICABLE);
   }
 }

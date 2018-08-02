@@ -1,0 +1,26 @@
+app-select-result {
+  .select-result-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 2px solid;
+    .single-result {
+      justify-self: center;
+      &.input-result {
+        .result {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          .result-column {
+            grid-column-start: 2;
+            ion-input.input {
+              border: 1px solid;
+              border-radius: 2px;
+            }
+          }
+        }
+      }
+      p {
+        text-align: center;
+      }
+    }
+  }
+}
