@@ -8,6 +8,8 @@ import {
 
 import { Project } from "../../../../models/project";
 import { Connection } from "../../../../models/connection";
+import { ConnectionFacade } from "../../store/connection.facade";
+import { Observable } from "../../../../../node_modules/@firebase/util";
 
 @Component({
   selector: "app-project-list",
@@ -15,7 +17,17 @@ import { Connection } from "../../../../models/connection";
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectListComponent {
+  connection: Connection;
+
+  constructor(private connectionFacade: ConnectionFacade) {}
   @Input() projects: Project[];
-  // @Input() connections: Connection[];
   @Output() select = new EventEmitter<Project>();
+
+  ngOnInit() {
+    this.connectionFacade.selectedConnection$
+      .subscribe(con => {
+        this.connection = con;
+      })
+      .unsubscribe();
+  }
 }

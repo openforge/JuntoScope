@@ -12,17 +12,17 @@
         <h2>Connections</h2>
       </ion-label>
     </ion-list-header>
-  
+
     <!-- existing connection(s)-->
     <ion-item button *ngFor="let connection of connections" (click)="select.emit(connection)">
       <ion-label>
-        {{ connection.externalData.company }} - {{ connection.type }}
+        {{ connection.externalData.company }} - {{ connection.type | titlecase }}
       </ion-label>
       <button ion-button item-end>
         <ion-icon name="arrow-dropright"></ion-icon>
       </button>
     </ion-item>
-  
+
     <!-- new connection-->
     <ion-item (click)="add.emit()">
       <ion-label>

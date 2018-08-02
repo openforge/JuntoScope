@@ -2,8 +2,7 @@
   <ion-list-header text-center no-lines>
     <ion-label>
       <ion-icon name="contacts"></ion-icon>
-      <!-- Dev : the h2 should have the company name and type -->
-      <h2>Connections</h2>
+      <h2>{{ connection.externalData.company }} - {{connection.type | titlecase }}</h2>
     </ion-label>
   </ion-list-header>
 
