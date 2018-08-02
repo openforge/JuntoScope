@@ -10,6 +10,7 @@ import { ConnectionFacade } from "../../store/connection.facade";
 import { TaskList } from "../../../../models/task-list";
 import { Connection } from "../../../../models/connection";
 import { NavParams } from "ionic-angular";
+import { Project } from "../../../../models/project";
 
 @Component({
   selector: "app-select-task-list",
@@ -18,6 +19,7 @@ import { NavParams } from "ionic-angular";
 export class SelectTaskListComponent implements OnInit {
   connectionId: string;
   projectId: string;
+  project: Project;
 
   taskLists$ = this.connectionFacade.selectedConnection$.pipe(
     filter(connection =>
@@ -48,6 +50,9 @@ export class SelectTaskListComponent implements OnInit {
     this.connectionId = this.navParams.get("connectionId");
     this.projectId = this.navParams.get("projectId");
     this.connectionFacade.selectProject(this.connectionId, this.projectId);
+    this.connectionFacade.selectedProject$
+      .subscribe((p: Project) => (this.project = p))
+      .unsubscribe();
   }
 
   handleToggle(checked: boolean, taskList: TaskList) {
@@ -58,7 +63,8 @@ export class SelectTaskListComponent implements OnInit {
     this.connectionFacade.createSession(
       this.connectionId,
       this.projectId,
-      this.taskListIds
+      this.taskListIds,
+      this.project.name
     );
   }
 }

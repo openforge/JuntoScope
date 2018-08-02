@@ -1,7 +1,7 @@
-import * as express from 'express';
+import * as express from "express";
 
-import { addSession } from './add-session';
+import { addSession } from "./add-session";
 
 export const sessionsRouter = express.Router({ mergeParams: true });
 
-sessionsRouter.post('/', addSession);
+sessionsRouter.post("/:projectName", addSession);

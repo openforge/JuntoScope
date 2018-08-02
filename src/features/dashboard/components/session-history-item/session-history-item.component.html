@@ -1,7 +1,7 @@
 <ion-card>
   <ion-card-header>
     <!-- Dev : the h2 should have the project name -->
-    <h2>{{ item.projectId }}</h2>
+    <h2>{{ item.projectName }}</h2>
     <!-- <button ion-fab mini>P</button> -->
     <!-- Design: what should this button be? -->
   </ion-card-header>
@@ -12,7 +12,6 @@
 
   <ion-item>
     <div item-start>
-      <!-- Dev : the h2 should be a readable time ... ideally m/d/y-->
       <p>{{ formattedTime }}</p>
     </div>
     <div item-end style="text-decoration: underline" (click)="handleDetailClick()">

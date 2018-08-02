@@ -71,12 +71,13 @@ export class ConnectionService {
   createSession(
     connectionId: string,
     projectId: string,
-    taskListIds: string[]
+    taskListIds: string[],
+    projectName: string
   ) {
     return this.http.post<{ sessionCode: string; accessCode: string }>(
       `${
         environment.apiBaseUrl
-      }/connections/${connectionId}/projects/${projectId}/sessions`,
+      }/connections/${connectionId}/projects/${projectId}/sessions/${projectName}`,
       { taskListIds }
     );
   }

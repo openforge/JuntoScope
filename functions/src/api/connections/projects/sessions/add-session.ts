@@ -1,33 +1,39 @@
-import * as express from 'express';
+import * as express from "express";
 
-import * as _ from 'lodash';
+import * as _ from "lodash";
 
 import {
   firestore,
   encryptionService,
   sessionService,
-  teamworkService,
-} from './../../../../services';
+  teamworkService
+} from "./../../../../services";
 
 export async function addSession(req: express.Request, res: express.Response) {
   const uid = res.locals.user.uid;
-  const { connectionId, projectId } = req.params;
+  const { connectionId, projectId, projectName } = req.params;
   const { taskListIds } = req.body;
 
   if (!connectionId) {
     return res
       .status(400)
-      .json({ message: 'Connection id is a required parameter.' });
+      .json({ message: "Connection id is a required parameter." });
   }
 
   if (!projectId) {
     return res
       .status(400)
-      .json({ message: 'Project id is a required parameter.' });
+      .json({ message: "Project id is a required parameter." });
+  }
+
+  if (!projectName) {
+    return res
+      .status(400)
+      .json({ message: "Project Name is a required parameter." });
   }
 
   if (!Array.isArray(taskListIds) || taskListIds.length === 0) {
-    return res.status(400).json({ message: 'Task List Ids is required' });
+    return res.status(400).json({ message: "Task List Ids is required" });
   }
 
   const connection = await firestore
@@ -36,14 +42,14 @@ export async function addSession(req: express.Request, res: express.Response) {
     .then(snapshot => snapshot.data());
 
   if (!connection) {
-    return res.status(400).json({ message: 'Invalid connection id.' });
+    return res.status(400).json({ message: "Invalid connection id." });
   }
 
   let sessionTasks;
   let newSession;
   try {
     switch (connection.type) {
-      case 'teamwork': {
+      case "teamwork": {
         const token = encryptionService.decrypt(connection.token);
         const baseUrl = connection.externalData.baseUrl;
 
@@ -66,7 +72,7 @@ export async function addSession(req: express.Request, res: express.Response) {
       }
 
       default: {
-        return res.status(400).json({ message: 'Unknown Connection Type' });
+        return res.status(400).json({ message: "Unknown Connection Type" });
       }
     }
 
@@ -74,7 +80,8 @@ export async function addSession(req: express.Request, res: express.Response) {
       uid,
       connectionId,
       projectId,
-      sessionTasks
+      sessionTasks,
+      projectName
     );
   } catch (error) {
     return res.status(400).json({ message: error });

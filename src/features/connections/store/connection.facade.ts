@@ -179,7 +179,8 @@ export class ConnectionFacade {
         .createSession(
           action.payload.connectionId,
           action.payload.projectId,
-          action.payload.taskListIds
+          action.payload.taskListIds,
+          action.payload.projectName
         )
         .pipe(
           tap(response => {
@@ -292,10 +293,16 @@ export class ConnectionFacade {
   createSession(
     connectionId: string,
     projectId: string,
-    taskListIds: string[]
+    taskListIds: string[],
+    projectName: string
   ) {
     this.store.dispatch(
-      new CreateSessionAction({ connectionId, projectId, taskListIds })
+      new CreateSessionAction({
+        connectionId,
+        projectId,
+        taskListIds,
+        projectName
+      })
     );
   }
 }
