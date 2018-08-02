@@ -1,26 +1,57 @@
 app-select-result {
-  .select-result-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    border-bottom: 2px solid;
-    .single-result {
-      justify-self: center;
-      &.input-result {
-        .result {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          .result-column {
-            grid-column-start: 2;
-            ion-input.input {
-              border: 1px solid;
-              border-radius: 2px;
-            }
-          }
+  // .select-result-container {
+  //   display: grid;
+  //   grid-template-columns: 1fr 1fr 1fr;
+  //   border-bottom: 2px solid;
+  //   .single-result {
+  //     justify-self: center;
+  //     &.input-result {
+  //       .result {
+  //         display: grid;
+  //         grid-template-columns: 1fr 1fr 1fr;
+  //         .result-column {
+  //           grid-column-start: 2;
+  //           ion-input.input {
+  //             border: 1px solid;
+  //             border-radius: 2px;
+  //           }
+  //         }
+  //       }
+  //     }
+  //     p {
+  //       text-align: center;
+  //     }
+  //   }
+  // }
+
+
+  // my attempt at this ...
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+
+    .result {
+      margin: 25px;
+
+      button {
+        height: 60px;
+        width: 70px;
+        margin: 0px;
+        .button-inner {
+          font-size: 35px;
+          font-weight: bolder;
         }
       }
-      p {
-        text-align: center;
+
+      ion-input.input {
+        border: 1px solid;
+        border-radius: 4px;
+        height: 60px;
+        width: 70px;
       }
     }
   }
+
 }
