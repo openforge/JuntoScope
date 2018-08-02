@@ -90,27 +90,20 @@ export class LoginPage implements OnInit, OnDestroy {
 
   googleLogin() {
     this.authEffects.googleLogin();
-    // let navOptions;
     this.loginSub = this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-      console.log("navOptions: ", navOptions);
       this.navCtrl.push(navOptions.path[0]);
-      // navOptions = navOptions;
     });
   }
 
   facebookLogin() {
     this.authEffects.facebookLogin();
 
-    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-      // this.routerFacade.navigate(navOptions);
-    });
+    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
 
   twitterLogin() {
     this.authEffects.twitterLogin();
 
-    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-      // this.routerFacade.navigate(navOptions);
-    });
+    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
 }

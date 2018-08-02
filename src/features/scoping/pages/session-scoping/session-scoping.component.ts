@@ -10,7 +10,7 @@ import { AuthQuery } from "../../../authentication/store/auth.reducer";
 import { User } from "../../../../models/user";
 import { ScopingFacade } from "../../store/scoping.facade";
 
-import { take, debounceTime, switchMap, share, concat } from "rxjs/operators";
+import { distinctUntilChanged, sample } from "rxjs/operators";
 import { ParticipantState } from "../../store/scoping.reducer";
 import { NavParams, NavController } from "ionic-angular";
 import { Task } from "../../../../models/task";
@@ -29,6 +29,8 @@ export class SessionScopingComponent implements OnInit {
   _ = _;
   sessionSub: Subscription;
   participantSub: Subscription;
+  otherSub: Subscription;
+
   sessionObservable$: Observable<ScopingSession>;
   error$ = this.scopingFacade.error$;
   uiState$ = this.scopingFacade.uiState$;
@@ -53,6 +55,8 @@ export class SessionScopingComponent implements OnInit {
   estimateSubmitted = false;
   timerOn = false;
 
+  next: Subject<void> = new Subject();
+
   constructor(
     private store: Store<AppState>,
     private scopingFacade: ScopingFacade,
@@ -61,48 +65,9 @@ export class SessionScopingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.refresh.next();
     this.user$ = this.store.pipe(select(AuthQuery.selectUser));
     this.user$.subscribe(user => {
       this.user = user;
-    });
-
-    this.sessionObservable$ = this.session$.pipe(debounceTime(500));
-
-    this.sessionSub = this.sessionObservable$.subscribe(session => {
-      if (session && session.currentTaskId && this.user) {
-        console.log("session: ", session);
-        this.session = session;
-        this.isModerator = session.ownerId === this.user.uid;
-        this.taskId = this.session.currentTaskId;
-        this.task = this.session.tasks[this.taskId];
-
-        // Check if all tasks are estimated
-        this.isComplete();
-        // Check if user submitted vote
-        this.didVote();
-
-        console.log(this.scopedCount);
-        console.log(this.session.numScopedTasks);
-
-        if (this.scopedCount === undefined) {
-          this.scopedCount = this.session.numScopedTasks;
-        } else if (this.scopedCount < this.session.numScopedTasks) {
-          this.scopedCount = this.session.numScopedTasks;
-          this.estimateSubmitted = true;
-        } else {
-          this.estimateSubmitted = false;
-        }
-
-        // if has voted and estimate submitted, go to next task
-        if (this.estimateSubmitted) {
-          console.log("setting timer...");
-          this.timerOn = true;
-          setTimeout(() => {
-            this.nextTask();
-          }, TIMER_FOR_NEXT_TASK);
-        }
-      }
     });
 
     this.sessionCode = this.navParams.get("sessionUrl");
@@ -114,20 +79,81 @@ export class SessionScopingComponent implements OnInit {
         this.scopingFacade.loadSession(this.sessionCode);
       }
     });
+
+    this.sessionObservable$ = this.session$.pipe(
+      // distinctUntilChanged(),
+      sample(this.next)
+    );
+
+    // Sets next task
+    this.otherSub = this.session$.subscribe(session => {
+      console.log("new millenial fired");
+
+      if (session && session.tasks) {
+        if (!this.session) {
+          this.session = session;
+          this.isModerator = session.ownerId === this.user.uid;
+          this.taskId = this.session.currentTaskId;
+          this.task = this.session.tasks[this.taskId];
+        }
+
+        const task = session.tasks ? session.tasks[this.taskId] : null;
+
+        if (task) {
+          this.didVote(task);
+        }
+
+        if (this.scopedCount === undefined) {
+          this.scopedCount = session.numScopedTasks;
+        } else if (this.scopedCount < session.numScopedTasks) {
+          this.scopedCount = session.numScopedTasks;
+          this.estimateSubmitted = true;
+        } else {
+          this.estimateSubmitted = false;
+        }
+
+        // if has voted and estimate submitted, go to next task
+        if (this.estimateSubmitted) {
+          console.log("setting timer!");
+          setTimeout(() => {
+            this.nextTask();
+          }, TIMER_FOR_NEXT_TASK);
+        }
+      }
+    });
+
+    // Loads session, sets current task
+    this.sessionSub = this.sessionObservable$.subscribe(session => {
+      console.log("old fart fired");
+      if (session && session.currentTaskId && this.user) {
+        console.log("loading session");
+        this.session = session;
+        this.isModerator = session.ownerId === this.user.uid;
+        this.taskId = this.session.currentTaskId;
+        this.task = this.session.tasks[this.taskId];
+
+        // Check if all tasks are estimated
+        this.isComplete();
+        // Check if user submitted vote
+        // this.didVote(this.task);
+      }
+    });
   }
 
-  IonViewDidLeave() {
-    console.log("did this run?");
+  unsub() {
     if (this.sessionSub) {
-      console.log("Unsubscribing!");
       this.sessionSub.unsubscribe();
     }
     if (this.participantSub) {
       this.participantSub.unsubscribe();
     }
+    if (this.otherSub) {
+      this.otherSub.unsubscribe();
+    }
   }
 
   goDashboard() {
+    this.unsub();
     this.navCtrl.push(DashboardComponent);
   }
 
@@ -135,7 +161,6 @@ export class SessionScopingComponent implements OnInit {
     // Are all tasks estimated?
     if (this.session.numTasks === this.session.numScopedTasks) {
       if (this.sessionSub) {
-        console.log("Unsubscribing!");
         this.sessionSub.unsubscribe();
       }
       this.navCtrl.push(SessionResultsComponent);
@@ -177,14 +202,13 @@ export class SessionScopingComponent implements OnInit {
     this.scopingFacade.validateSession(sessionValidation);
   }
 
-  didVote() {
+  didVote(task) {
     let votes;
     let voteValue;
 
-    if (!this.task.votes) {
-      console.log("there are no votes");
+    if (!task.votes) {
     } else {
-      votes = this.task.votes;
+      votes = task.votes;
       voteValue = votes[this.user.uid];
     }
 
@@ -198,14 +222,11 @@ export class SessionScopingComponent implements OnInit {
   }
 
   nextTask() {
-    console.log("Next task");
-
-    this.taskId = this.session.currentTaskId;
-    this.task = this.session.tasks[this.taskId];
-
+    console.log("next task...");
+    this.hasVoted = false;
     this.estimateSubmitted = false;
+    this.next.next();
 
     this.isComplete();
-    this.timerOn = false;
   }
 }

@@ -1,6 +1,6 @@
-import * as express from 'express';
+import * as express from "express";
 
-import { sessionService } from '../../services';
+import { sessionService } from "../../services";
 
 export async function deleteSession(
   req: express.Request,
@@ -10,7 +10,7 @@ export async function deleteSession(
   const sessionLink = req.params.sessionLink;
 
   if (!sessionLink) {
-    return res.status(400).json({ message: 'Session Link is required.' });
+    return res.status(400).json({ message: "Session Link is required." });
   }
 
   try {
@@ -19,5 +19,5 @@ export async function deleteSession(
     return res.status(400).json({ message: error });
   }
 
-  return res.send(204);
+  return res.sendStatus(204);
 }
