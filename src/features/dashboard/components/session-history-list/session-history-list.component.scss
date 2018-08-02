@@ -4,10 +4,9 @@ app-session-history-list {
 		ion-list.list {
 			border: 2px solid $primary-orange;
 
-			h2 {
-				color: $primary-orange;
+			ion-list-header.list-header h2 {
 				font-size: 2rem;
-				font-style: italic;
+				font-weight: bolder;
 				margin-left: 12px;
 				margin-top: 1rem;
 			}
