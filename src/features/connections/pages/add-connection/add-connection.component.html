@@ -7,13 +7,26 @@
 <ion-content>
 
   <ng-container *ngIf="!type" class="select">
-    <!-- consult design team about this design for selecting the type -->
-    <ion-item (click)="setType('teamwork')" padding>
-      <ion-label>Teamwork</ion-label>
-      <button ion-button clear item-end>
-        <ion-icon name="add-circle-outline"></ion-icon>
-      </button>
-    </ion-item>
+    <!-- TODO: consult design team about this design for selecting the type -->
+    <h2>NEEDS STYLE!</h2>
+
+    <p>
+      This is instructions / description of connections. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+      Integer bibendum pretium dolor. Nullam faucibus turpis tellus, 
+      eu venenatis ipsum convallis et. Nulla ut dolor pharetra, congue orci pretium, 
+      vehicula erat. Donec dignissim, felis iaculis sagittis lobortis, turpis mi 
+      molestie ante, eget viverra mauris erat sodales orci. Fusce tincidunt quam id 
+      eros condimentum, eu consectetur tortor dignissim. Pellentesque habitant morbi 
+      tristique senectus et netus et malesuada fames ac turpis egestas. Aenean laoreet 
+      nisl non feugiat accumsan. Donec non neque venenatis, imperdiet tortor vel, 
+      pellentesque erat. Praesent viverra metus in lacus pellentesque, a consectetur 
+      metus molestie. Sed vehicula magna justo, quis condimentum augue vulputate ac. 
+      Sed hendrerit purus vitae egestas tempus. Morbi commodo nec nisi eget varius. 
+      Integer imperdiet sed nunc sit amet posuere. Pellentesque consectetur tincidunt mauris, 
+      venenatis ultrices tortor luctus sed. Nulla molestie euismod facilisis.
+    </p>
+
+    <button ion-button class="submit-btn" (click)="setType('teamwork')">Teamwork</button>
   </ng-container>
   
   <ng-container *ngIf="type">
@@ -35,7 +48,7 @@
 
       <a href="">Where do I find this?</a>
 
-      <button ion-button type="submit">SUBMIT</button>
+      <button ion-button type="submit" class="submit-btn">SUBMIT</button>
     </form>
   </ng-container>
 </ion-content>
