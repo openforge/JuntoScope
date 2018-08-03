@@ -1,29 +1,3 @@
-<!-- <p>Results:</p>
-<div class="select-result-container">
-  <div class="single-result" [class.selected]="selectedResult === SELECTED_RESULT.AVG_RESULT">
-    <button ion-button outline (click)="selectAvg($event)">{{avg}}</button>
-    <p>Average</p>
-  </div>
-  <div class="single-result" [class.selected]="selectedResult === SELECTED_RESULT.MAX_RESULT">
-    <button ion-button outline (click)="selectMax($event)">{{max}}</button>
-    <p>Max</p>
-  </div>
-  <div class="single-result input-result" [class.selected]="selectedResult === SELECTED_RESULT.CUSTOM_RESULT">
-    <form [formGroup]="selectionForm" (submit)="selectCustom()">
-      <div class="result">
-        <div class="result-column">
-            <ion-input class="form-control" type="number" formControlName="custom" name="custom"></ion-input>
-        </div>
-      </div>
-      <p>Custom</p>
-    </form>
-  </div>
-</div> -->
-
-
-<!-- my attempt at this -->
-<!-- thinking ... maybe we can have the button / input in one row-->
-<!-- then the label / p / text associated it within the row aligned up -->
 <p>Results:</p>
 <div class="container">
   <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.AVG_RESULT">
