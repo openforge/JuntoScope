@@ -7,7 +7,7 @@
 <ion-content padding text-center>
   <div class="content">
     <p>
-      First, we need a way of identifying your participation. 
+      First, we need a way of identifying your participation.
       Please sign in with:
     </p>
 
@@ -15,29 +15,29 @@
       <button ion-button (click)="facebookLogin()" [disabled]="!hasAgreed">
         Facebook
       </button>
-    
+
       <button ion-button (click)="googleLogin()" [disabled]="!hasAgreed">
         Google
       </button>
-    
+
       <button ion-button (click)="twitterLogin()" [disabled]="!hasAgreed">
         Twitter
       </button>
     </ion-list>
-    
-      
+
+
     <!-- <p *ngIf="loading$ | async">
       Authenticating ...
     </p>
-  
+
     <p *ngIf="authError$ | async as message">
       Auth Error: {{ message }}
     </p> -->
-      
-    
-    <form [formGroup]="agreeForm">
+
+
+    <form>
       <ion-item>
-        <ion-checkbox class="form-control" formControlName="agree" name="agree"></ion-checkbox>
+        <ion-checkbox class="form-control"  [(ngModel)]="hasAgreed" name="agree" ></ion-checkbox>
         <ion-label text-right>I Agree</ion-label>
       </ion-item>
     </form>
@@ -48,5 +48,5 @@
       <a (click)="goToPrivacy()"> Privacy Policy</a>
     </div>
   </div>
-      
+
 </ion-content>

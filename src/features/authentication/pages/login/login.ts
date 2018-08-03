@@ -27,15 +27,9 @@ import { Subscription } from "rxjs";
   providers: [],
   templateUrl: "./login.html"
 })
-export class LoginPage implements OnInit, OnDestroy {
-  agreeForm: FormGroup;
+export class LoginPage implements OnDestroy {
   userSub: Subscription;
   loginSub: Subscription;
-  // loading$ = this.authFacade.uiState$.pipe(
-  //   map(uiState => uiState === AuthUiState.LOADING)
-  // );
-
-  // authError$ = this.authFacade.error$;
   hasAgreed = false;
 
   user$ = this.authEffects.user$;
@@ -54,30 +48,15 @@ export class LoginPage implements OnInit, OnDestroy {
   );
 
   constructor(
-    private fb: FormBuilder,
     private appEffects: AppEffects,
     private authEffects: AuthEffects,
     private navCtrl: NavController,
     private navParams: NavParams
   ) {}
 
-  ngOnInit() {
-    this.createForm();
-  }
-
   ngOnDestroy() {
     this.userSub.unsubscribe();
     this.loginSub.unsubscribe();
-  }
-
-  createForm() {
-    this.agreeForm = this.fb.group({
-      agree: ["", Validators.required]
-    });
-
-    this.agreeForm.valueChanges.subscribe(data => {
-      this.hasAgreed = data.agree;
-    });
   }
 
   goToTerms() {
