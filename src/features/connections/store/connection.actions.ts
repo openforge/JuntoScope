@@ -78,6 +78,7 @@ export class CreateSessionAction implements Action {
       connectionId: string;
       projectId: string;
       taskListIds: string[];
+      projectName: string;
     }
   ) {}
 }
