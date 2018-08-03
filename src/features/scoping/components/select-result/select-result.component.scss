@@ -24,7 +24,6 @@ app-select-result {
   //   }
   // }
 
-
   // my attempt at this ...
   .container {
     display: flex;
@@ -39,6 +38,7 @@ app-select-result {
         height: 60px;
         width: 70px;
         margin: 0px;
+        border-radius: 4px;
         .button-inner {
           font-size: 35px;
           font-weight: bolder;
@@ -50,8 +50,12 @@ app-select-result {
         border-radius: 4px;
         height: 60px;
         width: 70px;
+        input {
+          height: calc(100% - 8px - 16px);
+          font-size: 35px;
+          font-weight: bolder;
+        }
       }
     }
   }
-
 }

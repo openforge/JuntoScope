@@ -35,9 +35,7 @@
     <p>Max</p>
   </div>
   <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.CUSTOM_RESULT">
-    <form [formGroup]="selectionForm" (submit)="selectCustom()">
-      <ion-input text-center class="form-control" type="number" formControlName="custom" name="custom"></ion-input>
-      <p>Custom</p>
-    </form>
+    <ion-input text-center type="number" name="custom" (ionChange)="onChangeValue($event)"></ion-input>
+    <p>Custom</p>
   </div>
 </div>

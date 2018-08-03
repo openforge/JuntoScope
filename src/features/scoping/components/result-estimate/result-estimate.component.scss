@@ -4,19 +4,21 @@ app-result-estimate {
     flex-direction: column;
     align-items: center;
     border-bottom: 2px solid;
-    h2 {
+    h2,
+    h3 {
       text-transform: uppercase;
+    }
+    p {
+      text-transform: capitalize;
     }
     .hours-estimate {
       display: flex;
       p {
         margin-right: 5px;
         padding: 5px 10px 5px 10px;
-        border: 1px solid;
         border-radius: 6px;
-        &:last-child {
-          text-transform: capitalize;
-          border: none;
+        &.box-estimate {
+          border: 1px solid;
         }
       }
     }
