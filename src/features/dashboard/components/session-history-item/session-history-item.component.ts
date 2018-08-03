@@ -25,8 +25,24 @@ export class SessionHistoryItemComponent {
   @Output() options = new EventEmitter<SessionUserType>();
   @Output() detail = new EventEmitter<SessionStatus>();
 
+  get isSessionOwner(): boolean {
+    return this.item && this.item.ownerId === this.uid;
+  }
+
+  get sessionUserType():
+    | SessionUserType.MODERATOR
+    | SessionUserType.PARTICIPANT {
+    return this.isSessionOwner
+      ? SessionUserType.MODERATOR
+      : SessionUserType.PARTICIPANT;
+  }
+
   get sessionStatus(): string {
     return this.isComplete() ? "Complete" : "Incomplete";
+  }
+
+  get sessionRoleAbbreviation(): string {
+    return this.sessionUserType === SessionUserType.MODERATOR ? "M" : "P";
   }
 
   get ctaText(): string {
@@ -38,12 +54,7 @@ export class SessionHistoryItemComponent {
   }
 
   handleOptionsClick() {
-    const userType =
-      this.item.ownerId === this.uid
-        ? SessionUserType.MODERATOR
-        : SessionUserType.PARTICIPANT;
-
-    this.options.emit(userType);
+    this.options.emit(this.sessionUserType);
   }
 
   handleDetailClick() {
