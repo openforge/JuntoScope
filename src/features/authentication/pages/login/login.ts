@@ -16,6 +16,8 @@ import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
 import { AppEffects } from "../../../../store/app.effects";
 import { Subscription } from "rxjs";
+import { Actions } from "@ngrx/effects";
+import { AuthActionTypes } from "../../store/auth.actions";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -53,13 +55,23 @@ export class LoginPage implements OnInit, OnDestroy {
     })
   );
 
+  redirectSubs: Subscription;
+
   constructor(
     private fb: FormBuilder,
     private appEffects: AppEffects,
     private authEffects: AuthEffects,
     private navCtrl: NavController,
-    private navParams: NavParams
-  ) {}
+    private navParams: NavParams,
+    private actions$: Actions
+  ) {
+    this.redirectSubs = this.actions$
+      .ofType(AuthActionTypes.AUTHENTICATED)
+      .subscribe(() => {
+        this.redirectSubs.unsubscribe();
+        this.navCtrl.push("DashboardComponent");
+      });
+  }
 
   ngOnInit() {
     this.createForm();
@@ -90,9 +102,6 @@ export class LoginPage implements OnInit, OnDestroy {
 
   googleLogin() {
     this.authEffects.googleLogin();
-    this.loginSub = this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-      this.navCtrl.push(navOptions.path[0]);
-    });
   }
 
   facebookLogin() {
