@@ -72,7 +72,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
   createForm() {
     this.agreeForm = this.fb.group({
-      agree: ["", Validators.required]
+      agree: [false, Validators.required]
     });
 
     this.agreeForm.valueChanges.subscribe(data => {
