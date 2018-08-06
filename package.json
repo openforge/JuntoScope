@@ -1,6 +1,6 @@
 {
   "name": "juntoscope",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "OpenForge",
   "license": "MIT",
   "homepage": "http://openforge.io/",
@@ -45,6 +45,7 @@
     "@ngrx/store-devtools": "6.0.0-beta.1",
     "angularfire2": "5.0.0-rc.4",
     "core-js": "2.5.3",
+    "cordova-ios": "4.5.5",
     "firebase": "4.12.1",
     "functions": "file:functions",
     "ionic-angular": "3.9.2",
