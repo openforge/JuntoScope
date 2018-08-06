@@ -14,6 +14,13 @@ app-vote {
         box-shadow: inset 5px 5px 13px -8px rgba(0, 0, 0, 0.75);
         background: #f2f2f2;
         margin-right: 10px;
+        input {
+          font-size: 16px;
+          font-weight: 500;
+        }
+        input::placeholder {
+          color: #999999;
+        }
       }
     }
   }
