@@ -27,14 +27,6 @@ export class VoteComponent implements OnInit {
     });
   }
 
-  needMoreInfo() {
-    this.vote.emit(MORE_INFO_NEEDED);
-  }
-
-  notApplicable() {
-    this.vote.emit(NOT_APPLICABLE);
-  }
-
   sendVote() {
     this.vote.emit(this.voteForm.value.estimate);
   }

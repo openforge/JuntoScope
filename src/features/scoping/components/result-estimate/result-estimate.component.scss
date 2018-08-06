@@ -1,0 +1,36 @@
+app-result-estimate {
+  .result-estimate-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 2px solid;
+    h2,
+    h3 {
+      text-transform: uppercase;
+    }
+    p {
+      text-transform: capitalize;
+      font-size: 16px;
+    }
+    .hours-estimate {
+      display: flex;
+      p {
+        margin-right: 5px;
+        padding: 10px 15px 10px 15px;
+        font-size: 18px;
+        position: absolute;
+        margin-left: 50px;
+        &.box-estimate {
+          position: initial;
+          margin-left: 0px;
+          border: 1px solid;
+          font-weight: bold;
+          padding: 15px 20px 15px 20px;
+          font-size: 25px;
+          border-radius: 6px;
+          margin-bottom: 0px;
+        }
+      }
+    }
+  }
+}

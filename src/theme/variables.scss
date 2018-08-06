@@ -5,12 +5,10 @@
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
 
-
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
-
 
 @import "ionic.globals";
 
@@ -19,8 +17,6 @@ $app-direction: ltr;
 $sm-min: 769px;
 $md-min: 992px;
 $lg-min: 1200px;
-
-
 
 // Named Color Variables
 // --------------------------------------------------
@@ -31,14 +27,15 @@ $lg-min: 1200px;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #C94313,
-  secondary:  #F1652D,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
+  primary: #c94313,
+  secondary: #f1652d,
+  danger: #f53d3d,
+  light: #f4f4f4,
+  dark: #222,
+  white: #ffffff
 );
 
-$primary-orange: #C94313;
+$primary-orange: #c94313;
 
 // Shared Variables
 // --------------------------------------------------
@@ -50,7 +47,6 @@ $primary-orange: #C94313;
 // primary textcolor
 $text-color: $primary-orange;
 $text-input-placeholder-color: $primary-orange;
-
 
 // App iOS Variables
 // --------------------------------------------------
@@ -68,7 +64,6 @@ $item-ios-detail-push-color: $primary-orange;
 // Input
 $text-input-ios-input-clear-icon-color: $primary-orange;
 $text-input-ios-highlight-color: gray;
-
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -92,7 +87,6 @@ $checkbox-md-icon-border-color-off: $primary-orange;
 $text-input-md-input-clear-icon-color: $primary-orange;
 $text-input-md-highlight-color: gray;
 
-
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
@@ -112,7 +106,6 @@ $item-wp-detail-push-color: $primary-orange;
 $text-input-wp-input-clear-icon-color: $primary-orange;
 $text-input-wp-highlight-color: gray;
 
-
 // App Theme
 // --------------------------------------------------
 // Ionic apps can have different themes applied, which can
@@ -122,14 +115,12 @@ $text-input-wp-highlight-color: gray;
 
 @import "ionic.theme.default";
 
-
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/ionicons/
 
 @import "ionic.ionicons";
-
 
 // Fonts
 // --------------------------------------------------
@@ -138,62 +129,62 @@ $text-input-wp-highlight-color: gray;
 @import "noto-sans";
 
 @font-face {
-  font-family: 'Avenir Next';
-  src: local('Avenir Next Bold'),
-       url('../assets/fonts/Avenir-Next/bold.woff2') format('woff2'),
-       url('../assets/fonts/Avenir-Next/bold.woff') format('woff'),
-       url('../assets/fonts/Avenir-Next/bold.ttf') format('ttf'),
-       url('../assets/fonts/Avenir-Next/bold.eot?#iefix') format('eot');
+  font-family: "Avenir Next";
+  src: local("Avenir Next Bold"),
+    url("../assets/fonts/Avenir-Next/bold.woff2") format("woff2"),
+    url("../assets/fonts/Avenir-Next/bold.woff") format("woff"),
+    url("../assets/fonts/Avenir-Next/bold.ttf") format("ttf"),
+    url("../assets/fonts/Avenir-Next/bold.eot?#iefix") format("eot");
   font-weight: 700;
-  unicode-range: U+000-5FF;
+  unicode-range: U + 000-5ff;
 }
 @font-face {
-  font-family: 'Avenir Next';
-  src: local('Avenir Next Demi Bold'),
-       url('../assets/fonts/Avenir-Next/demi.woff2') format('woff2'),
-       url('../assets/fonts/Avenir-Next/demi.woff') format('woff'),
-       url('../assets/fonts/Avenir-Next/demi.ttf') format('ttf'),
-       url('../assets/fonts/Avenir-Next/demi.eot?#iefix') format('eot');
+  font-family: "Avenir Next";
+  src: local("Avenir Next Demi Bold"),
+    url("../assets/fonts/Avenir-Next/demi.woff2") format("woff2"),
+    url("../assets/fonts/Avenir-Next/demi.woff") format("woff"),
+    url("../assets/fonts/Avenir-Next/demi.ttf") format("ttf"),
+    url("../assets/fonts/Avenir-Next/demi.eot?#iefix") format("eot");
   font-weight: 600;
-  unicode-range: U+000-5FF;
+  unicode-range: U + 000-5ff;
 }
 @font-face {
-  font-family: 'Avenir Next';
-  src: local('Avenir Next Medium'),
-       url('../assets/fonts/Avenir-Next/medium.woff') format('woff'),
-       url('../assets/fonts/Avenir-Next/medium.ttf') format('truetype'),
-       url('../assets/fonts/Avenir-Next/medium.eot?#iefix') format('eot');
+  font-family: "Avenir Next";
+  src: local("Avenir Next Medium"),
+    url("../assets/fonts/Avenir-Next/medium.woff") format("woff"),
+    url("../assets/fonts/Avenir-Next/medium.ttf") format("truetype"),
+    url("../assets/fonts/Avenir-Next/medium.eot?#iefix") format("eot");
   font-weight: 500;
-  unicode-range: U+000-5FF;
+  unicode-range: U + 000-5ff;
 }
 @font-face {
-  font-family: 'Avenir Next';
-  src: local('Avenir Next Regular'),
-       url('../assets/fonts/Avenir-Next/regular.woff') format('woff'),
-       url('../assets/fonts/Avenir-Next/regular.ttf') format('ttf'),
-       url('../assets/fonts/Avenir-Next/regular.eot?#iefix') format('eot');
+  font-family: "Avenir Next";
+  src: local("Avenir Next Regular"),
+    url("../assets/fonts/Avenir-Next/regular.woff") format("woff"),
+    url("../assets/fonts/Avenir-Next/regular.ttf") format("ttf"),
+    url("../assets/fonts/Avenir-Next/regular.eot?#iefix") format("eot");
   font-weight: 400;
-  unicode-range: U+000-5FF;
+  unicode-range: U + 000-5ff;
 }
 @font-face {
-  font-family: 'Avenir Next';
-  src: local('Avenir Next Thin'),
-       url('../assets/fonts/Avenir-Next/thin.woff2') format('woff2'),
-       url('../assets/fonts/Avenir-Next/thin.woff') format('woff'),
-       url('../assets/fonts/Avenir-Next/thin.ttf') format('ttf'),
-       url('../assets/fonts/Avenir-Next/thin.eot?#iefix') format('eot');
+  font-family: "Avenir Next";
+  src: local("Avenir Next Thin"),
+    url("../assets/fonts/Avenir-Next/thin.woff2") format("woff2"),
+    url("../assets/fonts/Avenir-Next/thin.woff") format("woff"),
+    url("../assets/fonts/Avenir-Next/thin.ttf") format("ttf"),
+    url("../assets/fonts/Avenir-Next/thin.eot?#iefix") format("eot");
   font-weight: 300;
-  unicode-range: U+000-5FF;
+  unicode-range: U + 000-5ff;
 }
 @font-face {
-  font-family: 'Avenir Next';
-  src: local('Avenir Next Ultra Light'),
-       url('../assets/fonts/Avenir-Next/ultralight.woff2') format('woff2'),
-       url('../assets/fonts/Avenir-Next/ultralight.woff') format('woff'),
-       url('../assets/fonts/Avenir-Next/ultralight.ttf') format('ttf'),
-       url('../assets/fonts/Avenir-Next/ultralight.eot?#iefix') format('eot');
+  font-family: "Avenir Next";
+  src: local("Avenir Next Ultra Light"),
+    url("../assets/fonts/Avenir-Next/ultralight.woff2") format("woff2"),
+    url("../assets/fonts/Avenir-Next/ultralight.woff") format("woff"),
+    url("../assets/fonts/Avenir-Next/ultralight.ttf") format("ttf"),
+    url("../assets/fonts/Avenir-Next/ultralight.eot?#iefix") format("eot");
   font-weight: 200;
-  unicode-range: U+000-5FF;
+  unicode-range: U + 000-5ff;
 }
 
 $font-family-base: "Avenir Next";
