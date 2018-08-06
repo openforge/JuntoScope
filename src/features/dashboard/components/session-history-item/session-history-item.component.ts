@@ -3,7 +3,8 @@ import {
   ChangeDetectionStrategy,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnInit
 } from "@angular/core";
 
 import { HistoryItem } from "../../../../models/history-item";
@@ -15,13 +16,19 @@ import { SessionStatus } from "../../../../models/scoping-session";
   templateUrl: "./session-history-item.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SessionHistoryItemComponent {
+export class SessionHistoryItemComponent implements OnInit {
   @Input() item: HistoryItem;
   @Input() uid: string;
   @Input() time: number;
 
   @Output() options = new EventEmitter<SessionUserType>();
   @Output() detail = new EventEmitter<SessionStatus>();
+
+  abbreviation;
+
+  ngOnInit() {
+    this.abbreviation = this.item.ownerId === this.uid ? "M" : "P";
+  }
 
   get sessionStatus(): string {
     return this.isComplete() ? "Complete" : "Incomplete";
