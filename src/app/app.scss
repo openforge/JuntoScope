@@ -1,5 +1,6 @@
 // http://ionicframework.com/docs/theming/
 
+
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -13,3 +14,185 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+// 1. Text
+// --------------------------------------------------
+// All styles related to text
+
+// Ionicons
+ion-icon {
+    font-size: 25px;
+  }
+  
+  
+  // Text Weight
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  a,
+  .item {
+    color: $primary-orange;
+    font-weight: 500;
+  }
+  
+  h1, h2 {
+    font-weight: 800;
+  }
+  
+  p {
+    line-height: 21px;
+  }
+  
+  a {
+    font-weight: 500;
+  }
+  
+  // 2. Buttons
+  // --------------------------------------------------
+  // All styles related to buttons
+  
+  // .button-ios {
+  //     margin: 0rem;
+  // }
+  
+  // // Wide Buttons
+  // .wide-button {
+  //   font-weight: 800;
+  //   width: 70%;
+  // }
+  
+  // iOs buttons
+  // .button-ios.button-block-ios.button-default,
+  // .button-wp.button-block-wp.button-default {
+  // 	text-transform: uppercase;
+  // 	margin: 0rem;
+      
+  // }
+  
+  // .button-ios.button-block-ios.button-clear,
+  // .button-wp.button-block-wp.button-clear {
+  //   text-transform: uppercase;
+  // 	margin: 0rem;
+  // }
+  
+  // 2. End Buttons
+  // **************************************************
+  
+  // 3. Header
+  // --------------------------------------------------
+  // All styles related to the header
+  
+  // ios Header
+  ion-header .toolbar-ios {
+  
+      // Background color
+    .toolbar-background-ios {
+      background: $primary-orange;
+      border: none;
+    }
+  
+    // Title
+    .toolbar-title-ios {
+      // overflow: visible;
+      color: white;
+      font-size: 16px;
+      text-transform: capitalize;
+    }
+  
+    // Buttons
+    .bar-button-default-ios, 
+    .bar-button-default
+    .bar-button-ios-default, 
+    .bar-button-clear-ios-default {
+      color: white;
+    }
+  }
+  
+  // md + wp Header
+  ion-header ion-navbar.toolbar-md,
+  ion-header ion-navbar.toolbar-wp {
+  
+    // Background color
+    .toolbar-background {
+      background: $primary-orange;
+      border: none;
+    }
+  
+    // Title
+    .toolbar-title {
+      color: white;
+      font-size: 16px;
+      text-transform: capitalize;
+    }
+  
+      // Buttons
+    .bar-button-default-md,
+    .bar-button-clear-md-default,
+    .bar-button-md-default,
+    .bar-button-default-wp,
+    .bar-button-clear-wp-default,
+    .bar-button-wp-default {
+      color: white;
+    }
+  }
+  
+  // 3. End Header
+  // **************************************************
+  
+  
+  // 4. Searchbar
+  // --------------------------------------------------
+  // All styles related to the searchbar
+  
+  // ios Searchbar
+  // --------------------------------------------------
+  
+  .searchbar {
+    background-color: white;
+    border: 0.55px solid $primary-orange;
+    border-radius: 10px;
+  }
+  
+  // md Searchbar
+  // --------------------------------------------------
+  
+  .toolbar .searchbar-md {
+    background-color: white;
+    border: 0.55px solid $primary-orange;
+    border-radius: 10px;
+  }
+  
+  // 4. End Searchbar
+  // **************************************************
+  
+  
+  
+  // 5. List Header
+  // --------------------------------------------------
+  // All styles related to the list header
+  
+
+  /// this is for an extra style of a compoent
+  // ion-list-header {
+  //   height: 0px;
+  //   min-height: 0px;
+  // }
+  
+  // 5. End List Header
+  // **************************************************
+  
+  
+  // 6. Checkbox
+  // --------------------------------------------------
+  // All styles related to the checkbox
+  
+  .checkbox-ios, .checkbox-md {
+    @extend.checkbox-md;
+  }
+  
+  // 6. End Checkbox
+  // **************************************************
+  

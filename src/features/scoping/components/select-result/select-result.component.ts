@@ -45,11 +45,10 @@ export class SelectResultComponent implements OnInit {
     this.estimate.emit(this.max);
   }
 
-  selectCustom() {
-    const customControl = this.selectionForm.controls["custom"];
-    if (customControl.valid) {
+  onChangeValue(ev) {
+    if (parseInt(ev.value) < 99) {
       this.selectedResult = SELECTED_RESULT.CUSTOM_RESULT;
-      this.estimate.emit(parseInt(customControl.value, 10));
+      this.estimate.emit(parseInt(ev.value, 10));
     }
   }
 }

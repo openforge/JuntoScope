@@ -1,21 +1,38 @@
-<ion-list>
+<div class="list-headers">
   <ion-list-header>
-    <ion-label>
-      Connections
-    </ion-label>
+    <h2>Connections</h2>
   </ion-list-header>
+</div>
 
-  <ion-item-group>
+<div padding>
+  <ion-list no-lines>
+    <ion-list-header text-center>
+      <ion-label>
+        <ion-icon name="contacts"></ion-icon>
+        <h2>Connections</h2>
+      </ion-label>
+    </ion-list-header>
+  
+    <!-- existing connection(s)-->
     <ion-item button *ngFor="let connection of connections" (click)="select.emit(connection)">
       <ion-label>
         {{ connection.externalData.company }} - {{ connection.type }}
       </ion-label>
+      <button color="white" class="existing-button" outline ion-button item-end icon-only>
+        <ion-icon name="arrow-dropright"></ion-icon>
+      </button>
     </ion-item>
-
-    <ion-item button (click)="add.emit()">
+  
+    <!-- new connection-->
+    <ion-item (click)="add.emit()">
       <ion-label>
-        Add Connection
+        New Connection
       </ion-label>
+      <button ion-button outline item-end icon-only>
+        <ion-icon name="add"></ion-icon>
+      </button>
     </ion-item>
-  </ion-item-group>
-</ion-list>
+  </ion-list>
+</div>
+
+

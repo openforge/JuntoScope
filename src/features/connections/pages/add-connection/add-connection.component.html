@@ -1,37 +1,54 @@
 <ion-header>
   <ion-navbar>
-    <!-- <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons> -->
-    <ion-title>Add Connection</ion-title>
+    <ion-title>New Connection</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-    <ng-container *ngIf="!type">
-      <button ion-button (click)="setType('teamwork')" >Teamwork</button>
-    </ng-container>
-    
-    <ng-container *ngIf="type">
-      <form [formGroup]="connectionForm" (ngSubmit)="continue()">
-        <ion-input class="form-control" type="text" formControlName="token" name="token"></ion-input>
-        
-        <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
-          <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
-            Token is required
-          </h6>
-        </ng-container>
+  <ng-container *ngIf="!type" class="select">
+    <!-- TODO: consult design team about this design for selecting the type -->
+    <h2>NEEDS STYLE!</h2>
 
-        <h6 *ngIf="addError$ | async as error">
-          {{ error }}
+    <p>
+      This is instructions / description of connections. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+      Integer bibendum pretium dolor. Nullam faucibus turpis tellus, 
+      eu venenatis ipsum convallis et. Nulla ut dolor pharetra, congue orci pretium, 
+      vehicula erat. Donec dignissim, felis iaculis sagittis lobortis, turpis mi 
+      molestie ante, eget viverra mauris erat sodales orci. Fusce tincidunt quam id 
+      eros condimentum, eu consectetur tortor dignissim. Pellentesque habitant morbi 
+      tristique senectus et netus et malesuada fames ac turpis egestas. Aenean laoreet 
+      nisl non feugiat accumsan. Donec non neque venenatis, imperdiet tortor vel, 
+      pellentesque erat. Praesent viverra metus in lacus pellentesque, a consectetur 
+      metus molestie. Sed vehicula magna justo, quis condimentum augue vulputate ac. 
+      Sed hendrerit purus vitae egestas tempus. Morbi commodo nec nisi eget varius. 
+      Integer imperdiet sed nunc sit amet posuere. Pellentesque consectetur tincidunt mauris, 
+      venenatis ultrices tortor luctus sed. Nulla molestie euismod facilisis.
+    </p>
+
+    <button ion-button class="submit-btn" (click)="setType('teamwork')">Teamwork</button>
+  </ng-container>
+  
+  <ng-container *ngIf="type">
+
+    <form [formGroup]="connectionForm" (ngSubmit)="continue()">
+      <ion-item no-lines>
+        <ion-input class="form-control" type="text" formControlName="token" name="token" clearInput></ion-input>
+      </ion-item>
+
+      <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
+        <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
+          Token is required
         </h6>
+      </ng-container>
 
-        <p>
-          <button ion-button href="">Where do I find this?</button>
-        </p>
+      <h6 *ngIf="addError$ | async as error">
+        {{ error }}
+      </h6>
 
-        <button ion-button type="submit">Allow access</button>
-      </form>
-    </ng-container>
+      <a href="">Where do I find this?</a>
+
+      <button ion-button type="submit" class="submit-btn">SUBMIT</button>
+    </form>
+  </ng-container>
 </ion-content>

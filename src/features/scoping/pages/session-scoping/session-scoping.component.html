@@ -1,81 +1,92 @@
 <ion-header>
-    <ion-navbar hideBackButton="true">
-        <ion-title>Scoping Session</ion-title>
-        <ion-buttons slot="start">
-            <button ion-button (click)="goDashboard()">
-                Dashboard
-            </button>
-        </ion-buttons>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title>Scoping Session</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-    <ng-container *ngIf="(uiState$ | async) === 'Loading' || participantState === ParticipantState.CHECKING_PARTICIPANT">
+  <ng-container *ngIf="(uiState$ | async) === 'Loading' || participantState === ParticipantState.CHECKING_PARTICIPANT">
 
-        Loading...
+    Loading...
 
-    </ng-container>
+  </ng-container>
 
 
-    <app-session-access *ngIf="participantState === ParticipantState.PARTICIPANT_INVALID" [sessionLink]="sessionCode" (access)="access($event)">
-    </app-session-access>
+  <app-session-access *ngIf="participantState === ParticipantState.PARTICIPANT_INVALID" [sessionLink]="sessionCode" (access)="access($event)">
+  </app-session-access>
 
-    <ng-container *ngIf="participantState === ParticipantState.PARTICIPANT_VALIDATED">
+  <ng-container *ngIf="participantState === ParticipantState.PARTICIPANT_VALIDATED">
 
-        <ng-container *ngIf="(uiState$ | async) !== 'Loading'">
+    <ng-container *ngIf="(uiState$ | async) !== 'Loading'">
 
-            <ng-container *ngIf="session && session.tasks; else noSession">
+      <ng-container *ngIf="session && session.tasks; else noSession">
 
-                <ng-container *ngIf="!hasVoted">
-                    <app-session-header [session]="session"></app-session-header>
-                    <app-task-card [task]="session.tasks[session.currentTaskId]"></app-task-card>
-                    <app-vote (vote)="vote($event)"></app-vote>
-                    <p>{{ (session.tasks[session.currentTaskId].votes | objKeys).length}} of {{ (session.participants | objKeys).length}}
-                        votes counted</p>
-                </ng-container>
+        <ng-container *ngIf="!hasVoted">
+          <app-session-header [session]="session"></app-session-header>
+          <div class="session-info-container">
+            <app-task-card [task]="session.tasks[session.currentTaskId]"></app-task-card>
+            <app-vote (vote)="vote($event)"></app-vote>
+          </div>
+          <div class="session-votes-counted">
+            <p>{{ (session.tasks[session.currentTaskId].votes | objKeys).length}}/{{ (session.participants | objKeys).length}}
+              votes counted</p>
+          </div>
+          <ion-list>
+            <ion-item>
+              Need more info
+              <button ion-button outline round item-end (click)="needMoreInfo()">?</button>
+            </ion-item>
+            <ion-item>
+              Not applicable
+              <button ion-button outline round item-end (click)="notApplicable()">N</button>
+            </ion-item>
+          </ion-list>
+        </ng-container>
 
-                <ng-container *ngIf="hasVoted">
-                    <app-session-header [session]="session"></app-session-header>
-                    <app-task-card [task]="session.tasks[session.currentTaskId]" [onlyTitle]="true"></app-task-card>
-                    <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
-                    
-                    <ng-container *ngIf="isModerator && !session.tasks[session.currentTaskId].estimate">
-                        <app-select-result [avg]="3" [max]="5" (estimate)="setFinalEstimate($event)"></app-select-result>
-                    </ng-container>
-
-                    <app-counted-votes [votes]="session.tasks[session.currentTaskId].votes" [participantCount]="(session.participants | objKeys).length"></app-counted-votes>
-
-                    <ng-container *ngIf="!session.tasks[session.currentTaskId].estimate">
-                        <ion-footer *ngIf="!isModerator">
-                            <ion-toolbar>
-                                <ion-title>Waiting</ion-title>
-                            </ion-toolbar>
-                        </ion-footer>
-                        <ion-footer *ngIf="isModerator">
-                            <ion-toolbar>
-                                <button ion-button [disabled]="!finalEstimate" (click)="saveFinalEstimate()">Submit</button>
-                            </ion-toolbar>
-                        </ion-footer>
-                    </ng-container>
-
-                    <ng-container *ngIf="session.tasks[session.currentTaskId].estimate">
-                        <ion-footer *ngIf="isModerator && session.tasks[session.currentTaskId].estimate">
-                            <ion-toolbar>
-                                <button ion-button>Next task</button>
-                            </ion-toolbar>
-                        </ion-footer>
-                    </ng-container>
-
-                </ng-container>
+        <ng-container *ngIf="hasVoted">
+          <app-session-header [session]="session"></app-session-header>
+          <div class="session-info-container">
+            <app-task-card [task]="session.tasks[session.currentTaskId]" [onlyTitle]="true"></app-task-card>
+            <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
+            
+            <ng-container *ngIf="isModerator && !session.tasks[session.currentTaskId].estimate">
+              <app-select-result [avg]="3" [max]="5" (estimate)="setFinalEstimate($event)"></app-select-result>
             </ng-container>
 
-            <ng-template #noSession>
-                No session found
-            </ng-template>
+            <app-counted-votes [votes]="session.tasks[session.currentTaskId].votes" [participantCount]="(session.participants | objKeys).length"></app-counted-votes>
+
+          </div>
+          <ng-container *ngIf="!session.tasks[session.currentTaskId].estimate">
+            <ion-footer *ngIf="!isModerator" no-border>
+              <ion-toolbar>
+                <ion-title>Waiting</ion-title>
+              </ion-toolbar>
+            </ion-footer>
+            <ion-footer *ngIf="isModerator" no-border>
+              <ion-toolbar>
+                <button ion-button [disabled]="!finalEstimate" (click)="saveFinalEstimate()">Submit</button>
+              </ion-toolbar>
+            </ion-footer>
+          </ng-container>
+
+          <ng-container *ngIf="session.tasks[session.currentTaskId].estimate">
+            <ion-footer *ngIf="isModerator && session.tasks[session.currentTaskId].estimate" no-border>
+              <ion-toolbar>
+                <button ion-button>Next task</button>
+              </ion-toolbar>
+            </ion-footer>
+          </ng-container>
 
         </ng-container>
+      </ng-container>
+
+      <ng-template #noSession>
+        No session found
+      </ng-template>
+
     </ng-container>
+  </ng-container>
 
 
 </ion-content>

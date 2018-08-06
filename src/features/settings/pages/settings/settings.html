@@ -5,21 +5,63 @@
 </ion-header>
 
 <ion-content>
-  <button ion-button (click)="logout()">
-    Logout
-  </button>
 
-  <p>Connections</p>
+  <div class="list-headers">
+    <ion-list-header>
+      <h2>Connections</h2>
+    </ion-list-header>
+  </div>
 
-  <ion-list>
-    <ion-item *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
-      {{connection.externalData.company}} {{connection.type}}
-    </ion-item>
-    <ion-item (click)="addConnection()">
-      Add Connection
-    </ion-item>
-  </ion-list>
+  <div class="connections" padding>
+    <ion-list no-lines>
 
-  <p>FAQ</p>
+      <ion-list-header text-center>
+        <ion-label>
+          <ion-icon name="contacts"></ion-icon>
+          <h2>Connections</h2>
+        </ion-label>
+      </ion-list-header>
+
+      <ion-item *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
+        <ion-label>
+          {{connection.externalData.company}} {{connection.type}}
+        </ion-label>
+        <button ion-button item-end>
+          <ion-icon name="arrow-dropright"></ion-icon>
+        </button>
+      </ion-item>
+
+      <ion-item (click)="addConnection()">
+        <ion-label>
+          New Connection
+        </ion-label>
+        <button ion-button clear item-end>
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+  </div>
+    
+
+  <div class="list-headers">
+    <!-- Design : what should each item do? Go to a separate page? Ecordian with information? -->
+    <!-- Dev : FAQ is hard-coded currently based on designs. Will need feedback on design on implementation ... will also need FAQ pulling from firestore -->
+    <ion-list>
+      <ion-list-header>
+        <h2>FAQ</h2>
+      </ion-list-header>
+
+      <ion-item no-lines detail-push>
+        <p>How do I ...?</p>
+      </ion-item>
+      <ion-item no-lines detail-push>
+        <p>How do I find ..?</p>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="logout" text-center>
+    <button ion-button (click)="logout()">LOG OUT</button>
+  </div> 
 
 </ion-content>

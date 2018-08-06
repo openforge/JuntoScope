@@ -1,0 +1,16 @@
+app-session-history-list {
+	.container {
+
+		ion-list.list {
+			border: 2px solid $primary-orange;
+
+			ion-list-header.list-header h2 {
+				font-size: 2rem;
+				font-weight: bolder;
+				margin-left: 12px;
+				margin-top: 1rem;
+			}
+
+		}
+	}
+}

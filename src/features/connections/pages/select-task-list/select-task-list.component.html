@@ -1,16 +1,33 @@
 <ion-header>
   <ion-navbar>
-    <!-- <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons> -->
     <ion-title>Select Task List</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="taskLists$ | async as taskLists">
-    <app-task-list *ngFor="let taskList of taskLists" [taskList]="taskList" (toggle)="handleToggle($event, taskList)"></app-task-list>
 
-    <button ion-button (click)="startSession()" [disabled]="!taskListIds || taskListIds.length === 0">Start</button>
-  </ion-list>
+  <ng-container *ngIf="taskLists$ | async as taskLists">
+
+    <ion-list>
+      <ion-list-header text-center no-lines>
+        <ion-label>
+          <ion-icon name="contacts"></ion-icon>
+          <!-- Dev : the h2 should have the selected project name -->
+          <h2>Connections</h2>
+        </ion-label>
+      </ion-list-header>
+
+      <app-task-list *ngFor="let taskList of taskLists" [taskList]="taskList" (toggle)="handleToggle($event, taskList)"></app-task-list>
+    </ion-list>
+
+    <div class="start-btn" text-center>
+      <button ion-button (click)="startSession()" [disabled]="!taskListIds || taskListIds.length === 0">START</button>
+    </div>
+  </ng-container>
+
+
+  <!-- TODO: Empty state for no task lists within project -->
+  <ng-container *ngIf="!taskLists$ | async as taskLists">
+    <h2>You have no task lists for this specific project!</h2>
+  </ng-container>
 </ion-content>

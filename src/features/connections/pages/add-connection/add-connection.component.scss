@@ -1,0 +1,26 @@
+app-add-connection {
+  form {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		justify-content: center;
+		width: 100%;
+
+		ion-item.item-block.item[no-lines] {
+			border: 2px solid $primary-orange;
+			border-radius: 10px;
+			height: 8%;
+			margin-bottom: 1rem;
+			width: 90%;
+		}
+		
+		a {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.submit-btn {
+		width: 60%;
+	}
+}

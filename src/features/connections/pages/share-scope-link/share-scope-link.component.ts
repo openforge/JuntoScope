@@ -15,6 +15,7 @@ export class ShareScopeLinkComponent implements OnInit {
   projectName;
   sessionUrl;
   accessCode;
+  accessCodeLetters;
 
   constructor(
     private params: NavParams,
@@ -28,6 +29,7 @@ export class ShareScopeLinkComponent implements OnInit {
     this.projectName = this.params.data.projectName;
     this.sessionUrl = this.params.data.sessionUrl;
     this.accessCode = this.params.data.accessCode;
+    this.accessCodeLetters = this.accessCode.split("");
   }
 
   startScoping() {

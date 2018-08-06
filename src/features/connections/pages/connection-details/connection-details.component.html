@@ -1,8 +1,5 @@
 <ion-header>
   <ion-navbar>
-    <!-- <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons> -->
     <ion-title>Connection Detail</ion-title>
   </ion-navbar>
 </ion-header>
@@ -10,13 +7,30 @@
   <ion-content>
   
     <ng-container *ngIf="connection">
-      <p>{{connection.externalData.company}} {{connection.type}}</p>
 
-      <p>Account: {{connection.type}}</p>
-      <p>Name: {{connection.externalData.name}}</p>
-      <p>Company: {{connection.externalData.company}}</p>
+      <ion-list>
+        <ion-list-header text-center no-lines>
+          <ion-label>
+            <ion-icon name="contacts"></ion-icon>
+            <h2> {{ connection.externalData.company }} - {{ connection.type }} </h2>
+          </ion-label>
+        </ion-list-header>
 
-      <button ion-button (click)="deleteConnection(connection.id)">Delete</button>
+        <ion-item>
+          <ion-label> Account: {{connection.type}} </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label> Name: {{connection.externalData.name}} </ion-label>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label> Company: {{connection.externalData.company}} </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <div class="delete-btn" text-center>
+        <button ion-button (click)="deleteConnection(connection.id)">Delete</button>
+      </div>
+
     </ng-container>
 
   </ion-content>

@@ -1,11 +1,11 @@
 <ion-list>
-  <ion-list-header>
+  <ion-list-header text-center no-lines>
     <ion-label>
-      Connection Name
+      <ion-icon name="contacts"></ion-icon>
+      <!-- Dev : the h2 should have the company name and type -->
+      <h2>Connections</h2>
     </ion-label>
   </ion-list-header>
 
-  <ion-item-group>
-    <app-project-item *ngFor="let project of projects" [project]="project" (select)="select.emit($event)">project</app-project-item>
-  </ion-item-group>
+  <app-project-item *ngFor="let project of projects" [project]="project" (select)="select.emit($event)">project</app-project-item>
 </ion-list>

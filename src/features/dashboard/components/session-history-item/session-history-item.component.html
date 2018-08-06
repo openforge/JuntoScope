@@ -1,19 +1,27 @@
 <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        {{ item.projectId }} {{ time }}
-        <button ion-button size="small" (click)="handleOptionsClick()">M</button>
-      </ion-card-title>
-  
-      <!--ion-card-subtitle>
-        {{ item.tasks && item.tasks[item.currentTaskId].name }}
-      </ion-card-subtitle-->
-    </ion-card-header>
-  
-    <ion-card-content>
-      {{ sessionStatus }}
-      <button ion-button (click)="handleDetailClick()">
-        {{ ctaText }}
-      </button>
-    </ion-card-content>
+  <ion-card-header>
+    <!-- Dev : the h2 should have the project name -->
+    <h2>{{ item.projectId }}</h2>
+    <button ion-button>{{ abbreviation }}</button>
+    <!-- Design: what should this button be? -->
+  </ion-card-header>
+
+  <ion-card-content>
+    <p>{{ item.tasks && item.tasks[item.currentTaskId].name }}</p>
+  </ion-card-content>
+
+  <ion-item>
+    <div item-start>
+      <p>{{ time | date: 'dd/MM/yyyy' }}</p>
+    </div>
+    <div item-end style="text-decoration: underline" (click)="handleDetailClick()">
+      <p>{{ ctaText }}</p>
+    </div>
+  </ion-item>
 </ion-card>
+
+
+
+
+
+

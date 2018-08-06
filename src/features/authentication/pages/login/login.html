@@ -1,44 +1,52 @@
 <ion-header>
-  <ion-navbar hideBackButton="true">
-    <ion-title>JuntoScope</ion-title>
-  </ion-navbar>
+  <!-- <ion-navbar hideBackButton="true">
+    <ion-title text-center>JuntoScope</ion-title>
+  </ion-navbar> -->
 </ion-header>
 
-<ion-content>
-  <p>
-    First, we need a way of identifying your participation. 
-    Please sign in with:
-  </p>
+<ion-content padding text-center>
+  <div class="content">
+    <p>
+      First, we need a way of identifying your participation. 
+      Please sign in with:
+    </p>
 
-  <button ion-button (click)="facebookLogin()" [disabled]="!hasAgreed">
-    Facebook
-  </button>
-
-  <button ion-button (click)="googleLogin()" [disabled]="!hasAgreed">
-    Google
-  </button>
-
-  <button ion-button (click)="twitterLogin()" [disabled]="!hasAgreed">
-    Twitter
-  </button>
-
-  <p *ngIf="loading$ | async">
-    Authenticating ...
-  </p>
-
-  <p *ngIf="authError$ | async as message">
-    Auth Error: {{ message }}
-  </p>
-
-  <div>
-
+    <ion-list>
+      <button ion-button (click)="facebookLogin()" [disabled]="!hasAgreed">
+        Facebook
+      </button>
+    
+      <button ion-button (click)="googleLogin()" [disabled]="!hasAgreed">
+        Google
+      </button>
+    
+      <button ion-button (click)="twitterLogin()" [disabled]="!hasAgreed">
+        Twitter
+      </button>
+    </ion-list>
+    
+      
+    <!-- <p *ngIf="loading$ | async">
+      Authenticating ...
+    </p>
+  
+    <p *ngIf="authError$ | async as message">
+      Auth Error: {{ message }}
+    </p> -->
+      
+    
     <form [formGroup]="agreeForm">
-      <ion-checkbox class="form-control" formControlName="agree" name="agree"></ion-checkbox>
+      <ion-item>
+        <ion-checkbox class="form-control" formControlName="agree" name="agree"></ion-checkbox>
+        <ion-label text-right>I Agree</ion-label>
+      </ion-item>
     </form>
 
-    <button (click)="goToTerms()">Terms</button>
-    and
-    <button (click)="goToPrivacy()">Privacy Policy</button>
-
+    <div class="terms">
+      <a (click)="goToTerms()">Terms of Service </a>
+      and
+      <a (click)="goToPrivacy()"> Privacy Policy</a>
+    </div>
   </div>
+      
 </ion-content>

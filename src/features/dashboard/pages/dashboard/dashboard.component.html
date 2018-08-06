@@ -1,19 +1,20 @@
 <ion-header>
-  <ion-navbar hideBackButton>
-    <ion-title>JuntoScope</ion-title>
-  
-    <ion-buttons slot="end">
-      <button ion-button (click)="goSettings()">
-        Settings
+  <ion-navbar>
+    <ion-title text-center>JUNTOSCOPE</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goSettings()">
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
+
   </ion-navbar>
 </ion-header>
   
 <ion-content>
   <app-join-session (join)="handleJoin($event)"></app-join-session>
   
-  <app-connection-list [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
+  <app-connection-list padding [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
   
   <app-session-history-list [uid]="uid$ | async" [items]="historyItems$ | async" (options)="handleOptionClick($event)" (detail)="handleDetailClick($event)"></app-session-history-list>
   
