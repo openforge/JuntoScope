@@ -7,7 +7,7 @@
 <ion-content>
 
   <div class="list-headers">
-    <ion-list-header>
+    <ion-list-header no-lines>
       <h2>Connections</h2>
     </ion-list-header>
   </div>
@@ -42,23 +42,21 @@
     </ion-list>
   </div>
     
-
   <div class="list-headers">
-    <!-- Design : what should each item do? Go to a separate page? Ecordian with information? -->
-    <!-- Dev : FAQ is hard-coded currently based on designs. Will need feedback on design on implementation ... will also need FAQ pulling from firestore -->
-    <ion-list>
-      <ion-list-header>
-        <h2>FAQ</h2>
-      </ion-list-header>
-
-      <ion-item no-lines detail-push>
-        <p>How do I ...?</p>
-      </ion-item>
-      <ion-item no-lines detail-push>
-        <p>How do I find ..?</p>
-      </ion-item>
-    </ion-list>
+    <ion-list-header no-lines>
+      <h2>FAQ</h2>
+    </ion-list-header>
   </div>
+  <!-- Design : what should each item do? Go to a separate page? Ecordian with information? -->
+  <!-- Dev : FAQ is hard-coded currently based on designs. Will need feedback on design on implementation ... will also need FAQ pulling from firestore -->
+  <ion-list>
+    <ion-item no-lines detail-push>
+      <p>How do I ...?</p>
+    </ion-item>
+    <ion-item no-lines detail-push>
+      <p>How do I find ..?</p>
+    </ion-item>
+  </ion-list>
 
   <div class="logout" text-center>
     <button ion-button (click)="logout()">LOG OUT</button>
