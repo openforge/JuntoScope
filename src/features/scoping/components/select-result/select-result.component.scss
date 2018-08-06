@@ -4,9 +4,9 @@ app-select-result {
     flex-direction: row;
     justify-content: center;
     text-align: center;
-
+    border-bottom: 2px solid;
     .result {
-      margin: 25px;
+      margin: 25px 25px 15px 25px;
 
       button {
         height: 60px;
