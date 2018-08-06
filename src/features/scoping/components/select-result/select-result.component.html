@@ -1,14 +1,15 @@
-<div [class.selected]="selectedResult === SELECTED_RESULT.AVG_RESULT">
-  Average:
-  <button ion-button (click)="selectAvg($event)">{{avg}}</button>
-</div>
-<div [class.selected]="selectedResult === SELECTED_RESULT.MAX_RESULT">
-  Max:
-  <button ion-button (click)="selectMax($event)">{{max}}</button>
-</div>
-<div [class.selected]="selectedResult === SELECTED_RESULT.CUSTOM_RESULT">
-  <form [formGroup]="selectionForm" (submit)="selectCustom()">
-    Custom:
-    <ion-input class="form-control" type="number" formControlName="custom" name="custom"></ion-input>
-  </form>
+<p>Results:</p>
+<div class="container">
+  <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.AVG_RESULT">
+    <button ion-button outline (click)="selectAvg($event)">{{avg}}</button>
+    <p>Average</p>
+  </div>
+  <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.MAX_RESULT">
+    <button ion-button outline (click)="selectMax($event)">{{max}}</button>
+    <p>Max</p>
+  </div>
+  <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.CUSTOM_RESULT">
+    <ion-input text-center type="number" name="custom" (ionChange)="onChangeValue($event)"></ion-input>
+    <p>Custom</p>
+  </div>
 </div>

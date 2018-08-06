@@ -1,0 +1,38 @@
+app-session-scoping {
+  .session-info-container {
+    margin: 30px;
+  }
+  .session-votes-counted {
+    display: flex;
+    justify-content: center;
+    background: #c94313;
+    p {
+      color: white;
+    }
+  }
+  ion-list.list {
+    ion-item.item {
+      border-bottom: 1px solid #c94313;
+      .item-inner {
+        border-bottom: none;
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+  ion-footer.footer {
+    ion-toolbar.toolbar {
+      .toolbar-background {
+        background: white;
+      }
+      .toolbar-content {
+        display: flex;
+        justify-content: center;
+      }
+      button.button {
+        width: 50%;
+      }
+    }
+  }
+}

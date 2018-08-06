@@ -1,0 +1,50 @@
+app-share-scope-link {
+  ion-content.container {
+    .scroll-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .share-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 30px;
+        -webkit-box-shadow: inset 4px 4px 13px -8px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: inset 4px 4px 13px -8px rgba(0, 0, 0, 0.75);
+        box-shadow: inset 4px 4px 13px -8px rgba(0, 0, 0, 0.75);
+        h4 {
+          text-transform: uppercase;
+        }
+        .share-url-section {
+          display: flex;
+          margin-bottom: 20px;
+          .session-url {
+            border-bottom: 1px solid;
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-right: 15px;
+          }
+        }
+        .access-code-letters {
+          display: flex;
+          justify-content: center;
+          .single-letter {
+            color: black;
+            border: 1px solid #c94313;
+            padding: 5px;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-left: 10px;
+          }
+        }
+      }
+      button.button {
+        width: 50%;
+        margin-top: 20px;
+        text-transform: capitalize;
+      }
+    }
+  }
+}

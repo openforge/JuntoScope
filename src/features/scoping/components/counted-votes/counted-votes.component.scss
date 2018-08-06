@@ -1,0 +1,16 @@
+app-counted-votes {
+  .votes-container {
+    padding: 10px;
+    .single-vote {
+      padding-left: 25px;
+      padding-right: 25px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      color: white;
+      background: #c94313;
+      border-radius: 5px;
+      font-size: 34px;
+      font-weight: 500;
+    }
+  }
+}
