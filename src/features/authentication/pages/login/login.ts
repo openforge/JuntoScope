@@ -1,21 +1,19 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
-  Validators
-} from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
 
-import { map, tap, filter, withLatestFrom, take } from "rxjs/operators";
+import { map, filter, take } from "rxjs/operators";
 
 import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
 import { AppEffects } from "../../../../store/app.effects";
 import { Subscription } from "rxjs";
+
+import { Actions } from "@ngrx/effects";
+import { AuthActionTypes } from "../../store/auth.actions";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -40,6 +38,8 @@ export class LoginPage implements OnInit, OnDestroy {
 
   user$ = this.authEffects.user$;
 
+  redirectSubs: Subscription;
+
   private loginRedirect$ = this.appEffects.authRedirect$.pipe(
     untilDestroyed(this),
     filter(redirectUrl => !!redirectUrl),
@@ -58,8 +58,16 @@ export class LoginPage implements OnInit, OnDestroy {
     private appEffects: AppEffects,
     private authEffects: AuthEffects,
     private navCtrl: NavController,
-    private navParams: NavParams
-  ) {}
+    private navParams: NavParams,
+    private actions$: Actions
+  ) {
+    this.redirectSubs = this.actions$
+      .ofType(AuthActionTypes.AUTHENTICATED)
+      .subscribe(() => {
+        this.redirectSubs.unsubscribe();
+        this.navCtrl.push("DashboardComponent");
+      });
+  }
 
   ngOnInit() {
     this.createForm();
@@ -90,9 +98,6 @@ export class LoginPage implements OnInit, OnDestroy {
 
   googleLogin() {
     this.authEffects.googleLogin();
-    this.loginSub = this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {
-      this.navCtrl.push(navOptions.path[0]);
-    });
   }
 
   facebookLogin() {
