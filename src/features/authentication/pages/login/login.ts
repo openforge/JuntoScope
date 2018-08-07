@@ -14,9 +14,6 @@ import { Subscription } from "rxjs";
 import { Actions } from "@ngrx/effects";
 import { AuthActionTypes } from "../../store/auth.actions";
 
-import { Actions } from "@ngrx/effects";
-import { AuthActionTypes } from "../../store/auth.actions";
-
 @TakeUntilDestroy()
 @IonicPage({
   segment: "LoginPage",
@@ -54,8 +51,6 @@ export class LoginPage implements OnInit, OnDestroy {
       return navOptions;
     })
   );
-
-  redirectSubs: Subscription;
 
   constructor(
     private fb: FormBuilder,
