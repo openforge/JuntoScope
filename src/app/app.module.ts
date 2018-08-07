@@ -42,6 +42,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ConnectionsModule } from "../features/connections/connections.module";
 import { ScopingService } from "../features/scoping/services/scoping.service";
 import { ScopingFacade } from "../features/scoping/store/scoping.facade";
+import { GooglePlus } from "../../node_modules/@ionic-native/google-plus";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
@@ -70,6 +71,7 @@ import { ScopingFacade } from "../features/scoping/store/scoping.facade";
     AuthGuard,
     StatusBar,
     SplashScreen,
+    GooglePlus,
     PopupService,
     ScopingService,
     ScopingFacade,
