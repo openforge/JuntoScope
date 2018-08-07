@@ -24,7 +24,7 @@
 
       <ion-item *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
         <ion-label>
-          {{connection.externalData.company}} {{connection.type}}
+          {{ connection.externalData.company }} {{ connection.type | titlecase }}
         </ion-label>
         <button ion-button item-end>
           <ion-icon name="arrow-dropright"></ion-icon>
