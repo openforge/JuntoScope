@@ -11,6 +11,8 @@ import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
 import { AppEffects } from "../../../../store/app.effects";
 import { Subscription } from "rxjs";
+import { Actions } from "@ngrx/effects";
+import { AuthActionTypes } from "../../store/auth.actions";
 
 import { Actions } from "@ngrx/effects";
 import { AuthActionTypes } from "../../store/auth.actions";
@@ -52,6 +54,8 @@ export class LoginPage implements OnInit, OnDestroy {
       return navOptions;
     })
   );
+
+  redirectSubs: Subscription;
 
   constructor(
     private fb: FormBuilder,
