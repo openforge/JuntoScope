@@ -111,12 +111,11 @@
   },
   "cordova": {
     "platforms": [
-      "android",
-      "ios"
+      "android"
     ],
     "plugins": {
       "cordova-plugin-googleplus": {
-        "REVERSE_CLIENT_ID": "com.googleusercontent.apps.494457695327-611er42ptb000gevad2g51vvcflkif5m"
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.494457695327-611er42ptb000gevad2g51vvcflkif5m"
       }
     }
   }
