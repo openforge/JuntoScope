@@ -1,0 +1,19 @@
+app-join-session {
+  .container {
+    margin-top: 2rem;
+
+    .list-headers {
+      margin: 2rem 1rem;
+
+      ion-list-header.list-header {
+        border-bottom: 2px solid $primary-orange;
+      }
+    }
+
+    .join {
+      height: 44px;
+      padding: 0 2rem;
+      margin: 0;
+    }
+  }
+}

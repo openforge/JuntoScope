@@ -18,6 +18,7 @@ import { NavParams } from "ionic-angular";
 export class SelectTaskListComponent implements OnInit {
   connectionId: string;
   projectId: string;
+  projectName: string;
 
   taskLists$ = this.connectionFacade.selectedConnection$.pipe(
     filter(connection =>
@@ -47,6 +48,7 @@ export class SelectTaskListComponent implements OnInit {
     //Add 'implements OnInit' to the class.
     this.connectionId = this.navParams.get("connectionId");
     this.projectId = this.navParams.get("projectId");
+    this.projectName = this.navParams.get("projectName");
     this.connectionFacade.selectProject(this.connectionId, this.projectId);
   }
 

@@ -12,8 +12,7 @@
       <ion-list-header text-center no-lines>
         <ion-label>
           <ion-icon name="contacts"></ion-icon>
-          <!-- Dev : the h2 should have the selected project name -->
-          <h2>Connections</h2>
+          <h2>{{ projectName }}</h2>
         </ion-label>
       </ion-list-header>
 
@@ -25,8 +24,6 @@
     </div>
   </ng-container>
 
-
-  <!-- TODO: Empty state for no task lists within project -->
   <ng-container *ngIf="!taskLists$ | async as taskLists">
     <h2>You have no task lists for this specific project!</h2>
   </ng-container>
