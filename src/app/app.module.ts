@@ -10,6 +10,7 @@ import {
 } from "ionic-angular";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
+import { Facebook } from "@ionic-native/facebook";
 
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
@@ -31,10 +32,10 @@ import { AuthenticationModule } from "../features/authentication/authentication.
 import { AuthService } from "../features/authentication/services/auth.service";
 
 import { AuthEffects } from "../features/authentication/store/auth.effects";
-// import { AppRoutingModule } from "./app-routing.module";
 import { NotFoundComponent } from "./not-found.component";
 import { DashboardModule } from "../features/dashboard/dashboard.module";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { AuthGuard } from "./auth.guard";
 import { PopupService } from "../shared/popup.service";
 import { AppRoutingModule } from "./app-routing.module";
@@ -49,6 +50,7 @@ import { GooglePlus } from "../../node_modules/@ionic-native/google-plus";
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule,
     IonicModule.forRoot(JuntoScopeComponent, { preloadModules: true }),
     AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
@@ -66,6 +68,8 @@ import { GooglePlus } from "../../node_modules/@ionic-native/google-plus";
   bootstrap: [IonicApp],
   entryComponents: [JuntoScopeComponent],
   providers: [
+    HttpClientModule,
+    Facebook,
     AppEffects,
     AuthService,
     AuthGuard,

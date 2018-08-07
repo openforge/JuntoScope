@@ -35,6 +35,7 @@
     "@angular/platform-browser-dynamic": "5.2.11",
     "@angular/router": "6.0.7",
     "@ionic-native/core": "4.8.0",
+    "@ionic-native/facebook": "^4.11.0",
     "@ionic-native/google-plus": "^4.11.0",
     "@ionic-native/splash-screen": "4.8.0",
     "@ionic-native/status-bar": "4.8.0",
@@ -66,7 +67,8 @@
     "rxjs": "6.0.0",
     "rxjs-compat": "6.0.0",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "cordova-plugin-facebook4": "~2.2.0"
   },
   "devDependencies": {
     "@angular/cli": "1.1.2",
@@ -131,6 +133,11 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-android-support-gradle-release": {
         "ANDROID_SUPPORT_VERSION": "27.+"
+      },
+      "cordova-plugin-facebook4": {
+        "APP_ID": "1427549454016328",
+        "APP_NAME": "“JuntoScope”",
+        "ANDROID_SDK_VERSION": "4.+"
       }
     }
   }
