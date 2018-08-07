@@ -19,7 +19,9 @@ import { EventEmitter } from "events";
 export class SessionDetailModalComponent implements OnInit {
   accountData;
   isModerator: boolean;
+  isExpired: boolean;
   expirationDate;
+  accessCodeLetters;
 
   constructor(
     private popupSvc: PopupService,
@@ -34,7 +36,9 @@ export class SessionDetailModalComponent implements OnInit {
     this.isModerator =
       this.params.data.accountData.userType === "Session Moderator";
     const now = moment();
+    this.isExpired = now.isAfter(this.accountData.item.expirationDate);
     this.expirationDate = now.to(this.accountData.item.expirationDate);
+    this.accessCodeLetters = this.accountData.item.accessCode.split("");
   }
 
   closeModal() {

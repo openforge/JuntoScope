@@ -2,7 +2,7 @@
   <ion-card-header>
     <!-- Dev : the h2 should have the project name -->
     <h2>{{ item.projectId }}</h2>
-    <button ion-button>{{ abbreviation }}</button>
+    <button ion-button (click)="handleOptionsClick()">{{ abbreviation }}</button>
     <!-- Design: what should this button be? -->
   </ion-card-header>
 
