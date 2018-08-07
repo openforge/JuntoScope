@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 
-import { InfiniteScroll, IonicPage, NavController } from "ionic-angular";
+import { InfiniteScroll, IonicPage, NavController, ViewController } from "ionic-angular";
 
 import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
 
@@ -57,7 +57,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private popupSvc: PopupService,
     private connectionFacade: ConnectionFacade,
     private navCtrl: NavController,
-    private scopingFacade: ScopingFacade
+    private scopingFacade: ScopingFacade,
+    private viewCtrl: ViewController
   ) {}
 
   ngOnInit() {
@@ -66,6 +67,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {}
+
+  ionViewWillEnter() {
+    this.viewCtrl.showBackButton(false);
+  }
 
   handleOptionClick(event: HistoryItemOptionEvent) {
     this.modal = this.popupSvc.openModal({
