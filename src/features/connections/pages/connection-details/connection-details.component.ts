@@ -5,8 +5,9 @@ import { take } from "rxjs/operators";
 import { Observable } from "@firebase/util";
 import { Connection } from "../../../../models/connection";
 import { ConnectionFacade } from "../../store/connection.facade";
-import { NavParams } from "ionic-angular";
+import { NavParams, NavController } from "ionic-angular";
 import { Subscription } from "rxjs";
+import { DashboardComponent } from "../../../dashboard/pages/dashboard/dashboard.component";
 
 @Component({
   selector: "app-connection-details",
@@ -20,7 +21,8 @@ export class ConnectionDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private routerFacade: RouterFacade,
     private connectionFacade: ConnectionFacade,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -43,5 +45,6 @@ export class ConnectionDetailsComponent implements OnInit, OnDestroy {
 
   deleteConnection(connectionId) {
     this.connectionFacade.removeConnection(connectionId);
+    this.navCtrl.setRoot(DashboardComponent);
   }
 }
