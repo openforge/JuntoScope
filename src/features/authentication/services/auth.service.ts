@@ -2,11 +2,14 @@ import { Injectable } from "@angular/core";
 
 import { AngularFireAuth } from "angularfire2/auth";
 
-import { map, tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 import * as firebase from "firebase";
 
 import { User } from "../../../models/user";
+
+import { Platform } from "ionic-angular";
+import { GooglePlus } from "@ionic-native/google-plus";
 
 @Injectable()
 export class AuthService {
@@ -14,12 +17,20 @@ export class AuthService {
   private facebookProvider = new firebase.auth.FacebookAuthProvider();
   private twitterProvider = new firebase.auth.TwitterAuthProvider();
 
-  constructor(private afAuth: AngularFireAuth) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private plt: Platform,
+    private gplus: GooglePlus
+  ) {}
 
   login(provider) {
     switch (provider) {
       case "google":
-        return this.afAuth.auth.signInWithPopup(this.googleProvider);
+        if (this.plt.is("cordova")) {
+          return this.nativeGoogleLogin();
+        } else {
+          return this.afAuth.auth.signInWithPopup(this.googleProvider);
+        }
       case "facebook":
         return this.afAuth.auth.signInWithPopup(this.facebookProvider);
       case "twitter":
@@ -33,7 +44,6 @@ export class AuthService {
     return this.afAuth.authState.pipe(
       map(authData => {
         if (authData) {
-          // authData.getIdToken().then(d => { console.log(d);});
           const { uid, displayName } = authData;
           return { uid, displayName } as User;
         }
@@ -44,5 +54,17 @@ export class AuthService {
 
   logout() {
     return this.afAuth.auth.signOut();
+  }
+
+  async nativeGoogleLogin(): Promise<void> {
+    const gplusUser = await this.gplus.login({
+      webClientId:
+        "494457695327-97un3fs0v2dpib0ep78ma1qocmvkph4q.apps.googleusercontent.com",
+      offline: true,
+      scopes: "profile email"
+    });
+    return await this.afAuth.auth.signInWithCredential(
+      firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)
+    );
   }
 }

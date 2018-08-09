@@ -1,18 +1,21 @@
 app-session-history-item {
 	ion-card-header.card-header {
-		color: $primary-orange;
 		padding: 0;
 
 		h2 {
-			margin-left: 1.5rem;
+			color: $primary-orange;
+			margin-left: 0.5rem;
 			padding: 1.5rem 0;
+		}
+
+		button.fab {
+			float: right;
 		}
 	}
 
 	ion-card.card {
-		box-shadow: none;
 		border-bottom: 2px solid $primary-orange;
-		color: $primary-orange;
+		box-shadow: none;
 
 		p {
 			color: $primary-orange;

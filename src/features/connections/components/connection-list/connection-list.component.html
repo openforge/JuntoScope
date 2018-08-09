@@ -16,9 +16,9 @@
     <!-- existing connection(s)-->
     <ion-item button *ngFor="let connection of connections" (click)="select.emit(connection)">
       <ion-label>
-        {{ connection.externalData.company }} - {{ connection.type }}
+        {{ connection.externalData.company }} - {{ connection.type | titlecase }}
       </ion-label>
-      <button color="white" class="existing-button" outline ion-button item-end icon-only>
+      <button color="white" class="existing-button" ion-button outline item-end icon-only>
         <ion-icon name="arrow-dropright"></ion-icon>
       </button>
     </ion-item>
