@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { RouterFacade } from "../../../../store/router.facade";
 
-import { take } from "rxjs/operators";
-import { Observable } from "@firebase/util";
 import { Connection } from "../../../../models/connection";
 import { ConnectionFacade } from "../../store/connection.facade";
 import { NavParams, NavController } from "ionic-angular";
 import { Subscription } from "rxjs";
-import { DashboardComponent } from "../../../dashboard/pages/dashboard/dashboard.component";
+import { SettingsPage } from "../../../settings/pages/settings/settings";
 
 @Component({
   selector: "app-connection-details",
@@ -45,6 +43,6 @@ export class ConnectionDetailsComponent implements OnInit, OnDestroy {
 
   deleteConnection(connectionId) {
     this.connectionFacade.removeConnection(connectionId);
-    this.navCtrl.setRoot(DashboardComponent);
+    this.navCtrl.setRoot(SettingsPage);
   }
 }
