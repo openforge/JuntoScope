@@ -53,6 +53,14 @@ app-settings {
 		}
 	}
 
+	.faq {
+		ion-item.item {
+			p {
+				color: $primary-orange;
+			}
+		}
+	}
+
 
 	.logout {
 		margin-top: 2rem;
