@@ -11,7 +11,6 @@ import { AuthEffects } from "../../store/auth.effects";
 import { AuthUiState } from "../../store/auth.reducer";
 import { AppEffects } from "../../../../store/app.effects";
 import { Subscription } from "rxjs";
-
 import { Actions } from "@ngrx/effects";
 import { AuthActionTypes } from "../../store/auth.actions";
 
@@ -25,10 +24,10 @@ import { AuthActionTypes } from "../../store/auth.actions";
   providers: [],
   templateUrl: "./login.html"
 })
-export class LoginPage implements OnInit, OnDestroy {
+export class LoginPage implements OnInit {
   agreeForm: FormGroup;
-  userSub: Subscription;
-  loginSub: Subscription;
+  // userSub: Subscription;
+  // loginSub: Subscription;
   // loading$ = this.authFacade.uiState$.pipe(
   //   map(uiState => uiState === AuthUiState.LOADING)
   // );
@@ -65,17 +64,12 @@ export class LoginPage implements OnInit, OnDestroy {
       .ofType(AuthActionTypes.AUTHENTICATED)
       .subscribe(() => {
         this.redirectSubs.unsubscribe();
-        this.navCtrl.push("DashboardComponent");
+        this.navCtrl.setRoot("DashboardComponent");
       });
   }
 
   ngOnInit() {
     this.createForm();
-  }
-
-  ngOnDestroy() {
-    this.userSub.unsubscribe();
-    this.loginSub.unsubscribe();
   }
 
   createForm() {
