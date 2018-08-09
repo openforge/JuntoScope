@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import { IonicPage, NavController, NavParams } from "ionic-angular";
@@ -24,10 +24,8 @@ import { AuthActionTypes } from "../../store/auth.actions";
   providers: [],
   templateUrl: "./login.html"
 })
-export class LoginPage implements OnInit, OnDestroy {
+export class LoginPage implements OnInit {
   agreeForm: FormGroup;
-  userSub: Subscription;
-  loginSub: Subscription;
   // loading$ = this.authFacade.uiState$.pipe(
   //   map(uiState => uiState === AuthUiState.LOADING)
   // );
@@ -70,11 +68,6 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
-  }
-
-  ngOnDestroy() {
-    this.userSub.unsubscribe();
-    this.loginSub.unsubscribe();
   }
 
   createForm() {
