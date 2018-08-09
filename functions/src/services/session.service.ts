@@ -13,7 +13,13 @@ export class SessionService {
 
   constructor(private firestore: Firestore) {}
 
-  async createSession(ownerId, connectionId, projectId, sessionTasks) {
+  async createSession(
+    ownerId,
+    connectionId,
+    projectId,
+    sessionTasks,
+    projectName
+  ) {
     const { accessCode, expirationDate } = this.generateAccessCode();
 
     const sessionDocRef = this.firestore
@@ -65,6 +71,7 @@ export class SessionService {
             ownerId,
             connectionId,
             projectId,
+            projectName,
             sessionId: sessionDocRef.id,
             participants: { [ownerId]: Date.now() }
           });
