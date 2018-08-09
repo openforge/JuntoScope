@@ -9,13 +9,12 @@
 
 <ion-content>
 
-  <ion-spinner *ngIf="!loaded"></ion-spinner>
+  <ion-spinner name="crescent" *ngIf="!loaded"></ion-spinner>
 
   <ng-container *ngIf="projects$ | async">
     <app-project-list [projects]="projects$ | async" (select)="handleProjectSelect($event)"></app-project-list>
   </ng-container>
 
-  <!-- TODO: Empty state for no projects within the connection-->
   <ng-container *ngIf="!projects$ | async">
     <h2>You have no task projects for this specific connection!</h2>
   </ng-container>

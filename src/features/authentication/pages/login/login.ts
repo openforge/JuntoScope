@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
       .ofType(AuthActionTypes.AUTHENTICATED)
       .subscribe(() => {
         this.redirectSubs.unsubscribe();
-        this.navCtrl.push("DashboardComponent");
+        this.navCtrl.setRoot("DashboardComponent");
       });
   }
 
