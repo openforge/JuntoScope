@@ -60,7 +60,8 @@ export class SelectTaskListComponent implements OnInit {
     this.connectionFacade.createSession(
       this.connectionId,
       this.projectId,
-      this.taskListIds
+      this.taskListIds,
+      this.projectName
     );
   }
 }

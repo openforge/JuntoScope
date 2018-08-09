@@ -92,5 +92,6 @@
         <variable name="TWITTER_KEY" value="RpWT5YZYdFYjPSzI8wB5O4kwP" />
         <variable name="TWITTER_SECRET" value="yILFMxwPl7zK4qKuQMqqmAZ9bQbJGKbOt8gygvOPweYRamoSoq" />
     </plugin>
+    <plugin name="cordova-plugin-screen-orientation" spec="^3.0.1" />
     <engine name="android" spec="7.0.0" />
 </widget>

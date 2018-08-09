@@ -44,6 +44,8 @@ import { ScopingService } from "../features/scoping/services/scoping.service";
 import { ScopingFacade } from "../features/scoping/store/scoping.facade";
 import { GooglePlus } from "@ionic-native/google-plus";
 import { TwitterConnect } from "@ionic-native/twitter-connect";
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
+
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
   imports: [
@@ -72,6 +74,7 @@ import { TwitterConnect } from "@ionic-native/twitter-connect";
     StatusBar,
     SplashScreen,
     GooglePlus,
+    ScreenOrientation,
     PopupService,
     ScopingService,
     ScopingFacade,
