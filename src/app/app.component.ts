@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { AuthEffects } from "../features/authentication/store/auth.effects";
 
@@ -14,6 +15,7 @@ export class JuntoScopeComponent {
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
+    screenOrientation: ScreenOrientation,
     authFacade: AuthEffects
   ) {
     platform.ready().then(() => {
@@ -21,6 +23,7 @@ export class JuntoScopeComponent {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT);
 
       authFacade.checkAuth();
     });
