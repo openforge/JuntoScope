@@ -42,8 +42,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ConnectionsModule } from "../features/connections/connections.module";
 import { ScopingService } from "../features/scoping/services/scoping.service";
 import { ScopingFacade } from "../features/scoping/store/scoping.facade";
-import { GooglePlus } from "../../node_modules/@ionic-native/google-plus";
-
+import { GooglePlus } from "@ionic-native/google-plus";
+import { TwitterConnect } from "@ionic-native/twitter-connect";
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
   imports: [
@@ -75,6 +75,7 @@ import { GooglePlus } from "../../node_modules/@ionic-native/google-plus";
     PopupService,
     ScopingService,
     ScopingFacade,
+    TwitterConnect,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
