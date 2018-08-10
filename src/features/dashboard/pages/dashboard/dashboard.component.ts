@@ -1,17 +1,14 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-
-import { InfiniteScroll, IonicPage, NavController, ViewController } from "ionic-angular";
-
-import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
-
-import { map, filter, withLatestFrom, take, tap } from "rxjs/operators";
-
+import {
+  InfiniteScroll,
+  IonicPage,
+  NavController,
+  ViewController
+} from "ionic-angular";
+import { TakeUntilDestroy } from "ngx-take-until-destroy";
 import { AppEffects } from "../../../../store/app.effects";
-import { RouterFacade } from "../../../../store/router.facade";
 import { DashboardEffects } from "../../store/dashboard.effects";
 import { ConnectionFacade } from "../../../connections/store/connection.facade";
-// import { SessionUserType } from '@models/user';
-// import { SessionStatus } from '@models/scoping-session';
 import { Connection } from "../../../../models/connection";
 import {
   HistoryItemOptionEvent,
@@ -19,12 +16,7 @@ import {
 } from "../../../../models/history-item";
 import { PopupService } from "../../../../shared/popup.service";
 import { SessionDetailModalComponent } from "../../components/session-detail-modal/session-detail-modal.component";
-import { SelectProjectComponent } from "../../../connections/pages/select-project/select-project.component";
-import { SettingsPage } from "../../../settings/pages/settings/settings";
-import { AddConnectionComponent } from "../../../connections/pages/add-connection/add-connection.component";
-import { SessionScopingComponent } from "../../../scoping/pages/session-scoping/session-scoping.component";
 import { DashboardUiState } from "../../store/dashboard.reducer";
-import { SessionResultsComponent } from "../../../scoping/pages/session-results/session-results.component";
 import { ScopingFacade } from "../../../scoping/store/scoping.facade";
 
 @TakeUntilDestroy()
@@ -36,9 +28,9 @@ import { ScopingFacade } from "../../../scoping/store/scoping.facade";
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html"
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardPage implements OnInit, OnDestroy {
   private infiniteScroll: InfiniteScroll;
-  private modal;
+  modal;
 
   uid$ = this.appFacade.uid$;
   historyItems$ = this.dashboardFacade.historyItems$;
@@ -52,7 +44,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private appFacade: AppEffects,
-    private routerFacade: RouterFacade,
     private dashboardFacade: DashboardEffects,
     private popupSvc: PopupService,
     private connectionFacade: ConnectionFacade,
@@ -81,17 +72,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   handleDetailClick(event: HistoryItemDetailEvent) {
     console.log("details for session status", event);
-    // this.routerFacade.navigate({
-    //   path: [`/scoping/${event.item.sessionCode}`]
-    // });
     this.scopingFacade.loadSession(event.item.id);
 
     if (event.status === "Session Completed") {
-      this.navCtrl.push(SessionResultsComponent, {
+      this.navCtrl.push("SessionResultsPage", {
         sessionUrl: event.item.sessionCode
       });
     } else {
-      this.navCtrl.push(SessionScopingComponent, {
+      this.navCtrl.push("SessionScopingPage", {
         sessionUrl: event.item.sessionCode
       });
     }
@@ -110,28 +98,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   handleJoin(sessionCode: string) {
-    this.navCtrl.push(SessionScopingComponent, { sessionUrl: sessionCode });
+    this.navCtrl.push("SessionScopingPage", { sessionUrl: sessionCode });
   }
 
   createSession(connection: Connection) {
     console.log("How bout this: ", connection.id);
-    this.navCtrl.push(SelectProjectComponent, { connectionId: connection.id });
+    this.navCtrl.push("SelectProjectPage", { connectionId: connection.id });
   }
 
   goSettings() {
-    this.navCtrl.push(SettingsPage);
+    this.navCtrl.push("SettingsPage");
   }
 
   addConnection() {
-    // this.routerFacade.navigate({ path: ["/connections/add"] });
-    this.navCtrl.push(AddConnectionComponent);
-  }
-
-  resumeSession(sessionId) {
-    this.routerFacade.navigate({ path: [`/scoping/${sessionId}`] });
-  }
-
-  viewResults(sessionId) {
-    this.routerFacade.navigate({ path: [`/scoping/${sessionId}/results`] });
+    this.navCtrl.push("AddConnectionPage");
   }
 }

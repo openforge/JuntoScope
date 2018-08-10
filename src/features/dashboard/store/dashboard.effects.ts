@@ -12,7 +12,7 @@ import {
   mergeAll,
   filter
 } from "rxjs/operators";
-import { of, merge, forkJoin, concat } from "rxjs";
+import { of, merge, concat } from "rxjs";
 
 import { AppState } from "../../../store/app.reducer";
 import {
@@ -122,12 +122,14 @@ export class DashboardEffects {
   refreshAccessCode$ = this.actions$.pipe(
     ofType<RefreshAccessCodeAction>(DashboardActionTypes.REFRESH_ACCESS_CODE),
     switchMap(action =>
-      this.historySvc.refreshAccessCode(action.sessionCode).pipe(
-        map(() => new NoopAction()),
-        catchError(error =>
-          of(new RefreshAccessCodeErrorAction({ message: error.message }))
+      this.historySvc
+        .refreshAccessCode(action.sessionCode)
+        .pipe(
+          map(() => new NoopAction()),
+          catchError(error =>
+            of(new RefreshAccessCodeErrorAction({ message: error.message }))
+          )
         )
-      )
     )
   );
 
