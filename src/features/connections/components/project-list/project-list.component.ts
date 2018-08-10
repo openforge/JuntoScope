@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
-
 import { Project } from "../../../../models/project";
 import { Connection } from "../../../../models/connection";
 import { ConnectionFacade } from "../../store/connection.facade";

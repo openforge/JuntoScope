@@ -1,23 +1,18 @@
 import { Injectable } from "@angular/core";
-import * as firebase from "firebase";
 import { HttpClient } from "@angular/common/http";
-
 import { environment } from "../../../environment";
 import { switchMap, map, tap, take } from "rxjs/operators";
 import {
   SessionValidation,
   ScopingSession
 } from "../../../models/scoping-session";
-
 import { AngularFirestore } from "angularfire2/firestore";
 import { HistoryService } from "../../dashboard/services/history.service";
-import { AppEffects } from "../../../store/app.effects";
 
 @Injectable()
 export class ScopingService {
   constructor(
     private afs: AngularFirestore,
-    private appFacade: AppEffects,
     private historySvc: HistoryService,
     private http: HttpClient
   ) {}
@@ -82,40 +77,8 @@ export class ScopingService {
     });
   }
 
-  // setEstimate(payload): Promise<any> {
-  //   const {
-  //     userId,
-  //     moderatorId,
-  //     connectionId,
-  //     sessionId,
-  //     taskId,
-  //     estimate
-  //   } = payload;
-  //   const taskRef = this.afs.firestore.doc(
-  //     "/users/" +
-  //       moderatorId +
-  //       "/connections/" +
-  //       connectionId +
-  //       "/sessions/" +
-  //       sessionId +
-  //       "/tasks/" +
-  //       taskId
-  //   );
-  //   // Only update estimate attribute.
-  //   return taskRef.update({
-  //     estimate: estimate
-  //   });
-  // }
-
   setEstimate(payload) {
-    const {
-      userId,
-      moderatorId,
-      connectionId,
-      sessionId,
-      taskId,
-      estimate
-    } = payload;
+    const { moderatorId, connectionId, sessionId, taskId, estimate } = payload;
 
     return this.http.put(
       `${
@@ -135,12 +98,6 @@ export class ScopingService {
   }
 
   checkParticipant(uid: string, sessionLink: string) {
-    // this.afs
-    //   .collection("public/data/sessions")
-    //   .doc<ScopingSession>(sessionLink)
-    //   .valueChanges()
-    //   .map(session => !!session.participants[uid]);
-
     return this.afs
       .collection("public/data/sessions")
       .doc<ScopingSession>(sessionLink)

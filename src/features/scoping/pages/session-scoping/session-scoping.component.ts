@@ -9,27 +9,27 @@ import { AppState } from "../../../../store/app.reducer";
 import { AuthQuery } from "../../../authentication/store/auth.reducer";
 import { User } from "../../../../models/user";
 import { ScopingFacade } from "../../store/scoping.facade";
-
-import { distinctUntilChanged, sample } from "rxjs/operators";
+import { sample } from "rxjs/operators";
 import { ParticipantState } from "../../store/scoping.reducer";
-import { NavParams, NavController } from "ionic-angular";
+import { NavParams, NavController, IonicPage } from "ionic-angular";
 import { Task } from "../../../../models/task";
-
 import * as _ from "lodash";
 import {
   TIMER_FOR_NEXT_TASK,
   NOT_APPLICABLE,
   MORE_INFO_NEEDED
 } from "../../../../app/app.constants";
-import { SessionResultsComponent } from "../session-results/session-results.component";
 import { Subject, Subscription } from "rxjs";
-import { DashboardComponent } from "../../../dashboard/pages/dashboard/dashboard.component";
 
+@IonicPage({
+  segment: "SessionScopingPage",
+  priority: "high"
+})
 @Component({
   selector: "app-session-scoping",
   templateUrl: "./session-scoping.component.html"
 })
-export class SessionScopingComponent implements OnInit {
+export class SessionScopingPage implements OnInit {
   _ = _;
   sessionSub: Subscription;
   participantSub: Subscription;
@@ -84,10 +84,7 @@ export class SessionScopingComponent implements OnInit {
       }
     });
 
-    this.sessionObservable$ = this.session$.pipe(
-      // distinctUntilChanged(),
-      sample(this.next)
-    );
+    this.sessionObservable$ = this.session$.pipe(sample(this.next));
 
     // Sets next task
     this.otherSub = this.session$.subscribe(session => {
@@ -158,7 +155,7 @@ export class SessionScopingComponent implements OnInit {
 
   goDashboard() {
     this.unsub();
-    this.navCtrl.push(DashboardComponent);
+    this.navCtrl.push("DashboardPage");
   }
 
   isComplete() {
@@ -167,7 +164,7 @@ export class SessionScopingComponent implements OnInit {
       if (this.sessionSub) {
         this.sessionSub.unsubscribe();
       }
-      this.navCtrl.push(SessionResultsComponent);
+      this.navCtrl.push("SessionResultsPage");
     }
   }
 
