@@ -19,8 +19,6 @@ import { AuthActionTypes } from "../../store/auth.actions";
 })
 export class LoginPage implements OnInit {
   agreeForm: FormGroup;
-  // userSub: Subscription;
-  // loginSub: Subscription;
   // loading$ = this.authFacade.uiState$.pipe(
   //   map(uiState => uiState === AuthUiState.LOADING)
   // );
