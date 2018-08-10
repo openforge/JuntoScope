@@ -1,11 +1,9 @@
-import * as express from 'express';
-import { auth } from 'firebase-admin';
-
+import * as express from "express";
 import {
   firestore,
   teamworkService,
-  encryptionService,
-} from './../../services';
+  encryptionService
+} from "./../../services";
 
 export async function addConnection(
   req: express.Request,
@@ -15,15 +13,15 @@ export async function addConnection(
   const uid = res.locals.user.uid;
 
   if (!type) {
-    return res.status(400).json({ message: 'Connection Type is required.' });
+    return res.status(400).json({ message: "Connection Type is required." });
   }
 
   if (!token) {
-    return res.status(400).json({ message: 'Connection Token is required.' });
+    return res.status(400).json({ message: "Connection Token is required." });
   }
 
   switch (type.toLowerCase()) {
-    case 'teamwork': {
+    case "teamwork": {
       let teamworkResponse;
       try {
         teamworkResponse = await teamworkService.validateToken(token);
@@ -33,28 +31,28 @@ export async function addConnection(
 
       const snapshot = await firestore
         .collection(`/users/${uid}/connections`)
-        .where('type', '==', type.toLowerCase())
-        .where('externalData.id', '==', teamworkResponse.id)
+        .where("type", "==", type.toLowerCase())
+        .where("externalData.id", "==", teamworkResponse.id)
         .get();
 
       if (snapshot.size > 0) {
-        return res.status(422).json({ message: 'Connection already exists!' });
+        return res.status(422).json({ message: "Connection already exists!" });
       }
 
       await firestore.collection(`/users/${uid}/connections`).add({
-        type: 'teamwork',
+        type: "teamwork",
         token: encryptionService.encrypt(token),
-        externalData: teamworkResponse,
+        externalData: teamworkResponse
       });
 
       return res.status(201).send({
-        type: 'teamwork',
-        externalData: teamworkResponse,
+        type: "teamwork",
+        externalData: teamworkResponse
       });
     }
 
     default: {
-      return res.status(400).json({ message: 'Unknown Connection Type' });
+      return res.status(400).json({ message: "Unknown Connection Type" });
     }
   }
 }

@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
-
 import { Store, select } from "@ngrx/store";
 import { Actions, ofType, Effect } from "@ngrx/effects";
-
 import {
   switchMap,
   catchError,
@@ -13,8 +11,7 @@ import {
   filter,
   exhaustMap
 } from "rxjs/operators";
-import { of, combineLatest, empty } from "rxjs";
-
+import { of } from "rxjs";
 import { AppState } from "../../../store/app.reducer";
 import {
   ConnectionActionTypes,
@@ -33,15 +30,11 @@ import {
 } from "./connection.actions";
 import { ConnectionService } from "../services/connection.service";
 import { Connection } from "../../../models/connection";
-import { Project } from "../../../models/project";
 import { ConnectionQuery, ConnectionUiState } from "./connection.reducer";
 import { NoopAction } from "../../../store/app.actions";
 import { PopupService } from "../../../shared/popup.service";
-import { RouterFacade } from "../../../store/router.facade";
-import * as RouterActions from "../../../store/router.actions";
 import { VerifyModalComponent } from "../components/verify-modal/verify-modal.component";
-
-import { ShareScopeLinkComponent } from "../pages/share-scope-link/share-scope-link.component";
+import { ShareScopeLinkModalComponent } from "../components/share-scope-link-modal/share-scope-link-modal.component";
 
 @Injectable()
 export class ConnectionFacade {
@@ -203,7 +196,7 @@ export class ConnectionFacade {
               .unsubscribe();
 
             this.popupSvc.openModal({
-              component: ShareScopeLinkComponent,
+              component: ShareScopeLinkModalComponent,
               componentProps: {
                 connectionName: connectionName,
                 projectName: projectName,
@@ -221,8 +214,7 @@ export class ConnectionFacade {
     private store: Store<AppState>,
     private actions$: Actions,
     private connectionSvc: ConnectionService,
-    private popupSvc: PopupService,
-    private routerFacade: RouterFacade
+    private popupSvc: PopupService
   ) {}
 
   /*

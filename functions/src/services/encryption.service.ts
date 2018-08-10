@@ -1,7 +1,5 @@
 import * as crypto from "crypto";
 
-import { config } from ".";
-
 export class EncryptionService {
   private algorithm = "aes-256-cbc";
   // private SECRET_KEY = config.encryption.secret; // Must be 32 characters long

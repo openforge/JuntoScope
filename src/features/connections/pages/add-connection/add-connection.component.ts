@@ -1,17 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-
 import { ConnectionFacade } from "../../store/connection.facade";
-import { Subscription } from "../../../../../node_modules/rxjs";
-import { NavController } from "ionic-angular";
+import { Subscription } from "rxjs";
+import { NavController, IonicPage } from "ionic-angular";
 import { ConnectionActionTypes } from "../../store/connection.actions";
 import { Actions } from "@ngrx/effects";
 
+@IonicPage({
+  segment: "AddConnectionPage",
+  priority: "high"
+})
 @Component({
   selector: "app-add-connection",
   templateUrl: "./add-connection.component.html"
 })
-export class AddConnectionComponent implements OnInit {
+export class AddConnectionPage implements OnInit {
   connectionForm: FormGroup;
   type: string;
 

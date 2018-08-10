@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NavParams, ViewController } from "ionic-angular";
-import { PopupService } from "../../../../shared/popup.service";
 
 @Component({
   selector: "app-verify-modal",
@@ -9,11 +8,7 @@ import { PopupService } from "../../../../shared/popup.service";
 export class VerifyModalComponent implements OnInit {
   connectionData;
 
-  constructor(
-    private popupSvc: PopupService,
-    private params: NavParams,
-    private viewCtrl: ViewController
-  ) {}
+  constructor(private params: NavParams, private viewCtrl: ViewController) {}
 
   ngOnInit() {
     console.log(this.params.data.connectionData);
