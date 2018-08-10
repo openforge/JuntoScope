@@ -23,6 +23,7 @@ import { AuthGuard } from "./auth.guard";
 import { AppRoutingModule } from "./app-routing.module";
 import { ConnectionsModule } from "../features/connections/connections.module";
 import { GooglePlus } from "@ionic-native/google-plus";
+import { TwitterConnect } from "@ionic-native/twitter-connect";
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { ScopingModule } from "../features/scoping/scoping.module";
 import { SettingsModule } from "../features/settings/settings.module";
@@ -57,6 +58,10 @@ import { SettingsModule } from "../features/settings/settings.module";
     SplashScreen,
     GooglePlus,
     ScreenOrientation,
+    PopupService,
+    ScopingService,
+    ScopingFacade,
+    TwitterConnect,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

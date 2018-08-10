@@ -5,6 +5,7 @@ import * as firebase from "firebase";
 import { User } from "../../../models/user";
 import { Platform } from "ionic-angular";
 import { GooglePlus } from "@ionic-native/google-plus";
+import { TwitterConnect } from "@ionic-native/twitter-connect";
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,8 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private plt: Platform,
-    private gplus: GooglePlus
+    private gplus: GooglePlus,
+    private twitter: TwitterConnect
   ) {}
 
   login(provider) {
@@ -29,7 +31,11 @@ export class AuthService {
       case "facebook":
         return this.afAuth.auth.signInWithPopup(this.facebookProvider);
       case "twitter":
-        return this.afAuth.auth.signInWithPopup(this.twitterProvider);
+        if (this.plt.is("cordova")) {
+          return this.nativeTwitterLogin();
+        } else {
+          return this.afAuth.auth.signInWithPopup(this.twitterProvider);
+        }
       default:
         return Promise.reject(Error("Unknown AuthProvider Passed"));
     }
@@ -60,6 +66,16 @@ export class AuthService {
     });
     return await this.afAuth.auth.signInWithCredential(
       firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)
+    );
+  }
+
+  async nativeTwitterLogin(): Promise<void> {
+    const response = await this.twitter.login();
+    return await this.afAuth.auth.signInWithCredential(
+      firebase.auth.TwitterAuthProvider.credential(
+        response.token,
+        response.secret
+      )
     );
   }
 }
