@@ -1,23 +1,25 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { RouterFacade } from "../../../../store/router.facade";
-
 import { Connection } from "../../../../models/connection";
 import { ConnectionFacade } from "../../store/connection.facade";
-import { NavParams, NavController } from "ionic-angular";
+import { NavParams, IonicPage } from "ionic-angular";
 import { Subscription } from "rxjs";
-import { SettingsPage } from "../../../settings/pages/settings/settings";
+import { TakeUntilDestroy } from "ngx-take-until-destroy";
 
+@TakeUntilDestroy()
+@IonicPage({
+  segment: "ConnectionDetailsPage",
+  priority: "high"
+})
 @Component({
   selector: "app-connection-details",
   templateUrl: "./connection-details.component.html"
 })
-export class ConnectionDetailsComponent implements OnInit, OnDestroy {
+export class ConnectionDetailsPage implements OnInit, OnDestroy {
   connectionId = this.navParams.get("connectionId");
   connection: Connection;
   connectionSub: Subscription;
 
   constructor(
-    private routerFacade: RouterFacade,
     private connectionFacade: ConnectionFacade,
     private navParams: NavParams,
     private navCtrl: NavController

@@ -1,9 +1,8 @@
-import { Component, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import {
   ModalController,
   AlertController,
-  PopoverController,
-  ViewController
+  PopoverController
 } from "ionic-angular";
 
 @Injectable()
@@ -12,8 +11,7 @@ export class PopupService {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private popoverCtrl: PopoverController
-  ) // private viewController: ViewController
-  {}
+  ) {}
 
   /**
    * Shows up a simple alert with one button
@@ -105,20 +103,6 @@ export class PopupService {
     await modal.present();
     return modal;
   }
-
-  /**
-   * Dismiss the modal page
-   */
-  async closeModal() {
-    // this.viewController.dismiss();
-  }
-
-  /**
-   * Return the top modal
-   */
-  // async topModl() {
-  //   return this.modalCtrl.getTop();
-  // }
 
   /**
    * Shows up a popover

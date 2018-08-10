@@ -1,32 +1,21 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  DocumentChangeAction
-} from "angularfire2/firestore";
-
-import { Observable, BehaviorSubject, Subject, of, Subscription } from "rxjs";
+import { AngularFirestore, DocumentChangeAction } from "angularfire2/firestore";
+import { Subject, of, Subscription } from "rxjs";
 import {
   tap,
   share,
   takeUntil,
   switchMap,
   map,
-  filter,
   catchError
 } from "rxjs/operators";
-
 import { AppEffects } from "../../../store/app.effects";
 import { ScopingSession } from "../../../models/scoping-session";
 import { HistoryItem } from "../../../models/history-item";
 import { Task } from "../../../models/task";
 import { environment } from "../../../environment";
 
-// @Injectable({
-//   providedIn: 'root',
-// })
 @Injectable()
 export class HistoryService {
   private uidSub: Subscription;
