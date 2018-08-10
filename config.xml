@@ -96,5 +96,6 @@
         <variable name="APP_NAME" value="“JuntoScope”" />
         <variable name="ANDROID_SDK_VERSION" value="4.+" />
     </plugin>
+    <plugin name="cordova-plugin-screen-orientation" spec="^3.0.1" />
     <engine name="android" spec="7.0.0" />
 </widget>

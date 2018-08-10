@@ -1,9 +1,15 @@
 <ion-card>
   <ion-card-header>
-    <!-- Dev : the h2 should have the project name -->
-    <h2>{{ item.projectId }}</h2>
-    <button ion-button>{{ abbreviation }}</button>
-    <!-- Design: what should this button be? -->
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <h2>{{ item.projectName }}</h2>          
+        </ion-col>
+        <ion-col col-6>
+          <button ion-fab mini item-end>{{ abbreviation }}</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card-header>
 
   <ion-card-content>
@@ -12,7 +18,7 @@
 
   <ion-item>
     <div item-start>
-      <p>{{ time | date: 'dd/MM/yyyy' }}</p>
+      <p>{{ time | date: 'MM/dd/yyyy' }}</p>
     </div>
     <div item-end style="text-decoration: underline" (click)="handleDetailClick()">
       <p>{{ ctaText }}</p>

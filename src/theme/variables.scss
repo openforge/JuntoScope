@@ -34,8 +34,9 @@ $colors: (
   dark: #222,
   white: #ffffff
 );
-
 $primary-orange: #c94313;
+
+
 
 // Shared Variables
 // --------------------------------------------------
@@ -44,9 +45,14 @@ $primary-orange: #c94313;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
-// primary textcolor
+// Textcolor
 $text-color: $primary-orange;
 $text-input-placeholder-color: $primary-orange;
+
+// Infinite Scroll
+$infinite-scroll-loading-color: $primary-orange;
+
+
 
 // App iOS Variables
 // --------------------------------------------------
@@ -64,6 +70,12 @@ $item-ios-detail-push-color: $primary-orange;
 // Input
 $text-input-ios-input-clear-icon-color: $primary-orange;
 $text-input-ios-highlight-color: gray;
+
+// Loading Spinner
+$loading-ios-spinner-crescent-color: $primary-orange;
+$spinner-ios-crescent-color: $primary-orange;
+
+
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -87,6 +99,12 @@ $checkbox-md-icon-border-color-off: $primary-orange;
 $text-input-md-input-clear-icon-color: $primary-orange;
 $text-input-md-highlight-color: gray;
 
+// Loading Spinner
+$loading-md-spinner-crescent-color: $primary-orange;
+$spinner-md-crescent-color: $primary-orange;
+
+
+
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
@@ -105,6 +123,13 @@ $item-wp-detail-push-color: $primary-orange;
 // Input
 $text-input-wp-input-clear-icon-color: $primary-orange;
 $text-input-wp-highlight-color: gray;
+
+// Loading Spinner
+$loading-wp-spinner-crescent-color: $primary-orange;
+$spinner-wp-crescent-color: $primary-orange;
+
+
+
 
 // App Theme
 // --------------------------------------------------

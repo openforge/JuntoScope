@@ -9,6 +9,7 @@ import { NavParams, NavController } from "ionic-angular";
 import { ScopingSession } from "../../../../models/scoping-session";
 import { Observable, Subscription } from "rxjs";
 import { DashboardComponent } from "../../../dashboard/pages/dashboard/dashboard.component";
+import { SettingsPage } from "../../../settings/pages/settings/settings";
 
 @Component({
   selector: "app-session-results",
@@ -82,4 +83,8 @@ export class SessionResultsComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  goSettings() {
+    this.navCtrl.push(SettingsPage);
+  }
 }
