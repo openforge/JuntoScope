@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NavParams, ViewController } from "ionic-angular";
-import { PopupService } from "../../popup.service";
 
 @Component({
   selector: "app-info-modal",

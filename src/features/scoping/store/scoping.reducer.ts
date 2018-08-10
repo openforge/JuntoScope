@@ -1,6 +1,6 @@
 import { createSelector, createFeatureSelector } from "@ngrx/store";
 
-import { ScopingActions, ScopingActionTypes } from "../store/scoping.actions";
+import { ScopingActions, ScopingActionTypes } from "./scoping.actions";
 import { ScopingSession } from "../../../models/scoping-session";
 
 export enum ScopingUiState {

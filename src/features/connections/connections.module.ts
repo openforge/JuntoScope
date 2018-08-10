@@ -1,9 +1,6 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
-import { IonicModule } from "ionic-angular";
-
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
-
 import { SharedModule } from "../../shared/shared.module";
 import { connectionReducer } from "./store/connection.reducer";
 import { ConnectionFacade } from "./store/connection.facade";
@@ -14,40 +11,32 @@ import { TaskListComponent } from "./components/task-list/task-list.component";
 import { ProjectItemComponent } from "./components/project-item/project-item.component";
 import { InstructionsComponent } from "./components/instructions/instructions.component";
 import { ConnectionListComponent } from "./components/connection-list/connection-list.component";
-import { JoinSessionComponent } from "../dashboard/components/join-session/join-session.component";
-import { HistoryService } from "../dashboard/services/history.service";
-import { HttpClient } from "@angular/common/http";
-import { SelectProjectComponent } from "./pages/select-project/select-project.component";
-import { SelectTaskListComponent } from "./pages/select-task-list/select-task-list.component";
-import { ShareScopeLinkComponent } from "./pages/share-scope-link/share-scope-link.component";
-import { ScopingModule } from "../scoping/scoping.module";
-import { SessionScopingComponent } from "../scoping/pages/session-scoping/session-scoping.component";
+import { ShareScopeLinkModalComponent } from "./components/share-scope-link-modal/share-scope-link-modal.component";
 
 @NgModule({
   imports: [
-    IonicModule,
     SharedModule,
     StoreModule.forFeature("connection", connectionReducer),
-    EffectsModule.forFeature([ConnectionFacade]),
-    ScopingModule
+    EffectsModule.forFeature([ConnectionFacade])
   ],
-  exports: [ConnectionListComponent, ShareScopeLinkComponent],
   declarations: [
+    ConnectionListComponent,
     InstructionsComponent,
-    VerifyModalComponent,
+    ProjectItemComponent,
     ProjectListComponent,
     TaskListComponent,
-    ProjectItemComponent,
-    ConnectionListComponent,
-    SelectProjectComponent,
-    SelectTaskListComponent,
-    ShareScopeLinkComponent
-  ],
-  entryComponents: [
     VerifyModalComponent,
-    ShareScopeLinkComponent,
-    SessionScopingComponent
+    ShareScopeLinkModalComponent
   ],
-  providers: [HistoryService, ConnectionFacade, ConnectionService]
+  entryComponents: [VerifyModalComponent, ShareScopeLinkModalComponent],
+  exports: [TaskListComponent, ProjectListComponent, ConnectionListComponent],
+  providers: []
 })
-export class ConnectionsModule {}
+export class ConnectionsModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: ConnectionsModule,
+      providers: [ConnectionFacade, ConnectionService]
+    };
+  }
+}

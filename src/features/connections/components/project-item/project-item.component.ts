@@ -5,7 +5,6 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from "@angular/core";
-
 import { Project } from "../../../../models/project";
 
 @Component({

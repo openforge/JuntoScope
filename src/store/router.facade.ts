@@ -1,16 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Location } from "@angular/common";
-// import { Router } from "@angular/router";
 import { ViewChild } from "@angular/core";
-import { Nav, NavController } from "ionic-angular";
-
-import { Store, select } from "@ngrx/store";
+import { Nav } from "ionic-angular";
+import { Store } from "@ngrx/store";
 import { Effect, Actions, ofType } from "@ngrx/effects";
-
-import { map, tap, catchError } from "rxjs/operators";
-
+import { map, tap } from "rxjs/operators";
 import { AppState } from "./app.reducer";
-// import { RouterQuery } from "./router.reducer";
 import {
   GoAction,
   BackAction,
@@ -25,14 +20,6 @@ export class RouterFacade {
    * Observable Store Queries
    */
 
-  // state$ = this.store.pipe(select(RouterQuery.getState));
-
-  // url$ = this.store.pipe(select(RouterQuery.getUrl));
-
-  // params$ = this.store.pipe(select(RouterQuery.getParams));
-
-  // queryParams$ = this.store.pipe(select(RouterQuery.getQueryParams));
-
   @ViewChild(Nav) nav: Nav;
 
   /*
@@ -45,10 +32,8 @@ export class RouterFacade {
     ofType<GoAction>(RouterActionTypes.GO),
     map(action => action.payload),
     tap(({ path, query: queryParams, extras }) => {
-      // this.router.navigate(path, { queryParams, ...extras });
       console.log("Path: ", path[0]);
       this.nav.push(path[0]);
-      // this.navCtrl.push(path[0]);
     })
   );
 
@@ -67,7 +52,6 @@ export class RouterFacade {
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
-    // private navCtrl: NavController,
     private location: Location
   ) {}
 
