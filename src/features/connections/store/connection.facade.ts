@@ -28,7 +28,8 @@ import {
   SelectedProjectAction,
   AddConnectionErrorAction,
   NoConnectionsAction,
-  CreateSessionAction
+  CreateSessionAction,
+  AddConnectionSuccessAction
 } from "./connection.actions";
 import { ConnectionService } from "../services/connection.service";
 import { Connection } from "../../../models/connection";
@@ -102,7 +103,7 @@ export class ConnectionFacade {
             componentProps: { connectionData: response }
           })
         ),
-        map(() => new RouterActions.GoAction({ path: ["/dashboard"] })),
+        map(() => new AddConnectionSuccessAction()),
         catchError(error =>
           of(new AddConnectionErrorAction({ message: error.message }))
         )
@@ -179,7 +180,8 @@ export class ConnectionFacade {
         .createSession(
           action.payload.connectionId,
           action.payload.projectId,
-          action.payload.taskListIds
+          action.payload.taskListIds,
+          action.payload.projectName
         )
         .pipe(
           tap(response => {
@@ -292,10 +294,16 @@ export class ConnectionFacade {
   createSession(
     connectionId: string,
     projectId: string,
-    taskListIds: string[]
+    taskListIds: string[],
+    projectName: string
   ) {
     this.store.dispatch(
-      new CreateSessionAction({ connectionId, projectId, taskListIds })
+      new CreateSessionAction({
+        connectionId,
+        projectId,
+        taskListIds,
+        projectName
+      })
     );
   }
 }

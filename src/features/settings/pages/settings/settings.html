@@ -26,7 +26,7 @@
         <ion-label>
           {{ connection.externalData.company }} {{ connection.type | titlecase }}
         </ion-label>
-        <button ion-button item-end>
+        <button color="white" class="existing-button" ion-button outline item-end icon-only>
           <ion-icon name="arrow-dropright"></ion-icon>
         </button>
       </ion-item>
@@ -35,8 +35,8 @@
         <ion-label>
           New Connection
         </ion-label>
-        <button ion-button clear item-end>
-          <ion-icon name="add-circle-outline"></ion-icon>
+        <button ion-button outline item-end icon-only>
+          <ion-icon name="add"></ion-icon>
         </button>
       </ion-item>
     </ion-list>
@@ -49,7 +49,7 @@
   </div>
   <!-- Design : what should each item do? Go to a separate page? Ecordian with information? -->
   <!-- Dev : FAQ is hard-coded currently based on designs. Will need feedback on design on implementation ... will also need FAQ pulling from firestore -->
-  <ion-list>
+  <ion-list class="faq">
     <ion-item no-lines detail-push>
       <p>How do I ...?</p>
     </ion-item>

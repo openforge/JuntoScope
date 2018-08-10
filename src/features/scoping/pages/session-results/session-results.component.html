@@ -1,14 +1,21 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Session Results</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title text-center>Session Results</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goSettings()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
 </ion-header>
 <ion-content>
   <ng-container *ngIf="session && session.tasks">
 
     <div class="session-results-top">
-        <h1>Results</h1>
-        <p>{{ session.numScopedTasks }} Tasks scoped</p>
+      <h1>Final Results</h1>
+      <p>{{ session.numScopedTasks }} Tasks Scoped</p>
     </div>
 
     <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [results]="true" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>

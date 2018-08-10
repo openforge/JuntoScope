@@ -1,4 +1,23 @@
 app-share-scope-link {
+  ion-header .toolbar {
+    // Background color
+    .toolbar-background {
+      background: $primary-orange;
+      border: none;
+    } // Title
+    .toolbar-title {
+      // overflow: visible;
+      color: white;
+      font-size: 16px;
+      text-transform: capitalize;
+    } // Buttons
+    .bar-button-default {
+      color: white;
+    }
+    ion-buttons.bar-buttons {
+      order: 1;
+    }
+  }
   ion-content.container {
     .scroll-content {
       display: flex;

@@ -43,7 +43,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ConnectionsModule } from "../features/connections/connections.module";
 import { ScopingService } from "../features/scoping/services/scoping.service";
 import { ScopingFacade } from "../features/scoping/store/scoping.facade";
-import { GooglePlus } from "../../node_modules/@ionic-native/google-plus";
+import { GooglePlus } from "@ionic-native/google-plus";
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
@@ -76,6 +77,7 @@ import { GooglePlus } from "../../node_modules/@ionic-native/google-plus";
     StatusBar,
     SplashScreen,
     GooglePlus,
+    ScreenOrientation,
     PopupService,
     ScopingService,
     ScopingFacade,

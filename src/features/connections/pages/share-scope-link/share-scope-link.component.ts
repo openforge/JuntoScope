@@ -40,6 +40,6 @@ export class ShareScopeLinkComponent implements OnInit {
 
   goDashboard() {
     this.viewCtrl.dismiss();
-    this.navCtrl.push(DashboardComponent);
+    this.navCtrl.setRoot(DashboardComponent);
   }
 }
