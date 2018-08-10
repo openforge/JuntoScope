@@ -1,9 +1,5 @@
 import { Params, RouterStateSnapshot } from "@angular/router";
-
-import { createSelector } from "@ngrx/store";
 import { RouterStateSerializer, RouterReducerState } from "@ngrx/router-store";
-
-import { AppState } from "./app.reducer";
 
 interface SerializedRouterState {
   url: string;
@@ -14,10 +10,7 @@ interface SerializedRouterState {
 export class CustomSerializer
   implements RouterStateSerializer<SerializedRouterState> {
   serialize(snapshot: RouterStateSnapshot): SerializedRouterState {
-    const {
-      url,
-      root: { queryParams }
-    } = snapshot;
+    const { url, root: { queryParams } } = snapshot;
     let { root: route } = snapshot;
 
     while (route.firstChild) {
@@ -38,14 +31,3 @@ export const initialRouterState: RouterState = {
 };
 
 export { routerReducer } from "@ngrx/router-store";
-
-// export namespace RouterQuery {
-//   const getSlice = (state: AppState) => state.router;
-//   export const getState = createSelector(getSlice, state => state.state);
-//   export const getUrl = createSelector(getState, state => state.url);
-//   export const getParams = createSelector(getState, state => state.params);
-//   export const getQueryParams = createSelector(
-//     getState,
-//     state => state.queryParams
-//   );
-// }
