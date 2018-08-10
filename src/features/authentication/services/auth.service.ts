@@ -34,7 +34,7 @@ export class AuthService {
           return this.afAuth.auth.signInWithPopup(this.googleProvider);
         }
       case "facebook":
-        if (this.plt.is('cordova')) {
+        if (this.plt.is("cordova")) {
           return this.nativeFacebookLogin();
         } else {
           return this.afAuth.auth.signInWithPopup(this.facebookProvider);
@@ -75,9 +75,14 @@ export class AuthService {
   }
 
   async nativeFacebookLogin(): Promise<void> {
-    await this.facebook.login(['email', 'public_profile']).then(res => {
-      const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
-      return this.afAuth.auth.signInWithCredential(facebookCredential);
-    })
+    const facebookResponse = await this.facebook.login([
+      "email",
+      "public_profile"
+    ]);
+    return await this.afAuth.auth.signInWithCredential(
+      firebase.auth.FacebookAuthProvider.credential(
+        facebookResponse.authResponse.accessToken
+      )
+    );
   }
 }
