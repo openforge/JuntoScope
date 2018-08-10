@@ -26,8 +26,6 @@ import {
 } from "./auth.actions";
 import { AuthService } from "../services/auth.service";
 import { HistoryService } from "../../dashboard/services/history.service";
-import { ConnectionService } from "../../connections/services/connection.service";
-import { ConnectionFacade } from "../../connections/store/connection.facade";
 
 @Injectable()
 export class AuthEffects {
@@ -48,7 +46,7 @@ export class AuthEffects {
   @Effect()
   getUser$ = this.actions$.pipe(
     ofType<GetUserAction>(AuthActionTypes.GET_USER),
-    switchMap(action =>
+    switchMap(() =>
       this.authSvc.getUser().pipe(
         map(user => {
           if (!user) {
@@ -95,10 +93,7 @@ export class AuthEffects {
 
   checkAuth() {
     this.uiState$
-      .pipe(
-        take(1),
-        map(uiState => uiState === AuthUiState.UNKNOWN)
-      )
+      .pipe(take(1), map(uiState => uiState === AuthUiState.UNKNOWN))
       .subscribe(unchecked => {
         if (unchecked) {
           this.store.dispatch(new GetUserAction());

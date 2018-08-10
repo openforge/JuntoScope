@@ -1,13 +1,8 @@
 import { Injectable } from "@angular/core";
-
 import { AngularFireAuth } from "angularfire2/auth";
-
 import { map } from "rxjs/operators";
-
 import * as firebase from "firebase";
-
 import { User } from "../../../models/user";
-
 import { Platform } from "ionic-angular";
 import { GooglePlus } from "@ionic-native/google-plus";
 import { TwitterConnect } from "@ionic-native/twitter-connect";

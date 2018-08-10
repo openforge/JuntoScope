@@ -1,11 +1,11 @@
 <p>Results:</p>
 <div class="container">
   <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.AVG_RESULT">
-    <button ion-button outline (click)="selectAvg($event)">{{avg}}</button>
+    <button ion-button outline (click)="selectAvg()">{{avg}}</button>
     <p>Average</p>
   </div>
   <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.MAX_RESULT">
-    <button ion-button outline (click)="selectMax($event)">{{max}}</button>
+    <button ion-button outline (click)="selectMax()">{{max}}</button>
     <p>Max</p>
   </div>
   <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.CUSTOM_RESULT">

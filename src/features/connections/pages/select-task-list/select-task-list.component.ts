@@ -1,21 +1,20 @@
 import { Component, OnInit } from "@angular/core";
-
-import { combineLatest } from "rxjs";
-import { map, tap, filter, switchMap, take } from "rxjs/operators";
-
+import { map, filter } from "rxjs/operators";
 import * as _ from "lodash";
-
-import { RouterFacade } from "../../../../store/router.facade";
 import { ConnectionFacade } from "../../store/connection.facade";
 import { TaskList } from "../../../../models/task-list";
 import { Connection } from "../../../../models/connection";
-import { NavParams } from "ionic-angular";
+import { NavParams, IonicPage } from "ionic-angular";
 
+@IonicPage({
+  segment: "SelectTaskListPage",
+  priority: "high"
+})
 @Component({
   selector: "app-select-task-list",
   templateUrl: "./select-task-list.component.html"
 })
-export class SelectTaskListComponent implements OnInit {
+export class SelectTaskListPage implements OnInit {
   connectionId: string;
   projectId: string;
   projectName: string;
@@ -38,14 +37,11 @@ export class SelectTaskListComponent implements OnInit {
   }
 
   constructor(
-    private routerFacade: RouterFacade,
     private connectionFacade: ConnectionFacade,
     private navParams: NavParams
   ) {}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.connectionId = this.navParams.get("connectionId");
     this.projectId = this.navParams.get("projectId");
     this.projectName = this.navParams.get("projectName");
