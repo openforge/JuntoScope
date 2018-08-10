@@ -32,7 +32,7 @@ export class AddConnectionPage implements OnInit {
       .ofType(ConnectionActionTypes.ADD_SUCCESS)
       .subscribe(() => {
         this.redirectSubs.unsubscribe();
-        this.navCtrl.setRoot("DashboardPage");
+        this.navCtrl.push("DashboardPage");
       });
   }
 

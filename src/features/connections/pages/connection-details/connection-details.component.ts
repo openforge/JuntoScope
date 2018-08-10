@@ -7,6 +7,7 @@ import { TakeUntilDestroy } from "ngx-take-until-destroy";
 import { Connection } from "../../../../models/connection";
 import { ConnectionFacade } from "../../store/connection.facade";
 import { SettingsPage } from "../../../settings/pages/settings/settings";
+import { PopupService } from "../../../../shared/popup.service";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -25,7 +26,8 @@ export class ConnectionDetailsPage implements OnInit, OnDestroy {
   constructor(
     private connectionFacade: ConnectionFacade,
     private navParams: NavParams,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private popupSvc: PopupService
   ) {}
 
   ngOnInit() {
@@ -47,7 +49,20 @@ export class ConnectionDetailsPage implements OnInit, OnDestroy {
   }
 
   deleteConnection(connectionId) {
-    this.connectionFacade.removeConnection(connectionId);
-    this.navCtrl.setRoot(SettingsPage);
+    this.popupSvc.customButtonsAlert(
+      "Delete Connection",
+      "Are you sure you would like to delete this connection? Please confirm below.",
+      [{
+        text: 'Cancel',
+        role: 'cancel',
+      }, {
+        text: 'Confirm',
+        handler: () => {
+          this.connectionFacade.removeConnection(connectionId);
+          this.navCtrl.push(SettingsPage);
+        }
+      }]
+    )
   }
+
 }
