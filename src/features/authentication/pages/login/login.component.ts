@@ -1,13 +1,19 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
+
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
 import { untilDestroyed } from "ngx-take-until-destroy";
 import { map, filter, take } from "rxjs/operators";
-import { AuthEffects } from "../../store/auth.effects";
-import { AppEffects } from "../../../../store/app.effects";
 import { Subscription } from "rxjs";
 import { Actions } from "@ngrx/effects";
+
+import { AuthEffects } from "../../store/auth.effects";
+import { AppEffects } from "../../../../store/app.effects";
 import { AuthActionTypes } from "../../store/auth.actions";
+
+import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { IAB_OPTIONS } from "../../../../app/app.constants";
 
 @IonicPage({
   segment: "LoginPage",
@@ -15,7 +21,7 @@ import { AuthActionTypes } from "../../store/auth.actions";
 })
 @Component({
   selector: "app-login",
-  templateUrl: "./login.html"
+  templateUrl: "./login.component.html"
 })
 export class LoginPage implements OnInit {
   agreeForm: FormGroup;
@@ -49,7 +55,8 @@ export class LoginPage implements OnInit {
     private authEffects: AuthEffects,
     private navCtrl: NavController,
     private navParams: NavParams,
-    private actions$: Actions
+    private actions$: Actions,
+    private iab: InAppBrowser
   ) {
     this.redirectSubs = this.actions$
       .ofType(AuthActionTypes.AUTHENTICATED)
@@ -74,11 +81,11 @@ export class LoginPage implements OnInit {
   }
 
   goToTerms() {
-    this.navCtrl.push("TermsPage");
+    this.iab.create('tos.juntoscope.com', '_blank', IAB_OPTIONS);
   }
 
   goToPrivacy() {
-    this.navCtrl.push("PrivacyPage");
+    this.iab.create('pp.juntoscope.com', '_blank', IAB_OPTIONS);
   }
 
   googleLogin() {
