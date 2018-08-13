@@ -6,7 +6,7 @@
           <h2>{{ item.projectName }}</h2>          
         </ion-col>
         <ion-col col-6>
-          <button ion-fab mini item-end>{{ abbreviation }}</button>
+          <button (click)="handleOptionsClick()" ion-fab mini item-end>{{ abbreviation }}</button>
         </ion-col>
       </ion-row>
     </ion-grid>
