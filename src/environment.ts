@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "http://localhost:5000/junto-scope-dev/us-central1/api",
-  // apiBaseUrl: "https://us-central1-junto-scope-dev.cloudfunctions.net/api",
+  // apiBaseUrl: "http://localhost:5000/junto-scope-dev/us-central1/api",
+  apiBaseUrl: "https://us-central1-junto-scope-dev.cloudfunctions.net/api",
   firebase: {
     apiKey: "AIzaSyDpn5_jCcNAHdBq70gaPSueWaszn4xnrR8",
     authDomain: "junto-scope-dev.firebaseapp.com",

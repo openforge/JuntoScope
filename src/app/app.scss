@@ -20,10 +20,9 @@
 // All styles related to text
 
 // Ionicons
-ion-icon {
+  ion-icon {
     font-size: 25px;
   }
-  
   
   // Text Weight
   h2,
@@ -50,45 +49,14 @@ ion-icon {
     font-weight: 500;
   }
   
-  // 2. Buttons
+  // 2. Header / Title
   // --------------------------------------------------
-  // All styles related to buttons
-  
-  // .button-ios {
-  //     margin: 0rem;
-  // }
-  
-  // // Wide Buttons
-  // .wide-button {
-  //   font-weight: 800;
-  //   width: 70%;
-  // }
-  
-  // iOs buttons
-  // .button-ios.button-block-ios.button-default,
-  // .button-wp.button-block-wp.button-default {
-  // 	text-transform: uppercase;
-  // 	margin: 0rem;
-      
-  // }
-  
-  // .button-ios.button-block-ios.button-clear,
-  // .button-wp.button-block-wp.button-clear {
-  //   text-transform: uppercase;
-  // 	margin: 0rem;
-  // }
-  
-  // 2. End Buttons
-  // **************************************************
-  
-  // 3. Header
-  // --------------------------------------------------
-  // All styles related to the header
+  // All styles related to the header  / title
   
   // ios Header
   ion-header .toolbar-ios {
-  
-      // Background color
+    
+    // Background color
     .toolbar-background-ios {
       background: $primary-orange;
       border: none;
@@ -128,7 +96,7 @@ ion-icon {
       text-transform: capitalize;
     }
   
-      // Buttons
+    // Buttons
     .bar-button-default-md,
     .bar-button-clear-md-default,
     .bar-button-md-default,
@@ -138,12 +106,23 @@ ion-icon {
       color: white;
     }
   }
+
+  // md + wp Title
+  .title.title-md, .title.title-wp {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 70%;
+    text-align: center;
+  }
   
-  // 3. End Header
+  // 2. End Header / Title
   // **************************************************
   
   
-  // 4. Searchbar
+  // 3. Searchbar
   // --------------------------------------------------
   // All styles related to the searchbar
   
@@ -159,33 +138,23 @@ ion-icon {
   // md Searchbar
   // --------------------------------------------------
   
-  .toolbar .searchbar-md {
+  .toolbar .searchbar-md, .searchbar-wp, {
     background-color: white;
-    border: 0.55px solid $primary-orange;
+    border: 1px solid $primary-orange;
     border-radius: 10px;
   }
-  
-  // 4. End Searchbar
-  // **************************************************
-  
-  
-  
-  // 5. List Header
-  // --------------------------------------------------
-  // All styles related to the list header
-  
 
-  /// this is for an extra style of a compoent
-  // ion-list-header {
-  //   height: 0px;
-  //   min-height: 0px;
-  // }
+  // wp Searchbar
+  // --------------------------------------------------
+  .searchbar-wp .searchbar-input-container {
+    border: none;
+  }
   
-  // 5. End List Header
+  // 3. End Searchbar
   // **************************************************
   
   
-  // 6. Checkbox
+  // 4. Checkbox
   // --------------------------------------------------
   // All styles related to the checkbox
   
@@ -193,10 +162,10 @@ ion-icon {
     @extend.checkbox-md;
   }
   
-  // 6. End Checkbox
+  // 4. End Checkbox
   // **************************************************
   
-  // 7. Spinner
+  // 5. Spinner
   // --------------------------------------------------
   // All styles related to the spinner
 
@@ -211,6 +180,18 @@ ion-icon {
     width: 50px
   }
 
-  // 7. End Spinner
+  // 5. End Spinner
+  // **************************************************
+  
+
+
+  // 6. scroll-content TMP issue related to - https://github.com/ionic-team/ionic/issues/10629
+  // --------------------------------------------------
+  // All styles related to scroll-content
+
+  .scroll-content { 
+    padding-bottom: 0!important; 
+  }
+  // 6. scroll-content
   // **************************************************
   

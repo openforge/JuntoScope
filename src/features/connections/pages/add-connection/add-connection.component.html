@@ -6,39 +6,37 @@
 
 <ion-content>
 
-  <ng-container *ngIf="!type" class="select">
-    <!-- TODO: consult design team about this design for selecting the type -->
-    <h2>NEEDS STYLE!</h2>
+  <ng-container *ngIf="!type">
+    <div padding text-center>
+      <h2 text-center>Connect to Teamwork</h2>
 
-    <p>
-      This is instructions / description of connections. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      Integer bibendum pretium dolor. Nullam faucibus turpis tellus, 
-      eu venenatis ipsum convallis et. Nulla ut dolor pharetra, congue orci pretium, 
-      vehicula erat. Donec dignissim, felis iaculis sagittis lobortis, turpis mi 
-      molestie ante, eget viverra mauris erat sodales orci. Fusce tincidunt quam id 
-      eros condimentum, eu consectetur tortor dignissim. Pellentesque habitant morbi 
-      tristique senectus et netus et malesuada fames ac turpis egestas. Aenean laoreet 
-      nisl non feugiat accumsan. Donec non neque venenatis, imperdiet tortor vel, 
-      pellentesque erat. Praesent viverra metus in lacus pellentesque, a consectetur 
-      metus molestie. Sed vehicula magna justo, quis condimentum augue vulputate ac. 
-      Sed hendrerit purus vitae egestas tempus. Morbi commodo nec nisi eget varius. 
-      Integer imperdiet sed nunc sit amet posuere. Pellentesque consectetur tincidunt mauris, 
-      venenatis ultrices tortor luctus sed. Nulla molestie euismod facilisis.
-    </p>
+      <p text-center>
+        * CONTENT NEEDED *
+        * FINAL STYLE NEEDED *
+        JuntoScope connects into your Teamwork to be able to import your task list(s) that
+        you and or your team can scope together in a scope session!
+      <br>
+      <br>
+      <br>
+        It is recommended that a user who will be the moderator have read and write rights to
+        the teamwork task lists that will be used during a scope session in order to properly post
+        the time estimate associated to the task to your Teamwork.
+      </p>
 
-    <button ion-button class="submit-btn" (click)="setType('teamwork')">Teamwork</button>
+      <button ion-button (click)="setType('teamwork')">ACCEPT</button>
+    </div>
   </ng-container>
   
   <ng-container *ngIf="type">
 
-    <form [formGroup]="connectionForm" (ngSubmit)="continue()">
+    <form [formGroup]="connectionForm" (ngSubmit)="continue()" text-center>
       <ion-item no-lines>
         <ion-input class="form-control" type="text" formControlName="token" name="token" clearInput></ion-input>
       </ion-item>
 
       <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
         <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
-          Token is required
+          Please enter in a Teamwork API Token. For Instructions please view the link below.
         </h6>
       </ng-container>
 

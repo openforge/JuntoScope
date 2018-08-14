@@ -1,33 +1,24 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-
-import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
-
+import { untilDestroyed } from "ngx-take-until-destroy";
 import { map, filter, take } from "rxjs/operators";
-
 import { AuthEffects } from "../../store/auth.effects";
-import { AuthUiState } from "../../store/auth.reducer";
 import { AppEffects } from "../../../../store/app.effects";
 import { Subscription } from "rxjs";
 import { Actions } from "@ngrx/effects";
 import { AuthActionTypes } from "../../store/auth.actions";
 
-@TakeUntilDestroy()
 @IonicPage({
   segment: "LoginPage",
   priority: "high"
 })
 @Component({
   selector: "app-login",
-  providers: [],
   templateUrl: "./login.html"
 })
 export class LoginPage implements OnInit {
   agreeForm: FormGroup;
-  // userSub: Subscription;
-  // loginSub: Subscription;
   // loading$ = this.authFacade.uiState$.pipe(
   //   map(uiState => uiState === AuthUiState.LOADING)
   // );
@@ -64,7 +55,7 @@ export class LoginPage implements OnInit {
       .ofType(AuthActionTypes.AUTHENTICATED)
       .subscribe(() => {
         this.redirectSubs.unsubscribe();
-        this.navCtrl.setRoot("DashboardComponent");
+        this.navCtrl.setRoot("DashboardPage");
       });
   }
 

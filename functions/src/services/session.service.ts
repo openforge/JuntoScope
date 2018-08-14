@@ -1,6 +1,4 @@
 import { Firestore } from "@google-cloud/firestore";
-import { encryptionService } from ".";
-import { deleteSession } from "../api/session-links/delete-session";
 
 // Shuffled alphanumerics w/o vowels and ambiguous I, l, 1, 0, O, o.
 const CHARS = "vdR8gYZ43DpNJPQkBnWXGtysHfF7z2x-Mjh9bK6Tr5c_wVLCSqm";
@@ -13,7 +11,13 @@ export class SessionService {
 
   constructor(private firestore: Firestore) {}
 
-  async createSession(ownerId, connectionId, projectId, sessionTasks) {
+  async createSession(
+    ownerId,
+    connectionId,
+    projectId,
+    sessionTasks,
+    projectName
+  ) {
     const { accessCode, expirationDate } = this.generateAccessCode();
 
     const sessionDocRef = this.firestore
@@ -65,6 +69,7 @@ export class SessionService {
             ownerId,
             connectionId,
             projectId,
+            projectName,
             sessionId: sessionDocRef.id,
             participants: { [ownerId]: Date.now() }
           });
@@ -270,16 +275,5 @@ export class SessionService {
     }
 
     return encoded;
-  }
-
-  // Bijective Enumeration -- String to Number
-  private decode(str: string) {
-    let id = 0;
-
-    for (let i = 0, len = str.length; i < len; i++) {
-      id = id * BASE + CHARS.indexOf(str.charAt(i));
-    }
-
-    return id;
   }
 }

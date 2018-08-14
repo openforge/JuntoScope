@@ -1,16 +1,11 @@
-import { Component, OnInit, Input } from "@angular/core";
-
+import { Component, OnInit } from "@angular/core";
 import { NavParams, NavController, ViewController } from "ionic-angular";
-
-import { PopupService } from "../../../../shared/popup.service";
-import { DashboardComponent } from "../../../dashboard/pages/dashboard/dashboard.component";
-import { SessionScopingComponent } from "../../../scoping/pages/session-scoping/session-scoping.component";
 
 @Component({
   selector: "app-share-scope-link",
-  templateUrl: "./share-scope-link.component.html"
+  templateUrl: "./share-scope-link-modal.component.html"
 })
-export class ShareScopeLinkComponent implements OnInit {
+export class ShareScopeLinkModalComponent implements OnInit {
   connectionName;
   projectName;
   sessionUrl;
@@ -19,7 +14,6 @@ export class ShareScopeLinkComponent implements OnInit {
 
   constructor(
     private params: NavParams,
-    private popupSvc: PopupService,
     private viewCtrl: ViewController,
     private navCtrl: NavController
   ) {}
@@ -33,13 +27,12 @@ export class ShareScopeLinkComponent implements OnInit {
   }
 
   startScoping() {
-    console.log("Going scoping");
     this.viewCtrl.dismiss();
-    this.navCtrl.push(SessionScopingComponent, { sessionUrl: this.sessionUrl });
+    this.navCtrl.push("SessionScopingPage", { sessionUrl: this.sessionUrl });
   }
 
   goDashboard() {
     this.viewCtrl.dismiss();
-    this.navCtrl.setRoot(DashboardComponent);
+    this.navCtrl.setRoot("DashboardPage");
   }
 }

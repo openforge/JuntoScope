@@ -1,6 +1,6 @@
-import * as express from 'express';
+import * as express from "express";
 
-import { sessionService, encryptionService, firestore } from '../../services';
+import { sessionService } from "../../services";
 
 export async function decodeSessionLink(
   req: express.Request,
@@ -11,11 +11,11 @@ export async function decodeSessionLink(
   const accessCode = req.query.accessCode;
 
   if (!sessionLink) {
-    return res.status(400).json({ message: 'Session Link is required.' });
+    return res.status(400).json({ message: "Session Link is required." });
   }
 
   if (!accessCode) {
-    return res.status(400).json({ message: 'Access Code is required.' });
+    return res.status(400).json({ message: "Access Code is required." });
   }
 
   try {

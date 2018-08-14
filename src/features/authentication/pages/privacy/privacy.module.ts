@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { IonicPageModule } from "ionic-angular";
 import { PrivacyPage } from "./privacy";
-import { AuthenticationModule } from "../../authentication.module";
+import { SharedModule } from "../../../../shared/shared.module";
 
 @NgModule({
   declarations: [PrivacyPage],
-  imports: [IonicPageModule.forChild(PrivacyPage)],
+  imports: [IonicPageModule.forChild(PrivacyPage), SharedModule],
   exports: [PrivacyPage]
 })
 export class PrivacyPageModule {}

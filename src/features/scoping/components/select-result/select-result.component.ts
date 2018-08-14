@@ -35,12 +35,12 @@ export class SelectResultComponent implements OnInit {
     });
   }
 
-  selectAvg(event) {
+  selectAvg() {
     this.selectedResult = SELECTED_RESULT.AVG_RESULT;
     this.estimate.emit(this.avg);
   }
 
-  selectMax(event) {
+  selectMax() {
     this.selectedResult = SELECTED_RESULT.MAX_RESULT;
     this.estimate.emit(this.max);
   }
