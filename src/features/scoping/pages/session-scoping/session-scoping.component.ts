@@ -9,7 +9,6 @@ import { AppState } from "../../../../store/app.reducer";
 import { AuthQuery } from "../../../authentication/store/auth.reducer";
 import { User } from "../../../../models/user";
 import { ScopingFacade } from "../../store/scoping.facade";
-import { sample } from "rxjs/operators";
 import { ParticipantState } from "../../store/scoping.reducer";
 import { NavParams, NavController, IonicPage } from "ionic-angular";
 import { Task } from "../../../../models/task";
@@ -20,6 +19,7 @@ import {
   MORE_INFO_NEEDED
 } from "../../../../app/app.constants";
 import { Subject, Subscription } from "rxjs";
+import { HistoryService } from "../../../dashboard/services/history.service";
 
 @IonicPage({
   segment: "SessionScopingPage",
@@ -52,12 +52,15 @@ export class SessionScopingPage implements OnInit {
   finalEstimate: number;
   navigateTimer: any;
   ParticipantState = ParticipantState;
-  hasVoted = false;
+  hasVoted: boolean = false;
+  allVotesSubmited = false;
   hasResults = false;
   isModerator = true;
   timerToNextSet = false;
   estimateSubmitted = false;
   timerOn = false;
+  votes: number = 0;
+  lastTaskId: string;
 
   next: Subject<void> = new Subject();
 
@@ -65,7 +68,8 @@ export class SessionScopingPage implements OnInit {
     private store: Store<AppState>,
     private scopingFacade: ScopingFacade,
     private navParams: NavParams,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private historySvc: HistoryService
   ) {}
 
   ngOnInit() {
@@ -84,24 +88,26 @@ export class SessionScopingPage implements OnInit {
       }
     });
 
-    this.sessionObservable$ = this.session$.pipe(sample(this.next));
-
     // Sets next task
     this.otherSub = this.session$.subscribe(session => {
       console.log("new millenial fired");
 
       if (session && session.tasks) {
-        if (!this.session) {
-          this.session = session;
-          this.isModerator = session.ownerId === this.user.uid;
-          this.taskId = this.session.currentTaskId;
-          this.task = this.session.tasks[this.taskId];
-        }
+        this.session = session;
+        this.isModerator = session.ownerId === this.user.uid;
+        this.lastTaskId = this.taskId ? this.taskId : null;
+        this.getLastTask();
+        this.taskId = this.session.currentTaskId;
+        this.task = this.session.tasks[this.taskId];
 
-        const task = session.tasks ? session.tasks[this.taskId] : null;
+        this.didVote(session.tasks[this.taskId]);
 
-        if (task) {
-          this.didVote(task);
+        this.votes = session.tasks[this.taskId].votes
+          ? Object.keys(session.tasks[session.currentTaskId].votes).length
+          : 0;
+
+        if (Object.keys(session.participants).length === this.votes) {
+          this.allVotesSubmited = true;
         }
 
         if (this.scopedCount === undefined) {
@@ -116,29 +122,33 @@ export class SessionScopingPage implements OnInit {
         // if has voted and estimate submitted, go to next task
         if (this.estimateSubmitted) {
           console.log("setting timer!");
+          this.timerOn = true;
           setTimeout(() => {
             this.nextTask();
           }, TIMER_FOR_NEXT_TASK);
         }
       }
     });
+  }
 
-    // Loads session, sets current task
-    this.sessionSub = this.sessionObservable$.subscribe(session => {
-      console.log("old fart fired");
-      if (session && session.currentTaskId && this.user) {
-        console.log("loading session");
-        this.session = session;
-        this.isModerator = session.ownerId === this.user.uid;
-        this.taskId = this.session.currentTaskId;
-        this.task = this.session.tasks[this.taskId];
+  async getLastTask() {
+    console.log("getting last task");
+    if (this.lastTaskId) {
+      const lastTask = await this.historySvc.getSessionTask(
+        {
+          ownerId: this.session.ownerId,
+          connectionId: this.session.connectionId,
+          sessionId: this.session.sessionId
+        },
+        this.lastTaskId
+      );
 
-        // Check if all tasks are estimated
-        this.isComplete();
-        // Check if user submitted vote
-        // this.didVote(this.task);
-      }
-    });
+      const lastSub = lastTask.subscribe(task => {
+        console.log("lastTask: ", task);
+        this.finalEstimate = task.estimate;
+        lastSub.unsubscribe();
+      });
+    }
   }
 
   unsub() {
@@ -224,8 +234,10 @@ export class SessionScopingPage implements OnInit {
 
   nextTask() {
     console.log("next task...");
-    this.hasVoted = false;
+    this.allVotesSubmited = false;
     this.estimateSubmitted = false;
+    this.finalEstimate = null;
+    this.timerOn = false;
     this.next.next();
 
     this.isComplete();
