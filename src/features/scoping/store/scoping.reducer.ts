@@ -123,6 +123,13 @@ export function scopingReducer(
       };
     }
 
+    case ScopingActionTypes.CLEAN_ERROR: {
+      return {
+        ...state,
+        error: null
+      };
+    }
+
     default: {
       return state;
     }
