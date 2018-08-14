@@ -1,31 +1,7 @@
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
+import { FIREBASE_DEV_CONFIG, FIREBASE_DEV_FUNCTIONS } from "./config/config";
 
 export const environment = {
   production: false,
-  // apiBaseUrl: "http://localhost:5000/junto-scope-dev/us-central1/api",
-  apiBaseUrl: "https://us-central1-junto-scope-dev.cloudfunctions.net/api",
-  firebase: {
-    apiKey: "AIzaSyDpn5_jCcNAHdBq70gaPSueWaszn4xnrR8",
-    authDomain: "junto-scope-dev.firebaseapp.com",
-    databaseURL: "https://junto-scope-dev.firebaseio.com",
-    projectId: "junto-scope-dev",
-    storageBucket: "",
-    messagingSenderId: "494457695327"
-  }
+  apiBaseUrl: FIREBASE_DEV_FUNCTIONS,
+  firebase: FIREBASE_DEV_CONFIG
 };
-
-// export const environment = {
-//     production: true,
-//     apiBaseUrl: 'https://us-central1-junto-scope-dev.cloudfunctions.net/api',
-//     firebase: {
-//       apiKey: 'AIzaSyDpn5_jCcNAHdBq70gaPSueWaszn4xnrR8',
-//       authDomain: 'junto-scope-dev.firebaseapp.com',
-//       databaseURL: 'https://junto-scope-dev.firebaseio.com',
-//       projectId: 'junto-scope-dev',
-//       storageBucket: '',
-//       messagingSenderId: '494457695327',
-//     },
-// };
