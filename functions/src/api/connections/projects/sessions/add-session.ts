@@ -1,7 +1,4 @@
 import * as express from "express";
-
-import * as _ from "lodash";
-
 import {
   firestore,
   encryptionService,

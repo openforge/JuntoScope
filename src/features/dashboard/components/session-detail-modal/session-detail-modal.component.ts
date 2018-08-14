@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output } from "@angular/core";
-import { NavParams, ModalController, ViewController } from "ionic-angular";
+import { Component, OnInit } from "@angular/core";
+import { NavParams, ViewController } from "ionic-angular";
 import { PopupService } from "../../../../shared/popup.service";
 import { InfoModalComponent } from "../../../../shared/components/info-modal/info-modal";
 import { Store } from "@ngrx/store";
@@ -8,9 +8,7 @@ import {
   DeleteSessionAction,
   RefreshAccessCodeAction
 } from "../../store/dashboard.actions";
-
 import * as moment from "moment";
-import { EventEmitter } from "events";
 
 @Component({
   selector: "app-session-detail-modal",
@@ -19,11 +17,12 @@ import { EventEmitter } from "events";
 export class SessionDetailModalComponent implements OnInit {
   accountData;
   isModerator: boolean;
+  isExpired: boolean;
   expirationDate;
+  accessCodeLetters;
 
   constructor(
     private popupSvc: PopupService,
-    private modalCtrl: ModalController,
     private viewCtrl: ViewController,
     private params: NavParams,
     private store: Store<AppState>
@@ -34,7 +33,9 @@ export class SessionDetailModalComponent implements OnInit {
     this.isModerator =
       this.params.data.accountData.userType === "Session Moderator";
     const now = moment();
+    this.isExpired = now.isAfter(this.accountData.item.expirationDate);
     this.expirationDate = now.to(this.accountData.item.expirationDate);
+    this.accessCodeLetters = this.accountData.item.accessCode.split("");
   }
 
   closeModal() {

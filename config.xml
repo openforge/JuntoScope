@@ -87,6 +87,12 @@
     <plugin name="cordova-android-support-gradle-release" spec="^1.4.4">
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
+    <plugin name="twitter-connect-plugin" spec="https://github.com/chroa/twitter-connect-plugin">
+        <variable name="FABRIC_KEY" value="1ba0dc025725ca34727a6f26e9be759d120e4bad" />
+        <variable name="TWITTER_KEY" value="RpWT5YZYdFYjPSzI8wB5O4kwP" />
+        <variable name="TWITTER_SECRET" value="yILFMxwPl7zK4qKuQMqqmAZ9bQbJGKbOt8gygvOPweYRamoSoq" />
+    </plugin>
     <plugin name="cordova-plugin-screen-orientation" spec="^3.0.1" />
     <engine name="android" spec="7.0.0" />
+    <engine name="ios" spec="4.5.5" />
 </widget>
