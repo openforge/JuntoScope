@@ -48,7 +48,34 @@ export class SessionService {
             return Promise.resolve(this.encode(uniqueNum));
           });
 
-        const taskIds = Object.keys(sessionTasks);
+        let parentIds = [];
+        for (let key in sessionTasks) {
+          let task = sessionTasks[key];
+          if (task["parentId"]) {
+            let parent = task["parentId"].toString();
+            parentIds.push(parent);
+          }
+        }
+
+        parentIds = parentIds.filter((v, i) => {
+          return parentIds.indexOf(v) === i;
+        });
+
+        console.log("parents: ", parentIds);
+
+        let taskIds = Object.keys(sessionTasks);
+        taskIds = taskIds.filter(id => {
+          let isIn;
+          parentIds.forEach(pId => {
+            if (pId === id) {
+              isIn = true;
+            }
+          });
+          if (!isIn) {
+            return id;
+          }
+        });
+
         taskIds.forEach(taskId => {
           transaction = transaction.set(
             sessionTasksRef.doc(taskId),
