@@ -89,6 +89,13 @@ export function connectionReducer(
       };
     }
 
+    case ConnectionActionTypes.CLEAR_ERROR: {
+      return {
+        ...state,
+        error: null
+      };
+    }
+
     default: {
       return state;
     }
