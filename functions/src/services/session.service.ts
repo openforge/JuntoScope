@@ -71,7 +71,7 @@ export class SessionService {
               isIn = true;
             }
           });
-          if (!isIn) {
+          if (!isIn && !sessionTasks[id].estimate) {
             return id;
           }
         });
