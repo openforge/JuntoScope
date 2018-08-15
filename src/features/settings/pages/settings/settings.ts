@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { IonicPage, NavController } from "ionic-angular";
 import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
 import { filter, take } from "rxjs/operators";
-import { AuthEffects } from "../../../authentication/store/auth.effects";
+import { AuthFacade } from "../../../authentication/store/auth.facade";
 import { AuthUiState } from "../../../authentication/store/auth.reducer";
 import { ConnectionFacade } from "../../../connections/store/connection.facade";
 import { LoginPage } from "../../../authentication/pages/login/login";
@@ -29,7 +29,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   constructor(
     private navCtrl: NavController,
     private connectionFacade: ConnectionFacade,
-    private authFacade: AuthEffects
+    private authFacade: AuthFacade
   ) {}
 
   ngOnDestroy() {

@@ -16,13 +16,13 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFirestoreModule } from "angularfire2/firestore";
 
 import { reducers, initialState, metaReducers } from "../store/app.reducer";
-import { AppEffects } from "../store/app.effects";
+import { AppFacade } from "../store/app.facade";
 import { environment } from "../environment";
 
 import { JuntoScopeComponent } from "./app.component";
 import { SharedModule } from "../shared/shared.module";
 import { AuthenticationModule } from "../features/authentication/authentication.module";
-import { AuthEffects } from "../features/authentication/store/auth.effects";
+import { AuthFacade } from "../features/authentication/store/auth.facade";
 import { NotFoundComponent } from "./not-found.component";
 import { DashboardModule } from "../features/dashboard/dashboard.module";
 import { HttpClientModule } from "@angular/common/http";
@@ -41,7 +41,7 @@ import { SettingsModule } from "../features/settings/settings.module";
     AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthFacade]),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -56,7 +56,7 @@ import { SettingsModule } from "../features/settings/settings.module";
   bootstrap: [IonicApp],
   entryComponents: [JuntoScopeComponent],
   providers: [
-    AppEffects,
+    AppFacade,
     AuthGuard,
     StatusBar,
     SplashScreen,
