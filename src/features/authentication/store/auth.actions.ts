@@ -8,7 +8,8 @@ export enum AuthActionTypes {
   NOT_AUTHENTICATED = "[Auth] User not Authenticated",
   LOGIN = "[Auth] Login Attempt",
   AUTH_ERROR = "[Auth] Auth Error",
-  LOGOUT = "[Auth] Logout"
+  LOGOUT = "[Auth] Logout",
+  CLEAR_ERROR = "[Auth] Clear Error"
 }
 
 export class GetUserAction implements Action {
@@ -38,10 +39,15 @@ export class LogoutAction implements Action {
   readonly type = AuthActionTypes.LOGOUT;
 }
 
+export class ClearErrorAction implements Action {
+  readonly type = AuthActionTypes.CLEAR_ERROR;
+}
+
 export type AuthActions =
   | GetUserAction
   | AuthenticatedAction
   | NotAuthenticatedAction
   | LoginAction
   | AuthErrorAction
-  | LogoutAction;
+  | LogoutAction
+  | ClearErrorAction;
