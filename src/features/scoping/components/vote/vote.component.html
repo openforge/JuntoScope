@@ -1,6 +1,6 @@
 <div class="vote-form-container">
     <form [formGroup]="voteForm" (ngSubmit)="sendVote()">
-        <ion-input class="form-control" type="number" formControlName="estimate" name="estimate" placeholder="3 Hours"></ion-input>
+        <ion-input text-center class="form-control" type="number" formControlName="estimate" name="estimate" placeholder="3 Hours"></ion-input>
 
         <h6 *ngIf="error">
         {{ error }}

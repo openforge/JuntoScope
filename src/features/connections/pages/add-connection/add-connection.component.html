@@ -35,9 +35,10 @@
       </ion-item>
 
       <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
-        <h6 *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
-          Please enter in a Teamwork API Token. For Instructions please view the link below.
-        </h6>
+        <p class="item-text-wrap" *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
+          Please enter in a valid Teamwork API Token.
+          For instructions on where to find this please visit the link below.
+        </p>
       </ng-container>
 
       <a href="http://support.teamwork.com/projects/using-teamwork-projects/locating-your-api-key">Where do I find this?</a>
