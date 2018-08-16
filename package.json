@@ -130,7 +130,7 @@
     ],
     "plugins": {
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.494457695327-611er42ptb000gevad2g51vvcflkif5m"
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.10246365693-nmqslkj1herjr37pji9dondov6d3mqg2"
       },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
