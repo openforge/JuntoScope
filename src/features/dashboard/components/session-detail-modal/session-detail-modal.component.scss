@@ -1,0 +1,61 @@
+app-session-detail-modal {
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 50%;
+  ion-content.content {
+    border-radius: 2rem;
+    height: calc(100% - 28rem);
+    width: calc(100% - 7rem);
+    margin: 3.5rem;
+    display: flex;
+    justify-content: center;
+  }
+  .share-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    h4 {
+      text-transform: uppercase;
+    }
+    .share-url-section {
+      display: flex;
+      margin-bottom: 20px;
+      .session-url {
+        border-bottom: 1px solid;
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-right: 15px;
+      }
+    }
+    .access-code-letters {
+      display: flex;
+      justify-content: center;
+      .single-letter {
+        color: black;
+        border: 1px solid #c94313;
+        padding: 5px;
+        border-radius: 5px;
+        margin-right: 10px;
+        margin-left: 10px;
+      }
+    }
+    button.button {
+      width: 50%;
+      text-transform: capitalize;
+    }
+  }
+  .delete-box {
+    border-top: 2px solid #c94313;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    button.button {
+      margin-left: 10px;
+      width: 35%;
+      margin-right: 10px;
+      text-transform: capitalize;
+    }
+  }
+}

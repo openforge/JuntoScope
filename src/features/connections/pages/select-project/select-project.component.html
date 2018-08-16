@@ -1,8 +1,5 @@
 <ion-header>
   <ion-navbar>
-    <!-- <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons> -->
     <ion-title>Select Project</ion-title>
   </ion-navbar>
 </ion-header>
@@ -16,6 +13,6 @@
   </ng-container>
 
   <ng-container *ngIf="!projects$ | async">
-    <h2>You have no task projects for this specific connection!</h2>
+    <h2>You have no projects for this specific connection. Please add a project for this connection in Teamwork in order to continue.</h2>
   </ng-container>
 </ion-content>

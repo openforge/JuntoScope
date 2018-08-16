@@ -1,22 +1,30 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { ErrorHandler, NgModule } from "@angular/core";
 import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
+
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { Facebook } from "@ionic-native/facebook";
+import { GooglePlus } from "@ionic-native/google-plus";
+import { TwitterConnect } from "@ionic-native/twitter-connect";
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import { InAppBrowser } from "@ionic-native/in-app-browser";
+
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { EffectsModule } from "@ngrx/effects";
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFirestoreModule } from "angularfire2/firestore";
+
 import { reducers, initialState, metaReducers } from "../store/app.reducer";
-import { AppEffects } from "../store/app.effects";
-import { environment } from "../environment";
+import { AppFacade } from "../store/app.facade";
+import { environment } from "../environments/environment";
+
 import { JuntoScopeComponent } from "./app.component";
 import { SharedModule } from "../shared/shared.module";
 import { AuthenticationModule } from "../features/authentication/authentication.module";
-import { AuthEffects } from "../features/authentication/store/auth.effects";
+import { AuthFacade } from "../features/authentication/store/auth.facade";
 import { NotFoundComponent } from "./not-found.component";
 import { DashboardModule } from "../features/dashboard/dashboard.module";
 import { HttpClientModule } from "@angular/common/http";
@@ -24,8 +32,6 @@ import { HttpModule } from "@angular/http";
 import { AuthGuard } from "./auth.guard";
 import { AppRoutingModule } from "./app-routing.module";
 import { ConnectionsModule } from "../features/connections/connections.module";
-import { GooglePlus } from "@ionic-native/google-plus";
-import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { ScopingModule } from "../features/scoping/scoping.module";
 import { SettingsModule } from "../features/settings/settings.module";
 
@@ -39,7 +45,7 @@ import { SettingsModule } from "../features/settings/settings.module";
     AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthFacade]),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -56,12 +62,14 @@ import { SettingsModule } from "../features/settings/settings.module";
   providers: [
     HttpClientModule,
     Facebook,
-    AppEffects,
+    AppFacade,
     AuthGuard,
     StatusBar,
     SplashScreen,
     GooglePlus,
     ScreenOrientation,
+    TwitterConnect,
+    InAppBrowser,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

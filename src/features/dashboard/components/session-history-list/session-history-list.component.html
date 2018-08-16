@@ -1,14 +1,11 @@
+<div class="list-headers">
+  <ion-list-header no-lines>
+    <h2>History</h2>
+  </ion-list-header>
+</div>
 
-<div class="container" padding>
+<div padding>
   <ion-list>
-    <ion-list-header text-left no-lines>
-      <h2>HISTORY</h2>
-
-      <button ion-button clear item-end>
-        <ion-icon name="arrow-down"></ion-icon>
-      </button>
-    </ion-list-header>
-
     <ng-container *ngIf="items.length">
       <app-session-history-item *ngFor="let item of items" [item]="item" [uid]="uid" [time]="item.participants[uid]" (options)="handleOptionClick($event, item)" (detail)="handleDetailClick($event, item)"></app-session-history-item>
     </ng-container>
@@ -16,7 +13,6 @@
     <ng-container *ngIf="!items.length">
       <p text-center padding>You don't have any history yet. Join or start a session to add it to your history</p>
     </ng-container>
-
   </ion-list>
 </div>
 

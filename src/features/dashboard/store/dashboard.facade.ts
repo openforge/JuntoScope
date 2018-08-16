@@ -36,7 +36,7 @@ import { DocumentChangeAction } from "angularfire2/firestore";
 import { ScopingSession } from "../../../models/scoping-session";
 
 @Injectable()
-export class DashboardEffects {
+export class DashboardFacade {
   historyItems$ = this.store.pipe(select(DashboardQuery.selectAll));
 
   uiState$ = this.store.pipe(select(DashboardQuery.selectUiState));

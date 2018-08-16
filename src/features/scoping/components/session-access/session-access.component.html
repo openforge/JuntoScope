@@ -1,17 +1,15 @@
-<p>Enter Access Code</p>
-
 <form [formGroup]="accessForm" (ngSubmit)="continue()">
-  <ion-input class="form-control" type="text" formControlName="code" name="code"></ion-input>
+  <h3 text-center>Enter Access Code</h3>
+
+  <ion-item no-lines>
+    <ion-input class="form-control" type="text" formControlName="code" name="code" clearInput text-center></ion-input>
+  </ion-item>
 
   <ng-container *ngIf="accessForm.get('code') as codeCtrl">
-    <h6 *ngIf="codeCtrl.dirty && codeCtrl.hasError('required')" class="error input-error">
+    <p *ngIf="codeCtrl.dirty && codeCtrl.hasError('required')" class="error input-error">
       Access Code is required
-    </h6>
+    </p>
   </ng-container>
 
-  <h6 *ngIf="error$ | async as error">
-    {{ error }}
-  </h6>
-
-  <button ion-button type="submit">Start Scope</button>
+  <button ion-button type="submit">START SCOPE</button>
 </form>

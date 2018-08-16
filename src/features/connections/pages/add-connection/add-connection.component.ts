@@ -2,7 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ConnectionFacade } from "../../store/connection.facade";
 import { Subscription } from "rxjs";
-import { NavController, IonicPage } from "ionic-angular";
+import {
+  NavController,
+  IonicPage,
+  LoadingController,
+  Loading
+} from "ionic-angular";
 import { ConnectionActionTypes } from "../../store/connection.actions";
 import { Actions } from "@ngrx/effects";
 
@@ -22,17 +27,25 @@ export class AddConnectionPage implements OnInit {
 
   redirectSubs: Subscription;
 
+  loading: Loading;
+
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
     private connectionFacade: ConnectionFacade,
-    private actions$: Actions
+    private actions$: Actions,
+    private loadingCtrl: LoadingController
   ) {
+    this.loading = this.loadingCtrl.create({
+      spinner: "crescent",
+      cssClass: "custom-loading"
+    });
     this.redirectSubs = this.actions$
       .ofType(ConnectionActionTypes.ADD_SUCCESS)
       .subscribe(() => {
+        this.loading.dismiss();
         this.redirectSubs.unsubscribe();
-        this.navCtrl.setRoot("DashboardPage");
+        this.navCtrl.push("DashboardPage");
       });
   }
 
@@ -50,7 +63,7 @@ export class AddConnectionPage implements OnInit {
         token: this.connectionForm.get("token").value,
         type: this.type
       };
-
+      this.loading.present();
       this.connectionFacade.addConnection(connection);
     } else {
       this.connectionForm.get("token").markAsDirty();

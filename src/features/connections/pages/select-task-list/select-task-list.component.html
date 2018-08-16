@@ -6,6 +6,8 @@
 
 <ion-content>
 
+  <ion-spinner name="crescent" *ngIf="!loaded"></ion-spinner>
+
   <ng-container *ngIf="taskLists$ | async as taskLists">
 
     <ion-list>
@@ -27,4 +29,5 @@
   <ng-container *ngIf="!taskLists$ | async as taskLists">
     <h2>You have no task lists for this specific project!</h2>
   </ng-container>
+
 </ion-content>

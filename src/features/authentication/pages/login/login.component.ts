@@ -1,13 +1,19 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
+
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
 import { untilDestroyed } from "ngx-take-until-destroy";
 import { map, filter, take } from "rxjs/operators";
-import { AuthEffects } from "../../store/auth.effects";
-import { AppEffects } from "../../../../store/app.effects";
+import { AuthFacade } from "../../store/auth.facade";
+import { AppFacade } from "../../../../store/app.facade";
 import { Subscription } from "rxjs";
 import { Actions } from "@ngrx/effects";
+
 import { AuthActionTypes } from "../../store/auth.actions";
+
+import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { IAB_OPTIONS } from "../../../../app/app.constants";
 
 @IonicPage({
   segment: "LoginPage",
@@ -15,12 +21,10 @@ import { AuthActionTypes } from "../../store/auth.actions";
 })
 @Component({
   selector: "app-login",
-  templateUrl: "./login.html"
+  templateUrl: "./login.component.html"
 })
 export class LoginPage implements OnInit {
   agreeForm: FormGroup;
-  // userSub: Subscription;
-  // loginSub: Subscription;
   // loading$ = this.authFacade.uiState$.pipe(
   //   map(uiState => uiState === AuthUiState.LOADING)
   // );
@@ -28,11 +32,11 @@ export class LoginPage implements OnInit {
   // authError$ = this.authFacade.error$;
   hasAgreed = false;
 
-  user$ = this.authEffects.user$;
+  user$ = this.authFacade.user$;
 
   redirectSubs: Subscription;
 
-  private loginRedirect$ = this.appEffects.authRedirect$.pipe(
+  private loginRedirect$ = this.appFacade.authRedirect$.pipe(
     untilDestroyed(this),
     filter(redirectUrl => !!redirectUrl),
     map(navOptions => {
@@ -47,11 +51,12 @@ export class LoginPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private appEffects: AppEffects,
-    private authEffects: AuthEffects,
+    private appFacade: AppFacade,
+    private authFacade: AuthFacade,
     private navCtrl: NavController,
     private navParams: NavParams,
-    private actions$: Actions
+    private actions$: Actions,
+    private iab: InAppBrowser
   ) {
     this.redirectSubs = this.actions$
       .ofType(AuthActionTypes.AUTHENTICATED)
@@ -76,25 +81,25 @@ export class LoginPage implements OnInit {
   }
 
   goToTerms() {
-    this.navCtrl.push("TermsPage");
+    this.iab.create('https://docs.google.com/document/d/1T8z8bh285DOsPdthndKIrfECzAAgmg927BrTLrubKtg/', '_blank', IAB_OPTIONS);
   }
 
   goToPrivacy() {
-    this.navCtrl.push("PrivacyPage");
+    this.iab.create('https://docs.google.com/document/d/11MIeUYBu0PstjpzJ_x3jk4thisxI6uarYNciIedqAW0/', '_blank', IAB_OPTIONS);
   }
 
   googleLogin() {
-    this.authEffects.googleLogin();
+    this.authFacade.googleLogin();
   }
 
   facebookLogin() {
-    this.authEffects.facebookLogin();
+    this.authFacade.facebookLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
 
   twitterLogin() {
-    this.authEffects.twitterLogin();
+    this.authFacade.twitterLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }

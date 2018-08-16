@@ -55,7 +55,7 @@
   
   // ios Header
   ion-header .toolbar-ios {
-  
+    
     // Background color
     .toolbar-background-ios {
       background: $primary-orange;
@@ -181,5 +181,17 @@
   }
 
   // 5. End Spinner
+  // **************************************************
+  
+
+
+  // 6. scroll-content TMP issue related to - https://github.com/ionic-team/ionic/issues/10629
+  // --------------------------------------------------
+  // All styles related to scroll-content
+
+  .scroll-content { 
+    padding-bottom: 0!important; 
+  }
+  // 6. scroll-content
   // **************************************************
   

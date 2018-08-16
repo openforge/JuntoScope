@@ -2,9 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 import { UnAuthGuard } from "../../app/un-auth.guard";
-import { LoginPage } from "./pages/login/login";
-import { TermsPage } from "./pages/terms/terms";
-import { PrivacyPage } from "./pages/privacy/privacy";
+import { LoginPage } from "./pages/login/login.component";
 
 const routes: Routes = [
   {
@@ -16,14 +14,6 @@ const routes: Routes = [
     path: "login",
     component: LoginPage,
     canActivate: [UnAuthGuard]
-  },
-  {
-    path: "terms",
-    component: TermsPage
-  },
-  {
-    path: "privacy",
-    component: PrivacyPage
   }
 ];
 
