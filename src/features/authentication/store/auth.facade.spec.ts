@@ -13,7 +13,7 @@ import { Observable } from "rxjs/Observable";
 import { cold, hot } from "jest-marbles";
 import { ConfigureFn, configureTests } from "../../../test/jest-test.helper";
 import { AuthState, authReducer, initialAuthState } from "./auth.reducer";
-import { AuthEffects } from "./auth.effects";
+import { AuthFacade } from "./auth.facade";
 import {
   AuthActionTypes,
   GetUserAction,
@@ -44,37 +44,39 @@ describe("AuthEffects", () => {
   let store: Store<AuthState>;
   let actions$: Observable<Action>;
   let service: AuthService;
-  let facade: AuthEffects;
-  let metadata: EffectsMetadata<AuthEffects>;
+  let facade: AuthFacade;
+  let metadata: EffectsMetadata<AuthFacade>;
 
-  beforeEach(async(() => {
-    const configure: ConfigureFn = testBed => {
-      testBed.configureTestingModule({
-        imports: [
-          StoreModule.forRoot(
-            { auth: authReducer },
-            { initialState: { auth: initialAuthState } }
-          ),
-          EffectsModule.forRoot([AuthEffects])
-        ],
-        providers: [
-          {
-            provide: AuthService,
-            useClass: MockAuthService
-          },
-          AuthEffects,
-          provideMockActions(() => actions$)
-        ]
+  beforeEach(
+    async(() => {
+      const configure: ConfigureFn = testBed => {
+        testBed.configureTestingModule({
+          imports: [
+            StoreModule.forRoot(
+              { auth: authReducer },
+              { initialState: { auth: initialAuthState } }
+            ),
+            EffectsModule.forRoot([AuthFacade])
+          ],
+          providers: [
+            {
+              provide: AuthService,
+              useClass: MockAuthService
+            },
+            AuthFacade,
+            provideMockActions(() => actions$)
+          ]
+        });
+      };
+
+      configureTests(configure).then(testBed => {
+        store = testBed.get(Store);
+        service = testBed.get(AuthService);
+        facade = testBed.get(AuthFacade);
+        metadata = getEffectsMetadata(facade);
       });
-    };
-
-    configureTests(configure).then(testBed => {
-      store = testBed.get(Store);
-      service = testBed.get(AuthService);
-      facade = testBed.get(AuthEffects);
-      metadata = getEffectsMetadata(facade);
-    });
-  }));
+    })
+  );
 
   describe("Effect: getUser$", () => {
     it("should dispatch another action", () => {

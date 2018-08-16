@@ -28,7 +28,7 @@ import { AuthService } from "../services/auth.service";
 import { HistoryService } from "../../dashboard/services/history.service";
 
 @Injectable()
-export class AuthEffects {
+export class AuthFacade {
   /*
    * Observable Store Queries
    */

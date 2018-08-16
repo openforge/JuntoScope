@@ -6,8 +6,8 @@ import {
   ViewController
 } from "ionic-angular";
 import { TakeUntilDestroy } from "ngx-take-until-destroy";
-import { AppEffects } from "../../../../store/app.effects";
-import { DashboardEffects } from "../../store/dashboard.effects";
+import { AppFacade } from "../../../../store/app.facade";
+import { DashboardFacade } from "../../store/dashboard.facade";
 import { ConnectionFacade } from "../../../connections/store/connection.facade";
 import { Connection } from "../../../../models/connection";
 import {
@@ -43,8 +43,8 @@ export class DashboardPage implements OnInit, OnDestroy {
   connections$ = this.connectionFacade.connections$;
 
   constructor(
-    private appFacade: AppEffects,
-    private dashboardFacade: DashboardEffects,
+    private appFacade: AppFacade,
+    private dashboardFacade: DashboardFacade,
     private popupSvc: PopupService,
     private connectionFacade: ConnectionFacade,
     private navCtrl: NavController,
