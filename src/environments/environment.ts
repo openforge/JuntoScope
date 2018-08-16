@@ -1,4 +1,4 @@
-import { FIREBASE_DEV_CONFIG, FIREBASE_DEV_FUNCTIONS } from "./config/config";
+import { FIREBASE_DEV_CONFIG, FIREBASE_DEV_FUNCTIONS } from "../config/config";
 
 export const environment = {
   production: false,
