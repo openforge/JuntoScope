@@ -35,7 +35,9 @@
     "@angular/platform-browser-dynamic": "5.2.11",
     "@angular/router": "6.0.7",
     "@ionic-native/core": "4.8.0",
+    "@ionic-native/facebook": "^4.11.0",
     "@ionic-native/google-plus": "^4.11.0",
+    "@ionic-native/in-app-browser": "^4.11.0",
     "@ionic-native/screen-orientation": "^4.11.0",
     "@ionic-native/splash-screen": "4.8.0",
     "@ionic-native/status-bar": "4.8.0",
@@ -51,7 +53,9 @@
     "cordova-android-support-gradle-release": "^1.4.4",
     "cordova-ios": "4.5.5",
     "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-facebook4": "~2.2.0",
     "cordova-plugin-googleplus": "^5.3.0",
+    "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic-keyboard": "2.0.5",
     "cordova-plugin-ionic-webview": "1.1.19",
     "cordova-plugin-screen-orientation": "^3.0.1",
@@ -128,7 +132,7 @@
     ],
     "plugins": {
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.494457695327-611er42ptb000gevad2g51vvcflkif5m"
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.10246365693-nmqslkj1herjr37pji9dondov6d3mqg2"
       },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
@@ -138,12 +142,18 @@
       "cordova-android-support-gradle-release": {
         "ANDROID_SUPPORT_VERSION": "27.+"
       },
+      "cordova-plugin-facebook4": {
+        "APP_ID": "1427549454016328",
+        "APP_NAME": "JuntoScope",
+        "ANDROID_SDK_VERSION": "4.+"
+      },
       "twitter-connect-plugin": {
         "FABRIC_KEY": "1ba0dc025725ca34727a6f26e9be759d120e4bad",
         "TWITTER_KEY": "RpWT5YZYdFYjPSzI8wB5O4kwP",
         "TWITTER_SECRET": "yILFMxwPl7zK4qKuQMqqmAZ9bQbJGKbOt8gygvOPweYRamoSoq"
       },
-      "cordova-plugin-screen-orientation": {}
+      "cordova-plugin-screen-orientation": {},
+      "cordova-plugin-inappbrowser": {}
     }
   }
 }

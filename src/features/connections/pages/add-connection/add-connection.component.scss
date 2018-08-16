@@ -13,10 +13,19 @@ app-add-connection {
       height: 8%;
       margin-bottom: 1rem;
       width: 90%;
+
+      ion-input.input {
+        color: #000;
+        font-weight: 400;
+      }
     }
 
     a {
       margin-bottom: 2rem;
+    }
+
+    p {
+      font-style: italic;
     }
   }
 
