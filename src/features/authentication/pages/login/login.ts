@@ -12,8 +12,10 @@ import { AuthEffects } from "../../store/auth.effects";
 import { AppEffects } from "../../../../store/app.effects";
 import { AuthActionTypes } from "../../store/auth.actions";
 import { ClearErrorAction } from "../../store/auth.actions";
-import { AppState } from "../../../../store/app.reducer";
+import { AuthUiState } from "../../store/auth.reducer";
+import { AppState} from "../../../../store/app.reducer";
 import { PopupService } from "../../../../shared/popup.service";
+import { LoadingService } from "../../../../shared/loading.service";
 
 
 @IonicPage({
@@ -27,10 +29,6 @@ import { PopupService } from "../../../../shared/popup.service";
 export class LoginPage implements OnInit {
   agreeForm: FormGroup;
   
-  // loading$ = this.authFacade.uiState$.pipe(
-  //   map(uiState => uiState === AuthUiState.LOADING)
-  // );
-
   authError$ = this.authEffects.error$;
 
   hasAgreed = false;
@@ -60,25 +58,30 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private navParams: NavParams,
     private actions$: Actions,
-    private popupSvc: PopupService
+    private popupSvc: PopupService,
+    private loadingSrv: LoadingService
   ) {
     this.redirectSubs = this.actions$
       .ofType(AuthActionTypes.AUTHENTICATED)
       .subscribe(() => {
+        console.log('dismissing!');
+        this.loadingSrv.dismiss();
         this.redirectSubs.unsubscribe();
         this.navCtrl.setRoot("DashboardPage");
       });
 
       this.authError$.subscribe(error => {
         if (error) {
+          this.loadingSrv.hide();
           this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
           this.store.dispatch(new ClearErrorAction());
         }
-      }); 
+      });
   }
 
   ngOnInit() {
     this.createForm();
+    this.loadingSrv.initialize();
   }
 
   createForm() {
@@ -104,12 +107,14 @@ export class LoginPage implements OnInit {
   }
 
   facebookLogin() {
+    this.loadingSrv.present();
     this.authEffects.facebookLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
 
   twitterLogin() {
+    this.loadingSrv.present();
     this.authEffects.twitterLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
