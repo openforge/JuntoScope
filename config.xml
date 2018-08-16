@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.openforge.juntoscope" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>juntoscope</name>
+    <name>JuntoScope</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hello@openforge.io" href="http://openforge.io">OpenForge Team</author>
     <content src="index.html" />
@@ -20,6 +20,10 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <platform name="android">
+        <config-file parent="/resources" target="./res/values/strings.xml">
+            <string name="fb_app_id">1427549454016328</string>
+            <string name="fb_app_name">JuntoScope</string>
+        </config-file>
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
@@ -87,6 +91,10 @@
     <plugin name="cordova-android-support-gradle-release" spec="^1.4.4">
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
+    <plugin name="cordova-plugin-facebook4" spec="~2.2.0">
+        <variable name="APP_ID" value="1427549454016328" />
+        <variable name="APP_NAME" value="“JuntoScope”" />
+        <variable name="ANDROID_SDK_VERSION" value="4.+" />
     <plugin name="twitter-connect-plugin" spec="https://github.com/chroa/twitter-connect-plugin">
         <variable name="FABRIC_KEY" value="1ba0dc025725ca34727a6f26e9be759d120e4bad" />
         <variable name="TWITTER_KEY" value="RpWT5YZYdFYjPSzI8wB5O4kwP" />

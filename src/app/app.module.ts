@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
 
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
+import { Facebook } from "@ionic-native/facebook";
 import { GooglePlus } from "@ionic-native/google-plus";
 import { TwitterConnect } from "@ionic-native/twitter-connect";
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
@@ -27,6 +28,7 @@ import { AuthFacade } from "../features/authentication/store/auth.facade";
 import { NotFoundComponent } from "./not-found.component";
 import { DashboardModule } from "../features/dashboard/dashboard.module";
 import { HttpClientModule } from "@angular/common/http";
+import { HttpModule } from "@angular/http";
 import { AuthGuard } from "./auth.guard";
 import { AppRoutingModule } from "./app-routing.module";
 import { ConnectionsModule } from "../features/connections/connections.module";
@@ -38,6 +40,7 @@ import { SettingsModule } from "../features/settings/settings.module";
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule,
     IonicModule.forRoot(JuntoScopeComponent, { preloadModules: true }),
     AppRoutingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers, initialState }),
@@ -57,6 +60,8 @@ import { SettingsModule } from "../features/settings/settings.module";
   bootstrap: [IonicApp],
   entryComponents: [JuntoScopeComponent],
   providers: [
+    HttpClientModule,
+    Facebook,
     AppFacade,
     AuthGuard,
     StatusBar,
