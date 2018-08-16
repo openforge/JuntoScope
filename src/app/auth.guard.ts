@@ -8,18 +8,18 @@ import {
 import { map, tap, filter } from "rxjs/operators";
 
 import { RouterFacade } from "../store/router.facade";
-import { AuthEffects } from "../features/authentication/store/auth.effects";
+import { AuthFacade } from "../features/authentication/store/auth.facade";
 import { AuthUiState } from "../features/authentication/store/auth.reducer";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private routerFacade: RouterFacade,
-    private authEffects: AuthEffects
+    private authFacade: AuthFacade
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.authEffects.uiState$.pipe(
+    return this.authFacade.uiState$.pipe(
       filter(uiState => uiState !== AuthUiState.LOADING),
       map(uiState => uiState === AuthUiState.AUTHENTICATED),
       tap(isAuth => {

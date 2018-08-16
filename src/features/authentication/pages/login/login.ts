@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { untilDestroyed } from "ngx-take-until-destroy";
 import { map, filter, take } from "rxjs/operators";
-import { AuthEffects } from "../../store/auth.effects";
-import { AppEffects } from "../../../../store/app.effects";
+import { AuthFacade } from "../../store/auth.facade";
+import { AppFacade } from "../../../../store/app.facade";
 import { Subscription } from "rxjs";
 import { Actions } from "@ngrx/effects";
 import { AuthActionTypes } from "../../store/auth.actions";
@@ -26,11 +26,11 @@ export class LoginPage implements OnInit {
   // authError$ = this.authFacade.error$;
   hasAgreed = false;
 
-  user$ = this.authEffects.user$;
+  user$ = this.authFacade.user$;
 
   redirectSubs: Subscription;
 
-  private loginRedirect$ = this.appEffects.authRedirect$.pipe(
+  private loginRedirect$ = this.appFacade.authRedirect$.pipe(
     untilDestroyed(this),
     filter(redirectUrl => !!redirectUrl),
     map(navOptions => {
@@ -45,8 +45,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private appEffects: AppEffects,
-    private authEffects: AuthEffects,
+    private appFacade: AppFacade,
+    private authFacade: AuthFacade,
     private navCtrl: NavController,
     private navParams: NavParams,
     private actions$: Actions
@@ -82,17 +82,17 @@ export class LoginPage implements OnInit {
   }
 
   googleLogin() {
-    this.authEffects.googleLogin();
+    this.authFacade.googleLogin();
   }
 
   facebookLogin() {
-    this.authEffects.facebookLogin();
+    this.authFacade.facebookLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
 
   twitterLogin() {
-    this.authEffects.twitterLogin();
+    this.authFacade.twitterLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
