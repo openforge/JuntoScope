@@ -137,17 +137,25 @@
   
   // md Searchbar
   // --------------------------------------------------
-  
-  .toolbar .searchbar-md, .searchbar-wp, {
+
+  .searchbar-md {
     background-color: white;
     border: 1px solid $primary-orange;
     border-radius: 10px;
+    padding: 2px;
   }
 
   // wp Searchbar
   // --------------------------------------------------
-  .searchbar-wp .searchbar-input-container {
-    border: none;
+  
+  .searchbar-wp {
+    background-color: white;
+    border: 1px solid $primary-orange;
+    border-radius: 10px;
+
+    .searchbar-input-container {
+      border: none;
+    }
   }
   
   // 3. End Searchbar
