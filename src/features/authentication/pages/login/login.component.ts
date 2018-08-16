@@ -81,11 +81,11 @@ export class LoginPage implements OnInit {
   }
 
   goToTerms() {
-    this.iab.create('tos.juntoscope.com', '_blank', IAB_OPTIONS);
+    this.iab.create('https://docs.google.com/document/d/1T8z8bh285DOsPdthndKIrfECzAAgmg927BrTLrubKtg/', '_blank', IAB_OPTIONS);
   }
 
   goToPrivacy() {
-    this.iab.create('pp.juntoscope.com', '_blank', IAB_OPTIONS);
+    this.iab.create('https://docs.google.com/document/d/11MIeUYBu0PstjpzJ_x3jk4thisxI6uarYNciIedqAW0/', '_blank', IAB_OPTIONS);
   }
 
   googleLogin() {
