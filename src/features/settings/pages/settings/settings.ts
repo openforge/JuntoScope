@@ -5,7 +5,7 @@ import { filter, take } from "rxjs/operators";
 import { AuthFacade } from "../../../authentication/store/auth.facade";
 import { AuthUiState } from "../../../authentication/store/auth.reducer";
 import { ConnectionFacade } from "../../../connections/store/connection.facade";
-import { LoginPage } from "../../../authentication/pages/login/login";
+import { LoginPage } from "../../../authentication/pages/login/login.component";
 import { Subscription } from "rxjs";
 
 @TakeUntilDestroy()

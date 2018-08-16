@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
+
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import { untilDestroyed } from "ngx-take-until-destroy";
 import { map, filter, take } from "rxjs/operators";
@@ -9,12 +10,13 @@ import { Actions } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 
 import { AppFacade } from "../../../../store/app.facade";
-import { AppState} from "../../../../store/app.reducer";
+import { AppState } from "../../../../store/app.reducer";
 import { AuthFacade } from "../../store/auth.facade";
 import { AuthActionTypes, ClearErrorAction } from "../../store/auth.actions";
 import { PopupService } from "../../../../shared/popup.service";
 import { LoadingService } from "../../../../shared/loading.service";
-
+import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { IAB_OPTIONS } from "../../../../app/app.constants";
 
 @IonicPage({
   segment: "LoginPage",
@@ -22,11 +24,11 @@ import { LoadingService } from "../../../../shared/loading.service";
 })
 @Component({
   selector: "app-login",
-  templateUrl: "./login.html"
+  templateUrl: "./login.component.html"
 })
 export class LoginPage implements OnInit {
   agreeForm: FormGroup;
-  
+
   authError$ = this.authFacade.error$;
 
   hasAgreed = false;
@@ -57,24 +59,25 @@ export class LoginPage implements OnInit {
     private navParams: NavParams,
     private actions$: Actions,
     private popupSvc: PopupService,
-    private loadingSrv: LoadingService
+    private loadingSrv: LoadingService,
+    private iab: InAppBrowser
   ) {
     this.redirectSubs = this.actions$
       .ofType(AuthActionTypes.AUTHENTICATED)
       .subscribe(() => {
-        console.log('dismissing!');
+        console.log("dismissing!");
         this.loadingSrv.dismiss();
         this.redirectSubs.unsubscribe();
         this.navCtrl.setRoot("DashboardPage");
       });
 
-      this.authError$.subscribe(error => {
-        if (error) {
-          this.loadingSrv.hide();
-          this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
-          this.store.dispatch(new ClearErrorAction());
-        }
-      });
+    this.authError$.subscribe(error => {
+      if (error) {
+        this.loadingSrv.hide();
+        this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
+        this.store.dispatch(new ClearErrorAction());
+      }
+    });
   }
 
   ngOnInit() {
@@ -93,11 +96,19 @@ export class LoginPage implements OnInit {
   }
 
   goToTerms() {
-    this.navCtrl.push("TermsPage");
+    this.iab.create(
+      "https://docs.google.com/document/d/1T8z8bh285DOsPdthndKIrfECzAAgmg927BrTLrubKtg/",
+      "_blank",
+      IAB_OPTIONS
+    );
   }
 
   goToPrivacy() {
-    this.navCtrl.push("PrivacyPage");
+    this.iab.create(
+      "https://docs.google.com/document/d/11MIeUYBu0PstjpzJ_x3jk4thisxI6uarYNciIedqAW0/",
+      "_blank",
+      IAB_OPTIONS
+    );
   }
 
   googleLogin() {
