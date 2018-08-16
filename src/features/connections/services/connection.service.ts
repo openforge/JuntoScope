@@ -11,8 +11,8 @@ import { environment } from "../../../environment";
 import { Project } from "../../../models/project";
 import { TaskList } from "../../../models/task-list";
 import { Connection } from "../../../models/connection";
-import { AppEffects } from "../../../store/app.effects";
-import { AuthEffects } from "../../authentication/store/auth.effects";
+import { AppFacade } from "../../../store/app.facade";
+import { AuthFacade } from "../../authentication/store/auth.facade";
 import { AuthUiState } from "../../authentication/store/auth.reducer";
 
 @Injectable()
@@ -20,10 +20,10 @@ export class ConnectionService {
   authState$ = this.authFacade.uiState$;
 
   constructor(
-    private appFacade: AppEffects,
+    private appFacade: AppFacade,
     private afs: AngularFirestore,
     private http: HttpClient,
-    private authFacade: AuthEffects
+    private authFacade: AuthFacade
   ) {}
 
   addConnection(connection: Connection) {

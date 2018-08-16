@@ -8,12 +8,10 @@ import { Subscription } from "rxjs";
 import { Actions } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 
-import { AuthEffects } from "../../store/auth.effects";
-import { AppEffects } from "../../../../store/app.effects";
-import { AuthActionTypes } from "../../store/auth.actions";
-import { ClearErrorAction } from "../../store/auth.actions";
-import { AuthUiState } from "../../store/auth.reducer";
+import { AppFacade } from "../../../../store/app.facade";
 import { AppState} from "../../../../store/app.reducer";
+import { AuthFacade } from "../../store/auth.facade";
+import { AuthActionTypes, ClearErrorAction } from "../../store/auth.actions";
 import { PopupService } from "../../../../shared/popup.service";
 import { LoadingService } from "../../../../shared/loading.service";
 
@@ -29,15 +27,15 @@ import { LoadingService } from "../../../../shared/loading.service";
 export class LoginPage implements OnInit {
   agreeForm: FormGroup;
   
-  authError$ = this.authEffects.error$;
+  authError$ = this.authFacade.error$;
 
   hasAgreed = false;
 
-  user$ = this.authEffects.user$;
+  user$ = this.authFacade.user$;
 
   redirectSubs: Subscription;
 
-  private loginRedirect$ = this.appEffects.authRedirect$.pipe(
+  private loginRedirect$ = this.appFacade.authRedirect$.pipe(
     untilDestroyed(this),
     filter(redirectUrl => !!redirectUrl),
     map(navOptions => {
@@ -53,8 +51,8 @@ export class LoginPage implements OnInit {
   constructor(
     private store: Store<AppState>,
     private fb: FormBuilder,
-    private appEffects: AppEffects,
-    private authEffects: AuthEffects,
+    private appFacade: AppFacade,
+    private authFacade: AuthFacade,
     private navCtrl: NavController,
     private navParams: NavParams,
     private actions$: Actions,
@@ -103,19 +101,19 @@ export class LoginPage implements OnInit {
   }
 
   googleLogin() {
-    this.authEffects.googleLogin();
+    this.authFacade.googleLogin();
   }
 
   facebookLogin() {
     this.loadingSrv.present();
-    this.authEffects.facebookLogin();
+    this.authFacade.facebookLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
 
   twitterLogin() {
     this.loadingSrv.present();
-    this.authEffects.twitterLogin();
+    this.authFacade.twitterLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
