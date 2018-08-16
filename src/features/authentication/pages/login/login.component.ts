@@ -1,13 +1,19 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
+
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
 import { untilDestroyed } from "ngx-take-until-destroy";
 import { map, filter, take } from "rxjs/operators";
 import { AuthFacade } from "../../store/auth.facade";
 import { AppFacade } from "../../../../store/app.facade";
 import { Subscription } from "rxjs";
 import { Actions } from "@ngrx/effects";
+
 import { AuthActionTypes } from "../../store/auth.actions";
+
+import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { IAB_OPTIONS } from "../../../../app/app.constants";
 
 @IonicPage({
   segment: "LoginPage",
@@ -15,7 +21,7 @@ import { AuthActionTypes } from "../../store/auth.actions";
 })
 @Component({
   selector: "app-login",
-  templateUrl: "./login.html"
+  templateUrl: "./login.component.html"
 })
 export class LoginPage implements OnInit {
   agreeForm: FormGroup;
@@ -49,7 +55,8 @@ export class LoginPage implements OnInit {
     private authFacade: AuthFacade,
     private navCtrl: NavController,
     private navParams: NavParams,
-    private actions$: Actions
+    private actions$: Actions,
+    private iab: InAppBrowser
   ) {
     this.redirectSubs = this.actions$
       .ofType(AuthActionTypes.AUTHENTICATED)
@@ -74,11 +81,11 @@ export class LoginPage implements OnInit {
   }
 
   goToTerms() {
-    this.navCtrl.push("TermsPage");
+    this.iab.create('https://docs.google.com/document/d/1T8z8bh285DOsPdthndKIrfECzAAgmg927BrTLrubKtg/', '_blank', IAB_OPTIONS);
   }
 
   goToPrivacy() {
-    this.navCtrl.push("PrivacyPage");
+    this.iab.create('https://docs.google.com/document/d/11MIeUYBu0PstjpzJ_x3jk4thisxI6uarYNciIedqAW0/', '_blank', IAB_OPTIONS);
   }
 
   googleLogin() {

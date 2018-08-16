@@ -7,6 +7,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { GooglePlus } from "@ionic-native/google-plus";
 import { TwitterConnect } from "@ionic-native/twitter-connect";
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
@@ -63,6 +64,7 @@ import { SettingsModule } from "../features/settings/settings.module";
     GooglePlus,
     ScreenOrientation,
     TwitterConnect,
+    InAppBrowser,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
