@@ -6,7 +6,7 @@ import { User } from "../../../models/user";
 import { Platform } from "ionic-angular";
 import { GooglePlus } from "@ionic-native/google-plus";
 import { TwitterConnect } from "@ionic-native/twitter-connect";
-import { GOOGLE_WEB_CLIENT_ID } from "../../../config/config";
+import { environment } from "../../../environments/environment";
 
 @Injectable()
 export class AuthService {
@@ -60,7 +60,7 @@ export class AuthService {
 
   async nativeGoogleLogin(): Promise<void> {
     const gplusUser = await this.gplus.login({
-      webClientId: GOOGLE_WEB_CLIENT_ID,
+      webClientId: environment.webClientId,
       offline: true,
       scopes: "profile email"
     });

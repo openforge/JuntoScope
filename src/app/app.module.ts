@@ -7,7 +7,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { GooglePlus } from "@ionic-native/google-plus";
 import { TwitterConnect } from "@ionic-native/twitter-connect";
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { InAppBrowser } from "@ionic-native/in-app-browser";
 
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
@@ -18,7 +18,7 @@ import { AngularFirestoreModule } from "angularfire2/firestore";
 
 import { reducers, initialState, metaReducers } from "../store/app.reducer";
 import { AppFacade } from "../store/app.facade";
-import { environment } from "../environment";
+import { environment } from "../environments/environment";
 
 import { JuntoScopeComponent } from "./app.component";
 import { SharedModule } from "../shared/shared.module";
