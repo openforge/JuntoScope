@@ -54,7 +54,7 @@ export class AddConnectionPage implements OnInit {
 
     this.addError$.subscribe(error => {
       if (error) {
-        this.loadingSvc.recreate();
+        this.loadingSvc.hide();
         this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
         this.store.dispatch(new ClearErrorAction());
       }

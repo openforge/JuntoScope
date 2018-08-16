@@ -9,14 +9,16 @@ export class LoadingService {
 		private loadingCtrl: LoadingController
 	) {}
 
+	// create loading object
 	initialize() {
 		this.loading = this.loadingCtrl.create({
 			spinner: "crescent",
 			cssClass: "custom-loading"
 		});
 	}
-
-	recreate() {
+	
+	// hide loading object and create to show again in view
+	hide() {
 		this.loading.dismiss().then(() => {
 			this.loading = this.loadingCtrl.create({
 				spinner: "crescent",
@@ -25,10 +27,12 @@ export class LoadingService {
 		})
 	}
 
+	// dismiss loading object completely from view
 	dismiss() {
-		this.loading.dismissAll();
+		this.loading.dismiss().catch(()=>{})
 	}
 
+	// show loading object in view
 	present() {
 		this.loading.present();
 	}
