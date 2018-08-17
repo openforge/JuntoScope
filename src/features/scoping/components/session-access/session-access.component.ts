@@ -5,7 +5,7 @@ import { ScopingFacade } from "../../store/scoping.facade";
 import { SessionValidation } from "../../../../models/scoping-session";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../../store/app.reducer";
-import { CleanErrorAction } from "../../store/scoping.actions";
+import { ClearErrorAction } from "../../store/scoping.actions";
 import { PopupService } from "../../../../shared/popup.service";
 @Component({
   selector: "app-session-access",
@@ -30,7 +30,7 @@ export class SessionAccessComponent implements OnInit {
     this.error$.subscribe(error => {
       if (error) {
         this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
-        this.store.dispatch(new CleanErrorAction());
+        this.store.dispatch(new ClearErrorAction());
       }
     });
   }

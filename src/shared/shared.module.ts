@@ -1,11 +1,12 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
-import { IonicModule } from "ionic-angular";
+import { IonicModule, Loading } from "ionic-angular";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
 
 import { ApiInterceptor } from "./api.interceptor";
 import { PopupService } from "./popup.service";
+import { LoadingService } from "./loading.service";
 import {
   ObjectKeysPipe,
   ObjectValuesPipe,
@@ -43,7 +44,8 @@ export class SharedModule {
           useClass: ApiInterceptor,
           multi: true
         },
-        PopupService
+        PopupService,
+        LoadingService
       ]
     };
   }

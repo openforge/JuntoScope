@@ -22,7 +22,7 @@ export enum ScopingActionTypes {
   VALIDATE_PARTICIPANT_ERROR = "[Scoping] Validate Participant Error",
   PARTICIPANT_VALIDATED = "[Scoping] Participant Validated",
 
-  CLEAN_ERROR = "[Scoping] Clean Error"
+  CLEAR_ERROR = "[Scoping] Clear Error"
 }
 
 export class LoadSessionAction implements Action {
@@ -118,8 +118,8 @@ export class ValidateParticipantErrorAction implements Action {
   constructor(public payload: any) {}
 }
 
-export class CleanErrorAction implements Action {
-  readonly type = ScopingActionTypes.CLEAN_ERROR;
+export class ClearErrorAction implements Action {
+  readonly type = ScopingActionTypes.CLEAR_ERROR;
   constructor(public payload?: any) {}
 }
 
@@ -139,4 +139,4 @@ export type ScopingActions =
   | ValidateParticipantAction
   | ParticipantValidatedAction
   | ValidateParticipantErrorAction
-  | CleanErrorAction;
+  | ClearErrorAction;

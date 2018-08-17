@@ -16,7 +16,9 @@ export enum DashboardActionTypes {
   DELETE_SESSION_ERROR = "[Dashboard] Delete Session error",
   REFRESH_ACCESS_CODE = "[Dashboard] Refresh Access Code",
   REFRESH_ACCESS_CODE_SUCCESS = "[Dashboard] Refresh Access Code Success",
-  REFRESH_ACCESS_CODE_ERROR = "[Dashboard] Refresh Access Code Error"
+  REFRESH_ACCESS_CODE_ERROR = "[Dashboard] Refresh Access Code Error",
+
+  CLEAR_ERROR = "[Dashboard] Clear Error"
 }
 
 export class LoadHistoryItemsAction implements Action {
@@ -77,6 +79,12 @@ export class RefreshAccessCodeErrorAction implements Action {
   readonly type = DashboardActionTypes.REFRESH_ACCESS_CODE_ERROR;
   constructor(public payload?: any) {}
 }
+
+export class ClearErrorAction implements Action {
+  readonly type = DashboardActionTypes.CLEAR_ERROR;
+  constructor(public payload?: any) {}
+}
+
 export type DashboardActions =
   | LoadHistoryItemsAction
   | LoadMoreHistoryItemsAction
@@ -89,4 +97,5 @@ export type DashboardActions =
   | DeleteSessionErrorAction
   | RefreshAccessCodeAction
   | RefreshAccessCodeSuccessAction
-  | RefreshAccessCodeErrorAction;
+  | RefreshAccessCodeErrorAction
+  | ClearErrorAction;
