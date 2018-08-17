@@ -95,6 +95,7 @@
         <variable name="APP_ID" value="1427549454016328" />
         <variable name="APP_NAME" value="“JuntoScope”" />
         <variable name="ANDROID_SDK_VERSION" value="4.+" />
+    </plugin>
     <plugin name="twitter-connect-plugin" spec="https://github.com/chroa/twitter-connect-plugin">
         <variable name="FABRIC_KEY" value="1ba0dc025725ca34727a6f26e9be759d120e4bad" />
         <variable name="TWITTER_KEY" value="RpWT5YZYdFYjPSzI8wB5O4kwP" />
