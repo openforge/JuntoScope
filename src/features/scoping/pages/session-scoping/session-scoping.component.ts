@@ -61,6 +61,7 @@ export class SessionScopingPage implements OnInit {
   timerOn = false;
   votes: number = 0;
   lastTaskId: string;
+  lastTaskVotes: Object;
 
   next: Subject<void> = new Subject();
 
@@ -146,6 +147,8 @@ export class SessionScopingPage implements OnInit {
       const lastSub = lastTask.subscribe(task => {
         console.log("lastTask: ", task);
         this.finalEstimate = task.estimate;
+        this.lastTaskVotes = task.votes;
+        console.log("last VOTES: ", this.lastTaskVotes);
         lastSub.unsubscribe();
       });
     }
