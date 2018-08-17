@@ -192,7 +192,6 @@
   // **************************************************
   
 
-
   // 6. scroll-content TMP issue related to - https://github.com/ionic-team/ionic/issues/10629
   // --------------------------------------------------
   // All styles related to scroll-content
@@ -200,6 +199,21 @@
   .scroll-content { 
     padding-bottom: 0!important; 
   }
+
   // 6. scroll-content
+  // **************************************************
+  
+  // 7. ion-loading 
+  // --------------------------------------------------
+  // All styles related to ion-loading
+
+  ion-loading.custom-loading {
+    .loading-wrapper {
+      background: none;
+      box-shadow: none;
+    }
+  }
+  
+  // 7. scroll-content
   // **************************************************
   

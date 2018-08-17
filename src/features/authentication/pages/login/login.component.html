@@ -23,17 +23,7 @@
       <button ion-button (click)="twitterLogin()" [disabled]="!hasAgreed">
         Twitter
       </button>
-    </ion-list>
-    
-      
-    <!-- <p *ngIf="loading$ | async">
-      Authenticating ...
-    </p>
-  
-    <p *ngIf="authError$ | async as message">
-      Auth Error: {{ message }}
-    </p> -->
-      
+    </ion-list>  
     
     <form [formGroup]="agreeForm">
       <ion-item>

@@ -6,12 +6,7 @@
 
 <ion-content>
 
-  <ng-container *ngIf="(uiState$ | async) === 'Loading' || participantState === ParticipantState.CHECKING_PARTICIPANT">
-
-    Loading...
-
-  </ng-container>
-
+  <ion-spinner name="crescent" *ngIf="(uiState$ | async) === 'Loading' || participantState === ParticipantState.CHECKING_PARTICIPANT"></ion-spinner>
 
   <app-session-access *ngIf="participantState === ParticipantState.PARTICIPANT_INVALID" [sessionLink]="sessionCode" (access)="access($event)">
   </app-session-access>

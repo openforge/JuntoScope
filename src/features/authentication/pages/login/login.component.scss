@@ -1,42 +1,42 @@
 app-login {
-	.content {
-		align-items: center;
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		justify-content: center;
-		width: 100%;
+  .content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
 
-		p {
-			width: 70%;
-			font-weight: 600;
-		}
+    p {
+      width: 70%;
+      font-weight: 600;
+    }
 
-		ion-list.list {
-			margin-top: 2rem;
+    ion-list.list {
+      margin-top: 2rem;
 
-			button {
-				font-weight: 600;
-				margin: .75rem;
-				width: 60%;
+      button {
+        font-weight: 600;
+        margin: 0.75rem;
+        width: 60%;
 
-				&:disabled {
-					background-color: white;
-					border: 2px solid $primary-orange;
-					color: $primary-orange;
-				}
-			}
-		}
+        &:disabled {
+          background-color: white;
+          border: 2px solid $primary-orange;
+          color: $primary-orange;
+        }
+      }
+    }
 
-		ion-item.item.item-block .item-inner {
-			border: none;
-		}
+    ion-item.item.item-block .item-inner {
+      border: none;
+    }
 
-		.terms {
-			flex-direction: row;
-			a {
-				font-weight: 600;
-			}
-		}
-	}
+    .terms {
+      flex-direction: row;
+      a {
+        font-weight: 600;
+      }
+    }
+  }
 }

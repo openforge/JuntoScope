@@ -12,6 +12,7 @@ export enum DashboardUiState {
 
 export interface DashboardState extends EntityState<HistoryItem> {
   uiState: DashboardUiState;
+  error: string;
 }
 
 export const adapter: EntityAdapter<HistoryItem> = createEntityAdapter<
@@ -19,7 +20,8 @@ export const adapter: EntityAdapter<HistoryItem> = createEntityAdapter<
 >();
 
 export const initialDashboardState: DashboardState = adapter.getInitialState({
-  uiState: DashboardUiState.NOT_LOADED
+  uiState: DashboardUiState.NOT_LOADED,
+  error: null
 });
 
 export function dashboardReducer(
@@ -67,6 +69,13 @@ export function dashboardReducer(
       return {
         ...state,
         uiState: DashboardUiState.LOADING
+      };
+    }
+
+    case DashboardActionTypes.CLEAR_ERROR: {
+      return {
+        ...state,
+        error: null
       };
     }
 

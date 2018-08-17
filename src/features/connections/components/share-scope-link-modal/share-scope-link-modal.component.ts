@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { NavParams, NavController, ViewController } from "ionic-angular";
 
+import { LoadingService } from "../../../../shared/loading.service";
+
 @Component({
   selector: "app-share-scope-link",
   templateUrl: "./share-scope-link-modal.component.html"
@@ -15,7 +17,8 @@ export class ShareScopeLinkModalComponent implements OnInit {
   constructor(
     private params: NavParams,
     private viewCtrl: ViewController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private loadingSrv: LoadingService 
   ) {}
 
   ngOnInit() {
@@ -28,6 +31,7 @@ export class ShareScopeLinkModalComponent implements OnInit {
 
   startScoping() {
     this.viewCtrl.dismiss();
+    this.loadingSrv.dismiss();
     this.navCtrl.push("SessionScopingPage", { sessionUrl: this.sessionUrl });
   }
 
