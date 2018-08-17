@@ -10,11 +10,11 @@ import {
   map,
   catchError
 } from "rxjs/operators";
-import { AppEffects } from "../../../store/app.effects";
+import { AppFacade } from "../../../store/app.facade";
 import { ScopingSession } from "../../../models/scoping-session";
 import { HistoryItem } from "../../../models/history-item";
 import { Task } from "../../../models/task";
-import { environment } from "../../../environment";
+import { environment } from "../../../environments/environment";
 
 @Injectable()
 export class HistoryService {
@@ -42,7 +42,7 @@ export class HistoryService {
   } = { limit: 5, direction: "desc" };
 
   constructor(
-    private appFacade: AppEffects,
+    private appFacade: AppFacade,
     private afs: AngularFirestore,
     private http: HttpClient
   ) {}

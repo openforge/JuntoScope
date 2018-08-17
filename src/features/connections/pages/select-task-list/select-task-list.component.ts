@@ -18,16 +18,19 @@ export class SelectTaskListPage implements OnInit {
   connectionId: string;
   projectId: string;
   projectName: string;
+  loaded: boolean = false;
 
   taskLists$ = this.connectionFacade.selectedConnection$.pipe(
     filter(connection =>
       _.has(connection, `projects.${this.projectId}.taskLists`)
     ),
-    map((connection: Connection) =>
-      Object.keys(connection.projects[this.projectId].taskLists).map(
+    map((connection: Connection) => {
+      this.loaded = true;
+
+      return Object.keys(connection.projects[this.projectId].taskLists).map(
         keys => connection.projects[this.projectId].taskLists[keys]
-      )
-    )
+      );
+    })
   );
 
   selectedLists: { [taskListId: string]: boolean } = {};
