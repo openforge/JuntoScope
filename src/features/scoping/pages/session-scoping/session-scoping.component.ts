@@ -62,6 +62,8 @@ export class SessionScopingPage implements OnInit {
   votes: number = 0;
   lastTaskId: string;
   lastTaskVotes: Object;
+  average: number = 0;
+  max: number = 0;
 
   next: Subject<void> = new Subject();
 
@@ -111,6 +113,22 @@ export class SessionScopingPage implements OnInit {
           this.allVotesSubmited = true;
         }
 
+        if (this.allVotesSubmited && this.session.tasks[this.taskId].votes) {
+          let voteSum = 0;
+          let max = 0;
+          Object.keys(this.session.tasks[this.taskId].votes).forEach(id => {
+            let voteVal = this.session.tasks[this.taskId].votes[id];
+            max = voteVal > max ? voteVal : max;
+            voteSum += voteVal;
+          });
+          this.average =
+            voteSum / Object.keys(this.session.tasks[this.taskId].votes).length;
+          this.max = max;
+
+          console.log("Average: ", this.average);
+          console.log("Max: ", this.max);
+        }
+
         if (this.scopedCount === undefined) {
           this.scopedCount = session.numScopedTasks;
         } else if (this.scopedCount < session.numScopedTasks) {
@@ -145,10 +163,8 @@ export class SessionScopingPage implements OnInit {
       );
 
       const lastSub = lastTask.subscribe(task => {
-        console.log("lastTask: ", task);
         this.finalEstimate = task.estimate;
         this.lastTaskVotes = task.votes;
-        console.log("last VOTES: ", this.lastTaskVotes);
         lastSub.unsubscribe();
       });
     }

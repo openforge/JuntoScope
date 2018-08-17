@@ -51,7 +51,7 @@
             <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate || timerOn" [estimate]="finalEstimate"></app-result-estimate>
             
             <ng-container *ngIf="isModerator && !session.tasks[session.currentTaskId].estimate && !timerOn">
-              <app-select-result [avg]="3" [max]="5" (estimate)="setFinalEstimate($event)"></app-select-result>
+              <app-select-result [avg]="average" [max]="max" (estimate)="setFinalEstimate($event)"></app-select-result>
             </ng-container>
 
             <app-counted-votes *ngIf="!timerOn || (session.tasks[session.currentTaskId].estimate || timerOn)" 
