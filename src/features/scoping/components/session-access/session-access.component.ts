@@ -1,25 +1,30 @@
-import { Component, OnInit, Output, Input, EventEmitter } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Output,
+  Input,
+  EventEmitter,
+  OnDestroy
+} from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ScopingFacade } from "../../store/scoping.facade";
-
 import { SessionValidation } from "../../../../models/scoping-session";
-import { Store } from "@ngrx/store";
-import { AppState } from "../../../../store/app.reducer";
-import { ClearErrorAction } from "../../store/scoping.actions";
 import { PopupService } from "../../../../shared/popup.service";
+import { Subscription } from "rxjs";
+
 @Component({
   selector: "app-session-access",
   templateUrl: "./session-access.component.html"
 })
-export class SessionAccessComponent implements OnInit {
+export class SessionAccessComponent implements OnInit, OnDestroy {
   accessForm: FormGroup;
   error$ = this.scopingFacade.error$;
+  errorSubscription: Subscription;
 
   @Input() sessionLink: string;
   @Output() access = new EventEmitter<SessionValidation>();
 
   constructor(
-    private store: Store<AppState>,
     private fb: FormBuilder,
     private scopingFacade: ScopingFacade,
     private popupSvc: PopupService
@@ -27,12 +32,16 @@ export class SessionAccessComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.error$.subscribe(error => {
+    this.errorSubscription = this.error$.subscribe(error => {
       if (error) {
         this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
-        this.store.dispatch(new ClearErrorAction());
+        this.scopingFacade.cleanErrorAction();
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
   }
 
   continue() {
