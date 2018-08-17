@@ -22,7 +22,7 @@ import {
   ParticipantValidatedAction,
   ValidateParticipantErrorAction,
   LoadSessionAction,
-  CleanErrorAction
+  ClearErrorAction
 } from "./scoping.actions";
 import { PopupService } from "../../../shared/popup.service";
 import { ScopingQuery } from "./scoping.reducer";
@@ -234,7 +234,7 @@ export class ScopingFacade {
     );
   }
 
-  cleanErrorAction() {
-    this.store.dispatch(new CleanErrorAction());
+  ClearErrorAction() {
+    this.store.dispatch(new ClearErrorAction());
   }
 }
