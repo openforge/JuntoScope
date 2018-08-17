@@ -20,6 +20,7 @@ import {
 } from "../../../../app/app.constants";
 import { Subject, Subscription } from "rxjs";
 import { HistoryService } from "../../../dashboard/services/history.service";
+import { OnDestroy } from "../../../../../node_modules/ngx-take-until-destroy";
 
 @IonicPage({
   segment: "SessionScopingPage",
@@ -29,11 +30,10 @@ import { HistoryService } from "../../../dashboard/services/history.service";
   selector: "app-session-scoping",
   templateUrl: "./session-scoping.component.html"
 })
-export class SessionScopingPage implements OnInit {
+export class SessionScopingPage implements OnInit, OnDestroy {
   _ = _;
   sessionSub: Subscription;
   participantSub: Subscription;
-  otherSub: Subscription;
 
   sessionObservable$: Observable<ScopingSession>;
   error$ = this.scopingFacade.error$;
@@ -81,6 +81,45 @@ export class SessionScopingPage implements OnInit {
       this.user = user;
     });
 
+    this.loadSession();
+  }
+
+  async getLastTask() {
+    console.log("getting last task");
+    if (this.lastTaskId) {
+      const lastTask = await this.historySvc.getSessionTask(
+        {
+          ownerId: this.session.ownerId,
+          connectionId: this.session.connectionId,
+          sessionId: this.session.sessionId
+        },
+        this.lastTaskId
+      );
+
+      const lastSub = lastTask.subscribe(task => {
+        if (task) {
+          if (task.estimate) {
+            this.finalEstimate = task.estimate;
+          }
+          if (task.votes) {
+            this.lastTaskVotes = task.votes;
+          }
+        }
+        lastSub.unsubscribe();
+      });
+    }
+  }
+
+  ionViewWillEnter() {
+    if (!this.session) {
+      this.loadSession();
+    }
+  }
+
+  loadSession() {
+    console.log("loading session");
+    this.lastTaskId = null;
+
     this.sessionCode = this.navParams.get("sessionUrl");
     this.scopingFacade.validateParticipant(this.user.uid, this.sessionCode);
 
@@ -92,14 +131,13 @@ export class SessionScopingPage implements OnInit {
     });
 
     // Sets next task
-    this.otherSub = this.session$.subscribe(session => {
+    this.sessionSub = this.session$.subscribe(session => {
       console.log("new millenial fired");
 
       if (session && session.tasks) {
         this.session = session;
         this.isModerator = session.ownerId === this.user.uid;
         this.lastTaskId = this.taskId ? this.taskId : null;
-        this.getLastTask();
         this.taskId = this.session.currentTaskId;
         this.task = this.session.tasks[this.taskId];
 
@@ -109,10 +147,13 @@ export class SessionScopingPage implements OnInit {
           ? Object.keys(session.tasks[session.currentTaskId].votes).length
           : 0;
 
+        // All votes submited
         if (Object.keys(session.participants).length === this.votes) {
           this.allVotesSubmited = true;
+          this.getLastTask();
         }
 
+        // Calculate average and max
         if (this.allVotesSubmited && this.session.tasks[this.taskId].votes) {
           let voteSum = 0;
           let max = 0;
@@ -124,15 +165,9 @@ export class SessionScopingPage implements OnInit {
           this.average =
             voteSum / Object.keys(this.session.tasks[this.taskId].votes).length;
           this.max = max;
-
-          console.log("Average: ", this.average);
-          console.log("Max: ", this.max);
         }
 
-        if (this.scopedCount === undefined) {
-          this.scopedCount = session.numScopedTasks;
-        } else if (this.scopedCount < session.numScopedTasks) {
-          this.scopedCount = session.numScopedTasks;
+        if (this.session.tasks[this.taskId].estimate) {
           this.estimateSubmitted = true;
         } else {
           this.estimateSubmitted = false;
@@ -150,24 +185,17 @@ export class SessionScopingPage implements OnInit {
     });
   }
 
-  async getLastTask() {
-    console.log("getting last task");
-    if (this.lastTaskId) {
-      const lastTask = await this.historySvc.getSessionTask(
-        {
-          ownerId: this.session.ownerId,
-          connectionId: this.session.connectionId,
-          sessionId: this.session.sessionId
-        },
-        this.lastTaskId
-      );
+  ionViewWillLeave() {
+    this.session = null;
+    this.lastTaskId = null;
+    this.scopingFacade.clearSession();
+    this.unsub();
+  }
 
-      const lastSub = lastTask.subscribe(task => {
-        this.finalEstimate = task.estimate;
-        this.lastTaskVotes = task.votes;
-        lastSub.unsubscribe();
-      });
-    }
+  ngOnDestroy() {
+    this.session = null;
+    this.lastTaskId = null;
+    this.unsub();
   }
 
   unsub() {
@@ -176,9 +204,6 @@ export class SessionScopingPage implements OnInit {
     }
     if (this.participantSub) {
       this.participantSub.unsubscribe();
-    }
-    if (this.otherSub) {
-      this.otherSub.unsubscribe();
     }
   }
 

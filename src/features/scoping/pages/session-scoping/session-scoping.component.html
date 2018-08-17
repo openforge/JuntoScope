@@ -55,7 +55,7 @@
             </ng-container>
 
             <app-counted-votes *ngIf="!timerOn || (session.tasks[session.currentTaskId].estimate || timerOn)" 
-            [votes]="lastTaskVotes" 
+            [votes]="lastTaskVotes ? lastTaskVotes : session.tasks[taskId].votes" 
             [participantCount]="(session.participants | objKeys).length">
             </app-counted-votes>
 

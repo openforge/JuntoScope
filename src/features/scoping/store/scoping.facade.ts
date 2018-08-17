@@ -21,7 +21,8 @@ import {
   ValidateParticipantAction,
   ParticipantValidatedAction,
   ValidateParticipantErrorAction,
-  LoadSessionAction
+  LoadSessionAction,
+  ClearSessionAction
 } from "./scoping.actions";
 import { PopupService } from "../../../shared/popup.service";
 import { ScopingQuery } from "./scoping.reducer";
@@ -188,6 +189,10 @@ export class ScopingFacade {
 
   loadSession(sessionCode) {
     this.store.dispatch(new LoadSessionAction(sessionCode));
+  }
+
+  clearSession() {
+    this.store.dispatch(new ClearSessionAction());
   }
 
   vote(userId, moderatorId, connectionId, sessionId, taskId, estimate) {

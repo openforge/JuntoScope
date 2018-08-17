@@ -53,6 +53,13 @@ export function scopingReducer(
       };
     }
 
+    case ScopingActionTypes.CLEAR_SESSION: {
+      return {
+        ...state,
+        session: null
+      };
+    }
+
     case ScopingActionTypes.LOAD_SESSION_ERROR: {
       return {
         ...state,
