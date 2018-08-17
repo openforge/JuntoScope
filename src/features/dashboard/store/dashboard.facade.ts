@@ -26,7 +26,8 @@ import {
   DeleteSessionAction,
   DeleteSessionErrorAction,
   RefreshAccessCodeAction,
-  RefreshAccessCodeErrorAction
+  RefreshAccessCodeErrorAction,
+  ClearErrorAction
 } from "./dashboard.actions";
 import { HistoryService } from "../services/history.service";
 import { HistoryItem } from "../../../models/history-item";
@@ -146,6 +147,11 @@ export class DashboardFacade {
   getMoreHistory() {
     this.store.dispatch(new LoadMoreHistoryItemsAction());
   }
+  
+  clearError() {
+    this.store.dispatch(new ClearErrorAction());
+  }
+
 }
 
 const itemFromChangeAction = (

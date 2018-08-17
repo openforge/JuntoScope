@@ -22,7 +22,8 @@ import {
   NotAuthenticatedAction,
   AuthenticatedAction,
   LoginAction,
-  LogoutAction
+  LogoutAction,
+  ClearErrorAction
 } from "./auth.actions";
 import { AuthService } from "../services/auth.service";
 import { HistoryService } from "../../dashboard/services/history.service";
@@ -116,5 +117,9 @@ export class AuthFacade {
   logout() {
     this.historySvc.logOut(); // Unsubscribes from uid
     this.store.dispatch(new LogoutAction());
+  }
+
+  clearError() {
+    this.store.dispatch(new ClearErrorAction());
   }
 }

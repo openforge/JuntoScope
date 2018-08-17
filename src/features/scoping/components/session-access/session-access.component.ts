@@ -35,7 +35,7 @@ export class SessionAccessComponent implements OnInit, OnDestroy {
     this.errorSubscription = this.error$.subscribe(error => {
       if (error) {
         this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
-        this.scopingFacade.ClearErrorAction();
+        this.scopingFacade.clearError();
       }
     });
   }
