@@ -14,13 +14,19 @@ app-verify-modal {
 
     ion-list.list {
       flex-direction: column;
-      margin-top: 2rem;
+      margin-top: 10px;
+      margin-bottom: 10px;
 
-      ion-list-header.list-header h2 {
-        font-weight: bolder;
+      ion-list-header.list-header {
+        margin: 0;
+        border-radius: 2rem;
+        h2 {
+          font-weight: bolder;
+        }
       }
 
       ion-label.label {
+        margin: 10px 0 10px 0;
         &.title {
           font-weight: bold;
           font-size: 2rem;
