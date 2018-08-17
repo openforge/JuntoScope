@@ -15,6 +15,8 @@ export class AuthService {
   private facebookProvider = new firebase.auth.FacebookAuthProvider();
   private twitterProvider = new firebase.auth.TwitterAuthProvider();
 
+  providerUsed;
+
   constructor(
     private afAuth: AngularFireAuth,
     private plt: Platform,
@@ -27,18 +29,21 @@ export class AuthService {
     switch (provider) {
       case "google":
         if (this.plt.is("cordova")) {
+          this.providerUsed = "google";
           return this.nativeGoogleLogin();
         } else {
           return this.afAuth.auth.signInWithPopup(this.googleProvider);
         }
       case "facebook":
         if (this.plt.is("cordova")) {
+          this.providerUsed = "facebook";
           return this.nativeFacebookLogin();
         } else {
           return this.afAuth.auth.signInWithPopup(this.facebookProvider);
         }
       case "twitter":
         if (this.plt.is("cordova")) {
+          this.providerUsed = "twitter";
           return this.nativeTwitterLogin();
         } else {
           return this.afAuth.auth.signInWithPopup(this.twitterProvider);
@@ -60,7 +65,20 @@ export class AuthService {
     );
   }
 
-  logout() {
+  async logout() {
+    switch (this.providerUsed) {
+      case "google":
+        await this.gplus.logout();
+        break;
+      case "facebook":
+        await this.facebook.logout();
+        break;
+      case "twitter":
+        await this.twitter.logout();
+        break;
+      default:
+        break;
+    }
     return this.afAuth.auth.signOut();
   }
 
@@ -75,7 +93,7 @@ export class AuthService {
     );
   }
 
-    async nativeTwitterLogin(): Promise<void> {
+  async nativeTwitterLogin(): Promise<void> {
     const response = await this.twitter.login();
     return await this.afAuth.auth.signInWithCredential(
       firebase.auth.TwitterAuthProvider.credential(
@@ -84,7 +102,7 @@ export class AuthService {
       )
     );
   }
-  
+
   async nativeFacebookLogin(): Promise<void> {
     const facebookResponse = await this.facebook.login([
       "email",
