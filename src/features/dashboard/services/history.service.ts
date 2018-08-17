@@ -107,7 +107,7 @@ export class HistoryService {
     );
   }
 
-  private getSessionTask(
+  getSessionTask(
     { ownerId, connectionId, sessionId }: Partial<HistoryItem>,
     taskId: string
   ) {

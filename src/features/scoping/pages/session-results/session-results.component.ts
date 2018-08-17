@@ -30,6 +30,7 @@ export class SessionResultsPage implements OnInit {
     if (this.sessionSub) {
       this.sessionSub.unsubscribe();
     }
+    this.scopingFacade.clearSession();
   }
 
   goDashboard() {

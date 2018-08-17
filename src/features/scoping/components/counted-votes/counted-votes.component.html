@@ -1,6 +1,3 @@
-<p *ngIf="(votes | objKeys).length !== participantCount">{{ (votes | objKeys).length}} of {{ participantCount }} votes counted</p>
-<p *ngIf="(votes | objKeys).length === participantCount">{{ (votes | objKeys).length}} votes</p>
-
 <div class="votes-container">
   <span *ngFor="let vote of votes | objValues" class="single-vote">
     {{ vote }}

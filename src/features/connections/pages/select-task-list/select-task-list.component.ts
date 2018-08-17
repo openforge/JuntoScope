@@ -26,10 +26,10 @@ export class SelectTaskListPage implements OnInit {
     ),
     map((connection: Connection) => {
       this.loaded = true;
-  
+
       return Object.keys(connection.projects[this.projectId].taskLists).map(
         keys => connection.projects[this.projectId].taskLists[keys]
-      )
+      );
     })
   );
 

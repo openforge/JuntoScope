@@ -1,14 +1,13 @@
 app-session-history-list {
+  .list-headers {
+    margin: 2rem 1rem;
 
-	.list-headers {
-		margin: 2rem 1rem;
-		
-		ion-list-header.list-header {
-			border-bottom: 2px solid $primary-orange;
-		}
-	}
+    ion-list-header.list-header {
+      border-bottom: 2px solid $primary-orange;
+    }
+  }
 
-	ion-list.list {
-		border: 2px solid $primary-orange;
-	}
+  ion-list.list {
+    border: 2px solid $primary-orange;
+  }
 }
