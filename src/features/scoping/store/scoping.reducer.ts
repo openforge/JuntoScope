@@ -130,7 +130,7 @@ export function scopingReducer(
       };
     }
 
-    case ScopingActionTypes.CLEAN_ERROR: {
+    case ScopingActionTypes.CLEAR_ERROR: {
       return {
         ...state,
         error: null

@@ -60,6 +60,12 @@ export function authReducer(
         error: action.payload.message
       };
 
+    case AuthActionTypes.CLEAR_ERROR: 
+      return {
+        ...state,
+        error: null
+      };
+
     default:
       return state;
   }

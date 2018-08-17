@@ -1,17 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import { untilDestroyed } from "ngx-take-until-destroy";
 import { map, filter, take } from "rxjs/operators";
-import { AuthFacade } from "../../store/auth.facade";
-import { AppFacade } from "../../../../store/app.facade";
 import { Subscription } from "rxjs";
 import { Actions } from "@ngrx/effects";
 
+import { AppFacade } from "../../../../store/app.facade";
+import { AuthFacade } from "../../store/auth.facade";
 import { AuthActionTypes } from "../../store/auth.actions";
-
+import { PopupService } from "../../../../shared/popup.service";
+import { LoadingService } from "../../../../shared/loading.service";
 import { InAppBrowser } from "@ionic-native/in-app-browser";
 import { IAB_OPTIONS } from "../../../../app/app.constants";
 
@@ -23,18 +24,13 @@ import { IAB_OPTIONS } from "../../../../app/app.constants";
   selector: "app-login",
   templateUrl: "./login.component.html"
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
   agreeForm: FormGroup;
-  // loading$ = this.authFacade.uiState$.pipe(
-  //   map(uiState => uiState === AuthUiState.LOADING)
-  // );
-
-  // authError$ = this.authFacade.error$;
-  hasAgreed = false;
-
-  user$ = this.authFacade.user$;
-
+  errorSubscription: Subscription;
   redirectSubs: Subscription;
+  authError$ = this.authFacade.error$;
+  user$ = this.authFacade.user$;
+  hasAgreed = false;
 
   private loginRedirect$ = this.appFacade.authRedirect$.pipe(
     untilDestroyed(this),
@@ -56,18 +52,34 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private navParams: NavParams,
     private actions$: Actions,
+    private popupSvc: PopupService,
+    private loadingSrv: LoadingService,
     private iab: InAppBrowser
   ) {
     this.redirectSubs = this.actions$
       .ofType(AuthActionTypes.AUTHENTICATED)
       .subscribe(() => {
+        this.loadingSrv.dismiss();
         this.redirectSubs.unsubscribe();
         this.navCtrl.setRoot("DashboardPage");
       });
+
+    this.errorSubscription = this.authError$.subscribe(error => {
+      if (error) {
+        this.loadingSrv.hide();
+        this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
+        this.authFacade.clearError();
+      }
+    });
   }
 
   ngOnInit() {
     this.createForm();
+    this.loadingSrv.initialize();
+  }
+
+  ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
   }
 
   createForm() {
@@ -97,16 +109,19 @@ export class LoginPage implements OnInit {
   }
 
   googleLogin() {
+    this.loadingSrv.present();
     this.authFacade.googleLogin();
   }
 
   facebookLogin() {
+    this.loadingSrv.present();
     this.authFacade.facebookLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
 
   twitterLogin() {
+    this.loadingSrv.present();
     this.authFacade.twitterLogin();
 
     this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});

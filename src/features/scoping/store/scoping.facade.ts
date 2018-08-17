@@ -22,7 +22,8 @@ import {
   ParticipantValidatedAction,
   ValidateParticipantErrorAction,
   LoadSessionAction,
-  ClearSessionAction
+  ClearSessionAction,
+  ClearErrorAction
 } from "./scoping.actions";
 import { PopupService } from "../../../shared/popup.service";
 import { ScopingQuery } from "./scoping.reducer";
@@ -236,5 +237,9 @@ export class ScopingFacade {
     this.store.dispatch(
       new ValidateParticipantAction({ uid: uid, sessionLink: sessionLink })
     );
+  }
+
+  clearError() {
+    this.store.dispatch(new ClearErrorAction());
   }
 }

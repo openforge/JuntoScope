@@ -1,5 +1,6 @@
 // http://ionicframework.com/docs/theming/
 
+
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -36,8 +37,7 @@ a,
   font-weight: 500;
 }
 
-h1,
-h2 {
+h1, h2 {
   font-weight: 800;
 }
 
@@ -55,6 +55,7 @@ a {
 
 // ios Header
 ion-header .toolbar-ios {
+  
   // Background color
   .toolbar-background-ios {
     background: $primary-orange;
@@ -70,8 +71,9 @@ ion-header .toolbar-ios {
   }
 
   // Buttons
-  .bar-button-default-ios,
-  .bar-button-default .bar-button-ios-default,
+  .bar-button-default-ios, 
+  .bar-button-default
+  .bar-button-ios-default, 
   .bar-button-clear-ios-default {
     color: white;
   }
@@ -80,6 +82,7 @@ ion-header .toolbar-ios {
 // md + wp Header
 ion-header ion-navbar.toolbar-md,
 ion-header ion-navbar.toolbar-wp {
+
   // Background color
   .toolbar-background {
     background: $primary-orange;
@@ -105,8 +108,7 @@ ion-header ion-navbar.toolbar-wp {
 }
 
 // md + wp Title
-.title.title-md,
-.title.title-wp {
+.title.title-md, .title.title-wp {
   position: absolute;
   left: 50%;
   top: 0;
@@ -118,6 +120,7 @@ ion-header ion-navbar.toolbar-wp {
 
 // 2. End Header / Title
 // **************************************************
+
 
 // 3. Searchbar
 // --------------------------------------------------
@@ -158,12 +161,12 @@ ion-header ion-navbar.toolbar-wp {
 // 3. End Searchbar
 // **************************************************
 
+
 // 4. Checkbox
 // --------------------------------------------------
 // All styles related to the checkbox
 
-.checkbox-ios,
-.checkbox-md {
+.checkbox-ios, .checkbox-md {
   @extend.checkbox-md;
 }
 
@@ -188,12 +191,28 @@ ion-spinner {
 // 5. End Spinner
 // **************************************************
 
+
 // 6. scroll-content TMP issue related to - https://github.com/ionic-team/ionic/issues/10629
 // --------------------------------------------------
 // All styles related to scroll-content
 
-.scroll-content {
-  padding-bottom: 0 !important;
+.scroll-content { 
+  padding-bottom: 0 !important; 
 }
+
 // 6. scroll-content
+// **************************************************
+
+// 7. ion-loading 
+// --------------------------------------------------
+// All styles related to ion-loading
+
+ion-loading.custom-loading {
+  .loading-wrapper {
+    background: none;
+    box-shadow: none;
+  }
+}
+
+// 7. scroll-content
 // **************************************************
