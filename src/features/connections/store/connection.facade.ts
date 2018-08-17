@@ -26,7 +26,8 @@ import {
   AddConnectionErrorAction,
   NoConnectionsAction,
   CreateSessionAction,
-  AddConnectionSuccessAction
+  AddConnectionSuccessAction,
+  ClearErrorAction
 } from "./connection.actions";
 import { ConnectionService } from "../services/connection.service";
 import { Connection } from "../../../models/connection";
@@ -297,5 +298,9 @@ export class ConnectionFacade {
         projectName
       })
     );
+  }
+
+  clearError() {
+    this.store.dispatch(new ClearErrorAction());
   }
 }

@@ -9,12 +9,10 @@ import {
 
 import { Actions } from "@ngrx/effects";
 import { Subscription } from "rxjs";
-import { Store } from "@ngrx/store";
 
-import { ConnectionActionTypes, ClearErrorAction } from "../../store/connection.actions";
+import { ConnectionActionTypes } from "../../store/connection.actions";
 import { PopupService } from "../../../../shared/popup.service";
 import { ConnectionFacade } from "../../store/connection.facade";
-import { AppState } from "../../../../store/app.reducer";
 import { LoadingService } from "../../../../shared/loading.service";
 
 
@@ -29,18 +27,15 @@ import { LoadingService } from "../../../../shared/loading.service";
 export class AddConnectionPage implements OnInit {
   connectionForm: FormGroup;
   type: string;
-
+  errorSubscription: Subscription;
+  redirectSubs: Subscription;
   addError$ = this.connectionFacade.error$;
 
-  redirectSubs: Subscription;
-
   constructor(
-    private store: Store<AppState>,
     private fb: FormBuilder,
     private navCtrl: NavController,
     private connectionFacade: ConnectionFacade,
     private actions$: Actions,
-    private loadingCtrl: LoadingController,
     private popupSvc: PopupService,
     private loadingSvc: LoadingService
   ) {
@@ -52,11 +47,11 @@ export class AddConnectionPage implements OnInit {
         this.navCtrl.push("DashboardPage");
       });
 
-    this.addError$.subscribe(error => {
+    this.errorSubscription = this.addError$.subscribe(error => {
       if (error) {
         this.loadingSvc.hide();
         this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
-        this.store.dispatch(new ClearErrorAction());
+        this.connectionFacade.clearError();
       }
     });
   }
@@ -64,6 +59,10 @@ export class AddConnectionPage implements OnInit {
   ngOnInit() {
     this.createForm();
     this.loadingSvc.initialize();
+  }
+
+  ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
   }
 
   setType(type: string) {

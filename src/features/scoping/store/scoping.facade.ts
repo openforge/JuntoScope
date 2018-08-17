@@ -234,7 +234,7 @@ export class ScopingFacade {
     );
   }
 
-  ClearErrorAction() {
+  clearError() {
     this.store.dispatch(new ClearErrorAction());
   }
 }
