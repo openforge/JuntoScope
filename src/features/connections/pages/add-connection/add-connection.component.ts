@@ -1,11 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import {
-  NavController,
-  IonicPage,
-  LoadingController,
-  Loading
-} from "ionic-angular";
+import { NavController, IonicPage } from "ionic-angular";
 
 import { Actions } from "@ngrx/effects";
 import { Subscription } from "rxjs";

@@ -1,5 +1,5 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
-import { IonicModule, Loading } from "ionic-angular";
+import { IonicModule } from "ionic-angular";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
