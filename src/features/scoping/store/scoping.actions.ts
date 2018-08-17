@@ -8,6 +8,7 @@ export enum ScopingActionTypes {
   LOAD_SESSION = "[Scoping] Load Session",
   LOAD_SESSION_SUCCESS = "[Scoping] Load Session Success",
   LOAD_SESSION_ERROR = "[Scoping] Load Session Error",
+  CLEAR_SESSION = "[Scoping] Clear Sesssion",
   VOTE = "[Scoping] Vote",
   VOTE_SUCCESS = "[Scoping] Vote Success",
   VOTE_ERROR = "[Scoping] Vote Error",
@@ -28,6 +29,10 @@ export enum ScopingActionTypes {
 export class LoadSessionAction implements Action {
   readonly type = ScopingActionTypes.LOAD_SESSION;
   constructor(public payload?: string) {}
+}
+
+export class ClearSessionAction implements Action {
+  readonly type = ScopingActionTypes.CLEAR_SESSION;
 }
 
 export class LoadSessionSuccessAction implements Action {
@@ -127,6 +132,7 @@ export type ScopingActions =
   | LoadSessionAction
   | LoadSessionSuccessAction
   | LoadSessionErrorAction
+  | ClearSessionAction
   | VoteAction
   | VoteSuccessAction
   | VoteErrorAction

@@ -17,14 +17,14 @@
 
       <ng-container *ngIf="session && session.tasks; else noSession">
 
-        <ng-container *ngIf="!hasVoted">
+        <ng-container *ngIf="!allVotesSubmited">
           <app-session-header [session]="session"></app-session-header>
           <div class="session-info-container">
             <app-task-card [task]="session.tasks[session.currentTaskId]"></app-task-card>
             <app-vote (vote)="vote($event)"></app-vote>
           </div>
           <div class="session-votes-counted">
-            <p>{{ (session.tasks[session.currentTaskId].votes | objKeys).length}}/{{ (session.participants | objKeys).length}}
+            <p>{{ votes }}/{{ (session.participants | objKeys).length}}
               votes counted</p>
           </div>
           <ion-list>
@@ -39,17 +39,20 @@
           </ion-list>
         </ng-container>
 
-        <ng-container *ngIf="hasVoted">
+        <ng-container *ngIf="allVotesSubmited">
           <app-session-header [session]="session"></app-session-header>
           <div class="session-info-container">
             <app-task-card [task]="session.tasks[session.currentTaskId]" [onlyTitle]="true"></app-task-card>
-            <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
+            <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate || timerOn" [estimate]="finalEstimate"></app-result-estimate>
             
-            <ng-container *ngIf="isModerator && !session.tasks[session.currentTaskId].estimate">
-              <app-select-result [avg]="3" [max]="5" (estimate)="setFinalEstimate($event)"></app-select-result>
+            <ng-container *ngIf="isModerator && !session.tasks[session.currentTaskId].estimate && !timerOn">
+              <app-select-result [avg]="average" [max]="max" (estimate)="setFinalEstimate($event)"></app-select-result>
             </ng-container>
 
-            <app-counted-votes [votes]="session.tasks[session.currentTaskId].votes" [participantCount]="(session.participants | objKeys).length"></app-counted-votes>
+            <app-counted-votes *ngIf="!timerOn || (session.tasks[session.currentTaskId].estimate || timerOn)" 
+            [votes]="lastTaskVotes ? lastTaskVotes : session.tasks[taskId].votes" 
+            [participantCount]="(session.participants | objKeys).length">
+            </app-counted-votes>
 
           </div>
           <ng-container *ngIf="!session.tasks[session.currentTaskId].estimate">
@@ -58,20 +61,20 @@
                 <ion-title>Waiting</ion-title>
               </ion-toolbar>
             </ion-footer>
-            <ion-footer *ngIf="isModerator" no-border>
+            <ion-footer *ngIf="isModerator && !timerOn" no-border>
               <ion-toolbar>
                 <button ion-button [disabled]="!finalEstimate" (click)="saveFinalEstimate()">Submit</button>
               </ion-toolbar>
             </ion-footer>
           </ng-container>
 
-          <ng-container *ngIf="session.tasks[session.currentTaskId].estimate">
+          <!-- <ng-container *ngIf="session.tasks[session.currentTaskId].estimate || timerOn">
             <ion-footer *ngIf="isModerator && session.tasks[session.currentTaskId].estimate" no-border>
               <ion-toolbar>
                 <button ion-button>Next task</button>
               </ion-toolbar>
             </ion-footer>
-          </ng-container>
+          </ng-container> -->
 
         </ng-container>
       </ng-container>

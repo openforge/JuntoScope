@@ -1,91 +1,91 @@
 app-settings {
+  .list-headers {
+    margin: 2rem 1rem;
 
-	.list-headers {
-		margin: 2rem 1rem;
-		
-		ion-list-header.list-header {
-			border-bottom: 2px solid $primary-orange;
-		}
+    ion-list-header.list-header {
+      border-bottom: 2px solid $primary-orange;
+    }
 
-		p, h2 {
-			color: $primary-orange;
-		}
-	}
+    p,
+    h2 {
+      color: $primary-orange;
+    }
+  }
 
-	.connections {
-		ion-list.list {
-			background-color: $primary-orange;
-			border-bottom: 1px solid white !important;
-			margin: 0;
-			width: 100%;
-	
-			// header
-			ion-list-header.list-header {
-				background-color: $primary-orange;
-				padding: 1rem 1rem 0rem 1rem;
-				.icon, h2 {
-					color: white;
-					display: inline-block;
-					text-transform: none;
-					vertical-align: middle;
-				}
-	
-				ion-label.label {
-					border-bottom: 1px solid white;
-					padding: 2rem;
-					margin: 1rem;
-				}
-			}
-	
-			// existing projects
-			ion-item.item-block {
-				background-color: $primary-orange;
-				border-bottom: 1px solid $primary-orange;
-				color: white;
-	
-				// new connection
-				&:last-child {
-					background-color: white;
-					border: 2px solid $primary-orange;
-					color: $primary-orange;
-				}
-			}
-		}
-	}
+  .connections {
+    ion-list.list {
+      background-color: $primary-orange;
+      border-bottom: 1px solid white !important;
+      margin: 0;
+      width: 100%;
 
-	.faq {
-		ion-item.item {
-			p {
-				color: $primary-orange;
-			}
-		}
-	}
+      // header
+      ion-list-header.list-header {
+        background-color: $primary-orange;
+        padding: 1rem 1rem 0rem 1rem;
+        .icon,
+        h2 {
+          color: white;
+          display: inline-block;
+          text-transform: none;
+          vertical-align: middle;
+        }
 
+        ion-label.label {
+          border-bottom: 1px solid white;
+          padding: 2rem;
+          margin: 1rem;
+        }
+      }
 
-	.logout {
-		margin-top: 2rem;
+      // existing projects
+      ion-item.item-block {
+        background-color: $primary-orange;
+        border-bottom: 1px solid $primary-orange;
+        color: white;
 
-		button {
-			width: 60%;
-		}
-	}
+        // new connection
+        &:last-child {
+          background-color: white;
+          border: 2px solid $primary-orange;
+          color: $primary-orange;
+        }
+      }
+    }
+  }
 
-	// custom buttons for android and windows
-	.button-md, .button-wp {
-		border-radius: 11px;
-		&.existing-button span {
-		padding-left: 8px;
-		padding-right: 6px;
-		}
-		span {
-		padding-left: 3px;
-		padding-right: 2px;
-		}
-	}
+  .faq {
+    ion-item.item {
+      p {
+        color: $primary-orange;
+      }
+    }
+  }
 
-	// custom buttons for ios
-	.button-ios {
-		border: none;
-	}
-	
+  .logout {
+    margin-top: 2rem;
+
+    button {
+      width: 60%;
+    }
+  }
+
+  // custom buttons for android and windows
+  .button-md,
+  .button-wp {
+    border-radius: 11px;
+    &.existing-button span {
+      padding-left: 8px;
+      padding-right: 6px;
+    }
+    span {
+      padding-left: 3px;
+      padding-right: 2px;
+    }
+  }
+
+  // custom buttons for ios
+  .button-ios {
+    border: none;
+  }
 }
