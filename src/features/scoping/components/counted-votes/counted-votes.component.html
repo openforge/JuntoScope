@@ -1,11 +1,12 @@
-<div class="votes-container">
-  <span *ngFor="let vote of votes | objValues" class="single-vote">
+<div class="vote-group">
+  <span *ngFor="let vote of votes | objValues" class="vote">
     {{ vote }}
   </span>
 </div>
 
-<div class="votes-container" *ngIf="(votes | objKeys).length !== participantCount">
-  <span class="single-vote" *ngFor="let vote of (getRangeForEmptyVotes(participantCount - (votes | objKeys).length))">
+<div class="vote-group" *ngIf="(votes | objKeys).length !== participantCount">
+  <span class="vote" *ngFor="let vote of (getRangeForEmptyVotes(participantCount - (votes | objKeys).length))">
     -
   </span>
 </div>
+
