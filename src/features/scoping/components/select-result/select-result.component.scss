@@ -30,6 +30,16 @@ app-select-result {
           font-weight: bolder;
         }
       }
+
+      ion-input.input:hover:not(.disable-hover) {
+        background-color: $primary-orange;
+        color: white;
+      }
+
+      .button:hover:not(.disable-hover) {
+        background-color: $primary-orange;
+        color: white;
+      }
     }
   }
 }
