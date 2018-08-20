@@ -80,7 +80,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
     this.user$.subscribe(user => {
       this.user = user;
     });
-
+    this.scopingFacade.clearSession();
     this.loadSession();
   }
 
@@ -174,7 +174,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
         }
 
         // if has voted and estimate submitted, go to next task
-        if (this.estimateSubmitted) {
+        if (this.estimateSubmitted && !this.timerOn) {
           console.log("setting timer!");
           this.timerOn = true;
           setTimeout(() => {
@@ -187,14 +187,13 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   ionViewWillLeave() {
-    this.session = null;
+    console.log("Leaving...");
     this.lastTaskId = null;
-    this.scopingFacade.clearSession();
     this.unsub();
   }
 
   ngOnDestroy() {
-    this.session = null;
+    console.log("Destroying...");
     this.lastTaskId = null;
     this.unsub();
   }
@@ -216,9 +215,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   isComplete() {
     // Are all tasks estimated?
     if (this.session.numTasks === this.session.numScopedTasks) {
-      if (this.sessionSub) {
-        this.sessionSub.unsubscribe();
-      }
+      this.unsub();
       this.navCtrl.push("SessionResultsPage");
     }
   }
@@ -297,11 +294,13 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   putEstimateOnConnection() {
-    this.scopingFacade.putEstimate(
-      this.user.uid,
-      this.session.connectionId,
-      this.taskId,
-      this.finalEstimate
-    );
+    if (this.finalEstimate) {
+      this.scopingFacade.putEstimate(
+        this.user.uid,
+        this.session.connectionId,
+        this.taskId,
+        this.finalEstimate
+      );
+    }
   }
 }

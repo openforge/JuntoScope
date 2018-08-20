@@ -12,7 +12,7 @@ import { Subscription } from "rxjs";
   selector: "app-session-results",
   templateUrl: "./session-results.component.html"
 })
-export class SessionResultsPage implements OnInit {
+export class SessionResultsPage {
   session: ScopingSession;
   sessionCode: string;
   sessionSub: Subscription;
@@ -36,8 +36,6 @@ export class SessionResultsPage implements OnInit {
   goDashboard() {
     this.navCtrl.push("DashboardPage");
   }
-
-  ngOnInit() {}
 
   goSettings() {
     this.navCtrl.push("SettingsPage");
