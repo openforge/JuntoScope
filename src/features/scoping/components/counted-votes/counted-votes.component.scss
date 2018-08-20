@@ -2,15 +2,12 @@ app-counted-votes {
   .votes-container {
     padding: 10px;
     .single-vote {
-      padding-left: 25px;
-      padding-right: 25px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      color: white;
-      background: #c94313;
+      background: white;
+      border: 1px $primary-orange solid;
       border-radius: 5px;
       font-size: 34px;
       font-weight: 500;
+      padding: 10px 25px;
     }
   }
 }
