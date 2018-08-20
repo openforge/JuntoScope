@@ -13,7 +13,7 @@ export enum AuthUiState {
 export interface AuthState {
   user: User;
   uiState: AuthUiState;
-  error: string;
+  error: any;
 }
 
 export const initialAuthState: AuthState = {
@@ -60,7 +60,7 @@ export function authReducer(
         error: action.payload.message
       };
 
-    case AuthActionTypes.CLEAR_ERROR: 
+    case AuthActionTypes.CLEAR_ERROR:
       return {
         ...state,
         error: null

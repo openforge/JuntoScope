@@ -69,7 +69,7 @@ export class AuthFacade {
       this.authSvc
         .login(provider)
         .then(() => new GetUserAction())
-        .catch(({ message }) => new AuthErrorAction({ message }))
+        .catch(error => new AuthErrorAction({ message: error.message }))
     ),
     catchError(error => of(new AuthErrorAction({ message: error.message })))
   );
