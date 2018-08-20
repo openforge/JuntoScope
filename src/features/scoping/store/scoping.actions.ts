@@ -15,6 +15,9 @@ export enum ScopingActionTypes {
   SET_ESTIMATE = "[Scoping] Set Estimate",
   SET_ESTIMATE_SUCCESS = "[Scoping] Set Estimate Success",
   SET_ESTIMATE_ERROR = "[Scoping] Set Estimate Error",
+  PUT_ESTIMATE = "[Scoping] Put Estimate",
+  PUT_ESTIMATE_SUCCESS = "[Scoping] Put Estimate Success",
+  PUT_ESTIMATE_ERROR = "[Scoping] Put Estimate Error",
   VALIDATE_SESSION = "[Scoping] Validate Session",
   VALIDATE_PARTICIPANT = "[Scoping] Validate Participant",
 
@@ -93,6 +96,28 @@ export class SetEstimateErrorAction implements Action {
   constructor(public payload: { message: string }) {}
 }
 
+export class PutEstimateAction implements Action {
+  readonly type = ScopingActionTypes.PUT_ESTIMATE;
+  constructor(
+    public payload: {
+      userId: string;
+      connectionId: string;
+      taskId: string;
+      estimate: number;
+    }
+  ) {}
+}
+
+export class PutEstimateSuccessAction implements Action {
+  readonly type = ScopingActionTypes.PUT_ESTIMATE_SUCCESS;
+  constructor(public payload?: any) {}
+}
+
+export class PutEstimateErrorAction implements Action {
+  readonly type = ScopingActionTypes.PUT_ESTIMATE_ERROR;
+  constructor(public payload: { message: string }) {}
+}
+
 export class ValidateSessionAction implements Action {
   readonly type = ScopingActionTypes.VALIDATE_SESSION;
   constructor(public payload: { sessionValidation: SessionValidation }) {}
@@ -139,6 +164,9 @@ export type ScopingActions =
   | SetEstimateAction
   | SetEstimateSuccessAction
   | SetEstimateErrorAction
+  | PutEstimateAction
+  | PutEstimateSuccessAction
+  | PutEstimateErrorAction
   | ValidateSessionAction
   | SessionVerfiedAction
   | SessionJoinErrorAction
