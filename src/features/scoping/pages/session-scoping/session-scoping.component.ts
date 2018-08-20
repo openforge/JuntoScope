@@ -178,6 +178,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
           console.log("setting timer!");
           this.timerOn = true;
           setTimeout(() => {
+            this.putEstimateOnConnection();
             this.nextTask();
           }, TIMER_FOR_NEXT_TASK);
         }
@@ -293,5 +294,14 @@ export class SessionScopingPage implements OnInit, OnDestroy {
 
   notApplicable() {
     this.vote(NOT_APPLICABLE);
+  }
+
+  putEstimateOnConnection() {
+    this.scopingFacade.putEstimate(
+      this.user.uid,
+      this.session.connectionId,
+      this.taskId,
+      this.finalEstimate
+    );
   }
 }

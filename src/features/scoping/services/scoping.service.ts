@@ -107,4 +107,13 @@ export class ScopingService {
         map(session => !!session.participants[uid])
       );
   }
+
+  putEstimate(payload) {
+    const { connectionId, taskId, estimate } = payload;
+
+    return this.http.put(
+      `${environment.apiBaseUrl}/connections/${connectionId}/tasks/${taskId}`,
+      { hours: estimate }
+    );
+  }
 }

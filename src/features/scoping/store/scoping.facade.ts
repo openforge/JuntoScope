@@ -23,7 +23,10 @@ import {
   ValidateParticipantErrorAction,
   LoadSessionAction,
   ClearSessionAction,
-  ClearErrorAction
+  ClearErrorAction,
+  PutEstimateAction,
+  PutEstimateSuccessAction,
+  PutEstimateErrorAction
 } from "./scoping.actions";
 import { PopupService } from "../../../shared/popup.service";
 import { ScopingQuery } from "./scoping.reducer";
@@ -126,6 +129,39 @@ export class ScopingFacade {
   @Effect({ dispatch: false })
   setEstimateError$ = this.actions$.pipe(
     ofType<VoteAction>(ScopingActionTypes.SET_ESTIMATE_ERROR),
+    tap(() => {
+      this.popupService.simpleAlert(
+        "Error",
+        "An error occurred while trying to save the final estimate. Please, try again.",
+        "Ok"
+      );
+    })
+  );
+
+  @Effect()
+  putEstimate$ = this.actions$.pipe(
+    ofType<PutEstimateAction>(ScopingActionTypes.PUT_ESTIMATE),
+    switchMap(action =>
+      this.scopingSvc.putEstimate(action.payload).pipe(
+        map(data => new PutEstimateSuccessAction(action.payload)),
+        catchError(error => {
+          return of(new PutEstimateErrorAction({ message: error.message }));
+        })
+      )
+    )
+  );
+
+  @Effect({ dispatch: false })
+  putEstimateSuccess$ = this.actions$.pipe(
+    ofType<PutEstimateSuccessAction>(ScopingActionTypes.PUT_ESTIMATE_SUCCESS),
+    tap(action => {
+      return action.payload.sessionId;
+    })
+  );
+
+  @Effect({ dispatch: false })
+  putEstimateError$ = this.actions$.pipe(
+    ofType<PutEstimateErrorAction>(ScopingActionTypes.PUT_ESTIMATE_ERROR),
     tap(() => {
       this.popupService.simpleAlert(
         "Error",
@@ -241,5 +277,16 @@ export class ScopingFacade {
 
   clearError() {
     this.store.dispatch(new ClearErrorAction());
+  }
+
+  putEstimate(userId, connectionId, taskId, estimate) {
+    this.store.dispatch(
+      new PutEstimateAction({
+        userId,
+        connectionId,
+        taskId,
+        estimate
+      })
+    );
   }
 }
