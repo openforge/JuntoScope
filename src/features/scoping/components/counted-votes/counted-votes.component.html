@@ -1,6 +1,6 @@
 <div class="vote-group">
   <span *ngFor="let vote of votes | objValues" class="vote">
-    {{ vote }}
+    {{ vote === 0 ? '?' : (vote === -1 ? 'N/A' : vote) }}
   </span>
 </div>
 
