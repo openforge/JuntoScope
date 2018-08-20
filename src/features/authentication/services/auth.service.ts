@@ -112,14 +112,13 @@ export class AuthService {
    return await this.facebook.login([
       "email",
       "public_profile"
-    ]).catch(() => { throw new Error("An error occurred. Please try again.") })
-
+    ])
     .then((response) => {
       return this.afAuth.auth.signInWithCredential(
         firebase.auth.FacebookAuthProvider.credential(
           response.authResponse.accessToken
         )
       )
-    })
+    }).catch(() => { throw new Error("An error occurred. Please try again.") })
   }
 }
