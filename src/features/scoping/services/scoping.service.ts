@@ -22,7 +22,6 @@ export class ScopingService {
       .doc<ScopingSession>(`/public/data/sessions/${sessionCode}`)
       .valueChanges()
       .pipe(
-        take(1),
         switchMap(session => {
           return this.historySvc
             .getSession({
@@ -102,10 +101,7 @@ export class ScopingService {
       .collection("public/data/sessions")
       .doc<ScopingSession>(sessionLink)
       .valueChanges()
-      .pipe(
-        tap(session => console.log("Session: ", session)),
-        map(session => !!session.participants[uid])
-      );
+      .pipe(map(session => !!session.participants[uid]));
   }
 
   putEstimate(payload) {
