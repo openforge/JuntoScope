@@ -5,6 +5,7 @@ import { ConnectionFacade } from "../../store/connection.facade";
 import { TaskList } from "../../../../models/task-list";
 import { Connection } from "../../../../models/connection";
 import { NavParams, IonicPage } from "ionic-angular";
+import { LoadingService } from "../../../../shared/loading.service";
 
 @IonicPage({
   segment: "SelectTaskListPage",
@@ -41,10 +42,12 @@ export class SelectTaskListPage implements OnInit {
 
   constructor(
     private connectionFacade: ConnectionFacade,
+    private loadingSrv: LoadingService,
     private navParams: NavParams
   ) {}
 
   ngOnInit(): void {
+    this.loadingSrv.initialize();
     this.connectionId = this.navParams.get("connectionId");
     this.projectId = this.navParams.get("projectId");
     this.projectName = this.navParams.get("projectName");
@@ -56,6 +59,7 @@ export class SelectTaskListPage implements OnInit {
   }
 
   startSession() {
+    this.loadingSrv.present();
     this.connectionFacade.createSession(
       this.connectionId,
       this.projectId,

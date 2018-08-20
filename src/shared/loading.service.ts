@@ -3,38 +3,43 @@ import { Loading, LoadingController } from "ionic-angular";
 
 @Injectable()
 export class LoadingService {
-	loading: Loading;
-	
-	constructor(
-		private loadingCtrl: LoadingController
-	) {}
+  loading: Loading;
 
-	// create loading object
-	initialize() {
-		this.loading = this.loadingCtrl.create({
-			spinner: "crescent",
-			cssClass: "custom-loading"
-		});
-	}
-	
-	// hide loading object and create to show again in view
-	hide() {
-		this.loading.dismiss().then(() => {
-			this.loading = this.loadingCtrl.create({
-				spinner: "crescent",
-				cssClass: "custom-loading"
-			});
-		})
-	}
+  constructor(private loadingCtrl: LoadingController) {}
 
-	// dismiss loading object completely from view
-	dismiss() {
-		this.loading.dismiss().catch(()=>{})
-	}
+  // create loading object
+  initialize() {
+    if (!this.loading) {
+      this.loading = this.loadingCtrl.create({
+        spinner: "crescent",
+        cssClass: "custom-loading"
+      });
+    }
+  }
 
-	// show loading object in view
-	present() {
-		this.loading.present();
-	}
-	
+  // hide loading object and create to show again in view
+  hide() {
+    if (this.loading) {
+      this.loading.dismiss().then(() => {
+        this.loading = this.loadingCtrl.create({
+          spinner: "crescent",
+          cssClass: "custom-loading"
+        });
+      });
+    }
+  }
+
+  // dismiss loading object completely from view
+  dismiss() {
+    if (this.loading) {
+      this.loading.dismiss().catch(() => {});
+    }
+  }
+
+  // show loading object in view
+  present() {
+    if (this.loading) {
+      this.loading.present();
+    }
+  }
 }
