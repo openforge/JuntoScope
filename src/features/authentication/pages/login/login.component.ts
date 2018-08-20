@@ -67,7 +67,16 @@ export class LoginPage implements OnInit, OnDestroy {
     this.errorSubscription = this.authError$.subscribe(error => {
       if (error) {
         this.loadingSrv.hide();
-        this.popupSvc.simpleAlert("Uh Oh!", error, "OK");
+        if (error.code === "auth/account-exists-with-different-credential") {
+          this.popupSvc.simpleAlert(
+            "Oh...",
+            `It seems like you are already signed in using this email with another provider and it can not be used again. 
+            Please sign in with the correct provider.`,
+            "OK"
+          );
+        } else {
+          this.popupSvc.simpleAlert("Oh...", error, "OK");
+        }
         this.authFacade.clearError();
       }
     });
