@@ -11,33 +11,31 @@
       <h2 text-center>Connect to Teamwork</h2>
 
       <p text-center>
-        * CONTENT NEEDED *
-        * FINAL STYLE NEEDED *
-        JuntoScope connects into your Teamwork to be able to import your task list(s) that
-        you and or your team can scope together in a scope session!
-      <br>
-      <br>
-      <br>
-        It is recommended that a user who will be the moderator have read and write rights to
-        the teamwork task lists that will be used during a scope session in order to properly post
-        the time estimate associated to the task to your Teamwork.
+        JuntoScope connects directly with your Teamwork account to import your task list(s) that you and your team can scope together
+        in a scoping session.
+        <br>
+        <br>
+        <br> Connections should only be made by Teamwork users with Administrator privileges in order to successfully deploy
+        scoping sessions and assign scoped times to tasks.
       </p>
 
       <button ion-button (click)="setType('teamwork')">ACCEPT</button>
     </div>
   </ng-container>
-  
+
   <ng-container *ngIf="type">
 
     <form [formGroup]="connectionForm" (ngSubmit)="continue()" text-center>
+      <p text-center>
+          Please enter your API key below
+      </p>
       <ion-item no-lines>
         <ion-input class="form-control" type="text" formControlName="token" name="token" clearInput></ion-input>
       </ion-item>
 
       <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
         <p class="item-text-wrap" *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
-          Please enter in a valid Teamwork API Token.
-          For instructions on where to find this please visit the link below.
+          Please enter in a valid Teamwork API Token. For instructions on where to find this please visit the link below.
         </p>
       </ng-container>
 
