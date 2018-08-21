@@ -5,16 +5,16 @@
 </p>
 
 <div class="container">
-  <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.AVG_RESULT">
-    <button ion-button outline (click)="selectAvg()">{{avg}}</button>
+  <div class="result">
+    <button ion-button outline [class.selected]="selectedResult === SELECTED_RESULT.AVG_RESULT" (click)="selectAvg()">{{avg}}</button>
     <p>Average</p>
   </div>
-  <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.MAX_RESULT">
-    <button ion-button outline (click)="selectMax()">{{max}}</button>
+  <div class="result">
+    <button ion-button outline [class.selected]="selectedResult === SELECTED_RESULT.MAX_RESULT" (click)="selectMax()">{{max}}</button>
     <p>Max</p>
   </div>
-  <div class="result" [class.selected]="selectedResult === SELECTED_RESULT.CUSTOM_RESULT">
-    <ion-input text-center type="number" name="custom" (ionChange)="onChangeValue($event)"></ion-input>
+  <div class="result">
+    <ion-input text-center type="number" name="custom" [class.selected]="selectedResult === SELECTED_RESULT.CUSTOM_RESULT" (ionChange)="onChangeValue($event)"></ion-input>
     <p>Custom</p>
   </div>
 </div>
