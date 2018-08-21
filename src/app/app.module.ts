@@ -17,14 +17,12 @@ import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFirestoreModule } from "angularfire2/firestore";
 
-import { reducers, initialState, metaReducers } from "../store/app.reducer";
 import { AppFacade } from "../store/app.facade";
 import { environment } from "../environments/environment";
 
 import { JuntoScopeComponent } from "./app.component";
 import { SharedModule } from "../shared/shared.module";
 import { AuthenticationModule } from "../features/authentication/authentication.module";
-import { AuthFacade } from "../features/authentication/store/auth.facade";
 import { NotFoundComponent } from "./not-found.component";
 import { DashboardModule } from "../features/dashboard/dashboard.module";
 import { HttpClientModule } from "@angular/common/http";
@@ -43,9 +41,9 @@ import { SettingsModule } from "../features/settings/settings.module";
     HttpModule,
     IonicModule.forRoot(JuntoScopeComponent, { preloadModules: true }),
     AppRoutingModule.forRoot(),
-    StoreModule.forRoot(reducers, { metaReducers, initialState }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AuthFacade]),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
