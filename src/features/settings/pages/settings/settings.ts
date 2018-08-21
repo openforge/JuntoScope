@@ -7,6 +7,7 @@ import { AuthUiState } from "../../../authentication/store/auth.reducer";
 import { ConnectionFacade } from "../../../connections/store/connection.facade";
 import { LoginPage } from "../../../authentication/pages/login/login.component";
 import { Subscription } from "rxjs";
+import { SettingsService } from "../../service/settings.service";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -20,26 +21,37 @@ import { Subscription } from "rxjs";
 export class SettingsPage implements OnInit, OnDestroy {
   connections$ = this.connectionFacade.connections$;
   logOutSub: Subscription;
+  faqsSub: Subscription;
 
   private logoutRedirect$ = this.authFacade.uiState$.pipe(
     untilDestroyed(this),
     filter(authState => authState === AuthUiState.NOT_AUTHENTICATED)
   );
+  faqs;
 
   constructor(
     private navCtrl: NavController,
     private connectionFacade: ConnectionFacade,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private settingsSvc: SettingsService
   ) {}
 
   ngOnDestroy() {
     if (this.logOutSub) {
       this.logOutSub.unsubscribe();
     }
+    if (this.faqsSub) {
+      this.faqsSub.unsubscribe();
+    }
   }
 
   ngOnInit() {
     this.connectionFacade.getConnections();
+    this.faqsSub = this.settingsSvc.getFaqs().subscribe(faqs => {
+      if (faqs) {
+        this.faqs = faqs;
+      }
+    });
   }
 
   viewConnectionDetails(connectionId) {

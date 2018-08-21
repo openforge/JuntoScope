@@ -56,8 +56,13 @@ app-settings {
 
   .faq {
     ion-item.item {
+      h2 {
+        font-weight: bold;
+      }
       p {
         color: $primary-orange;
+        white-space: initial;
+        font-size: 13px;
       }
     }
   }

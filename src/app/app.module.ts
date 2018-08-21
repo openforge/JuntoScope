@@ -54,7 +54,7 @@ import { SettingsModule } from "../features/settings/settings.module";
     DashboardModule.forRoot(),
     ConnectionsModule.forRoot(),
     ScopingModule.forRoot(),
-    SettingsModule,
+    SettingsModule.forRoot(),
     SharedModule.forRoot()
   ],
   bootstrap: [IonicApp],
