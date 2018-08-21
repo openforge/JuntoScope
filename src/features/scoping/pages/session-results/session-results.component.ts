@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { ScopingFacade } from "../../store/scoping.facade";
 import { NavController, IonicPage } from "ionic-angular";
 import { ScopingSession } from "../../../../models/scoping-session";

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
-import { switchMap, map, tap, take } from "rxjs/operators";
+import { switchMap, map } from "rxjs/operators";
 import {
   SessionValidation,
   ScopingSession

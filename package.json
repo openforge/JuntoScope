@@ -6,10 +6,10 @@
   "homepage": "http://openforge.io/",
   "private": true,
   "scripts": {
-    "clean": "ionic-app-scripts clean",
-    "build": "ionic-app-scripts build",
-    "lint": "ionic-app-scripts lint",
+    "ionic:clean": "ionic-app-scripts clean",
+    "ionic:lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
+    "ionic:build:prod": "ionic-app-scripts build --prod",
     "ionic:serve": "ionic-app-scripts serve",
     "test": "jest --watch --no-cache",
     "test:ci": "jest --runInBand",
