@@ -21,6 +21,7 @@
     "firebase:serve": "npm --prefix functions run build && firebase serve --only functions",
     "firebase:shell": "npm --prefix functions run build && firebase functions:shell",
     "firebase:deploy": "firebase use default --token $FIREBASE_TOKEN && firebase deploy --only firestore:rules,functions,hosting --token $FIREBASE_TOKEN",
+    "firebase:deploy:prod": "firebase use production --token $FIREBASE_TOKEN && firebase deploy --only firestore:rules,functions,hosting --token $FIREBASE_TOKEN",
     "firebase:logs": "firebase functions:log"
   },
   "dependencies": {
