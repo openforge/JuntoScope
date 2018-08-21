@@ -48,13 +48,9 @@
     </ion-list-header>
   </div>
   <!-- Design : what should each item do? Go to a separate page? Ecordian with information? -->
-  <!-- Dev : FAQ is hard-coded currently based on designs. Will need feedback on design on implementation ... will also need FAQ pulling from firestore -->
   <ion-list class="faq">
-    <ion-item no-lines detail-push>
-      <p>How do I ...?</p>
-    </ion-item>
-    <ion-item no-lines detail-push>
-      <p>How do I find ..?</p>
+    <ion-item *ngFor="let faq of faqs" no-lines detail-push>
+      <p>{{ faq.question}}</p>
     </ion-item>
   </ion-list>
 
