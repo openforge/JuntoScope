@@ -43,6 +43,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   user$: Observable<User>;
   participantState: ParticipantState;
   session: ScopingSession;
+  currentSession: ScopingSession;
   user: User;
   task: Task;
   taskId: string;
@@ -140,6 +141,10 @@ export class SessionScopingPage implements OnInit, OnDestroy {
         this.lastTaskId = this.taskId ? this.taskId : null;
         this.taskId = this.session.currentTaskId;
         this.task = this.session.tasks[this.taskId];
+
+        if (!this.currentSession) {
+          this.currentSession = this.session;
+        }
 
         this.didVote(session.tasks[this.taskId]);
 
@@ -280,6 +285,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
     this.estimateSubmitted = false;
     this.finalEstimate = null;
     this.timerOn = false;
+    this.currentSession = this.session;
     this.next.next();
 
     this.isComplete();
