@@ -33,7 +33,7 @@ export class VoteComponent implements OnInit {
   }
 
   isValid(control: FormControl): any {
-    if (control.value < 1) {
+    if (control.value < 0.5) {
       return { invalid_quantity: true };
     }
 
