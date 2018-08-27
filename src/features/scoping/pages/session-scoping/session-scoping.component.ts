@@ -300,7 +300,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   putEstimateOnConnection() {
-    if (this.finalEstimate) {
+    if (this.finalEstimate && this.isModerator) {
       this.scopingFacade.putEstimate(
         this.user.uid,
         this.session.connectionId,
