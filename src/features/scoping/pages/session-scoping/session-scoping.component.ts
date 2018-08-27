@@ -167,8 +167,9 @@ export class SessionScopingPage implements OnInit, OnDestroy {
             max = voteVal > max ? voteVal : max;
             voteSum += voteVal;
           });
-          this.average =
-            voteSum / Object.keys(this.session.tasks[this.taskId].votes).length;
+          this.average = Math.round(
+            voteSum / Object.keys(this.session.tasks[this.taskId].votes).length
+          );
           this.max = max;
         }
 
