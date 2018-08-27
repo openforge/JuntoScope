@@ -18,9 +18,9 @@
       <ng-container *ngIf="session && session.tasks; else noSession">
 
         <ng-container *ngIf="!allVotesSubmited">
-          <app-session-header [session]="session"></app-session-header>
+          <app-session-header [session]="currentSession"></app-session-header>
           <div class="session-info-container">
-            <app-task-card [task]="session.tasks[session.currentTaskId]"></app-task-card>
+            <app-task-card [task]="currentSession.tasks[currentSession.currentTaskId]"></app-task-card>
             <app-vote (vote)="vote($event)"></app-vote>
           </div>
           <div class="session-votes-counted">
@@ -40,9 +40,9 @@
         </ng-container>
 
         <ng-container *ngIf="allVotesSubmited">
-          <app-session-header [session]="session"></app-session-header>
+          <app-session-header [session]="currentSession"></app-session-header>
           <div class="session-info-container">
-            <app-task-card [task]="session.tasks[session.currentTaskId]" [onlyTitle]="true"></app-task-card>
+            <app-task-card [task]="currentSession.tasks[currentSession.currentTaskId]" [onlyTitle]="true"></app-task-card>
             <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate || timerOn" [estimate]="finalEstimate"></app-result-estimate>
             
             <ng-container *ngIf="isModerator && !session.tasks[session.currentTaskId].estimate && !timerOn">
