@@ -83,35 +83,42 @@ export class AuthService {
   }
 
   async nativeGoogleLogin(): Promise<void> {
-    const gplusUser = await this.gplus.login({
+    return await this.gplus.login({
       webClientId: environment.webClientId,
       offline: true,
       scopes: "profile email"
-    });
-    return await this.afAuth.auth.signInWithCredential(
-      firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)
-    );
+    }).then((response) => {
+      return this.afAuth.auth.signInWithCredential(
+        firebase.auth.GoogleAuthProvider.credential(response.idToken)
+      )
+    })
+    .catch(() => { throw new Error("An error occured. Please try again.") });
   }
 
   async nativeTwitterLogin(): Promise<void> {
-    const response = await this.twitter.login();
-    return await this.afAuth.auth.signInWithCredential(
-      firebase.auth.TwitterAuthProvider.credential(
-        response.token,
-        response.secret
+    return await this.twitter.login()
+    .then((response) => {
+      return this.afAuth.auth.signInWithCredential(
+        firebase.auth.TwitterAuthProvider.credential(
+          response.token,
+          response.secret
+        )
       )
-    );
+    })
+    .catch(() => { throw new Error("An error occurred. Please try again.") });
   }
 
   async nativeFacebookLogin(): Promise<void> {
-    const facebookResponse = await this.facebook.login([
+   return await this.facebook.login([
       "email",
       "public_profile"
-    ]);
-    return await this.afAuth.auth.signInWithCredential(
-      firebase.auth.FacebookAuthProvider.credential(
-        facebookResponse.authResponse.accessToken
+    ])
+    .then((response) => {
+      return this.afAuth.auth.signInWithCredential(
+        firebase.auth.FacebookAuthProvider.credential(
+          response.authResponse.accessToken
+        )
       )
-    );
+    }).catch(() => { throw new Error("An error occurred. Please try again.") })
   }
 }
