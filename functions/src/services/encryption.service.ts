@@ -4,6 +4,7 @@ const functions = require("firebase-functions");
 export class EncryptionService {
   private algorithm = "aes-256-cbc";
   // Must be 32 characters long
+
   private SECRET_KEY = functions.config().encryption.secret;
 
   encrypt(text: string) {
