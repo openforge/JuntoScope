@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "junto-scope-dev",
-    "production": "junto-scope"
+    "default": "juntoscope-dev-963e3",
+    "production": "juntoscope-prod-61b4d"
   }
 }

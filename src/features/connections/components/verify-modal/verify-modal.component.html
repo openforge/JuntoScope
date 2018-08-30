@@ -1,0 +1,19 @@
+<ion-content>
+  <div text-center>
+    <ion-list>
+      <ion-list-header no-lines>
+        <h2>TOKEN SUCCESS!</h2>
+      </ion-list-header>
+
+      <ion-label class="title">{{ connectionData.externalData.company }}</ion-label>
+      <ion-label>Connection Type: {{ connectionData.type }}</ion-label>
+      <ion-label>Account Admin Name: {{ connectionData.externalData.name }}</ion-label>
+
+
+      <ion-item (click)="dismiss()" no-lines>
+        <ion-label>CONFIRM</ion-label>
+      </ion-item>
+
+    </ion-list>
+  </div>
+</ion-content>

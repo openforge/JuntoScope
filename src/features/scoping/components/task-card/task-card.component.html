@@ -1,0 +1,8 @@
+<div class="task-card-container">
+  <p>
+    Task: {{task.name}}
+  </p>
+  <p *ngIf="!onlyTitle">
+    Description: {{task.description}}
+  </p>
+</div>

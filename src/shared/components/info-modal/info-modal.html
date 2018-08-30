@@ -1,0 +1,12 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons slot="start">
+            <button ion-button (click)="closeModal()">Cancel</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <p>{{ title }}</p>
+    <p>{{ text }}</p>
+    <button ion-button (click)="dismiss()">{{ label }}</button>
+</ion-content>

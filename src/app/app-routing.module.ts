@@ -1,56 +1,12 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { EffectsModule } from '@ngrx/effects';
-import {
-  RouterStateSerializer,
-  StoreRouterConnectingModule,
-} from '@ngrx/router-store';
-
-import { CustomSerializer } from '@app/state/router.reducer';
-import { RouterFacade } from '@app/state/router.facade';
-import { NotFoundComponent } from '@app/not-found.component';
-import { AuthGuard } from '@app/auth.guard';
-
-const routes: Routes = [
-  {
-    path: '',
-    loadChildren:
-      '@app/authentication/authentication.module#AuthenticationModule',
-  },
-  {
-    path: 'dashboard',
-    loadChildren: '@app/dashboard/dashboard.module#DashboardModule',
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'scoping',
-    loadChildren: '@app/scoping/scoping.module#ScopingModule',
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'connections',
-    loadChildren: '@app/connections/connections.module#ConnectionsModule',
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'settings',
-    loadChildren: '@app/settings/settings.module#SettingsModule',
-    canActivate: [AuthGuard],
-  },
-  {
-    path: '**',
-    component: NotFoundComponent,
-  },
-];
+import { NgModule, ModuleWithProviders } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { RouterStateSerializer } from "@ngrx/router-store";
+import { CustomSerializer } from "../store/router.reducer";
+import { RouterFacade } from "../store/router.facade";
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes),
-    EffectsModule.forRoot([RouterFacade]),
-    StoreRouterConnectingModule.forRoot(),
-  ],
-  exports: [RouterModule],
+  imports: [],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
   static forRoot(): ModuleWithProviders {
@@ -59,10 +15,10 @@ export class AppRoutingModule {
       providers: [
         {
           provide: RouterStateSerializer,
-          useClass: CustomSerializer,
+          useClass: CustomSerializer
         },
-        RouterFacade,
-      ],
+        RouterFacade
+      ]
     };
   }
 }

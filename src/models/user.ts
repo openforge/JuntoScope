@@ -4,6 +4,6 @@ export interface User {
 }
 
 export enum SessionUserType {
-  MODERATOR = 'Session Moderator',
-  PARTICIPANT = 'Session Participant',
+  MODERATOR = "Session Moderator",
+  PARTICIPANT = "Session Participant"
 }

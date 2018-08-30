@@ -1,0 +1,35 @@
+app-select-task-list {
+
+	
+	ion-list.list {
+		margin: 0;
+		width: 100%;
+
+		ion-list-header.list-header {
+
+			.icon, h2 {
+				display: inline-block;
+				font-weight: bolder;
+				text-transform: none;
+				vertical-align: middle;
+			}
+
+			ion-label.label {
+				margin-top: 3rem;
+			}
+		}
+
+		ion-item.item.item-block .item-inner {
+				border-bottom: 2px solid $primary-orange;
+		}
+	}
+
+	.start-btn {
+		margin-top: 2rem;
+		
+		button {
+			width: 60%;
+		}
+	}
+
+}

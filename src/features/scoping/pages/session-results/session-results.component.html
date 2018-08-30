@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button icon-only (click)="goDashboard()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    
+    <ion-title text-center>Session Results</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goSettings()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-container *ngIf="session && session.tasks">
+
+    <div class="session-results-top">
+      <h1>Final Results</h1>
+      <p>{{ session.numScopedTasks }} Tasks Scoped</p>
+    </div>
+
+    <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [results]="true" [estimate]="session.tasks[session.currentTaskId].estimate"></app-result-estimate>
+
+    <ion-list>
+      <ion-item *ngFor="let task of (session.tasks | objValues)">
+        <ion-label>
+          {{ task.name }}
+        </ion-label>
+        <button ion-button clear item-end>
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+
+  </ng-container>
+</ion-content>

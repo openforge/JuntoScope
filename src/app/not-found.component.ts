@@ -1,18 +1,16 @@
-import { Component } from '@angular/core';
-
-import { RouterFacade } from '@app/state/router.facade';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-not-found',
+  selector: "app-not-found",
   template: `
     <p>
       Uh Oh ... '{{ url$ | async }}' Not Found!
     </p>
   `,
-  styles: [],
+  styles: []
 })
 export class NotFoundComponent {
-  url$ = this.routerFacade.url$;
+  // url$ = this.routerFacade.url$;
 
-  constructor(private routerFacade: RouterFacade) {}
+  constructor() {}
 }

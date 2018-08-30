@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-} from '@angular/router';
+  RouterStateSnapshot
+} from "@angular/router";
 
-import { map, tap, filter, switchMap } from 'rxjs/operators';
+import { map, tap, filter, switchMap } from "rxjs/operators";
 
-import { RouterFacade } from '@app/state/router.facade';
-import { AuthFacade } from '@app/authentication/state/auth.facade';
-import { AuthUiState } from '@app/authentication/state/auth.reducer';
-import { AppFacade } from '@app/state/app.facade';
+import { RouterFacade } from "../store/router.facade";
+import { AuthFacade } from "../features/authentication/store/auth.facade";
+import { AuthUiState } from "../features/authentication/store/auth.reducer";
+import { AppFacade } from "../store/app.facade";
 
 @Injectable()
 export class UnAuthGuard implements CanActivate {

@@ -1,0 +1,20 @@
+app-counted-votes {
+    .vote-group {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      margin: 25px;
+      text-align: center;
+
+      .vote {
+        background: white;
+        border: 1px $primary-orange solid;
+        border-radius: 4px;
+        font-size: 34px;
+        font-weight: 500;
+        margin: 5px;
+        padding: 10px 25px;
+      }
+    }
+}

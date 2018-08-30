@@ -1,2 +1,2 @@
-import 'jest-preset-angular';
-import '@test/jest-global-mocks';
+import "jest-preset-angular";
+import "jest-global-mocks";

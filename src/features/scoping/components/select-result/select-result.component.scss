@@ -1,0 +1,40 @@
+app-select-result {
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 2px solid;
+    .result {
+      margin: 25px 25px 15px 25px;
+
+      button {
+        height: 60px;
+        width: 70px;
+        margin: 0px;
+        border-radius: 4px;
+        .button-inner {
+          font-size: 35px;
+          font-weight: bolder;
+        }
+      }
+
+      ion-input.input {
+        border: 1px solid;
+        border-radius: 4px;
+        height: 60px;
+        width: 70px;
+        input {
+          height: calc(100% - 8px - 16px);
+          font-size: 35px;
+          font-weight: bolder;
+        }
+      }
+
+      .selected {
+        background-color: $primary-orange;
+        color: white;
+      }
+    }
+  }
+}

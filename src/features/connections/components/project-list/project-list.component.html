@@ -1,0 +1,10 @@
+<ion-list>
+  <ion-list-header text-center no-lines>
+    <ion-label>
+      <ion-icon name="contacts"></ion-icon>
+      <h2>{{ connection.externalData.company }} - {{connection.type | titlecase }}</h2>
+    </ion-label>
+  </ion-list-header>
+
+  <app-project-item *ngFor="let project of projects" [project]="project" (select)="select.emit($event)">project</app-project-item>
+</ion-list>

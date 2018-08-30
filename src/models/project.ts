@@ -1,4 +1,4 @@
-import { TaskList } from '@models/task-list';
+import { TaskList } from "./task-list";
 
 export interface Project {
   id?: string;

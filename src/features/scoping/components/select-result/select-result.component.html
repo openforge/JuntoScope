@@ -1,0 +1,20 @@
+<p>
+  Results: JuntoScope has determined the average and maximum scope per all the 
+  votes submitted in this session. Please select one of the following values, 
+  or enter in a custom value to be recorded as the final scope for this task. 
+</p>
+
+<div class="container">
+  <div class="result">
+    <button ion-button outline [class.selected]="selectedResult === SELECTED_RESULT.AVG_RESULT" (click)="selectAvg()">{{avg}}</button>
+    <p>Average</p>
+  </div>
+  <div class="result">
+    <button ion-button outline [class.selected]="selectedResult === SELECTED_RESULT.MAX_RESULT" (click)="selectMax()">{{max}}</button>
+    <p>Max</p>
+  </div>
+  <div class="result">
+    <ion-input text-center type="number" name="custom" [class.selected]="selectedResult === SELECTED_RESULT.CUSTOM_RESULT" (ionChange)="onChangeValue($event)"></ion-input>
+    <p>Custom</p>
+  </div>
+</div>

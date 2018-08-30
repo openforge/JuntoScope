@@ -1,0 +1,38 @@
+<div class="list-headers">
+  <ion-list-header no-lines>
+    <h2>Connections</h2>
+  </ion-list-header>
+</div>
+
+<div padding>
+  <ion-list no-lines>
+    <ion-list-header text-center>
+      <ion-label>
+        <ion-icon name="contacts"></ion-icon>
+        <h2>Connections</h2>
+      </ion-label>
+    </ion-list-header>
+  
+    <!-- existing connection(s)-->
+    <ion-item button *ngFor="let connection of connections" (click)="select.emit(connection)">
+      <ion-label>
+        {{ connection.externalData.company }} - {{ connection.type | titlecase }}
+      </ion-label>
+      <button color="white" class="existing-button" ion-button outline item-end icon-only>
+        <ion-icon name="arrow-dropright"></ion-icon>
+      </button>
+    </ion-item>
+  
+    <!-- new connection-->
+    <ion-item (click)="add.emit()">
+      <ion-label>
+        New Connection
+      </ion-label>
+      <button ion-button outline item-end icon-only>
+        <ion-icon name="add" ios="ios-add-circle-outline"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
+</div>
+
+

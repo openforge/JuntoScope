@@ -1,0 +1,22 @@
+<ion-content>
+  <div class="share-box">
+    <h4>Session Url</h4>
+    <div class="share-url-section">
+      <p class="session-url">https://juntoscope.com/{{accountData.item.sessionCode}}</p>
+      <ion-icon name="link"></ion-icon>
+    </div>
+    <h4>Access Code</h4>
+    <div class="access-code-letters">
+      <p *ngFor="let letter of accessCodeLetters" class="single-letter">
+        {{ letter }}
+      </p>
+    </div>
+    <p *ngIf="isExpired"> * Code Expired</p>
+    <button ion-button *ngIf="isModerator" (click)="refreshCode()">New Code</button>
+    <p *ngIf="!isModerator">Contact moderator to receive new code</p>
+  </div>
+  <div class="delete-box">
+    <button ion-button (click)="closeModal()">Cancel</button>
+    <button ion-button *ngIf="isModerator" (click)="deleteSession()">Delete Session</button>
+  </div>
+</ion-content>

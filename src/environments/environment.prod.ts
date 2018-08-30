@@ -1,12 +1,12 @@
+import {
+  FIREBASE_PROD_FUNCTIONS,
+  FIREBASE_PROD_CONFIG,
+  GOOGLE_WEB_CLIENT_ID_PROD
+} from "../config/config";
+
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://us-central1-junto-scope-dev.cloudfunctions.net/api',
-  firebase: {
-    apiKey: 'AIzaSyDpn5_jCcNAHdBq70gaPSueWaszn4xnrR8',
-    authDomain: 'junto-scope-dev.firebaseapp.com',
-    databaseURL: 'https://junto-scope-dev.firebaseio.com',
-    projectId: 'junto-scope-dev',
-    storageBucket: '',
-    messagingSenderId: '494457695327',
-  },
+  apiBaseUrl: FIREBASE_PROD_FUNCTIONS,
+  firebase: FIREBASE_PROD_CONFIG,
+  webClientId: GOOGLE_WEB_CLIENT_ID_PROD
 };

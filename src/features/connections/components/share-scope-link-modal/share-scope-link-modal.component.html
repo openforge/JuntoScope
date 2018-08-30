@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="goDashboard()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Share Scope Link</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="container">
+  <h2>{{connectionName}}</h2>
+  <h2>{{projectName}}</h2>
+
+  <div class="share-box">
+    <h4>Session Url</h4>
+    <div class="share-url-section">
+      <p class="session-url">https://juntoscope.com/{{sessionUrl}}</p>
+      <ion-icon name="link"></ion-icon>
+    </div>
+    <h4>Access Code</h4>
+    <div class="access-code-letters">
+      <p *ngFor="let letter of accessCodeLetters" class="single-letter">
+        {{ letter }}
+      </p>
+    </div>
+  </div>
+
+  <button ion-button (click)="startScoping()">
+    Start Scoping
+  </button>
+</ion-content>

@@ -1,0 +1,218 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+// 1. Text
+// --------------------------------------------------
+// All styles related to text
+
+// Ionicons
+ion-icon {
+  font-size: 25px;
+}
+
+// Text Weight
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+.item {
+  color: $primary-orange;
+  font-weight: 500;
+}
+
+h1, h2 {
+  font-weight: 800;
+}
+
+p {
+  line-height: 21px;
+}
+
+a {
+  font-weight: 500;
+}
+
+// 2. Header / Title
+// --------------------------------------------------
+// All styles related to the header  / title
+
+// ios Header
+ion-header .toolbar-ios {
+  
+  // Background color
+  .toolbar-background-ios {
+    background: $primary-orange;
+    border: none;
+  }
+
+  // Title
+  .toolbar-title-ios {
+    // overflow: visible;
+    color: white;
+    font-size: 16px;
+    text-transform: capitalize;
+  }
+
+  // Buttons
+  .bar-button-default-ios, 
+  .bar-button-default
+  .bar-button-ios-default, 
+  .bar-button-clear-ios-default {
+    color: white;
+  }
+}
+
+// md + wp Header
+ion-header ion-navbar.toolbar-md,
+ion-header ion-navbar.toolbar-wp {
+
+  // Background color
+  .toolbar-background {
+    background: $primary-orange;
+    border: none;
+  }
+
+  // Title
+  .toolbar-title {
+    color: white;
+    font-size: 16px;
+    text-transform: capitalize;
+  }
+
+  // Buttons
+  .bar-button-default-md,
+  .bar-button-clear-md-default,
+  .bar-button-md-default,
+  .bar-button-default-wp,
+  .bar-button-clear-wp-default,
+  .bar-button-wp-default {
+    color: white;
+  }
+}
+
+// md + wp Title
+.title.title-md, .title.title-wp {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 70%;
+  text-align: center;
+}
+
+// 2. End Header / Title
+// **************************************************
+
+
+// 3. Searchbar
+// --------------------------------------------------
+// All styles related to the searchbar
+
+// ios Searchbar
+// --------------------------------------------------
+
+.searchbar {
+  background-color: white;
+  border: 1px solid $primary-orange;
+  border-radius: 10px;
+}
+
+// md Searchbar
+// --------------------------------------------------
+
+.searchbar-md {
+  background-color: white;
+  border: 1px solid $primary-orange;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+// wp Searchbar
+// --------------------------------------------------
+
+.searchbar-wp {
+  background-color: white;
+  border: 1px solid $primary-orange;
+  border-radius: 10px;
+
+  .searchbar-input-container {
+    border: none;
+  }
+}
+
+// 3. End Searchbar
+// **************************************************
+
+
+// 4. Checkbox
+// --------------------------------------------------
+// All styles related to the checkbox
+
+.checkbox-ios, .checkbox-md {
+  @extend.checkbox-md;
+}
+
+// 4. End Checkbox
+// **************************************************
+
+// 5. Spinner
+// --------------------------------------------------
+// All styles related to the spinner
+
+ion-spinner {
+  bottom: 0;
+  height: 50px;
+  left: 0;
+  margin: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 50px;
+}
+
+// 5. End Spinner
+// **************************************************
+
+
+// 6. scroll-content TMP issue related to - https://github.com/ionic-team/ionic/issues/10629
+// --------------------------------------------------
+// All styles related to scroll-content
+
+.scroll-content { 
+  padding-bottom: 0 !important; 
+}
+
+// 6. scroll-content
+// **************************************************
+
+// 7. ion-loading 
+// --------------------------------------------------
+// All styles related to ion-loading
+
+ion-loading.custom-loading {
+  .loading-wrapper {
+    background: none;
+    box-shadow: none;
+  }
+}
+
+// 7. scroll-content
+// **************************************************

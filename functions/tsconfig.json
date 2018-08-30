@@ -2,13 +2,10 @@
   "compilerOptions": {
     "lib": ["es6"],
     "module": "commonjs",
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "outDir": "lib",
     "sourceMap": true,
-    "target": "es6",
-    "types": [
-      "node"
-    ]
+    "target": "es6"
   },
   "compileOnSave": true,
   "include": [

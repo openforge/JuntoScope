@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-} from '@angular/router';
+  RouterStateSnapshot
+} from "@angular/router";
 
-import { map, tap, filter } from 'rxjs/operators';
+import { map, tap, filter } from "rxjs/operators";
 
-import { RouterFacade } from '@app/state/router.facade';
-import { AuthFacade } from '@app/authentication/state/auth.facade';
-import { AuthUiState } from '@app/authentication/state/auth.reducer';
+import { RouterFacade } from "../store/router.facade";
+import { AuthFacade } from "../features/authentication/store/auth.facade";
+import { AuthUiState } from "../features/authentication/store/auth.reducer";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -25,8 +25,8 @@ export class AuthGuard implements CanActivate {
       tap(isAuth => {
         if (!isAuth) {
           this.routerFacade.navigate({
-            path: ['/login'],
-            query: { returnUrl: state.url },
+            path: ["/login"],
+            query: { returnUrl: state.url }
           });
         }
       })

@@ -1,0 +1,20 @@
+app-project-list {
+	ion-list.list {
+		margin: 0;
+		width: 100%;
+
+		ion-list-header.list-header {
+
+			.icon, h2 {
+				display: inline-block;
+				font-weight: bolder;
+				text-transform: none;
+				vertical-align: middle;
+			}
+
+			ion-label.label {
+				margin-top: 3rem;
+			}
+		}
+  	}
+}

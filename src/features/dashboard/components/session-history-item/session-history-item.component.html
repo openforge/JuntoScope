@@ -1,0 +1,33 @@
+<ion-card>
+  <ion-card-header>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <h2>{{ item.projectName }}</h2>          
+        </ion-col>
+        <ion-col col-6>
+          <button ion-fab mini item-end (click)="handleOptionsClick()">{{ abbreviation }}</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-header>
+
+  <ion-card-content>
+    <p>{{ item.tasks && item.tasks[item.currentTaskId].name }}</p>
+  </ion-card-content>
+
+  <ion-item>
+    <div item-start>
+      <p>{{ time | date: 'MM/dd/yyyy' }}</p>
+    </div>
+    <div item-end style="text-decoration: underline" (click)="handleDetailClick()">
+      <p>{{ ctaText }}</p>
+    </div>
+  </ion-item>
+</ion-card>
+
+
+
+
+
+

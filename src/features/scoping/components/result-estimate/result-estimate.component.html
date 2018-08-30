@@ -1,0 +1,16 @@
+<div class="result-estimate-container" *ngIf="!results">
+  <h2>Estimate</h2>
+  <div class="hours-estimate">
+    <p class="box-estimate">{{ estimate }}</p>
+    <p>hours</p>
+  </div>
+  <p>Average</p>
+</div>
+
+<div class="result-estimate-container" *ngIf="results">
+  <h3>Total Estimate</h3>
+  <div class="hours-estimate">
+    <p class="box-estimate">{{ estimate }}</p>
+  </div>
+  <p>hours</p>
+</div>

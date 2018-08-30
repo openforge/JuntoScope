@@ -1,16 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-
-import { AuthFacade } from '@app/authentication/state/auth.facade';
+import { Component } from "@angular/core";
+import { Platform } from "ionic-angular";
+import { StatusBar } from "@ionic-native/status-bar";
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import { SplashScreen } from "@ionic-native/splash-screen";
+import { AuthFacade } from "../features/authentication/store/auth.facade";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  templateUrl: "app.html"
 })
-export class AppComponent implements OnInit {
-  constructor(private authFacade: AuthFacade) {}
+export class JuntoScopeComponent {
+  rootPage: any = "LoginPage";
 
-  ngOnInit() {
-    this.authFacade.checkAuth();
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen,
+    screenOrientation: ScreenOrientation,
+    authFacade: AuthFacade
+  ) {
+    platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      statusBar.styleDefault();
+      splashScreen.hide();
+      screenOrientation
+        .lock(screenOrientation.ORIENTATIONS.PORTRAIT)
+        .catch(error => console.log(error));
+
+      authFacade.checkAuth();
+    });
   }
 }

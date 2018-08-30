@@ -1,4 +1,4 @@
-import { Project } from '@models/project';
+import { Project } from "./project";
 
 export interface Connection {
   id?: string;

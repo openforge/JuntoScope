@@ -1,5 +1,4 @@
-import { Task } from '@models/task';
-import { User } from '@models/user';
+import { Task } from "./task";
 
 export interface ScopingSession {
   id: string;
@@ -15,8 +14,8 @@ export interface ScopingSession {
 }
 
 export enum SessionStatus {
-  COMPLETE = 'Session Completed',
-  INCOMPLETE = 'Session Incomplete',
+  COMPLETE = "Session Completed",
+  INCOMPLETE = "Session Incomplete"
 }
 
 export interface SessionValidation {

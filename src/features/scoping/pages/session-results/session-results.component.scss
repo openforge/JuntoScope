@@ -1,0 +1,24 @@
+app-session-results {
+  ion-header .toolbar {
+    // Background color
+    .toolbar-background {
+      background: $primary-orange;
+      border: none;
+    } // Title
+    .toolbar-title {
+      // overflow: visible;
+      color: white;
+      font-size: 16px;
+      text-transform: capitalize;
+    } // Buttons
+    .bar-button-default {
+      color: white;
+    }
+  }
+  .session-results-top {
+    text-align: center;
+    h1 {
+      text-transform: uppercase;
+    }
+  }
+}

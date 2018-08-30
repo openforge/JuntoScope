@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>JuntoScope</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goSettings()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+  
+<ion-content>
+  <app-join-session (join)="handleJoin($event)"></app-join-session>
+  
+  <app-connection-list padding [connections]="connections$ | async" (add)="addConnection()" (select)="createSession($event)"></app-connection-list>
+  
+  <app-session-history-list [uid]="uid$ | async" [items]="historyItems$ | async" (options)="handleOptionClick($event)" (detail)="handleDetailClick($event)"></app-session-history-list>
+  
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content class="dashboard-spinner" loadingSpinner="crescent"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

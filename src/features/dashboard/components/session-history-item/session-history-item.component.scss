@@ -1,0 +1,25 @@
+app-session-history-item {
+	ion-card-header.card-header {
+		padding: 0;
+
+		h2 {
+			color: $primary-orange;
+			margin-left: 0.5rem;
+			padding: 1.5rem 0;
+		}
+
+		button.fab {
+			float: right;
+		}
+	}
+
+	ion-card.card {
+		border-bottom: 2px solid $primary-orange;
+		box-shadow: none;
+
+		p {
+			color: $primary-orange;
+		}
+		
+	}
+}

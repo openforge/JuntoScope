@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
 type CompilerOptions = Partial<{
   providers: any[];
@@ -13,7 +13,7 @@ export const configureTests = (
 ) => {
   const compilerConfig: CompilerOptions = {
     preserveWhitespaces: false,
-    ...compilerOptions,
+    ...compilerOptions
   };
 
   const configuredTestBed = TestBed.configureCompiler(compilerConfig);
