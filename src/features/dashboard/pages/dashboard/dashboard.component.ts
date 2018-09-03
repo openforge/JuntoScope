@@ -18,6 +18,8 @@ import { PopupService } from "../../../../shared/popup.service";
 import { SessionDetailModalComponent } from "../../components/session-detail-modal/session-detail-modal.component";
 import { DashboardUiState } from "../../store/dashboard.reducer";
 import { ScopingFacade } from "../../../scoping/store/scoping.facade";
+import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { IAB_OPTIONS } from "../../../../app/app.constants";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -49,7 +51,8 @@ export class DashboardPage implements OnInit, OnDestroy {
     private connectionFacade: ConnectionFacade,
     private navCtrl: NavController,
     private scopingFacade: ScopingFacade,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private iab: InAppBrowser
   ) {}
 
   ngOnInit() {
@@ -61,6 +64,13 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.viewCtrl.showBackButton(false);
+    const url = window.location.href;
+    let code = url.split("=")[1];
+    if (code) {
+      code = code.split("#")[0];
+    }
+
+    console.log("will enter", code);
   }
 
   handleOptionClick(event: HistoryItemOptionEvent) {
@@ -111,6 +121,12 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   addConnection() {
-    this.navCtrl.push("AddConnectionPage");
+    // this.navCtrl.push("AddConnectionPage");
+    const redirect_uri = "http://localhost:8100/#/DashboardPage";
+    this.iab.create(
+      `https://www.teamwork.com/launchpad/login?redirect_uri=${redirect_uri}`,
+      "_blank",
+      IAB_OPTIONS
+    );
   }
 }
