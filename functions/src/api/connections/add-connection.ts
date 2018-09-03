@@ -1,9 +1,5 @@
 import * as express from "express";
-import {
-  firestore,
-  teamworkService,
-  encryptionService
-} from "./../../services";
+import { firestore, teamworkService } from "./../../services";
 
 export async function addConnection(
   req: express.Request,
@@ -41,7 +37,7 @@ export async function addConnection(
 
       await firestore.collection(`/users/${uid}/connections`).add({
         type: "teamwork",
-        token: encryptionService.encrypt(token),
+        token: teamworkResponse.accessToken,
         externalData: teamworkResponse
       });
 
