@@ -68,6 +68,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     let code = url.split("=")[1];
     if (code) {
       code = code.split("#")[0];
+      this.dashboardFacade.teamworkLogin(code);
     }
 
     console.log("will enter", code);
