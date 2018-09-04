@@ -32,10 +32,10 @@ export class ConnectionService {
 
   teamworkAuth(code: string) {
     // This can change depending on the api route
-    return this.http.post(
-      `${environment.apiBaseUrl}/connections/teamwork`,
-      code
-    );
+    return this.http.post(`${environment.apiBaseUrl}/connections/`, {
+      token: code,
+      type: "teamwork"
+    });
   }
 
   deleteConnection(connectionId: string) {
