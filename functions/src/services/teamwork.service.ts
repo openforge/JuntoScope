@@ -9,27 +9,32 @@ export class TeamworkService {
 
     const options: request.OptionsWithUri = {
       uri,
-      method: "GET",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       json: true,
       body: {
-        code: token
+        code: `${token}`
       }
     };
 
     return request(options)
       .then(response => {
-        const { account } = response;
+        const account = response;
 
         return {
           accessToken: encryptionService.encrypt(account.access_token),
-          id: account.id,
-          baseUrl: account.apiEndPoint,
-          name: account.name,
-          company: account.company.name,
-          companyId: account.company.id
+          id: account.installation.id,
+          baseUrl: account.installation.apiEndPoint,
+          company: account.installation.company.name,
+          companyId: account.installation.company.id,
+          userId: account.user.id,
+          name: `${account.user.firstName} ${account.user.lastName}`
         };
       })
       .catch(error => {
+        console.log(error);
         throw new Error(
           "Unable to authenticate with Teamwork. Please verify your token and try again later."
         );
@@ -252,7 +257,7 @@ export class TeamworkService {
     const encodedToken = new Buffer(`${token}:X`).toString("base64");
     return {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${encodedToken}`
+      Authorization: `Bearer ${token}`
     };
   }
 }
