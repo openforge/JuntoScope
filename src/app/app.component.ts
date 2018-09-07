@@ -6,6 +6,8 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { AuthFacade } from "../features/authentication/store/auth.facade";
 import { Deeplinks } from "@ionic-native/deeplinks";
 import { DashboardPage } from "../features/dashboard/pages/dashboard/dashboard.component";
+import { ConnectionFacade } from "../features/connections/store/connection.facade";
+import { LoadingService } from "../shared/loading.service";
 
 @Component({
   templateUrl: "app.html"
@@ -19,7 +21,8 @@ export class JuntoScopeComponent {
     splashScreen: SplashScreen,
     screenOrientation: ScreenOrientation,
     authFacade: AuthFacade,
-    deeplinks: Deeplinks
+    deeplinks: Deeplinks,
+    connectionFacade: ConnectionFacade
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -42,6 +45,14 @@ export class JuntoScopeComponent {
             // match.$args - the args passed in the link
             // match.$link - the full link data
             console.log("Successfully matched route", match);
+            const code = match.$args.code;
+
+            const connection = {
+              token: code,
+              type: "teamwork"
+            };
+
+            connectionFacade.addConnection(connection);
           },
           nomatch => {
             // nomatch.$link - the full link data
