@@ -9,6 +9,7 @@ import { GooglePlus } from "@ionic-native/google-plus";
 import { TwitterConnect } from "@ionic-native/twitter-connect";
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { SafariViewController } from "@ionic-native/safari-view-controller";
 
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
@@ -32,6 +33,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ConnectionsModule } from "../features/connections/connections.module";
 import { ScopingModule } from "../features/scoping/scoping.module";
 import { SettingsModule } from "../features/settings/settings.module";
+import { Deeplinks } from "@ionic-native/deeplinks";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
@@ -68,6 +70,8 @@ import { SettingsModule } from "../features/settings/settings.module";
     ScreenOrientation,
     TwitterConnect,
     InAppBrowser,
+    SafariViewController,
+    Deeplinks,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

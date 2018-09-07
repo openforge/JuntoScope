@@ -103,6 +103,11 @@
     </plugin>
     <plugin name="cordova-plugin-screen-orientation" spec="^3.0.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
-    <engine name="android" spec="7.0.0" />
+    <plugin name="cordova-plugin-safariviewcontroller" spec="~1.5.4" />
+    <plugin name="ionic-plugin-deeplinks" spec="^1.0.17">
+        <variable name="URL_SCHEME" value="juntoscope" />
+        <variable name="DEEPLINK_HOST" value="juntoscope.io" />
+    </plugin>
     <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="7.0.0" />
 </widget>
