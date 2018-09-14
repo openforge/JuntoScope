@@ -24,7 +24,7 @@ In addition to providing services for our clients; it is our belief that we shou
 If you are a community member who would like to take part of our paid (yes, we said PAID!) Open Source contributions please reach out to us via our [opportunities page](http://www.openforge.io/opportunities).   We also always encourage anyone to contribute to anything we are doing, and we hope to contribute to your projects as well!
 
 
-# JuntoScope	
+# JuntoScope [![Build Status](https://travis-ci.org/openforge/JuntoScope.svg?branch=develop)](https://travis-ci.org/openforge/JuntoScope)
  
 JuntoScope will help your team determine scopes for tasks in Teamwork.com© Projects more accurately, quickly, and efficiently to keep your projects within budget. Integrating with Teamwork Projects API, your team will be able to:
 
@@ -55,10 +55,23 @@ ionic serve
  
 _Disclaimer: We do not have our Firebase keys environment configuration published in the repository! When attempting to run this project it will fail immediately. If you have your own firebase environment configuration that you would like to use, please consult the following instructions:_
 
-* Generate a 
+* Create a a folder called config under the src folder. Add a file called config.ts to the newly created folder.
+* Find your firebase credentials (apiKey, authDomain, databaseUrl, etc.), and copy the object into this file. It should look like this:
+
+```
+export const FIREBASE_CONFIG = {
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: ""
+}
+```
+
+That's it! :tada:
 
 
- 
  ## Versioning & Changelog	
 We utilize [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog) to generate a changelog from git metadata.	
  The following tools are used to achieve this purpose:	
@@ -74,3 +87,6 @@ npm run cz
  
 
 ## Download the App!
+[<img src="https://github.com/openforge/main-website/blob/master/src/assets/graphic-google-googleplaystore.png?raw=true" />](https://play.google.com/store/apps/details?id=com.openforge.juntoscope&hl=en_US)
+
+[<img src="https://github.com/openforge/main-website/blob/master/src/assets/graphic-apple-appstore.png?raw=true" />](https://itunes.apple.com/us/app/juntoscope/id1421846154?mt=8)
