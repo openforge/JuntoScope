@@ -36,6 +36,7 @@ import { NoopAction } from "../../../store/app.actions";
 import { PopupService } from "../../../shared/popup.service";
 import { VerifyModalComponent } from "../components/verify-modal/verify-modal.component";
 import { ShareScopeLinkModalComponent } from "../components/share-scope-link-modal/share-scope-link-modal.component";
+import { LoadingService } from "../../../shared/loading.service";
 
 @Injectable()
 export class ConnectionFacade {
@@ -206,7 +207,13 @@ export class ConnectionFacade {
               }
             });
           }),
-          map(response => new NoopAction())
+          map(response => new NoopAction()),
+          catchError(error => {
+            console.log("error: ", error);
+            this.loadingSvc.dismiss();
+            this.popupSvc.simpleAlert("Oops!", error.message, "Ok");
+            return of(error);
+          })
         )
     )
   );
@@ -215,7 +222,8 @@ export class ConnectionFacade {
     private store: Store<AppState>,
     private actions$: Actions,
     private connectionSvc: ConnectionService,
-    private popupSvc: PopupService
+    private popupSvc: PopupService,
+    private loadingSvc: LoadingService
   ) {}
 
   /*

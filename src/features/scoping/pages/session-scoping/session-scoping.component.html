@@ -45,7 +45,7 @@
             <app-task-card [task]="currentSession.tasks[currentSession.currentTaskId]" [onlyTitle]="true"></app-task-card>
             <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate || timerOn" [estimate]="finalEstimate"></app-result-estimate>
             
-            <ng-container *ngIf="isModerator && !session.tasks[session.currentTaskId].estimate && !timerOn">
+            <ng-container *ngIf="isModerator && session.tasks[session.currentTaskId].estimate && !timerOn">
               <app-select-result [avg]="average" [max]="max" (estimate)="setFinalEstimate($event)"></app-select-result>
             </ng-container>
 

@@ -7,7 +7,7 @@ import { AuthFacade } from "../features/authentication/store/auth.facade";
 import { Deeplinks } from "@ionic-native/deeplinks";
 import { DashboardPage } from "../features/dashboard/pages/dashboard/dashboard.component";
 import { ConnectionFacade } from "../features/connections/store/connection.facade";
-import { LoadingService } from "../shared/loading.service";
+// import { LoadingService } from "../shared/loading.service";
 
 @Component({
   templateUrl: "app.html"
