@@ -167,7 +167,7 @@ export class ConnectionFacade {
     )
   );
 
-  @Effect()
+  @Effect({ dispatch: false })
   createSession$ = this.actions$.pipe(
     ofType<CreateSessionAction>(ConnectionActionTypes.CREATE_SESSION),
     exhaustMap(action =>
@@ -207,12 +207,11 @@ export class ConnectionFacade {
               }
             });
           }),
-          map(response => new NoopAction()),
           catchError(error => {
             console.log("error: ", error);
             this.loadingSvc.dismiss();
             this.popupSvc.simpleAlert("Oops!", error.message, "Ok");
-            return of(error);
+            return of(error.message);
           })
         )
     )
