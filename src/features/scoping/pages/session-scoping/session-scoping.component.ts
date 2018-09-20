@@ -111,12 +111,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
     }
   }
 
-  ionViewWillEnter() {
-    if (!this.session) {
-      this.loadSession();
-    }
-  }
-
   loadSession() {
     console.log("loading session");
     this.lastTaskId = null;
