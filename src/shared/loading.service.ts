@@ -4,18 +4,9 @@ import { Loading, LoadingController } from "ionic-angular";
 @Injectable()
 export class LoadingService {
   loading: Loading;
+  isLoading = false;
 
   constructor(private loadingCtrl: LoadingController) {}
-
-  // create loading object
-  initialize() {
-    if (!this.loading) {
-      this.loading = this.loadingCtrl.create({
-        spinner: "crescent",
-        cssClass: "custom-loading"
-      });
-    }
-  }
 
   // hide loading object and create to show again in view
   hide() {
@@ -31,14 +22,22 @@ export class LoadingService {
 
   // dismiss loading object completely from view
   dismiss() {
-    if (this.loading) {
+    if (this.isLoading) {
       this.loading.dismiss().catch(() => {});
+      this.isLoading = false;
     }
   }
 
   // show loading object in view
   present() {
-    if (this.loading) {
+    this.isLoading = true;
+
+    this.loading = this.loadingCtrl.create({
+      spinner: "crescent",
+      cssClass: "custom-loading"
+    });
+
+    if (!this.isLoading) {
       this.loading.present();
     }
   }

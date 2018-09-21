@@ -10,7 +10,6 @@ import { PopupService } from "../../../../shared/popup.service";
 import { ConnectionFacade } from "../../store/connection.facade";
 import { LoadingService } from "../../../../shared/loading.service";
 
-
 @IonicPage({
   segment: "AddConnectionPage",
   priority: "high"
@@ -53,7 +52,6 @@ export class AddConnectionPage implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.loadingSvc.initialize();
   }
 
   ngOnDestroy() {
