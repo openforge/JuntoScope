@@ -47,7 +47,6 @@ export class SelectTaskListPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadingSrv.initialize();
     this.connectionId = this.navParams.get("connectionId");
     this.projectId = this.navParams.get("projectId");
     this.projectName = this.navParams.get("projectName");
