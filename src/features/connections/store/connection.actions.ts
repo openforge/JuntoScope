@@ -21,7 +21,8 @@ export enum ConnectionActionTypes {
   SELECTED_PROJECT = "[Connection] Selected Project",
   CREATE_SESSION = "[Connection] Create Session",
 
-  CLEAR_ERROR = "[Connection] Clear Error"
+  CLEAR_ERROR = "[Connection] Clear Error",
+  CLEAR_CONNECTIONS = "[Connection] Clear Connections"
 }
 
 export class QueryConnectionsAction implements Action {
@@ -96,6 +97,11 @@ export class ClearErrorAction implements Action {
   constructor(public payload?: any) {}
 }
 
+export class ClearConnectionsAction implements Action {
+  readonly type = ConnectionActionTypes.CLEAR_CONNECTIONS;
+  constructor(public payload?: any) {}
+}
+
 export type ConnectionActions =
   | QueryConnectionsAction
   | NoConnectionsAction
@@ -109,4 +115,5 @@ export type ConnectionActions =
   | SelectedProjectAction
   | RemoveConnectionAction
   | CreateSessionAction
-  | ClearErrorAction;
+  | ClearErrorAction
+  | ClearConnectionsAction;

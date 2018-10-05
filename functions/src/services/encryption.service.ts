@@ -5,7 +5,7 @@ export class EncryptionService {
   private algorithm = "aes-256-cbc";
   // Must be 32 characters long
 
-  private SECRET_KEY = functions.config().encryption.secret;
+  private SECRET_KEY = "12345678901234567890123456789000";
 
   encrypt(text: string) {
     const iv = crypto.randomBytes(16); // Must be 16 bytes long for AES encryption
