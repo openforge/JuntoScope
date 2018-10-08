@@ -100,9 +100,10 @@ export class ConnectionFacade {
           })
         ),
         map(() => new AddConnectionSuccessAction()),
-        catchError(error =>
-          of(new AddConnectionErrorAction({ message: error.message }))
-        )
+        catchError(error => {
+          this.popupSvc.simpleAlert("Uh Oh!", error.message, "OK");
+          return of(new AddConnectionErrorAction({ message: error.message }));
+        })
       )
     )
   );
