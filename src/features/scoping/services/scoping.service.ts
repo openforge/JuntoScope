@@ -8,6 +8,7 @@ import {
 } from "../../../models/scoping-session";
 import { AngularFirestore } from "angularfire2/firestore";
 import { HistoryService } from "../../dashboard/services/history.service";
+import { of } from "rxjs";
 
 @Injectable()
 export class ScopingService {
@@ -97,6 +98,9 @@ export class ScopingService {
   }
 
   checkParticipant(uid: string, sessionLink: string) {
+    if (sessionLink.includes("/")) {
+      return of(new Error("Invalid session code"));
+    }
     return this.afs
       .collection("public/data/sessions")
       .doc<ScopingSession>(sessionLink)
