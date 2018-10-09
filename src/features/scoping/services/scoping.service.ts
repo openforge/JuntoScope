@@ -8,7 +8,7 @@ import {
 } from "../../../models/scoping-session";
 import { AngularFirestore } from "angularfire2/firestore";
 import { HistoryService } from "../../dashboard/services/history.service";
-import { of } from "rxjs";
+import { of, from } from "rxjs";
 
 @Injectable()
 export class ScopingService {
