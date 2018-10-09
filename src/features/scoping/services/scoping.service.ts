@@ -98,9 +98,6 @@ export class ScopingService {
   }
 
   checkParticipant(uid: string, sessionLink: string) {
-    if (sessionLink.includes("/")) {
-      return of(new Error("Invalid session code"));
-    }
     return this.afs
       .collection("public/data/sessions")
       .doc<ScopingSession>(sessionLink)
