@@ -70,7 +70,7 @@ export class ConnectionService {
         }/connections/${connectionId}/projects/${projectId}/taskLists`
       )
       .pipe(
-        map(async response => {
+        map(response => {
           return _.keyBy(response.taskLists, "id");
         })
       );
