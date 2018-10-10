@@ -18,9 +18,6 @@ import { PopupService } from "../../../../shared/popup.service";
 import { SessionDetailModalComponent } from "../../components/session-detail-modal/session-detail-modal.component";
 import { DashboardUiState } from "../../store/dashboard.reducer";
 import { ScopingFacade } from "../../../scoping/store/scoping.facade";
-import { SafariViewController } from "@ionic-native/safari-view-controller";
-// import { InAppBrowser } from "@ionic-native/in-app-browser";
-// import { IAB_OPTIONS } from "../../../../app/app.constants";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -52,8 +49,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     private connectionFacade: ConnectionFacade,
     private navCtrl: NavController,
     private scopingFacade: ScopingFacade,
-    private viewCtrl: ViewController,
-    private svc: SafariViewController
+    private viewCtrl: ViewController
   ) {}
 
   ngOnInit() {
@@ -110,33 +106,6 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   addConnection() {
-    // this.navCtrl.push("AddConnectionPage");
-    console.log("adding connection");
-    const redirect_uri = "https://juntoscope.io";
-    const teamworkUrl = `https://www.teamwork.com/launchpad/login?redirect_uri=${redirect_uri}`;
-
-    this.svc.isAvailable().then((available: boolean) => {
-      if (available) {
-        this.svc
-          .show({
-            url: teamworkUrl,
-            hidden: false,
-            animated: false,
-            transition: "curl",
-            enterReaderModeIfAvailable: true,
-            tintColor: "#ff0000"
-          })
-          .subscribe(
-            (result: any) => {
-              if (result.event === "opened") console.log("Opened");
-              else if (result.event === "loaded") console.log("Loaded");
-              else if (result.event === "closed") console.log("Closed");
-            },
-            (error: any) => console.error(error)
-          );
-      } else {
-        // use fallback browser, example InAppBrowser
-      }
-    });
+    this.navCtrl.push("AddConnectionPage");
   }
 }
