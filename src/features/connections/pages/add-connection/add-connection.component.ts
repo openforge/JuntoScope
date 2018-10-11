@@ -59,7 +59,7 @@ export class AddConnectionPage implements OnInit {
 
   connectTeamwork() {
     console.log("adding connection");
-    const redirect_uri = "https://juntoscope.io";
+    const redirect_uri = "juntoscope://";
     const teamworkUrl = `https://www.teamwork.com/launchpad/login?redirect_uri=${redirect_uri}`;
 
     this.svc.isAvailable().then((available: boolean) => {
