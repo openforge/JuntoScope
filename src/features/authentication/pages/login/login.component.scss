@@ -1,5 +1,5 @@
 app-login {
-  .content {
+  .container {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -12,19 +12,15 @@ app-login {
       font-weight: 600;
     }
 
-    ion-list.list {
-      margin-top: 2rem;
+    button.button {
+      font-weight: 600;
+      margin: 0.75rem;
+      width: 60%;
 
-      button {
-        font-weight: 600;
-        margin: 0.75rem;
-        width: 60%;
-
-        &:disabled {
-          background-color: white;
-          border: 2px solid $primary-orange;
-          color: $primary-orange;
-        }
+      &:disabled {
+        background-color: white;
+        border: 2px solid $primary-orange;
+        color: $primary-orange;
       }
     }
 
@@ -32,11 +28,17 @@ app-login {
       border: none;
     }
 
-    .terms {
-      flex-direction: row;
-      a {
-        font-weight: 600;
-      }
+    .item.item-md .checkbox-md {
+      margin: 0px 10px 0px 0px;
+    }
+
+  }
+
+  .terms {
+    flex-direction: row;
+
+    a {
+      font-weight: 600;
     }
   }
 }
