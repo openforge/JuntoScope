@@ -38,6 +38,7 @@ import { PopupService } from "../../../shared/popup.service";
 import { VerifyModalComponent } from "../components/verify-modal/verify-modal.component";
 import { ShareScopeLinkModalComponent } from "../components/share-scope-link-modal/share-scope-link-modal.component";
 import { LoadingService } from "../../../shared/loading.service";
+import * as _ from "lodash";
 
 @Injectable()
 export class ConnectionFacade {
@@ -150,7 +151,13 @@ export class ConnectionFacade {
       this.connectionSvc
         .getTaskLists(action.payload.connection.id, action.payload.project.id)
         .pipe(
-          map(taskLists => {
+          map(response => {
+            const taskLists = _.keyBy(
+              response.filter(function(el) {
+                return el != null;
+              }),
+              "id"
+            );
             const updatedProject = { ...action.payload.project, taskLists };
             const projectsChanges = {
               ...action.payload.connection.projects,

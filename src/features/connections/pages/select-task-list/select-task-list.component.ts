@@ -22,9 +22,9 @@ export class SelectTaskListPage implements OnInit {
   loaded: boolean = false;
 
   taskLists$ = this.connectionFacade.selectedConnection$.pipe(
-    filter(connection =>
-      _.has(connection, `projects.${this.projectId}.taskLists`)
-    ),
+    filter(connection => {
+      return _.has(connection, `projects.${this.projectId}.taskLists`);
+    }),
     map((connection: Connection) => {
       this.loaded = true;
 
