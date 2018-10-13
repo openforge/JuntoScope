@@ -4,22 +4,19 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding text-center>
+  <div class="container">
+    <h2 text-center>Connect to Teamwork</h2>
 
-  <ng-container>
-    <div padding text-center>
-      <h2 text-center>Connect to Teamwork</h2>
+    <p text-center>
+      JuntoScope connects directly with your Teamwork account to import your task list(s) that you and your team can scope together
+      in a scoping session.
+      <br>
+      <br>
+      <br> Connections should only be made by Teamwork users with Administrator privileges in order to successfully deploy
+      scoping sessions and assign scoped times to tasks.
+    </p>
 
-      <p text-center>
-        JuntoScope connects directly with your Teamwork account to import your task list(s) that you and your team can scope together
-        in a scoping session.
-        <br>
-        <br>
-        <br> Connections should only be made by Teamwork users with Administrator privileges in order to successfully deploy
-        scoping sessions and assign scoped times to tasks.
-      </p>
-
-      <button ion-button (click)="connectTeamwork()">ACCEPT</button>
-    </div>
-  </ng-container>
+    <button ion-button (click)="connectTeamwork()">ACCEPT</button>
+  </div>
 </ion-content>

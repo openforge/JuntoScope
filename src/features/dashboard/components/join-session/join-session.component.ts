@@ -11,6 +11,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JoinSessionComponent {
+
   @Output() join = new EventEmitter<string>();
 
   onJoin(sessionCode: string) {
