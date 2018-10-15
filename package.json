@@ -6,6 +6,7 @@
   "homepage": "http://openforge.io/",
   "private": true,
   "scripts": {
+    "build": "ionic-app-scripts build",
     "ionic:clean": "ionic-app-scripts clean",
     "ionic:lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
