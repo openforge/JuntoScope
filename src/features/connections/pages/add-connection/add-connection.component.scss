@@ -1,5 +1,6 @@
 app-add-connection {
-  form {
+
+  .container {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -22,10 +23,6 @@ app-add-connection {
 
     a {
       margin-bottom: 2rem;
-    }
-
-    p {
-      font-style: italic;
     }
   }
 
