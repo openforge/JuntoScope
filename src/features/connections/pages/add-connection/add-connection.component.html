@@ -5,18 +5,38 @@
 </ion-header>
 
 <ion-content padding text-center>
-  <div class="container">
-    <h2 text-center>Connect to Teamwork</h2>
 
+    <ion-list no-lines>
+      <ion-item (click)="connectTeamwork()">
+        <ion-label>
+          Teamwork
+        </ion-label>
+        <button ion-button outline item-end icon-only>
+          <ion-icon name="add" ios="ios-add-circle-outline"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+
+  <div class="container">
+    
     <p text-center>
-      JuntoScope connects directly with your Teamwork account to import your task list(s) that you and your team can scope together
-      in a scoping session.
+      NOTICE
+      <br>
+      <u>This is made specifically for Teamwork.</u>
+      <br>
+      If you are not using Teamwork, we recommend trying it!
       <br>
       <br>
-      <br> Connections should only be made by Teamwork users with Administrator privileges in order to successfully deploy
+      Connections should <u>only</u> be made by <b>Teamwork users with Administrator privileges</b> in order to successfully deploy
       scoping sessions and assign scoped times to tasks.
+      <br>
+      <br>
+      <button class="link" (click)="register()"><u>Register here</u></button>and use the code
+      <br>
+      <b>"juntoscope"</b>
+      <br>
+      for a 10% discount
     </p>
 
-    <button ion-button (click)="connectTeamwork()">ACCEPT</button>
   </div>
 </ion-content>
