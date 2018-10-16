@@ -106,7 +106,7 @@
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <plugin name="ionic-plugin-deeplinks" spec="^1.0.17">
         <variable name="URL_SCHEME" value="juntoscope" />
-        <variable name="DEEPLINK_HOST" value="juntoscope.io" />
+        <variable name="DEEPLINK_HOST" value="juntoscope.com" />
     </plugin>
     <plugin name="twitter-connect-plugin" spec="git+https://github.com/chroa/twitter-connect-plugin.git">
         <variable name="FABRIC_KEY" value="1ba0dc025725ca34727a6f26e9be759d120e4bad" />
