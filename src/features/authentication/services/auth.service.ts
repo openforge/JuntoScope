@@ -83,42 +83,62 @@ export class AuthService {
   }
 
   async nativeGoogleLogin(): Promise<void> {
-    return await this.gplus.login({
-      webClientId: environment.webClientId,
-      offline: true,
-      scopes: "profile email"
-    }).then((response) => {
-      return this.afAuth.auth.signInWithCredential(
-        firebase.auth.GoogleAuthProvider.credential(response.idToken)
-      )
-    })
-    .catch(() => { throw new Error("An error occured. Please try again.") });
+    return await this.gplus
+      .login({
+        webClientId: environment.webClientId,
+        offline: true,
+        scopes: "profile email"
+      })
+      .then(response => {
+        return this.afAuth.auth.signInWithCredential(
+          firebase.auth.GoogleAuthProvider.credential(response.idToken)
+        );
+      })
+      .catch(error => {
+        if (error.code === "auth/account-exists-with-different-credential") {
+          throw new Error(error.message);
+        } else {
+          throw new Error("An error occured. Please try again.");
+        }
+      });
   }
 
   async nativeTwitterLogin(): Promise<void> {
-    return await this.twitter.login()
-    .then((response) => {
-      return this.afAuth.auth.signInWithCredential(
-        firebase.auth.TwitterAuthProvider.credential(
-          response.token,
-          response.secret
-        )
-      )
-    })
-    .catch(() => { throw new Error("An error occurred. Please try again.") });
+    return await this.twitter
+      .login()
+      .then(response => {
+        return this.afAuth.auth.signInWithCredential(
+          firebase.auth.TwitterAuthProvider.credential(
+            response.token,
+            response.secret
+          )
+        );
+      })
+      .catch(error => {
+        if (error.code === "auth/account-exists-with-different-credential") {
+          throw new Error(error.message);
+        } else {
+          throw new Error("An error occured. Please try again.");
+        }
+      });
   }
 
   async nativeFacebookLogin(): Promise<void> {
-   return await this.facebook.login([
-      "email",
-      "public_profile"
-    ])
-    .then((response) => {
-      return this.afAuth.auth.signInWithCredential(
-        firebase.auth.FacebookAuthProvider.credential(
-          response.authResponse.accessToken
-        )
-      )
-    }).catch(() => { throw new Error("An error occurred. Please try again.") })
+    return await this.facebook
+      .login(["email", "public_profile"])
+      .then(response => {
+        return this.afAuth.auth.signInWithCredential(
+          firebase.auth.FacebookAuthProvider.credential(
+            response.authResponse.accessToken
+          )
+        );
+      })
+      .catch(error => {
+        if (error.code === "auth/account-exists-with-different-credential") {
+          throw new Error(error.message);
+        } else {
+          throw new Error("An error occured. Please try again.");
+        }
+      });
   }
 }
