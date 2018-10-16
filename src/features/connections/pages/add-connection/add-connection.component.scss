@@ -33,14 +33,12 @@ app-add-connection {
   }
 
   ion-list.list {
-    background-color: $primary-orange;
     border-bottom: 1px solid white !important;
     margin: 0;
     width: 100%;
 
     // header
     ion-list-header.list-header {
-      background-color: $primary-orange;
       padding: 1rem 1rem 0rem 1rem;
       .icon,
       h2 {
@@ -59,14 +57,11 @@ app-add-connection {
 
     // existing projects
     ion-item.item-block {
-      background-color: $primary-orange;
-      border-bottom: px solid $primary-orange;
       color: white;
 
       // new connection
       &:last-child {
         background-color: white;
-        border: 2px solid $primary-orange;
         color: $primary-orange;
       }
     }
@@ -74,10 +69,6 @@ app-add-connection {
 
   .list-headers {
     margin: 2rem 1rem;
-
-    ion-list-header.list-header {
-      border-bottom: 2px solid $primary-orange;
-    }
   }
 
   // custom buttons for android and windows
