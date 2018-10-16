@@ -1,10 +1,9 @@
 app-add-connection {
-
   .container {
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 80%;
     justify-content: center;
     width: 100%;
 
@@ -26,8 +25,68 @@ app-add-connection {
     }
   }
 
-  button.button {
-    align-items: center;
-    width: 60%;
+  .link {
+    color: #c94313;
+    font-weight: 500;
+    font-size: 1.4rem;
+    background: none;
+  }
+
+  ion-list.list {
+    border-bottom: 1px solid white !important;
+    margin: 0;
+    width: 100%;
+
+    // header
+    ion-list-header.list-header {
+      padding: 1rem 1rem 0rem 1rem;
+      .icon,
+      h2 {
+        color: white;
+        display: inline-block;
+        text-transform: none;
+        vertical-align: middle;
+      }
+
+      ion-label.label {
+        border-bottom: 1px solid white;
+        padding: 2rem;
+        margin: 1rem;
+      }
+    }
+
+    // existing projects
+    ion-item.item-block {
+      color: white;
+
+      // new connection
+      &:last-child {
+        background-color: white;
+        color: $primary-orange;
+      }
+    }
+  }
+
+  .list-headers {
+    margin: 2rem 1rem;
+  }
+
+  // custom buttons for android and windows
+  .button-md,
+  .button-wp {
+    border-radius: 11px;
+    &.existing-button span {
+      padding-left: 8px;
+      padding-right: 6px;
+    }
+    span {
+      padding-left: 3px;
+      padding-right: 2px;
+    }
+  }
+
+  // custom buttons for ios
+  .button-ios {
+    border: none;
   }
 }

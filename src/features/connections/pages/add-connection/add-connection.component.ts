@@ -57,6 +57,33 @@ export class AddConnectionPage implements OnInit {
     this.errorSubscription.unsubscribe();
   }
 
+  register() {
+    console.log("register");
+    this.svc.isAvailable().then((available: boolean) => {
+      if (available) {
+        this.svc
+          .show({
+            url: "https://www.teamwork.com/?partner=gqfq4mb55o",
+            hidden: false,
+            animated: false,
+            transition: "curl",
+            enterReaderModeIfAvailable: true,
+            tintColor: "#ff0000"
+          })
+          .subscribe(
+            (result: any) => {
+              if (result.event === "opened") console.log("Opened");
+              else if (result.event === "loaded") console.log("Loaded");
+              else if (result.event === "closed") console.log("Closed");
+            },
+            (error: any) => console.error(error)
+          );
+      } else {
+        // use fallback browser, example InAppBrowser
+      }
+    });
+  }
+
   connectTeamwork() {
     console.log("adding connection");
     const redirect_uri = "juntoscope://";
