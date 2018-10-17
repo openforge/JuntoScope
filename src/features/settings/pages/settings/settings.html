@@ -47,9 +47,9 @@
       <h2>FAQ</h2>
     </ion-list-header>
   </div>
-  <!-- Design : what should each item do? Go to a separate page? Ecordian with information? -->
+
   <ion-list class="faq">
-    <ion-item *ngFor="let faq of faqs" no-lines>
+    <ion-item *ngFor="let faq of faqs" no-lines text-center text-wrap>
       <h2> {{ faq.question}} </h2>
       <p> {{ faq.answer}} </p>
     </ion-item>

@@ -266,13 +266,29 @@ export class ScopingFacade {
   }
 
   validateSession(sessionValidation: SessionValidation) {
-    this.store.dispatch(new ValidateSessionAction({ sessionValidation }));
+    if (sessionValidation.sessionLink.includes("/")) {
+      this.store.dispatch(
+        new SessionJoinErrorAction({
+          message: "Invalid Session Code"
+        })
+      );
+    } else {
+      this.store.dispatch(new ValidateSessionAction({ sessionValidation }));
+    }
   }
 
   validateParticipant(uid: string, sessionLink: string) {
-    this.store.dispatch(
-      new ValidateParticipantAction({ uid: uid, sessionLink: sessionLink })
-    );
+    if (sessionLink.includes("/")) {
+      this.store.dispatch(
+        new ValidateParticipantErrorAction({
+          message: "Invalid Session Code"
+        })
+      );
+    } else {
+      this.store.dispatch(
+        new ValidateParticipantAction({ uid: uid, sessionLink: sessionLink })
+      );
+    }
   }
 
   clearError() {

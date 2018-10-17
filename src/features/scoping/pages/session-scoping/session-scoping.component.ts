@@ -111,12 +111,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
     }
   }
 
-  ionViewWillEnter() {
-    if (!this.session) {
-      this.loadSession();
-    }
-  }
-
   loadSession() {
     console.log("loading session");
     this.lastTaskId = null;
@@ -184,7 +178,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
           console.log("setting timer!");
           this.timerOn = true;
           setTimeout(() => {
-            this.putEstimateOnConnection();
             this.nextTask();
           }, TIMER_FOR_NEXT_TASK);
         }
@@ -254,6 +247,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
         this.taskId,
         this.finalEstimate
       );
+      this.putEstimateOnConnection();
     }
   }
 

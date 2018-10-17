@@ -27,7 +27,8 @@ import {
   DeleteSessionErrorAction,
   RefreshAccessCodeAction,
   RefreshAccessCodeErrorAction,
-  ClearErrorAction
+  ClearErrorAction,
+  TeamworkLoginAction
 } from "./dashboard.actions";
 import { HistoryService } from "../services/history.service";
 import { HistoryItem } from "../../../models/history-item";
@@ -35,6 +36,7 @@ import { DashboardQuery } from "./dashboard.reducer";
 import { NoopAction } from "../../../store/app.actions";
 import { DocumentChangeAction } from "angularfire2/firestore";
 import { ScopingSession } from "../../../models/scoping-session";
+import { ConnectionService } from "../../connections/services/connection.service";
 
 @Injectable()
 export class DashboardFacade {
@@ -134,10 +136,21 @@ export class DashboardFacade {
     )
   );
 
+  @Effect()
+  teamworkLogin$ = this.actions$.pipe(
+    ofType<TeamworkLoginAction>(DashboardActionTypes.TEAMWORK_LOGIN),
+    switchMap(action => {
+      return this.connectionSvc
+        .teamworkAuth(action.payload.code)
+        .pipe(map(() => new NoopAction()), catchError(error => of(error)));
+    })
+  );
+
   constructor(
     private store: Store<AppState>,
     private actions$: Actions,
-    private historySvc: HistoryService
+    private historySvc: HistoryService,
+    private connectionSvc: ConnectionService
   ) {}
 
   getHistory() {
@@ -147,11 +160,14 @@ export class DashboardFacade {
   getMoreHistory() {
     this.store.dispatch(new LoadMoreHistoryItemsAction());
   }
-  
+
   clearError() {
     this.store.dispatch(new ClearErrorAction());
   }
 
+  teamworkLogin(code) {
+    this.store.dispatch(new TeamworkLoginAction({ code: code }));
+  }
 }
 
 const itemFromChangeAction = (

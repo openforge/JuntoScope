@@ -37,9 +37,11 @@
     "@angular/platform-browser-dynamic": "5.2.11",
     "@angular/router": "6.0.7",
     "@ionic-native/core": "4.8.0",
+    "@ionic-native/deeplinks": "^4.12.2",
     "@ionic-native/facebook": "^4.11.0",
     "@ionic-native/google-plus": "^4.11.0",
     "@ionic-native/in-app-browser": "^4.11.0",
+    "@ionic-native/safari-view-controller": "^4.12.2",
     "@ionic-native/screen-orientation": "^4.11.0",
     "@ionic-native/splash-screen": "4.8.0",
     "@ionic-native/status-bar": "4.8.0",
@@ -105,57 +107,62 @@
     "tslint-config-prettier": "1.10.0",
     "typescript": "~2.7.2"
   },
-  "description": "An Ionic project",
+  "description": "An application built with love and Ionic to make scoping easier.",
   "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "commit-msg": "commitlint -e $GIT_PARAMS"
+        }
+    },
+    "lint-staged": {
+        "{src,e2e,functions/src}/**/*.{js,ts}": [
+            "npx tslint",
+            "git add"
+        ],
+        "{src,e2e,functions/src}/**/*.{js,ts,css,scss,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "cordova": {
+        "platforms": [
+            "android",
+            "ios"
+        ],
+        "plugins": {
+            "cordova-plugin-googleplus": {
+                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.10246365693-nmqslkj1herjr37pji9dondov6d3mqg2"
+            },
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-device": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-ionic-webview": {},
+            "cordova-plugin-ionic-keyboard": {},
+            "cordova-android-support-gradle-release": {
+                "ANDROID_SUPPORT_VERSION": "27.+"
+            },
+            "cordova-plugin-facebook4": {
+                "APP_ID": "1427549454016328",
+                "APP_NAME": "JuntoScope",
+                "ANDROID_SDK_VERSION": "4.+"
+            },
+            "twitter-connect-plugin": {
+                "FABRIC_KEY": "1ba0dc025725ca34727a6f26e9be759d120e4bad",
+                "TWITTER_KEY": "RpWT5YZYdFYjPSzI8wB5O4kwP",
+                "TWITTER_SECRET": "yILFMxwPl7zK4qKuQMqqmAZ9bQbJGKbOt8gygvOPweYRamoSoq"
+            },
+            "cordova-plugin-screen-orientation": {},
+            "cordova-plugin-inappbrowser": {},
+            "cordova-plugin-safariviewcontroller": {},
+            "ionic-plugin-deeplinks": {
+                "URL_SCHEME": "juntoscope",
+                "DEEPLINK_HOST": "juntoscope.com"
+            }
+        }
     }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -e $GIT_PARAMS"
-    }
-  },
-  "lint-staged": {
-    "{src,e2e,functions/src}/**/*.{js,ts}": [
-      "npx tslint",
-      "git add"
-    ],
-    "{src,e2e,functions/src}/**/*.{js,ts,css,scss,md}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "cordova": {
-    "platforms": [
-      "android",
-      "ios"
-    ],
-    "plugins": {
-      "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.10246365693-nmqslkj1herjr37pji9dondov6d3mqg2"
-      },
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-device": {},
-      "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {},
-      "cordova-android-support-gradle-release": {
-        "ANDROID_SUPPORT_VERSION": "27.+"
-      },
-      "cordova-plugin-facebook4": {
-        "APP_ID": "1427549454016328",
-        "APP_NAME": "JuntoScope",
-        "ANDROID_SDK_VERSION": "4.+"
-      },
-      "twitter-connect-plugin": {
-        "FABRIC_KEY": "1ba0dc025725ca34727a6f26e9be759d120e4bad",
-        "TWITTER_KEY": "RpWT5YZYdFYjPSzI8wB5O4kwP",
-        "TWITTER_SECRET": "yILFMxwPl7zK4qKuQMqqmAZ9bQbJGKbOt8gygvOPweYRamoSoq"
-      },
-      "cordova-plugin-screen-orientation": {},
-      "cordova-plugin-inappbrowser": {}
-    }
-  }
 }

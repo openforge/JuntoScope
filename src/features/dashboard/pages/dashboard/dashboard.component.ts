@@ -85,11 +85,6 @@ export class DashboardPage implements OnInit, OnDestroy {
     }
   }
 
-  // Unused
-  refresh() {
-    this.dashboardFacade.getHistory();
-  }
-
   loadMore(infiniteScroll) {
     this.infiniteScroll = infiniteScroll;
     setTimeout(() => {

@@ -61,20 +61,27 @@ export class SessionService {
           return parentIds.indexOf(v) === i;
         });
 
-        console.log("parents: ", parentIds);
-
         let taskIds = Object.keys(sessionTasks);
-        taskIds = taskIds.filter(id => {
-          let isIn;
-          parentIds.forEach(pId => {
-            if (pId === id) {
-              isIn = true;
+        if (parentIds.length) {
+          taskIds = taskIds.filter(id => {
+            let isIn = false;
+            parentIds.forEach(pId => {
+              if (pId === id) {
+                isIn = true;
+              }
+            });
+            if (!isIn && !sessionTasks[id].estimate) {
+              return id;
             }
           });
-          if (!isIn && !sessionTasks[id].estimate) {
-            return id;
-          }
-        });
+        }
+
+        if (!taskIds.length) {
+          console.log("throwing...");
+          throw new Error(
+            "Cannot create session, all tasks have been estimated."
+          );
+        }
 
         taskIds.forEach(taskId => {
           transaction = transaction.set(

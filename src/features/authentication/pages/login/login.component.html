@@ -1,29 +1,21 @@
-<ion-header>
-  <!-- <ion-navbar hideBackButton="true">
-    <ion-title text-center>JuntoScope</ion-title>
-  </ion-navbar> -->
-</ion-header>
-
 <ion-content padding text-center>
-  <div class="content">
+  <div class="container">
     <p>
       First, we need a way of identifying your participation. 
       Please sign in with:
     </p>
 
-    <ion-list>
-      <button ion-button (click)="facebookLogin()" [disabled]="!hasAgreed">
-        Facebook
-      </button>
-    
-      <button ion-button (click)="googleLogin()" [disabled]="!hasAgreed">
-        Google
-      </button>
-    
-      <button ion-button (click)="twitterLogin()" [disabled]="!hasAgreed">
-        Twitter
-      </button>
-    </ion-list>  
+    <button ion-button (click)="facebookLogin()" [disabled]="!hasAgreed">
+      Facebook
+    </button>
+  
+    <button ion-button (click)="googleLogin()" [disabled]="!hasAgreed">
+      Google
+    </button>
+  
+    <button ion-button (click)="twitterLogin()" [disabled]="!hasAgreed">
+      Twitter
+    </button>
     
     <form [formGroup]="agreeForm">
       <ion-item>

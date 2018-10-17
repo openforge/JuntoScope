@@ -3,7 +3,14 @@ import { HttpClient } from "@angular/common/http";
 
 import { AngularFirestore } from "angularfire2/firestore";
 
-import { switchMap, map, takeUntil, filter } from "rxjs/operators";
+import {
+  switchMap,
+  map,
+  takeUntil,
+  filter,
+  mergeMap,
+  concatMap
+} from "rxjs/operators";
 
 import * as _ from "lodash";
 
@@ -14,6 +21,8 @@ import { Connection } from "../../../models/connection";
 import { AppFacade } from "../../../store/app.facade";
 import { AuthFacade } from "../../authentication/store/auth.facade";
 import { AuthUiState } from "../../authentication/store/auth.reducer";
+import { Task } from "../../../models/task";
+import { forkJoin } from "rxjs";
 
 @Injectable()
 export class ConnectionService {
@@ -28,6 +37,14 @@ export class ConnectionService {
 
   addConnection(connection: Connection) {
     return this.http.post(`${environment.apiBaseUrl}/connections`, connection);
+  }
+
+  teamworkAuth(code: string) {
+    // This can change depending on the api route
+    return this.http.post(`${environment.apiBaseUrl}/connections/`, {
+      token: code,
+      type: "teamwork"
+    });
   }
 
   deleteConnection(connectionId: string) {
@@ -52,7 +69,41 @@ export class ConnectionService {
           environment.apiBaseUrl
         }/connections/${connectionId}/projects/${projectId}/taskLists`
       )
-      .pipe(map(response => _.keyBy(response.taskLists, "id")));
+      .pipe(
+        switchMap(response => {
+          return forkJoin(
+            response.taskLists.map(taskList => {
+              return this.getTasks(connectionId, projectId, taskList.id).pipe(
+                map(taskArray => {
+                  const filteredArray = taskArray.filter(
+                    task => !task.estimate
+                  );
+                  if (filteredArray.length > 0) {
+                    return taskList;
+                  }
+                })
+              );
+            })
+          );
+        })
+      );
+  }
+
+  getTasks(connectionId: string, projectId: string, taskListId: string) {
+    console.log("getting the tasks");
+    return this.http
+      .get<{ tasks: Task[] }>(
+        `${
+          environment.apiBaseUrl
+        }/connections/${connectionId}/projects/${projectId}/taskLists/${taskListId}`
+      )
+      .pipe(
+        map(response => {
+          return Object.keys(response.tasks).map(function(key) {
+            return response.tasks[key];
+          });
+        })
+      );
   }
 
   getConnections() {
