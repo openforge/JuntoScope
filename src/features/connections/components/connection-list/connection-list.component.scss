@@ -17,9 +17,17 @@ app-connection-list {
         vertical-align: middle;
       }
 
+      h2 {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .icon {
+        font-size: 36px;
+      }
+
       ion-label.label {
-        border-bottom: 1px solid white;
-        padding: 2rem;
+        padding: 1rem;
         margin: 1rem;
       }
     }
@@ -29,13 +37,6 @@ app-connection-list {
       background-color: $primary-orange;
       border-bottom: 1px solid $primary-orange;
       color: white;
-
-      // new connection
-      &:last-child {
-        background-color: white;
-        border: 2px solid $primary-orange;
-        color: $primary-orange;
-      }
     }
   }
 
@@ -44,6 +45,35 @@ app-connection-list {
 
     ion-list-header.list-header {
       border-bottom: 2px solid $primary-orange;
+    }
+  }
+
+  ion-item.item.item-block.new-connection {
+    margin-top: 20px;
+    border: 2px solid #c94313;
+  }
+
+  .connections-header {
+    display: grid;
+    color: white;
+    grid-template-columns: 0.75fr 1fr;
+    margin: 10px;
+    background: #f1652d;
+    border-radius: 5px;
+
+    ion-label.label {
+      margin: 0;
+      padding: 4px;
+    }
+  }
+
+  .connection-item {
+    display: grid;
+    color: white;
+    grid-template-columns: 0.75fr 0.75fr;
+
+    ion-label.label {
+      margin: 0;
     }
   }
 
