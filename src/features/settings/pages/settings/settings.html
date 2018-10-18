@@ -6,54 +6,57 @@
 
 <ion-content>
 
-  <div class="list-headers">
-    <ion-list-header no-lines>
-      <h2>Connections</h2>
-    </ion-list-header>
-  </div>
-
   <div class="connections" padding>
     <ion-list no-lines>
-
       <ion-list-header text-center>
         <ion-label>
           <ion-icon name="contacts"></ion-icon>
-          <h2>Connections</h2>
+          <h2>My Connections</h2>
         </ion-label>
       </ion-list-header>
-
-      <ion-item *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
+  
+      <div class="connections-header">
+        <ion-label>Team</ion-label>
+        <ion-label>Connection</ion-label>
+      </div>
+  
+      <!-- existing connection(s)-->
+      <ion-item button *ngFor="let connection of connections$ | async" (click)="viewConnectionDetails(connection.id)">
         <ion-label>
-          {{ connection.externalData.company }} {{ connection.type | titlecase }}
+          <div class="connection-item">
+            <ion-label> {{ connection.externalData.company }}</ion-label>
+            <ion-label>{{ connection.type | titlecase }}</ion-label>
+          </div>
         </ion-label>
         <button color="white" class="existing-button" ion-button outline item-end icon-only>
           <ion-icon name="arrow-dropright"></ion-icon>
         </button>
       </ion-item>
-
-      <ion-item (click)="addConnection()">
-        <ion-label>
-          New Connection
-        </ion-label>
-        <button ion-button outline item-end icon-only>
-          <ion-icon name="add" ios="ios-add-circle-outline"></ion-icon>
-        </button>
-      </ion-item>
     </ion-list>
+
+    <!-- new connection-->
+    <ion-item class="new-connection" (click)="addConnection()">
+      <ion-label>
+        Add New Connection
+      </ion-label>
+      <button ion-button outline item-end icon-only>
+        <ion-icon name="add" ios="ios-add-circle-outline"></ion-icon>
+      </button>
+    </ion-item>
   </div>
     
-  <div class="list-headers">
+  <div class="faq">
     <ion-list-header no-lines>
       <h2>FAQ</h2>
     </ion-list-header>
-  </div>
 
-  <ion-list class="faq">
-    <ion-item *ngFor="let faq of faqs" no-lines text-center text-wrap>
-      <h2> {{ faq.question}} </h2>
-      <p> {{ faq.answer}} </p>
-    </ion-item>
-  </ion-list>
+    <ion-list>
+      <ion-item *ngFor="let faq of faqs" no-lines text-center text-wrap>
+        <h2> {{ faq.question}} </h2>
+        <p> {{ faq.answer}} </p>
+      </ion-item>
+    </ion-list>
+  </div>
 
   <div class="logout" text-center>
     <button ion-button (click)="logout()">LOG OUT</button>

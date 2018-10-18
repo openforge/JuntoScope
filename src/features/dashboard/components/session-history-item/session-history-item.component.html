@@ -13,15 +13,15 @@
   </ion-card-header>
 
   <ion-card-content>
-    <p>{{ item.tasks && item.tasks[item.currentTaskId].name }}</p>
+    <p>- {{ item.tasks && item.tasks[item.currentTaskId].name }}</p>
   </ion-card-content>
 
   <ion-item>
     <div item-start>
       <p>{{ time | date: 'MM/dd/yyyy' }}</p>
     </div>
-    <div item-end style="text-decoration: underline" (click)="handleDetailClick()">
-      <p>{{ ctaText }}</p>
+    <div item-end (click)="handleDetailClick()">
+      <p class="cta-text">{{ ctaText }}</p>
     </div>
   </ion-item>
 </ion-card>
