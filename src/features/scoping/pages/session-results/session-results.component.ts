@@ -40,4 +40,12 @@ export class SessionResultsPage {
   goSettings() {
     this.navCtrl.push("SettingsPage");
   }
+
+  getTotalEstimate(tasks) {
+    let totalEstimate = 0;
+    Object.keys(tasks).map(function(key, index) {
+      totalEstimate += tasks[key].estimate;
+    });
+    return totalEstimate;
+  }
 }

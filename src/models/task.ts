@@ -3,6 +3,7 @@ export interface Task {
   description: string;
   votes?: Votes;
   estimate?: number;
+  id?: number;
 }
 
 export interface Votes {

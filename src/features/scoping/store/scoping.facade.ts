@@ -86,7 +86,7 @@ export class ScopingFacade {
             "Added Vote",
             "Your vote has successfully been submitted! You will be navigated to the next screen once everyone has voted. Please wait.",
             "Ok"
-          )
+          );
           console.log("Vote saved successfully");
           return new VoteSuccessAction(action.payload);
         })

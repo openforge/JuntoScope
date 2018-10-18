@@ -9,7 +9,8 @@ app-connection-list {
       background-color: $primary-orange;
       padding: 1rem 1rem 0rem 1rem;
 
-      .icon, h2 {
+      .icon,
+      h2 {
         color: white;
         display: inline-block;
         font-size: 24px;
@@ -46,7 +47,7 @@ app-connection-list {
     color: white;
     grid-template-columns: 0.75fr 1fr;
     margin: 10px;
-    background: #f1652d;
+    background: rgba(241, 101, 45, 0.65);
     border-radius: 5px;
 
     ion-label.label {

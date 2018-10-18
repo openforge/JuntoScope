@@ -5,4 +5,34 @@ app-session-results {
       text-transform: uppercase;
     }
   }
+
+  .tasks-header {
+    display: grid;
+    color: white;
+    grid-template-columns: 0.25fr 1fr;
+    margin: 10px;
+    background: #f1652d;
+    border-radius: 5px;
+    ion-label.label {
+      margin: 0;
+      padding: 4px;
+    }
+
+    .first {
+      text-align: center;
+    }
+  }
+
+  .tasks-item {
+    display: grid;
+    color: #c94313;
+    grid-template-columns: 0.25fr 1fr;
+    ion-label.label {
+      margin: 0;
+    }
+
+    .first {
+      text-align: center;
+    }
+  }
 }
