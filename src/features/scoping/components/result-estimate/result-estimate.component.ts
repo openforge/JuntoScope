@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from "@angular/core";
 })
 export class ResultEstimateComponent implements OnInit {
   @Input() estimate: number;
-  @Input() results: boolean;
+  @Input() finalResults: boolean;
 
   constructor() {}
 
