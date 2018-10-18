@@ -20,20 +20,29 @@
   <ng-container *ngIf="session && session.tasks">
 
     <div class="session-results-top">
-      <h1>Final Results</h1>
+      <h1>RESULTS</h1>
+      <h2>{{ session.projectName }}</h2>
       <p>{{ session.numScopedTasks }} Tasks Scoped</p>
     </div>
 
     <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [results]="true" [estimate]="getTotalEstimate(session.tasks)"></app-result-estimate>
 
+    <div class="tasks-header">
+        <ion-label>Hours</ion-label>
+        <ion-label>Task</ion-label>
+    </div>
     <ion-list>
       <ion-item *ngFor="let task of (session.tasks | objValues)">
         <ion-label>
-          {{ task.name }}
+          <div class="tasks-item">
+            <ion-label>
+              {{ task.estimate }}
+            </ion-label>
+            <ion-label>
+              {{ task.name }}
+            </ion-label>
+          </div>
         </ion-label>
-        <button ion-button clear item-end>
-          <ion-icon name="arrow-forward"></ion-icon>
-        </button>
       </ion-item>
     </ion-list>
 

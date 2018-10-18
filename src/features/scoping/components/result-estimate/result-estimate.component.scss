@@ -3,7 +3,6 @@ app-result-estimate {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-bottom: 2px solid;
     h2,
     h3 {
       text-transform: uppercase;
@@ -11,6 +10,16 @@ app-result-estimate {
     p {
       text-transform: capitalize;
       font-size: 16px;
+    }
+    .estimate-container {
+      margin: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: rgba(255, 200, 148, 0.5);
+      width: 85%;
+      border-radius: 6px;
     }
     .hours-estimate {
       display: flex;
@@ -21,6 +30,7 @@ app-result-estimate {
         position: absolute;
         margin-left: 70px;
         &.box-estimate {
+          background: rgb(255, 255, 255);
           position: initial;
           margin-left: 0px;
           border: 1px solid;

@@ -21,4 +21,26 @@ app-session-results {
       text-transform: uppercase;
     }
   }
+
+  .tasks-header {
+    display: grid;
+    color: white;
+    grid-template-columns: 0.75fr 1fr;
+    margin: 10px;
+    background: #f1652d;
+    border-radius: 5px;
+    ion-label.label {
+      margin: 0;
+      padding: 4px;
+    }
+  }
+
+  .tasks-item {
+    display: grid;
+    color: white;
+    grid-template-columns: 0.75fr 0.75fr;
+    ion-label.label {
+      margin: 0;
+    }
+  }
 }
