@@ -5,21 +5,17 @@ app-connection-list {
     margin: 0;
     width: 100%;
 
-    // header
     ion-list-header.list-header {
       background-color: $primary-orange;
       padding: 1rem 1rem 0rem 1rem;
-      .icon,
-      h2 {
+
+      .icon, h2 {
         color: white;
         display: inline-block;
-        text-transform: none;
-        vertical-align: middle;
-      }
-
-      h2 {
         font-size: 24px;
         font-weight: 600;
+        text-transform: none;
+        vertical-align: middle;
       }
 
       .icon {
@@ -37,14 +33,6 @@ app-connection-list {
       background-color: $primary-orange;
       border-bottom: 1px solid $primary-orange;
       color: white;
-    }
-  }
-
-  .list-headers {
-    margin: 2rem 1rem;
-
-    ion-list-header.list-header {
-      border-bottom: 2px solid $primary-orange;
     }
   }
 
