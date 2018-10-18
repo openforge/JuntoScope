@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
-import { switchMap, map } from "rxjs/operators";
+import { switchMap, map, catchError } from "rxjs/operators";
 import {
   SessionValidation,
   ScopingSession
@@ -38,7 +38,8 @@ export class ScopingService {
                 };
               })
             );
-        })
+        }),
+        catchError(err => of(err))
       );
   }
 
