@@ -53,6 +53,23 @@ a {
 // --------------------------------------------------
 // All styles related to the header  / title
 
+// overall styles
+ion-header .toolbar {
+  .toolbar-background {
+    background: $primary-orange;
+    border: none;
+  }
+  .toolbar-title {
+    color: white;
+    font-size: 16px;
+    text-transform: capitalize;
+  }
+  .bar-button-default {
+    color: white;
+  }
+}
+
+
 // ios Header
 ion-header .toolbar-ios {
   
