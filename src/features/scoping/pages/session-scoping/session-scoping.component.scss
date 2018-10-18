@@ -1,4 +1,11 @@
 app-session-scoping {
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    top: 400px;
+  }
+
   .session-info-container {
     margin: 30px;
   }
