@@ -1,17 +1,35 @@
 app-result-estimate {
   .result-estimate-container {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+
     h2,
     h3 {
       text-transform: uppercase;
+      margin-bottom: 25px;
     }
+
     p {
-      text-transform: capitalize;
       font-size: 16px;
+      text-transform: capitalize;
+      margin: 10px 0 20px 0;
     }
-    .estimate-container {
+
+
+    .box-estimate {
+      background: white;
+      border: 1px solid $primary-orange;
+      border-radius: 4px;
+      font-size: 34px;
+      font-weight: bold;
+      margin: 0;
+      padding: 10px 25px;
+      position: initial;
+    }
+
+
+    .final-estimate-container {
       margin: 10px;
       display: flex;
       flex-direction: column;
@@ -21,31 +39,9 @@ app-result-estimate {
       width: 85%;
       border-radius: 6px;
     }
-    .hours-estimate {
-      display: flex;
+  }
 
-      p {
-        margin-right: 5px;
-        font-size: 18px;
-        position: absolute;
-        margin-left: 70px;
-
-        &.box-estimate {
-          background: rgb(255, 255, 255);
-          position: initial;
-          margin-left: 0px;
-          border: 1px solid;
-          font-weight: bold;
-          padding: 15px 20px 15px 20px;
-          font-size: 25px;
-          border-radius: 6px;
-          margin-bottom: 0px;
-        }
-
-        &.box-estimate-subtext {
-          margin-top: 40px;
-        }
-      }
-    }
+  .border {
+    border-bottom: 2px solid $primary-orange;
   }
 }

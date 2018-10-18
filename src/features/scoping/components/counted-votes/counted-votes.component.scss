@@ -1,19 +1,26 @@
 app-counted-votes {
     .vote-group {
+      align-items: center;
       display: flex;
-      flex-direction: row;
       flex-wrap: wrap;
-      justify-content: space-evenly;
+      justify-content: center;
       margin: 25px;
       text-align: center;
 
+      h2 {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        padding: 0;
+      }
+
       .vote {
         background: white;
-        border: 1px $primary-orange solid;
+        border: 1px solid $primary-orange ;
         border-radius: 4px;
+        flex-direction: row;
         font-size: 34px;
         font-weight: 500;
-        margin: 5px;
+        margin: 20px 5px 5px 5px;
         padding: 10px 25px;
       }
     }
