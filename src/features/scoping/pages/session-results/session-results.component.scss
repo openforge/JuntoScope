@@ -5,11 +5,4 @@ app-session-results {
       text-transform: uppercase;
     }
   }
-  ion-list.list {
-    border-top: 2px solid $primary-orange;
-  }
-  
-  ion-list.list > ion-item.item.item-block .item-inner {
-    border-bottom: 2px solid $primary-orange;
-  }
 }
