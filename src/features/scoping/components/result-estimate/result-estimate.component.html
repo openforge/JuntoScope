@@ -1,13 +1,13 @@
-<div class="result-estimate-container" *ngIf="!results">
+<div class="result-estimate-container" *ngIf="!finalResults">
   <h2>Estimate</h2>
   <div class="hours-estimate">
     <p class="box-estimate">{{ estimate }}</p>
-    <p>hours</p>
+    <p class="box-estimate-subtext">hours</p>
   </div>
   <p>Average</p>
 </div>
 
-<div class="result-estimate-container" *ngIf="results">
+<div class="result-estimate-container" *ngIf="finalResults">
   <h3>Total Estimate</h3>
   <div class="hours-estimate">
     <p class="box-estimate">{{ estimate }}</p>

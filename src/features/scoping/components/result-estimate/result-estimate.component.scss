@@ -14,12 +14,13 @@ app-result-estimate {
     }
     .hours-estimate {
       display: flex;
+
       p {
         margin-right: 5px;
-        padding: 10px 15px 10px 15px;
         font-size: 18px;
         position: absolute;
         margin-left: 70px;
+
         &.box-estimate {
           position: initial;
           margin-left: 0px;
@@ -30,6 +31,11 @@ app-result-estimate {
           border-radius: 6px;
           margin-bottom: 0px;
         }
+
+        &.box-estimate-subtext {
+          margin-top: 40px;
+        }
+
       }
     }
   }
