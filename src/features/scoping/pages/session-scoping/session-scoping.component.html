@@ -8,8 +8,7 @@
 
   <ion-spinner name="crescent" *ngIf="(uiState$ | async) === 'Loading' || participantState === ParticipantState.CHECKING_PARTICIPANT"></ion-spinner>
 
-  <app-session-access *ngIf="participantState === ParticipantState.PARTICIPANT_INVALID" [sessionLink]="sessionCode" (access)="access($event)">
-  </app-session-access>
+  <app-session-access *ngIf="participantState === ParticipantState.PARTICIPANT_INVALID" [sessionLink]="sessionCode" (access)="access($event)"></app-session-access>
 
   <ng-container *ngIf="participantState === ParticipantState.PARTICIPANT_VALIDATED">
 
@@ -29,7 +28,7 @@
           </div>
           <ion-list>
             <ion-item>
-              Need more info
+              Need more information
               <button ion-button outline round item-end (click)="needMoreInfo()">?</button>
             </ion-item>
             <ion-item>
@@ -37,9 +36,13 @@
               <button ion-button outline round item-end (click)="notApplicable()">N</button>
             </ion-item>
           </ion-list>
+
+          <ion-spinner name="crescent" *ngIf="hasVoted"></ion-spinner>
+
         </ng-container>
 
         <ng-container *ngIf="allVotesSubmited">
+
           <app-session-header [session]="currentSession"></app-session-header>
           <div class="session-info-container">
             <app-task-card [task]="currentSession.tasks[currentSession.currentTaskId]" [onlyTitle]="true"></app-task-card>
@@ -54,6 +57,7 @@
             [participantCount]="(session.participants | objKeys).length">
             </app-counted-votes>
           </div>
+
           <ng-container *ngIf="!session.tasks[session.currentTaskId].estimate">
             <ion-footer *ngIf="!isModerator" no-border>
               <ion-toolbar>
@@ -67,15 +71,8 @@
             </ion-footer>
           </ng-container>
 
-          <!-- <ng-container *ngIf="session.tasks[session.currentTaskId].estimate || timerOn">
-            <ion-footer *ngIf="isModerator && session.tasks[session.currentTaskId].estimate" no-border>
-              <ion-toolbar>
-                <button ion-button>Next task</button>
-              </ion-toolbar>
-            </ion-footer>
-          </ng-container> -->
-
         </ng-container>
+
       </ng-container>
 
       <ng-template #noSession>

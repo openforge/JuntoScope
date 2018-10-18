@@ -25,18 +25,19 @@
       <p>{{ session.numScopedTasks }} Tasks Scoped</p>
     </div>
 
-    <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [results]="true" [estimate]="getTotalEstimate(session.tasks)"></app-result-estimate>
+    <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate" [finalResults]="true" [estimate]="getTotalEstimate(session.tasks)"></app-result-estimate>
 
     <div class="tasks-header">
-        <ion-label>Hours</ion-label>
+        <ion-label class="first">Hours</ion-label>
         <ion-label>Task</ion-label>
     </div>
+
     <ion-list>
       <ion-item *ngFor="let task of (session.tasks | objValues)">
         <ion-label>
           <div class="tasks-item">
-            <ion-label>
-              {{ task.estimate }}
+            <ion-label class="first">
+              <b>{{ (task.estimate == -1) ? "N/A" : task.estimate }}</b>
             </ion-label>
             <ion-label>
               {{ task.name }}

@@ -1,20 +1,4 @@
 app-session-results {
-  ion-header .toolbar {
-    // Background color
-    .toolbar-background {
-      background: $primary-orange;
-      border: none;
-    } // Title
-    .toolbar-title {
-      // overflow: visible;
-      color: white;
-      font-size: 16px;
-      text-transform: capitalize;
-    } // Buttons
-    .bar-button-default {
-      color: white;
-    }
-  }
   .session-results-top {
     text-align: center;
     h1 {
@@ -25,7 +9,7 @@ app-session-results {
   .tasks-header {
     display: grid;
     color: white;
-    grid-template-columns: 0.75fr 1fr;
+    grid-template-columns: 0.25fr 1fr;
     margin: 10px;
     background: #f1652d;
     border-radius: 5px;
@@ -33,14 +17,22 @@ app-session-results {
       margin: 0;
       padding: 4px;
     }
+
+    .first {
+      text-align: center;
+    }
   }
 
   .tasks-item {
     display: grid;
-    color: white;
-    grid-template-columns: 0.75fr 0.75fr;
+    color: #c94313;
+    grid-template-columns: 0.25fr 1fr;
     ion-label.label {
       margin: 0;
+    }
+
+    .first {
+      text-align: center;
     }
   }
 }

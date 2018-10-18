@@ -1,17 +1,4 @@
 app-settings {
-  .list-headers {
-    margin: 2rem 1rem;
-
-    ion-list-header.list-header {
-      border-bottom: 2px solid $primary-orange;
-    }
-
-    p,
-    h2 {
-      color: $primary-orange;
-    }
-  }
-
   .connections {
     ion-list.list {
       background-color: $primary-orange;
@@ -19,21 +6,26 @@ app-settings {
       margin: 0;
       width: 100%;
 
-      // header
       ion-list-header.list-header {
         background-color: $primary-orange;
         padding: 1rem 1rem 0rem 1rem;
+
         .icon,
         h2 {
           color: white;
           display: inline-block;
+          font-size: 24px;
+          font-weight: 600;
           text-transform: none;
           vertical-align: middle;
         }
 
+        .icon {
+          font-size: 36px;
+        }
+
         ion-label.label {
-          border-bottom: 1px solid white;
-          padding: 2rem;
+          padding: 1rem;
           margin: 1rem;
         }
       }
@@ -43,35 +35,36 @@ app-settings {
         background-color: $primary-orange;
         border-bottom: 1px solid $primary-orange;
         color: white;
-
-        // new connection
-        &:last-child {
-          background-color: white;
-          border: 2px solid $primary-orange;
-          color: $primary-orange;
-        }
       }
     }
   }
 
-  .faq {
-    ion-item.item {
-      h2 {
-        font-weight: bold;
-      }
-      p {
-        color: $primary-orange;
-        white-space: initial;
-        font-size: 13px;
-      }
+  ion-item.item.item-block.new-connection {
+    margin-top: 20px;
+    border: 2px solid #c94313;
+  }
+
+  .connections-header {
+    display: grid;
+    color: white;
+    grid-template-columns: 0.75fr 1fr;
+    margin: 10px;
+    background: rgba(241, 101, 45, 0.65);
+    border-radius: 5px;
+
+    ion-label.label {
+      margin: 0;
+      padding: 4px;
     }
   }
 
-  .logout {
-    margin: 2rem 0;
+  .connection-item {
+    display: grid;
+    color: white;
+    grid-template-columns: 0.75fr 0.75fr;
 
-    button {
-      width: 60%;
+    ion-label.label {
+      margin: 0;
     }
   }
 
@@ -92,5 +85,37 @@ app-settings {
   // custom buttons for ios
   .button-ios {
     border: none;
+  }
+
+  .faq {
+    margin: 2rem 1rem;
+
+    ion-list-header.list-header {
+      border-bottom: 2px solid $primary-orange;
+    }
+
+    p,
+    h2 {
+      color: $primary-orange;
+    }
+
+    ion-item.item {
+      h2 {
+        font-weight: bold;
+      }
+      p {
+        color: $primary-orange;
+        white-space: initial;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .logout {
+    margin: 2rem 0;
+
+    button {
+      width: 60%;
+    }
   }
 }

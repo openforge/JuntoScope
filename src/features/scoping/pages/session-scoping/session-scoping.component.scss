@@ -2,17 +2,19 @@ app-session-scoping {
   .session-info-container {
     margin: 30px;
   }
+
   .session-votes-counted {
     display: flex;
     justify-content: center;
-    background: #c94313;
+    background: $primary-orange;
     p {
       color: white;
     }
   }
+
   ion-list.list {
     ion-item.item {
-      border-bottom: 1px solid #c94313;
+      border-bottom: 1px solid $primary-orange;
       .item-inner {
         border-bottom: none;
       }
@@ -21,6 +23,7 @@ app-session-scoping {
       }
     }
   }
+
   ion-footer.footer {
     position: initial;
     ion-toolbar.toolbar {
