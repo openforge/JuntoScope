@@ -90,3 +90,25 @@ npm run cz
 [<img src="https://github.com/openforge/main-website/blob/master/src/assets/graphic-google-googleplaystore.png?raw=true" />](https://play.google.com/store/apps/details?id=com.openforge.juntoscope&hl=en_US)
 
 [<img src="https://github.com/openforge/main-website/blob/master/src/assets/graphic-apple-appstore.png?raw=true" />](https://itunes.apple.com/us/app/juntoscope/id1421846154?mt=8)
+
+
+## Running End-to-End Tests
+1. To install the packages needed for testing:
+```
+npm install
+```
+2. Install the Java SE Development Kit from here: https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
+
+3. Install and prepare webdriver-manager to run the Selenium testing server for Protractor:
+```
+npm install -g webdriver-manager
+webdriver-manager update
+```
+4. In a separate terminal window, type the following command to run the Selenium testing server:
+```
+webdriver-manager start
+```
+5. In the JuntoScope directory, enter: 
+```
+npm run e2e
+```
