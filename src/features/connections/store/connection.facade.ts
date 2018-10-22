@@ -216,7 +216,6 @@ export class ConnectionFacade {
             });
           }),
           catchError(error => {
-            console.log("error: ", error);
             this.loadingSvc.dismiss();
             this.popupSvc.simpleAlert("Oops!", error.message, "Ok");
             return of(error.message);

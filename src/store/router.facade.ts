@@ -28,11 +28,9 @@ export class RouterFacade {
 
   @Effect({ dispatch: false })
   go$ = this.actions$.pipe(
-    tap(() => console.log("anybody here")),
     ofType<GoAction>(RouterActionTypes.GO),
     map(action => action.payload),
     tap(({ path, query: queryParams, extras }) => {
-      console.log("Path: ", path[0]);
       this.nav.push(path[0]);
     })
   );
@@ -60,7 +58,6 @@ export class RouterFacade {
    */
 
   navigate(options: NavigationOptions) {
-    console.log("trying to dispatch");
     this.store.dispatch(new GoAction(options));
   }
 

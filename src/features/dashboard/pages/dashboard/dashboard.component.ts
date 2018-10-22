@@ -71,7 +71,6 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   handleDetailClick(event: HistoryItemDetailEvent) {
-    console.log("details for session status", event);
     this.scopingFacade.loadSession(event.item.id);
 
     if (event.status === "Session Completed") {
@@ -97,7 +96,6 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   createSession(connection: Connection) {
-    console.log("How bout this: ", connection.id);
     this.navCtrl.push("SelectProjectPage", { connectionId: connection.id });
   }
 

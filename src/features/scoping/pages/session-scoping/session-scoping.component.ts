@@ -86,7 +86,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   async getLastTask() {
-    console.log("getting last task");
     if (this.lastTaskId) {
       const lastTask = await this.historySvc.getSessionTask(
         {
@@ -112,7 +111,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   loadSession() {
-    console.log("loading session");
     this.lastTaskId = null;
 
     this.sessionCode = this.navParams.get("sessionUrl");
@@ -127,7 +125,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
 
     // Sets next task
     this.sessionSub = this.session$.subscribe(session => {
-      console.log("new millenial fired");
 
       if (session && session.tasks) {
         this.session = session;
@@ -175,7 +172,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
 
         // if has voted and estimate submitted, go to next task
         if (this.estimateSubmitted && !this.timerOn) {
-          console.log("setting timer!");
           this.timerOn = true;
           setTimeout(() => {
             this.nextTask();
@@ -186,13 +182,11 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   ionViewWillLeave() {
-    console.log("Leaving...");
     this.lastTaskId = null;
     this.unsub();
   }
 
   ngOnDestroy() {
-    console.log("Destroying...");
     this.lastTaskId = null;
     this.unsub();
   }
@@ -275,7 +269,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   nextTask() {
-    console.log("next task...");
     this.allVotesSubmited = false;
     this.estimateSubmitted = false;
     this.finalEstimate = null;

@@ -87,11 +87,9 @@ export class ScopingFacade {
             "Your vote has successfully been submitted! You will be navigated to the next screen once everyone has voted. Please wait.",
             "Ok"
           );
-          console.log("Vote saved successfully");
           return new VoteSuccessAction(action.payload);
         })
         .catch(({ message }) => {
-          console.log("ERROR saving vote");
           return new VoteErrorAction({ message });
         })
     ),

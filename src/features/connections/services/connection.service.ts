@@ -62,7 +62,6 @@ export class ConnectionService {
   }
 
   getTaskLists(connectionId: string, projectId: string) {
-    console.log("getting the task lists");
     return this.http
       .get<{ taskLists: TaskList[] }>(
         `${
@@ -90,7 +89,6 @@ export class ConnectionService {
   }
 
   getTasks(connectionId: string, projectId: string, taskListId: string) {
-    console.log("getting the tasks");
     return this.http
       .get<{ tasks: Task[] }>(
         `${
