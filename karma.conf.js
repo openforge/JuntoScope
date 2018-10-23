@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      "src/features/authentication/services/auth.service.spec.ts"
+      "./src/**/*.spec.ts"
     ],
 
 
@@ -27,6 +27,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      "./src/test.ts": []
     },
 
 
@@ -64,6 +65,8 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
+    concurrency: Infinity,
+
+    mime: { 'text/x-typescript': ['ts','tsx'] }
   })
 }
