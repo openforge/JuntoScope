@@ -54,7 +54,9 @@
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
-          "options": {}
+          "options": {
+            "tsConfig": "tsconfig.json"
+          }
         }
       }
     }

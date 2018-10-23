@@ -36,6 +36,7 @@
         "@angular/platform-browser": "5.2.11",
         "@angular/platform-browser-dynamic": "5.2.11",
         "@angular/router": "6.0.7",
+        "@babel/register": "^7.0.0",
         "@ionic-native/core": "4.8.0",
         "@ionic-native/deeplinks": "^4.12.2",
         "@ionic-native/facebook": "^4.11.0",
