@@ -12,7 +12,11 @@
       "targets": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "options": {},
+          "options": {
+            "index": "src/index.html",
+            "main": "src/app/main.ts",
+            "tsConfig": "tsconfig.json"
+          },
           "configurations": {}
         },
         "serve": {
@@ -26,7 +30,11 @@
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
-          "options": {}
+          "options": {
+            "main": "src/app/main.ts",
+            "karmaConfig": "karma.conf.js",
+            "tsConfig": "tsconfig.json"
+          }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
