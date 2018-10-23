@@ -12,7 +12,7 @@ import { switchMap, take, catchError } from "rxjs/operators";
 
 import { AngularFireAuth } from "angularfire2/auth";
 
-import { environment } from "../environments/environment";
+import { environment } from "../environments/environment.prod";
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {

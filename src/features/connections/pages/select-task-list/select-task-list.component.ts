@@ -6,6 +6,7 @@ import { TaskList } from "../../../../models/task-list";
 import { Connection } from "../../../../models/connection";
 import { NavParams, IonicPage } from "ionic-angular";
 import { LoadingService } from "../../../../shared/loading.service";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 @IonicPage({
   segment: "SelectTaskListPage",
@@ -43,10 +44,14 @@ export class SelectTaskListPage implements OnInit {
   constructor(
     private connectionFacade: ConnectionFacade,
     private loadingSrv: LoadingService,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private firebaseAnalytics: FirebaseAnalytics
   ) {}
 
   ngOnInit(): void {
+    this.firebaseAnalytics.logEvent("page_view", {
+      page: "SelectTaskListPage"
+    });
     this.connectionId = this.navParams.get("connectionId");
     this.projectId = this.navParams.get("projectId");
     this.projectName = this.navParams.get("projectName");

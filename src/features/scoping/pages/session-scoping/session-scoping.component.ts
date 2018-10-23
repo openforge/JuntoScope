@@ -21,6 +21,7 @@ import {
 import { Subject, Subscription } from "rxjs";
 import { HistoryService } from "../../../dashboard/services/history.service";
 import { OnDestroy } from "../../../../../node_modules/ngx-take-until-destroy";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 @IonicPage({
   segment: "SessionScopingPage",
@@ -73,10 +74,14 @@ export class SessionScopingPage implements OnInit, OnDestroy {
     private scopingFacade: ScopingFacade,
     private navParams: NavParams,
     private navCtrl: NavController,
-    private historySvc: HistoryService
+    private historySvc: HistoryService,
+    private firebaseAnalytics: FirebaseAnalytics
   ) {}
 
   ngOnInit() {
+    this.firebaseAnalytics.logEvent("page_view", {
+      page: "SessionScopingPage"
+    });
     this.user$ = this.store.pipe(select(AuthQuery.selectUser));
     this.user$.subscribe(user => {
       this.user = user;

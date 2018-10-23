@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ScopingFacade } from "../../store/scoping.facade";
 import { NavController, IonicPage } from "ionic-angular";
 import { ScopingSession } from "../../../../models/scoping-session";
 import { Subscription } from "rxjs";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 @IonicPage({
   segment: "SessionResultsPage",
@@ -12,17 +13,24 @@ import { Subscription } from "rxjs";
   selector: "app-session-results",
   templateUrl: "./session-results.component.html"
 })
-export class SessionResultsPage {
+export class SessionResultsPage implements OnInit {
   session: ScopingSession;
   sessionCode: string;
   sessionSub: Subscription;
 
   constructor(
     private scopingFacade: ScopingFacade,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private firebaseAnalytics: FirebaseAnalytics
   ) {
     this.sessionSub = this.scopingFacade.session$.subscribe(session => {
       this.session = session;
+    });
+  }
+
+  ngOnInit() {
+    this.firebaseAnalytics.logEvent("page_view", {
+      page: "SessionResultsPage"
     });
   }
 

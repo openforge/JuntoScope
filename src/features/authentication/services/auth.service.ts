@@ -7,7 +7,7 @@ import { Platform } from "ionic-angular";
 import { GooglePlus } from "@ionic-native/google-plus";
 import { Facebook } from "@ionic-native/facebook";
 import { TwitterConnect } from "@ionic-native/twitter-connect";
-import { environment } from "../../../environments/environment";
+import { environment } from "../../../environments/environment.prod";
 
 @Injectable()
 export class AuthService {
