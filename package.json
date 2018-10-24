@@ -165,6 +165,9 @@
             "ionic-plugin-deeplinks": {
                 "URL_SCHEME": "juntoscope",
                 "DEEPLINK_HOST": "juntoscope.com"
+            },
+            "cordova-plugin-firebase-analytics": {
+                "FIREBASE_CORE_VERSION": "16.0.+"
             }
         }
     }
