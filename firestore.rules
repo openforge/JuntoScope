@@ -65,6 +65,10 @@ service cloud.firestore {
       }
 
     }
+    
+    match /faqs/{faqId} {
+    	allow read: if request.auth.uid != null;
+    }
 
   }
 

@@ -1,15 +1,20 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Scoping Session</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button icon-only (click)="goDashboard()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title text-center>Scoping Session</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <ion-spinner name="crescent" *ngIf="(uiState$ | async) === 'Loading' || participantState === ParticipantState.CHECKING_PARTICIPANT"></ion-spinner>
 
-  <app-session-access *ngIf="participantState === ParticipantState.PARTICIPANT_INVALID" [sessionLink]="sessionCode" (access)="access($event)">
-  </app-session-access>
+  <app-session-access *ngIf="participantState === ParticipantState.PARTICIPANT_INVALID" [sessionLink]="sessionCode" (access)="access($event)"></app-session-access>
 
   <ng-container *ngIf="participantState === ParticipantState.PARTICIPANT_VALIDATED">
 
@@ -18,9 +23,9 @@
       <ng-container *ngIf="session && session.tasks; else noSession">
 
         <ng-container *ngIf="!allVotesSubmited">
-          <app-session-header [session]="session"></app-session-header>
+          <app-session-header [session]="currentSession"></app-session-header>
           <div class="session-info-container">
-            <app-task-card [task]="session.tasks[session.currentTaskId]"></app-task-card>
+            <app-task-card [task]="currentSession.tasks[currentSession.currentTaskId]"></app-task-card>
             <app-vote (vote)="vote($event)"></app-vote>
           </div>
           <div class="session-votes-counted">
@@ -29,7 +34,7 @@
           </div>
           <ion-list>
             <ion-item>
-              Need more info
+              Need more information
               <button ion-button outline round item-end (click)="needMoreInfo()">?</button>
             </ion-item>
             <ion-item>
@@ -37,12 +42,16 @@
               <button ion-button outline round item-end (click)="notApplicable()">N</button>
             </ion-item>
           </ion-list>
+
+          <ion-spinner class="loading" name="crescent" *ngIf="hasVoted"></ion-spinner>
+
         </ng-container>
 
         <ng-container *ngIf="allVotesSubmited">
-          <app-session-header [session]="session"></app-session-header>
+
+          <app-session-header [session]="currentSession"></app-session-header>
           <div class="session-info-container">
-            <app-task-card [task]="session.tasks[session.currentTaskId]" [onlyTitle]="true"></app-task-card>
+            <app-task-card [task]="currentSession.tasks[currentSession.currentTaskId]" [onlyTitle]="true"></app-task-card>
             <app-result-estimate *ngIf="session.tasks[session.currentTaskId].estimate || timerOn" [estimate]="finalEstimate"></app-result-estimate>
             
             <ng-container *ngIf="isModerator && !session.tasks[session.currentTaskId].estimate && !timerOn">
@@ -53,8 +62,8 @@
             [votes]="lastTaskVotes ? lastTaskVotes : session.tasks[taskId].votes" 
             [participantCount]="(session.participants | objKeys).length">
             </app-counted-votes>
-
           </div>
+
           <ng-container *ngIf="!session.tasks[session.currentTaskId].estimate">
             <ion-footer *ngIf="!isModerator" no-border>
               <ion-toolbar>
@@ -68,15 +77,8 @@
             </ion-footer>
           </ng-container>
 
-          <!-- <ng-container *ngIf="session.tasks[session.currentTaskId].estimate || timerOn">
-            <ion-footer *ngIf="isModerator && session.tasks[session.currentTaskId].estimate" no-border>
-              <ion-toolbar>
-                <button ion-button>Next task</button>
-              </ion-toolbar>
-            </ion-footer>
-          </ng-container> -->
-
         </ng-container>
+
       </ng-container>
 
       <ng-template #noSession>

@@ -11,6 +11,8 @@ export enum DashboardActionTypes {
   MODIFIED = "[Dashboard] History Item Modified",
   REMOVED = "[Dashboard] History Item Removed",
 
+  TEAMWORK_LOGIN = "[Dashboard] Teamwork Login",
+
   DELETE_SESSION = "[Dashboard] Delete Session",
   DELETE_SESSION_SUCCESS = "[Dashboard] Delete Session Success",
   DELETE_SESSION_ERROR = "[Dashboard] Delete Session error",
@@ -19,6 +21,11 @@ export enum DashboardActionTypes {
   REFRESH_ACCESS_CODE_ERROR = "[Dashboard] Refresh Access Code Error",
 
   CLEAR_ERROR = "[Dashboard] Clear Error"
+}
+
+export class TeamworkLoginAction implements Action {
+  readonly type = DashboardActionTypes.TEAMWORK_LOGIN;
+  constructor(public payload: { code: string }) {}
 }
 
 export class LoadHistoryItemsAction implements Action {
@@ -98,4 +105,5 @@ export type DashboardActions =
   | RefreshAccessCodeAction
   | RefreshAccessCodeSuccessAction
   | RefreshAccessCodeErrorAction
+  | TeamworkLoginAction
   | ClearErrorAction;

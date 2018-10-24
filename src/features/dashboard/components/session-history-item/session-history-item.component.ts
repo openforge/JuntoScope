@@ -35,7 +35,7 @@ export class SessionHistoryItemComponent implements OnInit {
   }
 
   get ctaText(): string {
-    return this.isComplete() ? "View Results" : "Continue";
+    return this.isComplete() ? "View Results" : "Continue Scoping";
   }
 
   handleOptionsClick() {

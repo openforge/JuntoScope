@@ -27,6 +27,7 @@ import {
 } from "./auth.actions";
 import { AuthService } from "../services/auth.service";
 import { HistoryService } from "../../dashboard/services/history.service";
+import { ClearConnectionsAction } from "../../connections/store/connection.actions";
 
 @Injectable()
 export class AuthFacade {
@@ -116,6 +117,7 @@ export class AuthFacade {
 
   logout() {
     this.historySvc.logOut(); // Unsubscribes from uid
+    this.store.dispatch(new ClearConnectionsAction());
     this.store.dispatch(new LogoutAction());
   }
 

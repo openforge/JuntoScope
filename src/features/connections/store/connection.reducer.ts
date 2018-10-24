@@ -96,6 +96,10 @@ export function connectionReducer(
       };
     }
 
+    case ConnectionActionTypes.CLEAR_CONNECTIONS: {
+      return adapter.removeAll(state);
+    }
+
     default: {
       return state;
     }

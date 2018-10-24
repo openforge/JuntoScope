@@ -27,7 +27,8 @@ import {
   NoConnectionsAction,
   CreateSessionAction,
   AddConnectionSuccessAction,
-  ClearErrorAction
+  ClearErrorAction,
+  ClearConnectionsAction
 } from "./connection.actions";
 import { ConnectionService } from "../services/connection.service";
 import { Connection } from "../../../models/connection";
@@ -36,6 +37,8 @@ import { NoopAction } from "../../../store/app.actions";
 import { PopupService } from "../../../shared/popup.service";
 import { VerifyModalComponent } from "../components/verify-modal/verify-modal.component";
 import { ShareScopeLinkModalComponent } from "../components/share-scope-link-modal/share-scope-link-modal.component";
+import { LoadingService } from "../../../shared/loading.service";
+import * as _ from "lodash";
 
 @Injectable()
 export class ConnectionFacade {
@@ -98,9 +101,9 @@ export class ConnectionFacade {
           })
         ),
         map(() => new AddConnectionSuccessAction()),
-        catchError(error =>
-          of(new AddConnectionErrorAction({ message: error.message }))
-        )
+        catchError(error => {
+          return of(new AddConnectionErrorAction({ message: error.message }));
+        })
       )
     )
   );
@@ -147,7 +150,13 @@ export class ConnectionFacade {
       this.connectionSvc
         .getTaskLists(action.payload.connection.id, action.payload.project.id)
         .pipe(
-          map(taskLists => {
+          map(response => {
+            const taskLists = _.keyBy(
+              response.filter(function(el) {
+                return el != null;
+              }),
+              "id"
+            );
             const updatedProject = { ...action.payload.project, taskLists };
             const projectsChanges = {
               ...action.payload.connection.projects,
@@ -166,7 +175,7 @@ export class ConnectionFacade {
     )
   );
 
-  @Effect()
+  @Effect({ dispatch: false })
   createSession$ = this.actions$.pipe(
     ofType<CreateSessionAction>(ConnectionActionTypes.CREATE_SESSION),
     exhaustMap(action =>
@@ -206,7 +215,11 @@ export class ConnectionFacade {
               }
             });
           }),
-          map(response => new NoopAction())
+          catchError(error => {
+            this.loadingSvc.dismiss();
+            this.popupSvc.simpleAlert("Oops!", error.message, "Ok");
+            return of(error.message);
+          })
         )
     )
   );
@@ -215,7 +228,8 @@ export class ConnectionFacade {
     private store: Store<AppState>,
     private actions$: Actions,
     private connectionSvc: ConnectionService,
-    private popupSvc: PopupService
+    private popupSvc: PopupService,
+    private loadingSvc: LoadingService
   ) {}
 
   /*
@@ -223,6 +237,10 @@ export class ConnectionFacade {
    */
   getConnections() {
     this.store.dispatch(new QueryConnectionsAction());
+  }
+
+  clearConnections() {
+    this.store.dispatch(new ClearConnectionsAction());
   }
 
   addConnection(connection: Connection) {

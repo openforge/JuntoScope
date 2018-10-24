@@ -3,8 +3,6 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import { untilDestroyed } from "ngx-take-until-destroy";
-import { map, filter, take } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { Actions } from "@ngrx/effects";
 
@@ -28,29 +26,15 @@ export class LoginPage implements OnInit, OnDestroy {
   agreeForm: FormGroup;
   errorSubscription: Subscription;
   redirectSubs: Subscription;
+  loginSubs: Subscription;
   authError$ = this.authFacade.error$;
   user$ = this.authFacade.user$;
   hasAgreed = false;
 
-  private loginRedirect$ = this.appFacade.authRedirect$.pipe(
-    untilDestroyed(this),
-    filter(redirectUrl => !!redirectUrl),
-    map(navOptions => {
-      const query = this.navParams.get("query");
-      if (query && query.returnUrl) {
-        navOptions.path = [query.returnUrl];
-      }
-
-      return navOptions;
-    })
-  );
-
   constructor(
     private fb: FormBuilder,
-    private appFacade: AppFacade,
     private authFacade: AuthFacade,
     private navCtrl: NavController,
-    private navParams: NavParams,
     private actions$: Actions,
     private popupSvc: PopupService,
     private loadingSrv: LoadingService,
@@ -66,7 +50,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
     this.errorSubscription = this.authError$.subscribe(error => {
       if (error) {
-        this.loadingSrv.hide();
+        // this.loadingSrv.hide();
         if (error.code === "auth/account-exists-with-different-credential") {
           this.popupSvc.simpleAlert(
             "Oh...",
@@ -84,11 +68,14 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
-    this.loadingSrv.initialize();
+    // this.loadingSrv.initialize();
   }
 
   ngOnDestroy() {
     this.errorSubscription.unsubscribe();
+    if (this.loginSubs) {
+      this.loginSubs.unsubscribe();
+    }
   }
 
   createForm() {
@@ -125,14 +112,10 @@ export class LoginPage implements OnInit, OnDestroy {
   facebookLogin() {
     this.loadingSrv.present();
     this.authFacade.facebookLogin();
-
-    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
 
   twitterLogin() {
     this.loadingSrv.present();
     this.authFacade.twitterLogin();
-
-    this.loginRedirect$.pipe(take(1)).subscribe(navOptions => {});
   }
 }

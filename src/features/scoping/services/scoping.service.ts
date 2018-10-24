@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
-import { switchMap, map } from "rxjs/operators";
+import { switchMap, map, catchError } from "rxjs/operators";
 import {
   SessionValidation,
   ScopingSession
 } from "../../../models/scoping-session";
 import { AngularFirestore } from "angularfire2/firestore";
 import { HistoryService } from "../../dashboard/services/history.service";
+import { of, from } from "rxjs";
 
 @Injectable()
 export class ScopingService {
@@ -37,7 +38,8 @@ export class ScopingService {
                 };
               })
             );
-        })
+        }),
+        catchError(err => of(err))
       );
   }
 

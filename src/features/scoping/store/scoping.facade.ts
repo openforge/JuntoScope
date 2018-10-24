@@ -82,11 +82,14 @@ export class ScopingFacade {
       this.scopingSvc
         .vote(action.payload)
         .then(() => {
-          console.log("Vote saved successfully");
+          this.popupService.simpleAlert(
+            "Added Vote",
+            "Your vote has successfully been submitted! You will be navigated to the next screen once everyone has voted. Please wait.",
+            "Ok"
+          );
           return new VoteSuccessAction(action.payload);
         })
         .catch(({ message }) => {
-          console.log("ERROR saving vote");
           return new VoteErrorAction({ message });
         })
     ),
@@ -266,13 +269,29 @@ export class ScopingFacade {
   }
 
   validateSession(sessionValidation: SessionValidation) {
-    this.store.dispatch(new ValidateSessionAction({ sessionValidation }));
+    if (sessionValidation.sessionLink.includes("/")) {
+      this.store.dispatch(
+        new SessionJoinErrorAction({
+          message: "Invalid Session Code"
+        })
+      );
+    } else {
+      this.store.dispatch(new ValidateSessionAction({ sessionValidation }));
+    }
   }
 
   validateParticipant(uid: string, sessionLink: string) {
-    this.store.dispatch(
-      new ValidateParticipantAction({ uid: uid, sessionLink: sessionLink })
-    );
+    if (sessionLink.includes("/")) {
+      this.store.dispatch(
+        new ValidateParticipantErrorAction({
+          message: "Invalid Session Code"
+        })
+      );
+    } else {
+      this.store.dispatch(
+        new ValidateParticipantAction({ uid: uid, sessionLink: sessionLink })
+      );
+    }
   }
 
   clearError() {

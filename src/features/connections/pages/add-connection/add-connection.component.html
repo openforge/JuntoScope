@@ -4,44 +4,28 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
-  <ng-container *ngIf="!type">
-    <div padding text-center>
-      <h2 text-center>Connect to Teamwork</h2>
+  <div class="container">	
+    <h2 text-center>Connect to Teamwork</h2>
+    
+    <p text-center>
+      <span style="font-weight: bold">NOTICE</span>
+      <br>
+      <u>This is made specifically for Teamwork.</u>
+      <br> 
+      If you are not using Teamwork, we recommend trying it!
+    </p>
 
-      <p text-center>
-        JuntoScope connects directly with your Teamwork account to import your task list(s) that you and your team can scope together
-        in a scoping session.
-        <br>
-        <br>
-        <br> Connections should only be made by Teamwork users with Administrator privileges in order to successfully deploy
-        scoping sessions and assign scoped times to tasks.
-      </p>
+    <p text-center>
+      Connections should only be made by Teamwork users with Administrator privileges in order to successfully deploy
+      scoping sessions and assign scoped times to tasks.
+    </p>
 
-      <button ion-button (click)="setType('teamwork')">ACCEPT</button>
-    </div>
-  </ng-container>
+    <p text-center>
+      <a (click)="register()" style="font-weight: bold"><u>Register here</u></a> and use the code <span style="font-style: italic">"juntoscope"</span> for a 10% discount!
+    </p>
 
-  <ng-container *ngIf="type">
-
-    <form [formGroup]="connectionForm" (ngSubmit)="continue()" text-center>
-      <p text-center>
-          Please enter your API key below
-      </p>
-      <ion-item no-lines>
-        <ion-input class="form-control" type="text" formControlName="token" name="token" clearInput></ion-input>
-      </ion-item>
-
-      <ng-container *ngIf="connectionForm.get('token') as tokenCtrl">
-        <p class="item-text-wrap" *ngIf="tokenCtrl.dirty && tokenCtrl.hasError('required')" class="error input-error">
-          Please enter in a valid Teamwork API Token. For instructions on where to find this please visit the link below.
-        </p>
-      </ng-container>
-
-      <a href="http://support.teamwork.com/projects/using-teamwork-projects/locating-your-api-key">Where do I find this?</a>
-
-      <button ion-button type="submit" class="submit-btn">SUBMIT</button>
-    </form>
-  </ng-container>
+    <button ion-button (click)="connectTeamwork()">ACCEPT</button>
+  </div>
 </ion-content>

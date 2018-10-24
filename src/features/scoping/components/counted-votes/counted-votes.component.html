@@ -1,10 +1,12 @@
 <div class="vote-group">
+  <h2>COUNTED VOTES</h2>
   <span *ngFor="let vote of votes | objValues" class="vote">
     {{ vote === 0 ? '?' : (vote === -1 ? 'N/A' : vote) }}
   </span>
 </div>
 
 <div class="vote-group" *ngIf="(votes | objKeys).length !== participantCount">
+  <h2>COUNTED VOTES</h2>
   <span class="vote" *ngFor="let vote of (getRangeForEmptyVotes(participantCount - (votes | objKeys).length))">
     -
   </span>

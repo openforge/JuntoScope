@@ -79,17 +79,20 @@ export class HistoryService {
       )
       .valueChanges()
       .pipe(
-        switchMap(session =>
-          this.getSessionTask(
-            { ownerId, connectionId, sessionId },
-            session.currentTaskId
-          ).pipe(
-            map(task => {
-              session.tasks = { [session.currentTaskId]: task };
+        switchMap(session => {
+          return this.getSessionTasks({
+            ownerId,
+            connectionId,
+            sessionId
+          }).pipe(
+            map(tasks => {
+              tasks.map(task => {
+                session.tasks = { ...session.tasks, [task.id]: task };
+              });
               return session;
             })
-          )
-        ),
+          );
+        }),
         catchError(err => of(err))
       );
   }
@@ -114,6 +117,14 @@ export class HistoryService {
     return this.afs
       .doc<Task>(
         `users/${ownerId}/connections/${connectionId}/sessions/${sessionId}/tasks/${taskId}`
+      )
+      .valueChanges();
+  }
+
+  getSessionTasks({ ownerId, connectionId, sessionId }: Partial<HistoryItem>) {
+    return this.afs
+      .collection<Task>(
+        `users/${ownerId}/connections/${connectionId}/sessions/${sessionId}/tasks`
       )
       .valueChanges();
   }

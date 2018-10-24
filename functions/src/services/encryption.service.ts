@@ -1,9 +1,11 @@
 import * as crypto from "crypto";
+const functions = require("firebase-functions");
 
 export class EncryptionService {
   private algorithm = "aes-256-cbc";
-  // private SECRET_KEY = config.encryption.secret; // Must be 32 characters long
-  private SECRET_KEY = "J*+48Iz{J%m9xr08]Z1DLNTj5f66pE7G"; // GET THIS AWAY FROM HERE!!!
+  // Must be 32 characters long
+
+  private SECRET_KEY = functions.config().encryption.secret;
 
   encrypt(text: string) {
     const iv = crypto.randomBytes(16); // Must be 16 bytes long for AES encryption

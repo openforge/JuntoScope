@@ -5,9 +5,9 @@
     <ion-input class="form-control" type="text" formControlName="code" name="code" clearInput text-center></ion-input>
   </ion-item>
 
-  <ng-container *ngIf="accessForm.get('code') as codeCtrl">
-    <p *ngIf="codeCtrl.dirty && codeCtrl.hasError('required')" class="error input-error">
-      Access Code is required
+  <ng-container *ngIf="accessForm.get('code') as codeCtrl" padding>
+    <p *ngIf="codeCtrl.dirty && codeCtrl.hasError('required')">
+      An access code is required in order to enter a scoping session. Consult the moderator for credentials.
     </p>
   </ng-container>
 

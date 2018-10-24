@@ -1,16 +1,19 @@
-<div class="result-estimate-container" *ngIf="!results">
-  <h2>Estimate</h2>
+<div class="result-estimate-container border" *ngIf="!finalResults">
+  <h2>Total Estimate</h2>
   <div class="hours-estimate">
-    <p class="box-estimate">{{ estimate }}</p>
-    <p>hours</p>
+    <span class="box-estimate">{{ estimate }}</span>
   </div>
-  <p>Average</p>
+  <p>Hours</p>
 </div>
 
-<div class="result-estimate-container" *ngIf="results">
-  <h3>Total Estimate</h3>
-  <div class="hours-estimate">
-    <p class="box-estimate">{{ estimate }}</p>
+<div class="result-estimate-container" *ngIf="finalResults">
+
+  <div class="final-estimate-container">
+    <h3>Total Estimate</h3>
+    <div class="hours-estimate">
+      <span class="box-estimate">{{ estimate }}</span>
+    </div>
+    <p>Hours</p>
   </div>
-  <p>hours</p>
+
 </div>

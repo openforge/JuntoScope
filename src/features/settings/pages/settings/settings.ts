@@ -37,12 +37,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnDestroy() {
-    if (this.logOutSub) {
-      this.logOutSub.unsubscribe();
-    }
-    if (this.faqsSub) {
-      this.faqsSub.unsubscribe();
-    }
+    this.unsub();
   }
 
   ngOnInit() {
@@ -65,10 +60,20 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   logout() {
+    this.unsub();
     this.authFacade.logout();
 
     this.logOutSub = this.logoutRedirect$.pipe(take(1)).subscribe(() => {
       this.navCtrl.push(LoginPage);
     });
+  }
+
+  unsub() {
+    if (this.logOutSub) {
+      this.logOutSub.unsubscribe();
+    }
+    if (this.faqsSub) {
+      this.faqsSub.unsubscribe();
+    }
   }
 }

@@ -43,6 +43,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   user$: Observable<User>;
   participantState: ParticipantState;
   session: ScopingSession;
+  currentSession: ScopingSession;
   user: User;
   task: Task;
   taskId: string;
@@ -85,7 +86,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   async getLastTask() {
-    console.log("getting last task");
     if (this.lastTaskId) {
       const lastTask = await this.historySvc.getSessionTask(
         {
@@ -110,14 +110,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
     }
   }
 
-  ionViewWillEnter() {
-    if (!this.session) {
-      this.loadSession();
-    }
-  }
-
   loadSession() {
-    console.log("loading session");
     this.lastTaskId = null;
 
     this.sessionCode = this.navParams.get("sessionUrl");
@@ -132,7 +125,6 @@ export class SessionScopingPage implements OnInit, OnDestroy {
 
     // Sets next task
     this.sessionSub = this.session$.subscribe(session => {
-      console.log("new millenial fired");
 
       if (session && session.tasks) {
         this.session = session;
@@ -140,6 +132,10 @@ export class SessionScopingPage implements OnInit, OnDestroy {
         this.lastTaskId = this.taskId ? this.taskId : null;
         this.taskId = this.session.currentTaskId;
         this.task = this.session.tasks[this.taskId];
+
+        if (!this.currentSession) {
+          this.currentSession = this.session;
+        }
 
         this.didVote(session.tasks[this.taskId]);
 
@@ -162,8 +158,9 @@ export class SessionScopingPage implements OnInit, OnDestroy {
             max = voteVal > max ? voteVal : max;
             voteSum += voteVal;
           });
-          this.average =
-            voteSum / Object.keys(this.session.tasks[this.taskId].votes).length;
+          this.average = Math.round(
+            voteSum / Object.keys(this.session.tasks[this.taskId].votes).length
+          );
           this.max = max;
         }
 
@@ -175,10 +172,8 @@ export class SessionScopingPage implements OnInit, OnDestroy {
 
         // if has voted and estimate submitted, go to next task
         if (this.estimateSubmitted && !this.timerOn) {
-          console.log("setting timer!");
           this.timerOn = true;
           setTimeout(() => {
-            this.putEstimateOnConnection();
             this.nextTask();
           }, TIMER_FOR_NEXT_TASK);
         }
@@ -187,13 +182,11 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   ionViewWillLeave() {
-    console.log("Leaving...");
     this.lastTaskId = null;
     this.unsub();
   }
 
   ngOnDestroy() {
-    console.log("Destroying...");
     this.lastTaskId = null;
     this.unsub();
   }
@@ -248,6 +241,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
         this.taskId,
         this.finalEstimate
       );
+      this.putEstimateOnConnection();
     }
   }
 
@@ -275,11 +269,11 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   nextTask() {
-    console.log("next task...");
     this.allVotesSubmited = false;
     this.estimateSubmitted = false;
     this.finalEstimate = null;
     this.timerOn = false;
+    this.currentSession = this.session;
     this.next.next();
 
     this.isComplete();
@@ -294,7 +288,7 @@ export class SessionScopingPage implements OnInit, OnDestroy {
   }
 
   putEstimateOnConnection() {
-    if (this.finalEstimate) {
+    if (this.finalEstimate && this.isModerator) {
       this.scopingFacade.putEstimate(
         this.user.uid,
         this.session.connectionId,

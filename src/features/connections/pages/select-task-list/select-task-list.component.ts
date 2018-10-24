@@ -22,9 +22,9 @@ export class SelectTaskListPage implements OnInit {
   loaded: boolean = false;
 
   taskLists$ = this.connectionFacade.selectedConnection$.pipe(
-    filter(connection =>
-      _.has(connection, `projects.${this.projectId}.taskLists`)
-    ),
+    filter(connection => {
+      return _.has(connection, `projects.${this.projectId}.taskLists`);
+    }),
     map((connection: Connection) => {
       this.loaded = true;
 
@@ -47,7 +47,6 @@ export class SelectTaskListPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadingSrv.initialize();
     this.connectionId = this.navParams.get("connectionId");
     this.projectId = this.navParams.get("projectId");
     this.projectName = this.navParams.get("projectName");

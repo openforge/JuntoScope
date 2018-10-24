@@ -11,7 +11,6 @@ export class VerifyModalComponent implements OnInit {
   constructor(private params: NavParams, private viewCtrl: ViewController) {}
 
   ngOnInit() {
-    console.log(this.params.data.connectionData);
     this.connectionData = this.params.data.connectionData;
   }
 

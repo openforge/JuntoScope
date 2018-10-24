@@ -2,6 +2,7 @@ app-session-detail-modal {
   background: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 50%;
+
   ion-content.content {
     border-radius: 2rem;
     height: calc(100% - 28rem);
@@ -10,6 +11,7 @@ app-session-detail-modal {
     display: flex;
     justify-content: center;
   }
+
   .share-box {
     display: flex;
     flex-direction: column;
@@ -31,9 +33,10 @@ app-session-detail-modal {
     .access-code-letters {
       display: flex;
       justify-content: center;
+
       .single-letter {
         color: black;
-        border: 1px solid #c94313;
+        border: 1px solid $primary-orange;
         padding: 5px;
         border-radius: 5px;
         margin-right: 10px;
@@ -45,8 +48,9 @@ app-session-detail-modal {
       text-transform: capitalize;
     }
   }
+
   .delete-box {
-    border-top: 2px solid #c94313;
+    border-top: 2px solid $primary-orange;
     padding-top: 20px;
     display: flex;
     flex-direction: row;

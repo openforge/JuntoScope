@@ -41,7 +41,6 @@ export class SelectProjectPage implements OnInit {
 
   ngOnInit(): void {
     this.connectionId = this.navParams.get("connectionId");
-    console.log("Connection id: ", this.connectionId);
     this.connectionFacade.selectConnection(this.connectionId);
   }
 

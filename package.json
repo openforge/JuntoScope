@@ -1,160 +1,168 @@
 {
-  "name": "juntoscope",
-  "version": "1.0.1",
-  "author": "OpenForge",
-  "license": "MIT",
-  "homepage": "http://openforge.io/",
-  "private": true,
-  "scripts": {
-    "ionic:clean": "ionic-app-scripts clean",
-    "ionic:lint": "ionic-app-scripts lint",
-    "ionic:build": "ionic-app-scripts build",
-    "ionic:build:prod": "ionic-app-scripts build --prod",
-    "ionic:serve": "ionic-app-scripts serve",
-    "test": "jest --watch --no-cache",
-    "test:ci": "jest --runInBand",
-    "test:coverage": "jest --coverage",
-    "e2e": "ng e2e",
-    "cz": "git-cz",
-    "prettify": "prettier -l ./src/**/*.{js,jsx,ts,tsx,css,scss,md} --write",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "firebase:serve": "npm --prefix functions run build && firebase serve --only functions",
-    "firebase:shell": "npm --prefix functions run build && firebase functions:shell",
-    "firebase:deploy": "firebase use default --token $FIREBASE_TOKEN && firebase deploy --only firestore:rules,functions,hosting --token $FIREBASE_TOKEN",
-    "firebase:deploy:prod": "firebase use production --token $FIREBASE_TOKEN && firebase deploy --only firestore:rules,functions,hosting --token $FIREBASE_TOKEN",
-    "firebase:logs": "firebase functions:log"
-  },
-  "dependencies": {
-    "@angular/animations": "5.2.11",
-    "@angular/common": "5.2.11",
-    "@angular/compiler": "5.2.11",
-    "@angular/compiler-cli": "5.2.11",
-    "@angular/core": "5.2.11",
-    "@angular/forms": "5.2.11",
-    "@angular/http": "5.2.11",
-    "@angular/platform-browser": "5.2.11",
-    "@angular/platform-browser-dynamic": "5.2.11",
-    "@angular/router": "6.0.7",
-    "@ionic-native/core": "4.8.0",
-    "@ionic-native/facebook": "^4.11.0",
-    "@ionic-native/google-plus": "^4.11.0",
-    "@ionic-native/in-app-browser": "^4.11.0",
-    "@ionic-native/screen-orientation": "^4.11.0",
-    "@ionic-native/splash-screen": "4.8.0",
-    "@ionic-native/status-bar": "4.8.0",
-    "@ionic-native/twitter-connect": "^4.11.0",
-    "@ionic/storage": "2.1.3",
-    "@ngrx/effects": "6.0.0-beta.1",
-    "@ngrx/entity": "6.0.0-beta.1",
-    "@ngrx/router-store": "6.0.0-beta.1",
-    "@ngrx/store": "6.0.0-beta.1",
-    "@ngrx/store-devtools": "6.0.0-beta.1",
-    "angularfire2": "5.0.0-rc.4",
-    "cordova-android": "7.0.0",
-    "cordova-android-support-gradle-release": "^1.4.4",
-    "cordova-ios": "4.5.5",
-    "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-facebook4": "~2.2.0",
-    "cordova-plugin-googleplus": "^5.3.0",
-    "cordova-plugin-inappbrowser": "^3.0.0",
-    "cordova-plugin-ionic-keyboard": "2.0.5",
-    "cordova-plugin-ionic-webview": "1.1.19",
-    "cordova-plugin-screen-orientation": "^3.0.1",
-    "cordova-plugin-splashscreen": "5.0.2",
-    "cordova-plugin-whitelist": "1.3.3",
-    "core-js": "2.5.3",
-    "es6-promise-plugin": "^4.2.2",
-    "firebase": "4.12.1",
-    "functions": "file:functions",
-    "ionic-angular": "3.9.2",
-    "ionicons": "3.0.0",
-    "lodash": "4.17.10",
-    "moment": "2.22.1",
-    "ngrx-store-freeze": "0.2.1",
-    "ngx-take-until-destroy": "2.2.1",
-    "rxjs": "6.0.0",
-    "rxjs-compat": "6.0.0",
-    "sw-toolbox": "3.6.0",
-    "twitter-connect-plugin": "git+https://github.com/chroa/twitter-connect-plugin.git",
-    "zone.js": "0.8.26"
-  },
-  "devDependencies": {
-    "@angular/cli": "1.1.2",
-    "@commitlint/cli": "6.1.3",
-    "@commitlint/config-conventional": "6.1.3",
-    "@ionic/app-scripts": "3.1.10",
-    "@types/lodash": "4.14.108",
-    "@types/node": "~6.0.60",
-    "codelyzer": "4.0.1",
-    "commitizen": "2.9.6",
-    "conventional-changelog-cli": "1.3.21",
-    "cz-conventional-changelog": "2.1.0",
-    "firebase-tools": "3.18.4",
-    "husky": "0.15.0-rc.13",
-    "jasmine-core": "~2.8.0",
-    "jasmine-spec-reporter": "~4.2.1",
-    "jest": "22.4.3",
-    "jest-marbles": "1.0.6",
-    "jest-preset-angular": "5.2.1",
-    "lint-staged": "7.0.3",
-    "prettier": "1.11.1",
-    "protractor": "~5.1.2",
-    "ts-node": "~4.1.0",
-    "tslint": "~5.9.1",
-    "tslint-config-prettier": "1.10.0",
-    "typescript": "~2.7.2"
-  },
-  "description": "An Ionic project",
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+    "name": "juntoscope",
+    "version": "1.0.3",
+    "author": "OpenForge",
+    "license": "MIT",
+    "homepage": "http://openforge.io/",
+    "private": true,
+    "scripts": {
+        "build": "ionic-app-scripts build",
+        "ionic:clean": "ionic-app-scripts clean",
+        "ionic:lint": "ionic-app-scripts lint",
+        "ionic:build": "ionic-app-scripts build",
+        "ionic:build:prod": "ionic-app-scripts build --prod",
+        "ionic:serve": "ionic-app-scripts serve",
+        "test": "jest --watch --no-cache",
+        "test:ci": "jest --runInBand",
+        "test:coverage": "jest --coverage",
+        "e2e": "ng e2e",
+        "cz": "git-cz",
+        "prettify": "prettier -l ./src/**/*.{js,jsx,ts,tsx,css,scss,md} --write",
+        "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
+        "firebase:serve": "npm --prefix functions run build && firebase serve --only functions",
+        "firebase:shell": "npm --prefix functions run build && firebase functions:shell",
+        "firebase:deploy": "firebase use default --token $FIREBASE_TOKEN && firebase deploy --only firestore:rules,functions,hosting --token $FIREBASE_TOKEN",
+        "firebase:deploy:prod": "firebase use production --token $FIREBASE_TOKEN && firebase deploy --only firestore:rules,functions,hosting --token $FIREBASE_TOKEN",
+        "firebase:logs": "firebase functions:log"
+    },
+    "dependencies": {
+        "@angular/animations": "5.2.11",
+        "@angular/common": "5.2.11",
+        "@angular/compiler": "5.2.11",
+        "@angular/compiler-cli": "5.2.11",
+        "@angular/core": "5.2.11",
+        "@angular/forms": "5.2.11",
+        "@angular/http": "5.2.11",
+        "@angular/platform-browser": "5.2.11",
+        "@angular/platform-browser-dynamic": "5.2.11",
+        "@angular/router": "6.0.7",
+        "@ionic-native/core": "4.8.0",
+        "@ionic-native/deeplinks": "^4.12.2",
+        "@ionic-native/facebook": "^4.11.0",
+        "@ionic-native/google-plus": "^4.11.0",
+        "@ionic-native/in-app-browser": "^4.11.0",
+        "@ionic-native/safari-view-controller": "^4.12.2",
+        "@ionic-native/screen-orientation": "^4.11.0",
+        "@ionic-native/splash-screen": "4.8.0",
+        "@ionic-native/status-bar": "4.8.0",
+        "@ionic-native/twitter-connect": "^4.11.0",
+        "@ionic/storage": "2.1.3",
+        "@ngrx/effects": "6.0.0-beta.1",
+        "@ngrx/entity": "6.0.0-beta.1",
+        "@ngrx/router-store": "6.0.0-beta.1",
+        "@ngrx/store": "6.0.0-beta.1",
+        "@ngrx/store-devtools": "6.0.0-beta.1",
+        "angularfire2": "5.0.0-rc.4",
+        "cordova-android": "7.0.0",
+        "cordova-android-support-gradle-release": "^1.4.4",
+        "cordova-ios": "4.5.5",
+        "cordova-plugin-device": "2.0.2",
+        "cordova-plugin-facebook4": "~2.2.0",
+        "cordova-plugin-googleplus": "^5.3.0",
+        "cordova-plugin-inappbrowser": "^3.0.0",
+        "cordova-plugin-ionic-keyboard": "2.0.5",
+        "cordova-plugin-ionic-webview": "1.1.19",
+        "cordova-plugin-screen-orientation": "^3.0.1",
+        "cordova-plugin-splashscreen": "5.0.2",
+        "cordova-plugin-whitelist": "1.3.3",
+        "core-js": "2.5.3",
+        "es6-promise-plugin": "^4.2.2",
+        "firebase": "4.12.1",
+        "functions": "file:functions",
+        "ionic-angular": "3.9.2",
+        "ionicons": "3.0.0",
+        "lodash": "4.17.10",
+        "moment": "2.22.1",
+        "ngrx-store-freeze": "0.2.1",
+        "ngx-take-until-destroy": "2.2.1",
+        "rxjs": "6.0.0",
+        "rxjs-compat": "6.0.0",
+        "sw-toolbox": "3.6.0",
+        "twitter-connect-plugin": "git+https://github.com/chroa/twitter-connect-plugin.git",
+        "zone.js": "0.8.26"
+    },
+    "devDependencies": {
+        "@angular/cli": "1.1.2",
+        "@commitlint/cli": "6.1.3",
+        "@commitlint/config-conventional": "6.1.3",
+        "@ionic/app-scripts": "3.1.10",
+        "@types/lodash": "4.14.108",
+        "@types/node": "~6.0.60",
+        "codelyzer": "4.0.1",
+        "commitizen": "2.9.6",
+        "conventional-changelog-cli": "1.3.21",
+        "cz-conventional-changelog": "2.1.0",
+        "firebase-tools": "3.18.4",
+        "husky": "0.15.0-rc.13",
+        "jasmine-core": "~2.8.0",
+        "jasmine-spec-reporter": "~4.2.1",
+        "jest": "22.4.3",
+        "jest-marbles": "1.0.6",
+        "jest-preset-angular": "5.2.1",
+        "lint-staged": "7.0.3",
+        "prettier": "1.11.1",
+        "protractor": "~5.1.2",
+        "ts-node": "~4.1.0",
+        "tslint": "~5.9.1",
+        "tslint-config-prettier": "1.10.0",
+        "typescript": "~2.7.2"
+    },
+    "description": "An application built with love and Ionic to make scoping easier.",
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "commit-msg": "commitlint -e $GIT_PARAMS"
+        }
+    },
+    "lint-staged": {
+        "{src,e2e,functions/src}/**/*.{js,ts}": [
+            "npx tslint",
+            "git add"
+        ],
+        "{src,e2e,functions/src}/**/*.{js,ts,css,scss,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "cordova": {
+        "platforms": [
+            "android",
+            "ios"
+        ],
+        "plugins": {
+            "cordova-plugin-googleplus": {
+                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.10246365693-nmqslkj1herjr37pji9dondov6d3mqg2"
+            },
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-device": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-ionic-webview": {},
+            "cordova-plugin-ionic-keyboard": {},
+            "cordova-android-support-gradle-release": {
+                "ANDROID_SUPPORT_VERSION": "27.+"
+            },
+            "cordova-plugin-facebook4": {
+                "APP_ID": "1427549454016328",
+                "APP_NAME": "JuntoScope",
+                "ANDROID_SDK_VERSION": "4.+"
+            },
+            "twitter-connect-plugin": {
+                "FABRIC_KEY": "1ba0dc025725ca34727a6f26e9be759d120e4bad",
+                "TWITTER_KEY": "RpWT5YZYdFYjPSzI8wB5O4kwP",
+                "TWITTER_SECRET": "yILFMxwPl7zK4qKuQMqqmAZ9bQbJGKbOt8gygvOPweYRamoSoq"
+            },
+            "cordova-plugin-screen-orientation": {},
+            "cordova-plugin-inappbrowser": {},
+            "cordova-plugin-safariviewcontroller": {},
+            "ionic-plugin-deeplinks": {
+                "URL_SCHEME": "juntoscope",
+                "DEEPLINK_HOST": "juntoscope.com"
+            }
+        }
     }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -e $GIT_PARAMS"
-    }
-  },
-  "lint-staged": {
-    "{src,e2e,functions/src}/**/*.{js,ts}": [
-      "npx tslint",
-      "git add"
-    ],
-    "{src,e2e,functions/src}/**/*.{js,ts,css,scss,md}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "cordova": {
-    "platforms": [
-      "android",
-      "ios"
-    ],
-    "plugins": {
-      "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.10246365693-nmqslkj1herjr37pji9dondov6d3mqg2"
-      },
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-device": {},
-      "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {},
-      "cordova-android-support-gradle-release": {
-        "ANDROID_SUPPORT_VERSION": "27.+"
-      },
-      "cordova-plugin-facebook4": {
-        "APP_ID": "1427549454016328",
-        "APP_NAME": "JuntoScope",
-        "ANDROID_SDK_VERSION": "4.+"
-      },
-      "twitter-connect-plugin": {
-        "FABRIC_KEY": "1ba0dc025725ca34727a6f26e9be759d120e4bad",
-        "TWITTER_KEY": "RpWT5YZYdFYjPSzI8wB5O4kwP",
-        "TWITTER_SECRET": "yILFMxwPl7zK4qKuQMqqmAZ9bQbJGKbOt8gygvOPweYRamoSoq"
-      },
-      "cordova-plugin-screen-orientation": {},
-      "cordova-plugin-inappbrowser": {}
-    }
-  }
 }
