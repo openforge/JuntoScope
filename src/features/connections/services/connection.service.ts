@@ -14,7 +14,7 @@ import {
 
 import * as _ from "lodash";
 
-import { environment } from "../../../environments/environment.prod";
+import { environment } from "../../../environments/environment";
 import { Project } from "../../../models/project";
 import { TaskList } from "../../../models/task-list";
 import { Connection } from "../../../models/connection";

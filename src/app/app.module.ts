@@ -19,7 +19,7 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFirestoreModule } from "angularfire2/firestore";
 
 import { AppFacade } from "../store/app.facade";
-import { environment } from "../environments/environment.prod";
+import { environment } from "../environments/environment";
 
 import { JuntoScopeComponent } from "./app.component";
 import { SharedModule } from "../shared/shared.module";

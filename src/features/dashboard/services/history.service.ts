@@ -14,7 +14,7 @@ import { AppFacade } from "../../../store/app.facade";
 import { ScopingSession } from "../../../models/scoping-session";
 import { HistoryItem } from "../../../models/history-item";
 import { Task } from "../../../models/task";
-import { environment } from "../../../environments/environment.prod";
+import { environment } from "../../../environments/environment";
 
 @Injectable()
 export class HistoryService {

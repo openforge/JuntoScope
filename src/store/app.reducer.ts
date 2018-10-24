@@ -1,6 +1,6 @@
 import { MetaReducer, ActionReducerMap, createSelector } from "@ngrx/store";
 import { storeFreeze } from "ngrx-store-freeze";
-import { environment } from "../environments/environment.prod";
+import { environment } from "../environments/environment";
 import { NavigationOptions } from "./router.actions";
 import {
   AuthState,
