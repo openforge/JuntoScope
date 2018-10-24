@@ -5,8 +5,12 @@ exports.config = {
 
   beforeLaunch: () => {
     require("ts-node").register({
-      project: "src/tsconfig.spec.json"
+      project: "e2e/tsconfig.json"
     });
+
+    require("zone.js/dist/zone-node");
+    require("zone.js/dist/async-test.js");
+    require("zone.js/dist/proxy.js");
   }
   // onPrepare() {
   //   jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
