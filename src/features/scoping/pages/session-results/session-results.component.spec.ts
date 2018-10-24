@@ -1,24 +1,24 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+// import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SessionResultsComponent } from "./session-results.component";
+// import { SessionResultsComponent } from "./session-results.component";
 
-describe("SessionResultsComponent", () => {
-  let component: SessionResultsComponent;
-  let fixture: ComponentFixture<SessionResultsComponent>;
+// describe("SessionResultsComponent", () => {
+//   let component: SessionResultsComponent;
+//   let fixture: ComponentFixture<SessionResultsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [SessionResultsComponent]
-    }).compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [SessionResultsComponent]
+//     }).compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SessionResultsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(SessionResultsComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it("should create", () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it("should create", () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
