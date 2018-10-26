@@ -1,14 +1,18 @@
-// example-spec.js
-describe("angularjs homepage", function() {
-  it("should exist", function() {
-    browser.get("http://localhost:8100/#/LoginPage");
+// // example-spec.js
+// describe("angularjs homepage", function() {
+//   it("should exist", function() {
 
-    // element(by.model("yourName")).sendKeys("Julie");
+//     // browser.get("http://www.angularjs.org");
+//     // element(by.model("yourName")).sendKeys("Julie");
+//     //var greeting = element(by.binding("yourName"));
+//     // expect(greeting.getText()).toEqual("Hello Julie!");
 
-    var container = element(by.css(".jedi"));
+//     browser.get("http://localhost:8100/#/LoginPage");
 
-    //var greeting = element(by.binding("yourName"));
+//     var container = element(by.css(".jedi"));
 
-    expect(container).toBeTruthy();
-  });
-});
+//     expect(container).toBeTruthy();
+
+//     // browser.pause();
+//   });
+// });
