@@ -1,12 +1,14 @@
 // example-spec.js
 describe("angularjs homepage", function() {
-  it("should greet the named user", function() {
-    browser.get("http://www.angularjs.org");
+  it("should exist", function() {
+    browser.get("http://localhost:8100/#/LoginPage");
 
-    element(by.model("yourName")).sendKeys("Julie");
+    // element(by.model("yourName")).sendKeys("Julie");
 
-    var greeting = element(by.binding("yourName"));
+    var container = element(by.css(".jedi"));
 
-    expect(greeting.getText()).toEqual("Hello Julie!");
+    //var greeting = element(by.binding("yourName"));
+
+    expect(container).toBeTruthy();
   });
 });
