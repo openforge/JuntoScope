@@ -3,7 +3,9 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 exports.config = {
   framework: "jasmine",
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  specs: ["src/**/**/*.spec.ts", "src/**/**/*.spec.js", "src/**/*-spec.js", "e2e/*.spec.ts"],
+  specs: ["src/**/**/*.spec.ts", "src/**/*-spec.js", "e2e/*.spec.ts"],
+
+  // "e2e/*.spec.ts"
 
   beforeLaunch: () => {
     require("ts-node").register({
