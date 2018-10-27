@@ -5,12 +5,8 @@ describe("Example E2E Test", () => {
   it("the login page is displayed by default", () => {
     browser.get("http://localhost:8100/#/LoginPage");
 
-    var greeting = element(by.css("div p"));
+    var greeting = element(by.css(".container p"));
 
-    greeting.getText().then(function(value) {
-      console.log(value);
-
-      expect(value).toContain("First");
-    });
+    expect(greeting.getAttribute("innerHTML")).toContain("First");
   });
 });
