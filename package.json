@@ -106,7 +106,9 @@
         "ts-node": "~4.1.0",
         "tslint": "~5.9.1",
         "tslint-config-prettier": "1.10.0",
-        "typescript": "~2.7.2"
+        "typescript": "~2.7.2",
+        "webdriver-manager": "^12.1.0",
+        "webpack": "^4.23.1"
     },
     "description": "An application built with love and Ionic to make scoping easier.",
     "config": {
