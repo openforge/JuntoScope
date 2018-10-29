@@ -6,7 +6,10 @@ describe("Example E2E Test", () => {
   it("the login page is displayed by default", () => {
     browser.get("http://localhost:8100/#/LoginPage");
 
-    var checkbox = element(by.tagName("ion-checkbox"));
-    checkbox.click();
+    var checkbox = element(by.css(".checkbox-inner"));
+
+    // checkbox.click();
+
+    // expect(checkbox).toBeTruthy();
   });
 });
