@@ -6,7 +6,7 @@ describe("Example E2E Test", () => {
   it("the login page is displayed by default", () => {
     browser.get("http://localhost:8100/#/LoginPage");
 
-    var checkbox = element(by.css(".checkbox-inner"));
+    var checkbox = element(by.css('[name="agree"]'));
 
     // checkbox.click();
 
