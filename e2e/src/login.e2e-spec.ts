@@ -26,4 +26,15 @@ describe("E2E testing for Login Page", () => {
     expect(loginBtns.get(2).isEnabled()).toBeTruthy();
     browser.sleep(3000);
   });
+
+  it("should open Terms of Service and Privacy Policy", () => {
+    const termsLinks = page.getTermsLinks();
+    termsLinks.get(0).click();
+    browser.sleep(1500);
+    expect(termsLinks.get(0)).toBeTruthy();
+
+    termsLinks.get(1).click();
+    browser.sleep(3000);
+    expect(termsLinks.get(1)).toBeTruthy();
+  });
 });

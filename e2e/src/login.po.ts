@@ -14,6 +14,9 @@ export class LoginPage {
     return element(by.css(description));
   }
 
+  getTermsLinks() {
+    return element.all(by.css(".terms a"));
+  }
   getParagraphText() {
     return element(by.css("ion-label")).getText();
   }
