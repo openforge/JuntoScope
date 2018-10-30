@@ -1,11 +1,8 @@
 import { browser, element, by, ElementFinder } from "protractor";
 
 describe("Example E2E Test", () => {
-  beforeEach(function() {});
-
   beforeAll(function() {
     browser.get("http://localhost:8100/#/LoginPage");
-    // browser.ignoreSynchronization = true;
     browser.waitForAngularEnabled(false);
   });
 
@@ -42,6 +39,13 @@ describe("Example E2E Test", () => {
 
     browser.sleep(6000);
 
-    // browser.pause();
+    browser.getAllWindowHandles().then(value => {
+      console.log(value);
+      expect(value[1]).toBeTruthy();
+    });
+  });
+
+  it("should enter username and password for Twitter popup window", () => {
+    var;
   });
 });
