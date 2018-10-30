@@ -7,13 +7,13 @@ describe("workspace-project App", () => {
     page = new AppPage();
   });
 
-  xit("should display welcome message", () => {
+  it("should display label as 'I Agree'", () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual("JuntoScope");
+    expect(page.getParagraphText()).toEqual("I Agree");
   });
 
-  xit("should contain 'oyster'", () => {
+  it("should display 'FACEBOOK'", () => {
     page.navigateTo();
-    expect(page.getContentText()).toContain("oyster");
+    expect(page.getContentText()).toEqual("FACEBOOK");
   });
 });
