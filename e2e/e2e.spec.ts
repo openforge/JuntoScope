@@ -1,4 +1,4 @@
-import { browser, element, by, ElementFinder } from "protractor";
+import { browser, element, by, ElementFinder, protractor } from "protractor";
 
 describe("Example E2E Test", () => {
   beforeAll(function() {
@@ -37,15 +37,39 @@ describe("Example E2E Test", () => {
 
     twitterButton.click();
 
-    browser.sleep(6000);
+    // browser.sleep(6000);
 
     browser.getAllWindowHandles().then(value => {
+      let EC = protractor.ExpectedConditions;
       console.log(value);
       expect(value[1]).toBeTruthy();
     });
   });
 
   it("should enter username and password for Twitter popup window", () => {
-    var;
+    browser.getAllWindowHandles().then(handles => {
+      browser
+        .switchTo()
+        .window(handles[1])
+        .then(() => {
+          let EC = protractor.ExpectedConditions;
+          browser.wait(
+            EC.presenceOf(element(by.css("#username_or_email"))),
+            5000
+          );
+          element(by.css("#username_or_email")).sendKeys("samhudgensdev");
+          element(by.css("#password")).sendKeys("openforge777");
+          element(by.css("#allow")).click();
+          browser.sleep(5000);
+
+          browser
+            .switchTo()
+            .window(handles[0])
+            .then(() => {
+              let url = browser.getCurrentUrl();
+              expect(url).toEqual("http://localhost:8100/#/DashboardPage");
+            });
+        });
+    });
   });
 });
