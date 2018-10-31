@@ -166,7 +166,8 @@
             "ionic-plugin-deeplinks": {
                 "URL_SCHEME": "juntoscope",
                 "DEEPLINK_HOST": "juntoscope.com"
-            }
+            },
+            "cordova-plugin-hotspot": {}
         }
     }
 }

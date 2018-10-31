@@ -1,9 +1,10 @@
 import { LoginPage } from "./login.po";
-import { browser, ExpectedConditions } from "protractor";
+import { browser, element, by } from "protractor";
 
 describe("E2E testing for Login Page", () => {
   let page: LoginPage;
   let loginBtns;
+  let count;
 
   beforeAll(() => {
     page = new LoginPage();
@@ -24,7 +25,7 @@ describe("E2E testing for Login Page", () => {
     expect(loginBtns.get(0).isEnabled()).toBe(true);
     expect(loginBtns.get(1).isEnabled()).toBeTruthy();
     expect(loginBtns.get(2).isEnabled()).toBeTruthy();
-    browser.sleep(2000);
+    browser.sleep(1000);
   });
 
   it("should be true for 'aria-checked' when the checkbox was clicked.", () => {
@@ -35,18 +36,82 @@ describe("E2E testing for Login Page", () => {
   it("should open Terms of Service and Privacy Policy", () => {
     const termsLinks = page.getTermsLinks();
     termsLinks.get(0).click();
-    browser.getAllWindowHandles().then(values => {
-      expect(values.length).toBe(2);
-      expect(values[1]).toBeTruthy();
+    browser.getAllWindowHandles().then(handles => {
+      count = handles.length;
+      if (count > 1) {
+        browser
+          .switchTo()
+          .window(handles[count - 1])
+          .then(() => {
+            browser.sleep(1000);
+          })
+          .then(() => {
+            browser.getTitle().then(title => {
+              expect(title).toBe("JuntoScope Terms of Service - Google Docs");
+              console.log("title:", title);
+            });
+          });
+        browser.close();
+        browser
+          .switchTo()
+          .window(handles[count - 2])
+          .then(() => {
+            browser.sleep(2000);
+          });
+      }
     });
-    browser.sleep(1000);
 
     termsLinks.get(1).click();
-    browser.getAllWindowHandles().then(values => {
-      expect(values.length).toBe(3);
-      expect(values[2]).toBeTruthy();
+    browser.getAllWindowHandles().then(handles => {
+      count = handles.length;
+      if (count > 1) {
+        browser
+          .switchTo()
+          .window(handles[count - 1])
+          .then(() => {
+            browser.sleep(2000);
+          })
+          .then(() => {
+            browser.getTitle().then(title => {
+              expect(title).toBe("JuntoScope Privacy Policy - Google Docs");
+              console.log("title:", title);
+            });
+          });
+        browser.close();
+        browser
+          .switchTo()
+          .window(handles[count - 2])
+          .then(() => {
+            browser.sleep(2000);
+          });
+      }
     });
-    browser.sleep(2000);
-    expect(termsLinks.get(1)).toBeTruthy();
   });
+
+  it("should open a new window to login with Google account.", () => {
+    loginBtns.get(1).click();
+    browser.getAllWindowHandles().then(handles => {
+      let input;
+      count = handles.length;
+      if (count > 1) {
+        browser
+          .switchTo()
+          .window(handles[count - 1])
+          .then(() => {
+            browser.sleep(2000);
+          })
+          .then(() => {
+            browser.getTitle().then(title => {
+              expect(title).toBe("Sign in - Google Accounts");
+              console.log(title);
+            });
+            input = browser.findElement(by.id("identifierId"));
+            input.sendKeys("young@openforge.io");
+            browser.sleep(10000);
+          });
+      }
+    });
+  });
+
+  it("should diplay user's email at input", () => {});
 });
