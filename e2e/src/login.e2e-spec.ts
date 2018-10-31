@@ -1,5 +1,5 @@
 import { LoginPage } from "./login.po";
-import { browser } from "protractor";
+import { browser, ExpectedConditions } from "protractor";
 
 describe("E2E testing for Login Page", () => {
   let page: LoginPage;
@@ -35,10 +35,17 @@ describe("E2E testing for Login Page", () => {
   it("should open Terms of Service and Privacy Policy", () => {
     const termsLinks = page.getTermsLinks();
     termsLinks.get(0).click();
+    browser.getAllWindowHandles().then(values => {
+      expect(values.length).toBe(2);
+      expect(values[1]).toBeTruthy();
+    });
     browser.sleep(1000);
-    expect(termsLinks.get(0)).toBeTruthy();
 
     termsLinks.get(1).click();
+    browser.getAllWindowHandles().then(values => {
+      expect(values.length).toBe(3);
+      expect(values[2]).toBeTruthy();
+    });
     browser.sleep(2000);
     expect(termsLinks.get(1)).toBeTruthy();
   });

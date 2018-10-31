@@ -5,15 +5,14 @@ describe("workspace-project App", () => {
 
   beforeEach(() => {
     page = new AppPage();
+    page.navigateTo();
   });
 
   it("should display label as 'I Agree'", () => {
-    page.navigateTo();
     expect(page.getParagraphText()).toEqual("I Agree");
   });
 
   it("should display 'FACEBOOK'", () => {
-    page.navigateTo();
     expect(page.getContentText()).toEqual("FACEBOOK");
   });
 });
