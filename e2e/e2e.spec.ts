@@ -46,7 +46,7 @@ describe("Example E2E Test", () => {
     });
   });
 
-  it("should enter username and password for Twitter popup window", () => {
+  it("should enter username and password for Twitter popup window and navigate to Dashboard page", () => {
     browser.getAllWindowHandles().then(handles => {
       browser
         .switchTo()
@@ -57,9 +57,11 @@ describe("Example E2E Test", () => {
             EC.presenceOf(element(by.css("#username_or_email"))),
             5000
           );
+
           element(by.css("#username_or_email")).sendKeys("samhudgensdev");
           element(by.css("#password")).sendKeys("openforge777");
           element(by.css("#allow")).click();
+
           browser.sleep(5000);
 
           browser
