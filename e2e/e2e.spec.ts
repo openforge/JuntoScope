@@ -1,4 +1,11 @@
-import { browser, element, by, ElementFinder, protractor } from "protractor";
+import {
+  browser,
+  element,
+  by,
+  ElementFinder,
+  protractor,
+  ExpectedConditions
+} from "protractor";
 
 describe("Example E2E Test", () => {
   beforeAll(function() {
@@ -62,7 +69,7 @@ describe("Example E2E Test", () => {
           element(by.css("#password")).sendKeys("openforge777");
           element(by.css("#allow")).click();
 
-          browser.sleep(5000);
+          browser.sleep(4000);
 
           browser
             .switchTo()
@@ -70,8 +77,32 @@ describe("Example E2E Test", () => {
             .then(() => {
               let url = browser.getCurrentUrl();
               expect(url).toEqual("http://localhost:8100/#/DashboardPage");
+
+              browser.sleep(2000);
+
+              // expect(joinButton.isEnabled()).toBe(false);
             });
         });
     });
+  });
+
+  it("should click Add New Connection button and navigate to the AddConnectionPage", () => {
+    // let addNewConnectionButton = element(by.css("button .item-button"));
+    // expect(addNewConnectionButton).toBeTruthy();
+    browser.get("http://localhost:8100/#/DashboardPage");
+    browser.getAllWindowHandles().then(handles => {
+      console.log(handles);
+    });
+
+    // let EC = protractor.ExpectedConditions;
+    // browser.wait(EC.presenceOf(element(by.css("div .toolbar-title"))), 5000);
+
+    let addNewConnectionButton = element(by.css(".new-connection"));
+    addNewConnectionButton.click();
+
+    browser.sleep(3000);
+
+    // expect(joinButton.isPresent()).toBe(true);
+    // expect(joinButton.isEnabled()).toBe(false);
   });
 });
