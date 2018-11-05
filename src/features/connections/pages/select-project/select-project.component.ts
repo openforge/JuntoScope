@@ -4,6 +4,7 @@ import { ConnectionFacade } from "../../store/connection.facade";
 import { Project } from "../../../../models/project";
 import { Connection } from "../../../../models/connection";
 import { NavController, NavParams, IonicPage } from "ionic-angular";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 @IonicPage({
   segment: "SelectProjectPage",
@@ -36,10 +37,12 @@ export class SelectProjectPage implements OnInit {
   constructor(
     private connectionFacade: ConnectionFacade,
     private navCtrl: NavController,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private firebaseAnalytics: FirebaseAnalytics
   ) {}
 
   ngOnInit(): void {
+    this.firebaseAnalytics.logEvent("page_view", { page: "SelectProjectPage" });
     this.connectionId = this.navParams.get("connectionId");
     this.connectionFacade.selectConnection(this.connectionId);
   }

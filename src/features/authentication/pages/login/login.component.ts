@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
@@ -38,7 +39,8 @@ export class LoginPage implements OnInit, OnDestroy {
     private actions$: Actions,
     private popupSvc: PopupService,
     private loadingSrv: LoadingService,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
+    private firebaseAnalytics: FirebaseAnalytics
   ) {
     this.redirectSubs = this.actions$
       .ofType(AuthActionTypes.AUTHENTICATED)
@@ -67,6 +69,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.firebaseAnalytics.logEvent("page_view", { page: "LoginPage" });
     this.createForm();
     // this.loadingSrv.initialize();
   }

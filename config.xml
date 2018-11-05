@@ -113,6 +113,8 @@
         <variable name="TWITTER_KEY" value="RpWT5YZYdFYjPSzI8wB5O4kwP" />
         <variable name="TWITTER_SECRET" value="yILFMxwPl7zK4qKuQMqqmAZ9bQbJGKbOt8gygvOPweYRamoSoq" />
     </plugin>
+    <plugin name="cordova-plugin-firebase-analytics" spec="^1.0.1">
+        <variable name="FIREBASE_CORE_VERSION" value="16.0.+" />
+    </plugin>
     <engine name="android" spec="7.0.0" />
-    <engine name="ios" spec="4.5.5" />
 </widget>

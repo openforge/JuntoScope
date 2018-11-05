@@ -7,6 +7,7 @@ import { TakeUntilDestroy } from "ngx-take-until-destroy";
 import { Connection } from "../../../../models/connection";
 import { ConnectionFacade } from "../../store/connection.facade";
 import { PopupService } from "../../../../shared/popup.service";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -26,10 +27,14 @@ export class ConnectionDetailsPage implements OnInit, OnDestroy {
     private connectionFacade: ConnectionFacade,
     private navParams: NavParams,
     private navCtrl: NavController,
-    private popupSvc: PopupService
+    private popupSvc: PopupService,
+    private firebaseAnalytics: FirebaseAnalytics
   ) {}
 
   ngOnInit() {
+    this.firebaseAnalytics.logEvent("page_view", {
+      page: "ConnectionDetailsPage"
+    });
     this.connectionFacade.getConnections();
 
     this.connectionSub = this.connectionFacade.connections$.subscribe(

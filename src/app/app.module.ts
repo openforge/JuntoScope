@@ -34,6 +34,7 @@ import { ConnectionsModule } from "../features/connections/connections.module";
 import { ScopingModule } from "../features/scoping/scoping.module";
 import { SettingsModule } from "../features/settings/settings.module";
 import { Deeplinks } from "@ionic-native/deeplinks";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 @NgModule({
   declarations: [JuntoScopeComponent, NotFoundComponent],
@@ -72,6 +73,7 @@ import { Deeplinks } from "@ionic-native/deeplinks";
     InAppBrowser,
     SafariViewController,
     Deeplinks,
+    FirebaseAnalytics,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

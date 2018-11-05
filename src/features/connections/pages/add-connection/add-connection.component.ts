@@ -10,6 +10,7 @@ import { PopupService } from "../../../../shared/popup.service";
 import { ConnectionFacade } from "../../store/connection.facade";
 import { LoadingService } from "../../../../shared/loading.service";
 import { SafariViewController } from "@ionic-native/safari-view-controller";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 @IonicPage({
   segment: "AddConnectionPage",
@@ -32,7 +33,8 @@ export class AddConnectionPage implements OnInit {
     private actions$: Actions,
     private popupSvc: PopupService,
     private loadingSvc: LoadingService,
-    private svc: SafariViewController
+    private svc: SafariViewController,
+    private firebaseAnalytics: FirebaseAnalytics
   ) {
     this.redirectSubs = this.actions$
       .ofType(ConnectionActionTypes.ADD_SUCCESS)
@@ -51,7 +53,9 @@ export class AddConnectionPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.firebaseAnalytics.logEvent("page_view", { page: "AddConnectionPage" });
+  }
 
   ngOnDestroy() {
     this.errorSubscription.unsubscribe();

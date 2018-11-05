@@ -18,6 +18,7 @@ import { PopupService } from "../../../../shared/popup.service";
 import { SessionDetailModalComponent } from "../../components/session-detail-modal/session-detail-modal.component";
 import { DashboardUiState } from "../../store/dashboard.reducer";
 import { ScopingFacade } from "../../../scoping/store/scoping.facade";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -49,10 +50,12 @@ export class DashboardPage implements OnInit, OnDestroy {
     private connectionFacade: ConnectionFacade,
     private navCtrl: NavController,
     private scopingFacade: ScopingFacade,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private firebaseAnalytics: FirebaseAnalytics
   ) {}
 
   ngOnInit() {
+    this.firebaseAnalytics.logEvent("page_view", { page: "DashboardPage" });
     this.dashboardFacade.getHistory();
     this.connectionFacade.getConnections();
   }

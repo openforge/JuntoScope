@@ -8,6 +8,7 @@ import { ConnectionFacade } from "../../../connections/store/connection.facade";
 import { LoginPage } from "../../../authentication/pages/login/login.component";
 import { Subscription } from "rxjs";
 import { SettingsService } from "../../service/settings.service";
+import { FirebaseAnalytics } from "@ionic-native/firebase-analytics";
 
 @TakeUntilDestroy()
 @IonicPage({
@@ -33,7 +34,8 @@ export class SettingsPage implements OnInit, OnDestroy {
     private navCtrl: NavController,
     private connectionFacade: ConnectionFacade,
     private authFacade: AuthFacade,
-    private settingsSvc: SettingsService
+    private settingsSvc: SettingsService,
+    private firebaseAnalytics: FirebaseAnalytics
   ) {}
 
   ngOnDestroy() {
@@ -41,6 +43,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.firebaseAnalytics.logEvent("page_view", { page: "SettingsPage" });
     this.connectionFacade.getConnections();
     this.faqsSub = this.settingsSvc.getFaqs().subscribe(faqs => {
       if (faqs) {
