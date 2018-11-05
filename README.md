@@ -45,34 +45,74 @@ JuntoScope was made with love and care using [Ionic 3](https://github.com/ionic-
 * [Download the installer](https://nodejs.org/) for Node.js 6 or greater (we recommend < 8)
 * Install the ionic CLI globally: `npm install -g ionic`
  
-To run JuntoScope locally in a browser
-```
-ionic serve
-```
-
-:tada:
- 
- 
+## Setting up the project
 _Disclaimer: We do not have our Firebase keys environment configuration published in the repository! When attempting to run this project it will fail immediately. If you have your own firebase environment configuration that you would like to use, please consult the following instructions:_
 
 * Create a a folder called config under the src folder. Add a file called config.ts to the newly created folder.
-* Find your firebase credentials (apiKey, authDomain, databaseUrl, etc.), and copy the object into this file. It should look like this:
+* We setup our configuration to have 2 environments,but if you don't need that you can copy the same credentials from there firebase project in both configurations.
+* Find your DEV and PROD firebase credentials (apiKey, authDomain, databaseUrl, etc.), and copy the object into this file. It should look like this:
 
 ```
-export const FIREBASE_CONFIG = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: ""
+export const FIREBASE_DEV_CONFIG = {
+  apiKey: '',
+  authDomain: '',
+  databaseURL: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: ''
+}
+
+export const FIREBASE_PROD_CONFIG = {
+  apiKey: '',
+  authDomain: '',
+  databaseURL: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: ''
 }
 ```
 
-That's it! :tada:
+* Now you need to deploy the firebase functions to your own firebase project. For this you just need to run this command:
+```
+firebase deploy --only functions
+```
+* Or this other command if you have Firebase alias:
+```
+firebase use <your_alias> && firebase deploy --only functions
+```
+* Once you have deployed the firebase functions copy the URL and add that to the config file, shoul look like this:
+```
+export const FIREBASE_DEV_FUNCTIONS = '';
+export const FIREBASE_PROD_FUNCTIONS = '';
+```
 
+* And for the last step you need go to check your Web Client ID, you can find it on Firebase Console > Authentication > Sign-in method > Google and open Web SDK configuration. Then add it to the config file, it should look like this:
+```
+export const GOOGLE_WEB_CLIENT_ID_DEV = '';
+export const GOOGLE_WEB_CLIENT_ID_PROD = '';
+```
 
- ## Versioning & Changelog	
+## Setting up locally
+If you want to run the firebase functions locally, so you can debug easily your functions without the need to deploy them, we have you covered, just run this command
+```
+npm run firebase:serve
+```
+and you will have your firebase functions running locally, then you just need to add the URL that appears on the terminal on the config file.
+
+## Configuring the native plugins
+We are using the cordova native plugins to login with Google, Facebook and Twitter, so in order to configure them and use your own keys you can check here:
+- [Google Plugin](https://github.com/EddyVerbruggen/cordova-plugin-googleplus)
+- [Facebook Plugin](https://github.com/jeduan/cordova-plugin-facebook4)
+- [Twitter Plugin](https://github.com/chroa/twitter-connect-plugin)
+
+We know this can be messy, _we dealed with them all_, so feel free to open an issue with this info:
+- The steps you did
+- The plugin with you are facing the problem
+- The shwoing error
+
+We will read the issue and try to help you, _maybe the problem you have we already dealed with it_.
+
+## Versioning & Changelog	
 We utilize [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog) to generate a changelog from git metadata.	
  The following tools are used to achieve this purpose:	
 - [commitizen](https://github.com/commitizen/cz-cli)	
