@@ -92,13 +92,6 @@ export const GOOGLE_WEB_CLIENT_ID_DEV = '';
 export const GOOGLE_WEB_CLIENT_ID_PROD = '';
 ```
 
-## Setting up locally
-If you want to run the firebase functions locally, so you can debug easily your functions without the need to deploy them, we have you covered! Just run this command:
-```
-npm run firebase:serve
-```
-and you will have your firebase functions running locally, then you just need to add the URL that appears on the terminal on the config file.
-
 ## Configuring the native plugins
 We are using the cordova native plugins to login with Google, Facebook and Twitter, so in order to configure them and use your own keys you can check here:
 - [Google Plugin](https://github.com/EddyVerbruggen/cordova-plugin-googleplus)
@@ -106,11 +99,19 @@ We are using the cordova native plugins to login with Google, Facebook and Twitt
 - [Twitter Plugin](https://github.com/chroa/twitter-connect-plugin)
 
 We know this can be messy, _we dealt with them all_, so feel free to open an issue with this info:
+- The specific plugin with you are facing the problem
 - The steps you did
-- The plugin with you are facing the problem
-- The shwoing error
+- Showing error
 
 We will read the issue and try to help you, _maybe the problem you have we have already dealt with it_
+
+
+## Running Firebase Functions locally
+If you want to run the firebase functions locally, so you can debug easily your functions without the need to deploy them, we have you covered! Just run this command:
+```
+npm run firebase:serve
+```
+and you will have your firebase functions running locally, then you just need to add the URL that appears on the terminal on the config file.
 
 ## Versioning & Changelog	
 We utilize [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog) to generate a changelog from git metadata.	
