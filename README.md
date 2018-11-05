@@ -72,28 +72,28 @@ export const FIREBASE_PROD_CONFIG = {
 }
 ```
 
-* Now you need to deploy the firebase functions to your own firebase project. For this you just need to run this command:
+Now you need to deploy the firebase functions to your own firebase project. For this you just need to run this command:
 ```
 firebase deploy --only functions
 ```
-* Or this other command if you have Firebase alias:
+Or this other command if you have Firebase alias:
 ```
 firebase use <your_alias> && firebase deploy --only functions
 ```
-* Once you have deployed the firebase functions copy the URL and add that to the config file, shoul look like this:
+Once you have deployed the firebase functions copy the URL and add that to the same config file. The format should be the following :
 ```
 export const FIREBASE_DEV_FUNCTIONS = '';
 export const FIREBASE_PROD_FUNCTIONS = '';
 ```
 
-* And for the last step you need go to check your Web Client ID, you can find it on Firebase Console > Authentication > Sign-in method > Google and open Web SDK configuration. Then add it to the config file, it should look like this:
+For the last step you will need go to check and copy your Web Client ID. You can find it on by navigating to your Firebase Console > Authentication > Sign-in Method > Google and open Web SDK configuration. Then add it to the same config file. The format should be the following :
 ```
 export const GOOGLE_WEB_CLIENT_ID_DEV = '';
 export const GOOGLE_WEB_CLIENT_ID_PROD = '';
 ```
 
 ## Setting up locally
-If you want to run the firebase functions locally, so you can debug easily your functions without the need to deploy them, we have you covered, just run this command
+If you want to run the firebase functions locally, so you can debug easily your functions without the need to deploy them, we have you covered! Just run this command:
 ```
 npm run firebase:serve
 ```
@@ -105,12 +105,12 @@ We are using the cordova native plugins to login with Google, Facebook and Twitt
 - [Facebook Plugin](https://github.com/jeduan/cordova-plugin-facebook4)
 - [Twitter Plugin](https://github.com/chroa/twitter-connect-plugin)
 
-We know this can be messy, _we dealed with them all_, so feel free to open an issue with this info:
+We know this can be messy, _we dealt with them all_, so feel free to open an issue with this info:
 - The steps you did
 - The plugin with you are facing the problem
 - The shwoing error
 
-We will read the issue and try to help you, _maybe the problem you have we already dealed with it_.
+We will read the issue and try to help you, _maybe the problem you have we have already dealt with it_
 
 ## Versioning & Changelog	
 We utilize [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog) to generate a changelog from git metadata.	
